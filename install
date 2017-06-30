@@ -1,0 +1,19 @@
+#!/bin/bash
+echo "publicando..."
+
+TODAY=`date +"%Y-%m-%d"`
+file="bookmarks-node-$TODAY.tar.gz"
+rm -f $file;
+
+tar -czf $file * \
+--exclude "*.tar.gz" \
+--exclude 'install' \
+--exclude $file \
+--exclude node_modules \
+--exclude logs/** \
+--exclude files \
+--exclude db \
+--exclude test 
+#--warning=no-file-changed
+
+echo "tudo pronto!!!"

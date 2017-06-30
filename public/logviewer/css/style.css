@@ -1,0 +1,12 @@
+.info{
+    background: auto;
+}
+.debug {
+    background: auto;
+}
+.error {
+    background: red;
+}
+.warn {
+    background: yellow;
+}

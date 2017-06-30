@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ appName }}</title>
+		<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--STYLES-->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="/select2/select2.css" rel="stylesheet" />
+		<link href="/markdownEditor/css/bootstrap-markdown-editor.css" rel="stylesheet" />
+		<link href="/highlight/tomorrow-night.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
+    <link href="/css/animate.css" rel="stylesheet" />
+    <!--STYLES END-->
+		
+  </head>
+  <body >
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="glyphicon glyphicon-menu-hamburger menu-expand pull-left collapsed " style="margin-left:5px"  data-toggle="collapse" data-target="#menu-lateral" aria-expanded="false"></button>
+					<a href="/" class="navbar-brand">{{ appName }}</a>
+					<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+				<div class="navbar-collapse collapse" id="navbar-main">
+					<ul class="nav navbar-nav">
+						<li class="dropdown">
+							<a href="#" class="bookmarkNew" >New bookmark</a>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<form class="navbar-form navbar-left" role="search">
+								<div class="form-group">
+									<input type="text" class="form-control" id="iptSearch" placeholder="search bookmarks...">
+								</div>
+								<button type="button" class="btn btn-info">Search</button>
+							</form>
+						</li>
+					</ul>
+				</div>
+			  <div class="col-xs-6 col-md-2 mg-menu"  >
+					<div class="collapse" id="menu-lateral">
+					  <ul class="nav nav-sidebar ulLateralItems"></ul>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<!--SCRIPTS-->
+		<script >
+		var mg = {
+			defaults: {
+				debug: {{debug}}
+			}
+		}
+		</script>
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/bootstrap-notify.js"></script>
+		<script src="/select2/select2.full.js"></script>
+		<script src="/js/core.js"></script>
+		<script src="/js/mustache.min.js"></script>
+		<script src="/js/ace.js"></script>
+		<script src="/js/ext-searchbox.js"></script>
+		<script src="/js/mode-css.js"></script>
+		<script src="/markdownEditor/js/bootstrap-markdown-editor.js"></script>
+		<script src="/js/marked.min.js"></script>
+		<script src="/highlight/highlight.pack.js"></script>
+		<!--SCRIPTS END-->
+		<div id="container" class="container" style="margin-top: 80px">
+			{{> body }}
+		</div>
+		<div class="popuparea modal fade" role="dialog" id="modal" ></div>
+		<div class="mobile-full-screen-modal" style="display:none"></div>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+#!/bin/bash
+
+echo "deployando $1 ....."
+
+tmpdir=`mktemp -d`
+echo "criando o diretório '$tmpdir' para trabalho"
+cd $tmpdir
+
+original=`echo "$1" | sed "s/:/"-"/g"`
+filename="${original}.tar.bz2"
+
+echo "salvando a imagem '$1' em '$original' ..."
+docker save -o "$original" "$1"
+#echo "testado" > "$original"
+
+echo "comprensando a imagem pra envio no $filename"
+tar -cjf "$filename" "$original"
+
+echo "enviando para o servidor ..."
+scp $filename mageddo.com:~/Downloads
+
+echo "conectando no servidor e extraindo a imagem"
+echo "..."
+echo "..."
+cmd="cd ~/Downloads && \
+			echo 'extraindo do servidor ...' && \
+			tar -xvf '$filename' && \
+			echo 'carregando imagem no docker ... ' && \
+			docker load -i '$original' && \
+			echo 'apagando os arquivos do servidor ...' && \
+			rm '$filename' '$original' && \
+			echo 'apagando o container antigo ... ' && \
+			docker rm -f $3 &> /dev/null && \
+			echo 'rodando o novo container ... ' && \
+			$2"
+ssh elvis@mageddo.com $cmd
+
+echo "apagando a pasta temporária"
+cd /tmp
+rm -rf $tmpdir
+
+echo "enjoy!"

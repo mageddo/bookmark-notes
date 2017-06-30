@@ -1,0 +1,27 @@
+version: '2'
+services:
+  prod:
+    container_name: bookmarks-node
+    image: reg.mageddo.com:5000/mageddo/bookmarks-node:2.1.1
+    hostname: bookmarks.mageddo
+    ports:
+      - 3000:3000
+    environment:
+      - MG_MODE=production
+      - HOSTNAMES=bookmarks-node.mageddo
+    volumes:
+      - /var/lib/mageddo/bookmarks-node/db:/opt/bookmarks/db
+      - /var/lib/mageddo/bookmarks-node/logs:/opt/bookmarks/logs
+      - /var/lib/mageddo/bookmarks-node/conf:/opt/bookmarks/conf
+    network_mode: bridge
+  dev:
+    extends: prod
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - MG_MODE=debug
+    volumes:
+      - ./:/opt/bookmarks
+      - ./files/prod:/opt/bookmarks/prod/sql
+    command: bash -c 'npm install && sleep infinity'

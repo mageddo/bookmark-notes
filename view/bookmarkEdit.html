@@ -1,0 +1,54 @@
+<div class="modal-dialog modal-lg ctBookmarkNew" data-edit-mode="{{editMode}}" >
+	<form class="form" role="search" id="frmBookmarkEdit" >
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" style="padding-left:10px;padding-top: 5px;" >&times;</button>
+				<button type="submit" tabindex="5" class="btn btn-success pull-right">save</button>
+				<h1><span class="title"></span> bookmark</h1>
+			</div>
+			<div class="modal-body row">
+				<div class="header-editor-container" >
+					<input type="hidden" value="{{{ bookmark.id }}}" name="id" />
+					<div class="form-group col-xs-6 col-sm-4">
+						<label for="iptName" >Name </label>
+						<input id="iptName" type="text" class="form-control" tabindex="1" value="{{{ bookmark.name }}}" name="name" placeholder="bookmark name">
+					</div>
+					<div class="form-group col-xs-6 col-sm-4">
+						<label for="iptLink" >Link </label>
+						<input id="iptLink" type="text" name="link" tabindex="1" value="{{{ bookmark.link}}}" class="form-control" placeholder="bookmark link">
+					</div>
+					<div class="form-group col-xs-6 col-sm-3">
+						<label for="iptTag" >Tags </label><br />
+						<select id="iptTag" class="js-data-example-ajax" name="tag[]" multiple="multiple" style="width: 200px">
+							{{#tags}}
+								<option value="{{name}}">{{name}}</option>
+							{{/tags}}
+						</select>
+					</div>
+					<div class="form-group col-xs-6 col-sm-1 chckVisible">
+						<label for="visible" >Public</label><br />
+						<label class="switch">
+							<input id="visible" name="visible" type="checkbox" {{#getVisibilityFlag}}{{bookmark.visibility}}{{/getVisibilityFlag}}>
+							<div class="slider round"></div>
+						</label>
+					</div>
+				</div>
+				<div class="col-xs-12" id="txtDescription" tabindex="4" >{{ bookmark.html }}</div>
+			</div>
+		</div>
+	</form>
+</div>
+<script>
+var tagsToEdit = {{#stringify}}{{/stringify}};
+</script>
+<script src="/js/ct/bookmarkEdit.js" ></script>
+<script type="text/template" id="tplItemFilter">
+<div class="clearfix">
+{{.}}
+</div>
+</script>
+<script type="text/template" id="tplNoResults">
+<li class="select2-results__option select2-results__option" id="btnNewTag">	
+	<a style="color: black; cursor:pointer">{{.}}<i class="glyphicon glyphicon-cloud pull-right" style="font-size: 20px;"></i></a>
+</li>
+</script>

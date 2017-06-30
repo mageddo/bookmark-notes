@@ -1,0 +1,20 @@
+.containerHome .divItem {
+	margin-bottom: 10px;
+}
+.containerHome .divItemContainer {
+		background: #FBFAFA;
+		border: 1px solid #EEE;
+		padding: 10px 10px 0px 10px
+	}
+.containerHome .divItemHead h4 {
+		margin-top: 0px;
+	}
+.containerHome .divItemFooter .pbtn {
+		font-size: 10px;
+}
+.divItemContainer {
+	word-break: break-all;
+}
+body{
+	/*background: #FBFBFB;*/
+}
