@@ -1,13 +1,13 @@
 # Features
 * [Bookmarks list like thumbs](#001)
-* Markdown editor
-* Code highlight
-* Tag you bookmark
-* Tag list filter
-* Search by everything
+* [Markdown editor](#002)
+* [Code highlight](#003)
+* [Tag you bookmark](#005)
+* [Tag list filter](#006)
+* [Search by everything](#007)
 	* Search field to find by bookmark name, content and tags names]
 	* Tag list to filter your bookmarks
-* Logviewer
+* [Logviewer](#008)
 
 
 # Build and Run With Docker
@@ -64,12 +64,30 @@ See page [log page](http://127.0.0.1:3000/logviewer/#)
 
 ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/001-bookmarks-list-thumb.jpg)
 
-<div id="002">Bookmarks list like thumbs</div>
+<div id="002">Markdown editor</div>
 
-* ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/002-markdown-editor.jpg)
-* ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/003-code-highlight.jpg)
-* ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/004-code-highlight.jpg)
-* ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/005-bookmark-tag.jpg)
-* ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/006-tag-list-filter.jpg)
-* ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/007-search.jpg)
-* ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/008-logviewer.jpg)
+![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/002-markdown-editor.jpg)
+
+<div id="003">Code highlight</div>
+
+![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/003-code-highlight.jpg)
+
+<div id="004">Code highlight</div>
+
+![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/004-code-highlight.jpg)
+
+<div id="005">Tag you bookmark</div>
+
+![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/005-bookmark-tag.jpg)
+
+<div id="006">Tag list filter</div>
+
+![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/006-tag-list-filter.jpg)
+
+<div id="007">Search by everything</div>
+
+![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/007-search.jpg)
+
+<div id="008">Logviewer</div>
+
+![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/008-logviewer.jpg)
