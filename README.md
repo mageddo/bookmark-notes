@@ -56,5 +56,5 @@ Create the `./conf/users.htpasswd` authentication file, inside put something lik
 
 See page [log page](http://127.0.0.1:3000/logviewer/#)
 
-
-
+# Screenshots
+![](blob/master/files/screenshots/001-bookmarks-list-thumb.jpg)
