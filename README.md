@@ -73,11 +73,8 @@ See page [log page](http://127.0.0.1:3000/logviewer/#)
 
 ### <div id="003">Code highlight</div>
 
-![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/003-code-highlight.jpg)
-
-### <div id="004">Code highlight</div>
-
-![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/004-code-highlight.jpg)
+* ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/003-code-highlight.jpg)
+* ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/004-code-highlight.jpg)
 
 ### <div id="005">Tag you bookmark</div>
 
