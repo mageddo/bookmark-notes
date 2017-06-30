@@ -19,7 +19,7 @@ The settings base directory is `/var/lib/mageddo/bookmarks-node`
 
 ### Create the database file
 
-Create a `/var/lib/mageddo/bookmarks-node/db/1.6.db` sqlite3 database and import `db-1.6.sql` (I suggest [SQLStudio](http://sqlitestudio.pl/?act=download))
+Create a `/var/lib/mageddo/bookmarks-node/db/bookmarks.db` sqlite3 database and import `files/dbs/db-1.6.sql` (I suggest [SQLStudio](http://sqlitestudio.pl/?act=download))
 
 ### Setup authentication
 
@@ -31,7 +31,7 @@ Create the `/var/lib/mageddo/bookmarks-node/conf/users.htpasswd` authentication 
 ### Building 
 
 	$ docker-compose build dev && docker-compose up prod
-    
+
 
 ### See the results
 
@@ -43,7 +43,7 @@ This aproach is not the default but you can do it of course. The settings base p
 
 ### Setup database
 
-Create `./db/1.6.db` sqlite3 database and import `db-1.6.sql` (I suggest [SQLStudio](http://sqlitestudio.pl/?act=download))
+Create `./db/bookmarks.db` sqlite3 database and import `files/dbs/db-1.6.sql` (I suggest [SQLStudio](http://sqlitestudio.pl/?act=download))
 
 
 ### Setup authentication 
