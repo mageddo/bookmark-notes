@@ -1,9 +1,12 @@
 # Features
+* [Bookmarks list like thumbs](#001)
 * Markdown editor
 * Code highlight
-* Tags
-* Tag list to filter your bookmarks
-* Search field to find by bookmark name, content and tags names]
+* Tag you bookmark
+* Tag list filter
+* Search by everything
+	* Search field to find by bookmark name, content and tags names]
+	* Tag list to filter your bookmarks
 * Logviewer
 
 
@@ -57,7 +60,12 @@ Create the `./conf/users.htpasswd` authentication file, inside put something lik
 See page [log page](http://127.0.0.1:3000/logviewer/#)
 
 # Screenshots
-* ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/001-bookmarks-list-thumb.jpg)
+<div id="001">Bookmarks list like thumbs</div>
+
+![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/001-bookmarks-list-thumb.jpg)
+
+<div id="002">Bookmarks list like thumbs</div>
+
 * ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/002-markdown-editor.jpg)
 * ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/003-code-highlight.jpg)
 * ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/004-code-highlight.jpg)
