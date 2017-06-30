@@ -1,4 +1,6 @@
 # Features
+![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/001-bookmarks-list-thumb.jpg)
+
 * [Bookmarks list like thumbs](#001)
 * [Markdown editor](#002)
 * [Code highlight](#003)
@@ -8,6 +10,7 @@
 	* Search field to find by bookmark name, content and tags names]
 	* Tag list to filter your bookmarks
 * [Logviewer](#008)
+* Mobile friendly
 
 
 # Build and Run With Docker
