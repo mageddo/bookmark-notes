@@ -12,6 +12,7 @@ COPY src "${app}/src"
 COPY view "${app}/view"
 COPY public "${app}/public"
 COPY app.js "${app}"
+COPY conf "${app}/conf"
 COPY conf "${app}/conf.original"
 COPY files/prod "${app}/prod/sql"
 
