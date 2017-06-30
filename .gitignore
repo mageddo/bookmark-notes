@@ -32,8 +32,6 @@
 # images
 *.png
 *.PNG
-*.jpg
-*.JPG
 *.gif
 *.GIF
 *.jpeg
