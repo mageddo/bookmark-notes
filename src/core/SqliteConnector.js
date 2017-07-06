@@ -23,7 +23,7 @@ module.exports = {
 		con = new sqlite3.Database(file);
 		if(!fs.existsSync(file)){
 			console.log('arquivo do banco de dados nao existe', file);
-			buildDatabase(con);
+			buildDatabase(con, 0);
 		}
 		var currentVersion = this.version;
 		console.info("m=open, status=connected, db=%s, currentVersion=%d", file, currentVersion);
