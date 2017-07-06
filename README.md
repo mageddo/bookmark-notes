@@ -13,29 +13,32 @@
 * Mobile friendly
 
 
-# Build and Run With Docker
+# Build and Run With Docker (Fast Way)
 
-The settings base directory is `/var/lib/mageddo/bookmarks-node` 
+1. Run image
 
-### Create the database file
+        $ docker run --rm -p 3000:3000 --name bookmarks defreitas/bookmark-notes
+        ...
+        2017-07-06 23:14:13:942 - debug: loading: HomeController.js
+        2017-07-06 23:14:13:942 - debug: loading: TagController.js
+        2017-07-06 23:14:13:943 - debug: loading: TesteController.js
+        2017-07-06 23:14:14:629 - info: m=getSystemVersionCb, dbversion=1.7, currentVersion=1.7
 
-Create a `/var/lib/mageddo/bookmarks-node/db/bookmarks.db` sqlite3 database and import `files/dbs/db-1.6.sql` (I suggest [SQLStudio](http://sqlitestudio.pl/?act=download))
-
-### Setup authentication
-
-Create the `/var/lib/mageddo/bookmarks-node/conf/users.htpasswd` authentication file, inside put something like that:
-
-	user:mypassword
-
-
-### Building 
-
-	$ docker-compose build dev && docker-compose up prod
+2. Access browser [http://localhost:3000](http://localhost:3000)
+3. That's it :)
+	
 
 
-### See the results
+# Build and Run With Docker (Customized way)
 
-If you are using a docker DNS visit `http://bookmarks-node.mageddo:3000`, anyway access `http://localhost:3000` will work.
+1. Run from docker-compose.yml in the project
+
+		$ docker-compose docker-compose up prod
+
+2. Access browser [http://localhost:3000](http://localhost:3000)
+3. That's it :)
+
+
 
 # Build and Run Without Docker
 
