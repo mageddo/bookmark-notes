@@ -30,26 +30,25 @@ app.whitelist = function(regex){
 
 var authPath = process.cwd() + "/conf/users.htpasswd";
 if(!fs.existsSync(authPath)){
-	console.error("m=authenticator, status=auth-file-not-exists, file=" + authPath);
-	process.exit(-2);
+	console.warn("m=authenticator, status=auth-file-not-exists, file=" + authPath);
+	var originalAuthPath = process.cwd() + "/conf.original/users.htpasswd";
+	fs.appendFileSync(authPath, fs.readFileSync(originalAuthPath), {flag: 'w'});
 }
-	var basicAuth = auth.basic({
-		realm: "Mageddo Bookmarks",
-		file: authPath
-	});
-	console.info("=authenticatior, basicAuth=%o", basicAuth)
-	app.use(function(req, res, next){
-//		console.info('m=basicAuth, status=begin, arguments=', req.path);
-		for(var regex of whitelist){
-			if(regex.test(req.path)){
-//				console.info('m=basicAuth, status=whitelist, regex=', regex);
-				next();
-				return;
-			}
+
+var basicAuth = auth.basic({
+	realm: "Mageddo Bookmarks",
+	file: authPath
+});
+console.info("m=authenticator, basicAuth=%o", basicAuth)
+app.use(function(req, res, next){
+	for(var regex of whitelist){
+		if(regex.test(req.path)){
+			next();
+			return;
 		}
-//		console.info('m=basicAuth, status=not-matches, regex=', regex);
-		auth.connect(basicAuth)(req, res, next);
-	});
+	}
+	auth.connect(basicAuth)(req, res, next);
+});
 
 // whitelist urls
 app.whitelist(/^\/bookmark\/[0-9]+\/?.*$/);
