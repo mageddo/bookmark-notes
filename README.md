@@ -17,16 +17,15 @@
 
 1. Run image
 
-        $ docker run --rm -p 3000:3000 --name bookmarks defreitas/bookmark-notes
-        ...
-        2017-07-06 23:14:13:942 - debug: loading: HomeController.js
-        2017-07-06 23:14:13:942 - debug: loading: TagController.js
-        2017-07-06 23:14:13:943 - debug: loading: TesteController.js
-        2017-07-06 23:14:14:629 - info: m=getSystemVersionCb, dbversion=1.7, currentVersion=1.7
+		$ docker run --rm -p 3000:3000 --name bookmarks defreitas/bookmark-notes
+		...
+		2017-07-06 23:14:13:942 - debug: loading: HomeController.js
+		2017-07-06 23:14:13:942 - debug: loading: TagController.js
+		2017-07-06 23:14:13:943 - debug: loading: TesteController.js
+		2017-07-06 23:14:14:629 - info: m=getSystemVersionCb, dbversion=1.7, currentVersion=1.7
 
 2. Access browser [http://localhost:3000](http://localhost:3000)
 3. That's it :)
-	
 
 
 # Build and Run With Docker (Customized way)
@@ -37,8 +36,6 @@
 
 2. Access browser [http://localhost:3000](http://localhost:3000)
 3. That's it :)
-
-
 
 # Build and Run Without Docker
 

@@ -31,7 +31,7 @@ app.whitelist = function(regex){
 var authPath = process.cwd() + "/conf/users.htpasswd";
 if(!fs.existsSync(authPath)){
 	console.warn("m=authenticator, status=auth-file-not-exists, file=" + authPath);
-	var originalAuthPath = process.cwd() + "/conf.original/users.htpasswd";
+	var originalAuthPath = process.cwd() + "/conf.default/users.htpasswd";
 	fs.appendFileSync(authPath, fs.readFileSync(originalAuthPath), {flag: 'w'});
 }
 

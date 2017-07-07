@@ -55,7 +55,7 @@ function getDBSQL(fromVersion){
 	console.info('m=getDBSQL, status=begin, fromVersion=%d', fromVersion);
 
 	const REGEX_VALID_SQL_FILE_VERSION = /^([0-9.]+)\.sql$/,
-			folder = process.cwd() + '/prod/sql';
+			folder = process.cwd() + '/files/prod/';
 	var files = fs.readdirSync(folder);
 	var r = [];
 	files.forEach(file => {
