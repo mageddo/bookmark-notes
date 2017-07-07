@@ -39,23 +39,10 @@
 
 # Build and Run Without Docker
 
-This aproach is not the default but you can do it of course. The settings base path is project directory.
-
-### Setup database
-
-Create `./db/bookmarks.db` sqlite3 database and import `files/dbs/db-1.6.sql` (I suggest [SQLStudio](http://sqlitestudio.pl/?act=download))
-
-
-### Setup authentication 
-Create the `./conf/users.htpasswd` authentication file, inside put something like that:
-
-	user:mypassword
-
-### Building 
-
-	$ npm install # install dependencies
-	$ npm start # starting 
-	$ curl -v 127.0.0.1:3000 # testing the application connection, credentials at conf/users.htpasswd file
+	$ npm install && npm start
+	2017-07-07 11:20:49:849 - info: m=buildDatabase, status=executed
+	2017-07-07 11:20:49:849 - info: m=buildDatabase, status=executing, version=1.7
+	2017-07-07 11:20:49:850 - info: m=buildDatabase, status=executed
 
 
 # Logs
