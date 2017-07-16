@@ -17,8 +17,8 @@ module.exports = function(app) {
 
 		getRecentBookmarks(from, to, callback){
 			app.db.all(`SELECT b.id, b.name, GROUP_CONCAT(t.name) as tags FROM bookmark b
-				INNER JOIN tagBookmark tb ON tb.bookmarkId = b.id
-				INNER JOIN tag t on t.id = tb.tagId
+				LEFT JOIN tagBookmark tb ON tb.bookmarkId = b.id
+				LEFT JOIN tag t on t.id = tb.tagId
 			WHERE b.deleted = 0 AND b.visibility = 1
 			GROUP BY b.id
 			ORDER BY b.id DESC
