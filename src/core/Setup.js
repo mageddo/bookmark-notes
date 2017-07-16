@@ -51,7 +51,7 @@ app.use(function(req, res, next){
 });
 
 // whitelist urls
-app.whitelist(/^\/?.*$/);
+app.whitelist(/^\/?$/);
 app.whitelist(/^\/bookmark\/[0-9]+\/?.*$/);
 app.whitelist(/^\/css\//);
 app.whitelist(/^\/fonts\//);
