@@ -168,7 +168,7 @@ module.exports.controller = function(app) {
 		});
 	});
 
-	app.get('/bookmark/:id/:description?', function(req, res) {
+	app.get('/bookmark/:id/:description', function(req, res) {
 		console.info('m=/bookmark/:id/:description, status=begin, id=%s, desc=%s', req.params.id, req.params.description);
 		m.getBookmarkByIdWithNavigation(req.params.id, (err, bookmark) => {
 

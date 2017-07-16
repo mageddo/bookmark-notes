@@ -14,11 +14,20 @@ module.exports = function(app) {
 				}
 			});
 		},
+
+		getRecentBookmarks(from, to, callback){
+			app.db.all(`SELECT b.id, b.name, GROUP_CONCAT(t.name) as tags FROM bookmark b
+				INNER JOIN tagBookmark tb ON tb.bookmarkId = b.id
+				INNER JOIN tag t on t.id = tb.tagId
+			WHERE b.deleted = 0 AND b.visibility = 1
+			GROUP BY b.id
+			ORDER BY b.id DESC
+			LIMIT ?,?`, [from, to], callback);
+		},
+
 		/*
 			traz o bookmark por id e traz o bookmark anterior e o proximo a este
-
 			traz apenas bookmarks que sejam publicos e nao deletados
-
 		 */
 		getBookmarkByIdWithNavigation: function(id, callback){
 			app.db.all(`SELECT id, name, visibility, html FROM bookmark
@@ -29,6 +38,7 @@ module.exports = function(app) {
 					)
 					AND deleted = 0 AND visibility = 1;`, [id, id, id], function(err, data){
 
+				console.debug('m=getBookmarkByIdWithNavigation, bkid=%d, err=%s', id, err)
 				var foundId = -1;
 				data.map((v, i) => {
 					if(v.id == id){

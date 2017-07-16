@@ -1,11 +1,25 @@
 var LOG_FILE = __dirname + "/../../logs/log.log";
 
 module.exports.controller = function(app) {
-	
+
+	var m = require("../model/BookmarkModel")(app);
+
 	app.get("/", function(req, res){
-		res.render("index", {
-			layout: false
-		});
+		m.getRecentBookmarks(0, 100, function(err, data){
+			console.debug('m=getRecentBookmarks, err=%s, size=%d', err, data.length)
+			res.render("index", {
+				layout: false,
+				bookmarks: data,
+				toTagArray(){
+					return function(render){
+						console.debug('m=toTagArray');
+						this.tags = this.tags.split(',');
+					}
+				 }
+			});
+
+		})
+
 	});
 
 	app.get("/_/bookmarks", function(req, res){
