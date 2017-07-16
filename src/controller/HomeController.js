@@ -2,6 +2,12 @@ var LOG_FILE = __dirname + "/../../logs/log.log";
 
 module.exports.controller = function(app) {
 	
+	app.get("/", function(req, res){
+		res.render("index", {
+			layout: false
+		});
+	});
+
 	app.get("/_/bookmarks", function(req, res){
 		if(req.headers.layout != undefined)
 			res.render("bookmarkHome", {
