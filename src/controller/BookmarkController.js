@@ -168,7 +168,7 @@ module.exports.controller = function(app) {
 		});
 	});
 
-	app.get('/bookmark/:id/:description', function(req, res) {
+	app.get('/bookmark/:id/:description?', function(req, res) {
 		console.info('m=/bookmark/:id/:description, status=begin, id=%s, desc=%s', req.params.id, req.params.description);
 		m.getBookmarkByIdWithNavigation(req.params.id, (err, bookmark) => {
 
@@ -183,7 +183,7 @@ module.exports.controller = function(app) {
 						}
 					});
 			}else{
-				title = util.format("Bookmark '%s' not found", req.params.description);
+				title = util.format("Bookmark '%s' not found", req.params.description || req.params.id);
 				content = "";
 			}
 
