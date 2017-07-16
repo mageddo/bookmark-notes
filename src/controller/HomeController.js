@@ -2,7 +2,7 @@ var LOG_FILE = __dirname + "/../../logs/log.log";
 
 module.exports.controller = function(app) {
 	
-	app.get("/", function(req, res){
+	app.get("/_/bookmarks", function(req, res){
 		if(req.headers.layout != undefined)
 			res.render("bookmarkHome", {
 				compile: false,
