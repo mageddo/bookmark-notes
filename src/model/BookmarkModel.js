@@ -21,38 +21,38 @@ module.exports = function(app) {
 
 		 */
 		getBookmarkByIdWithNavigation: function(id, callback){
-				app.db.all(`SELECT id, name, visibility, html FROM bookmark
-						WHERE id IN(
-								(SELECT max(id) FROM bookmark WHERE id < ? AND deleted = 0 AND visibility = 1),
-								?,
-								(SELECT min(id) FROM bookmark WHERE id > ? AND deleted = 0 AND visibility = 1)
-						)
-						AND deleted = 0 AND visibility = 1;`, [id, id, id], function(err, data){
+			app.db.all(`SELECT id, name, visibility, html FROM bookmark
+					WHERE id IN(
+							(SELECT max(id) FROM bookmark WHERE id < ? AND deleted = 0 AND visibility = 1),
+							?,
+							(SELECT min(id) FROM bookmark WHERE id > ? AND deleted = 0 AND visibility = 1)
+					)
+					AND deleted = 0 AND visibility = 1;`, [id, id, id], function(err, data){
 
-					var foundId = -1;
-					data.map((v, i) => {
-						if(v.id == id){
-							foundId = i;
-						}
-					});
-					if(foundId == -1){
-						data = [];
-					}
-					if(data){
-						if(!data.length){
-							callback({status: 404, message: "No registers"}, data);
-						}else{
-							callback(err, {
-								prev: data[foundId-1],
-								bookmark: data[foundId],
-								next: data[foundId+1]
-							});
-						}
-					}else{
-						callback(err, data);
+				var foundId = -1;
+				data.map((v, i) => {
+					if(v.id == id){
+						foundId = i;
 					}
 				});
-			},
+				if(foundId == -1){
+					data = [];
+				}
+				if(data){
+					if(!data.length){
+						callback({status: 404, message: "No registers"}, data);
+					}else{
+						callback(err, {
+							prev: data[foundId-1],
+							bookmark: data[foundId],
+							next: data[foundId+1]
+						});
+					}
+				}else{
+					callback(err, data);
+				}
+			});
+		},
 		updateBookmark: function(bookmark, callback){
 			console.debug('m=updateBookmark, status=begin, bookmark=%j', bookmark);
 			app.db.run("UPDATE bookmark SET name=?, link=?, html=?, visibility=? WHERE id=?",
