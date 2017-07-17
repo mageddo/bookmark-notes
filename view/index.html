@@ -22,7 +22,14 @@
 <div class="container" style="min-height:500px">
 	{{#bookmarks}}
 	<div>
-		<h4><a href="/bookmark/{{id}}/{{name}}">{{name}}</a></h4>
+		<h4><a href="/bookmark/{{id}}/{{name}}">
+			{{#name}}
+				{{name}}
+			{{/name}}
+			{{^name}}
+				ID: {{id}} - Unknow name
+			{{/name}}
+		</a></h4>
 		{{#toTagArray}}{{/toTagArray}}
 		{{#tags}}
 			<a href="#" class="btn btn-tag">{{.}}</a>
