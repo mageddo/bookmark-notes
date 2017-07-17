@@ -12,7 +12,7 @@ module.exports = {
 		var fullUrl = url.format({
 			protocol: req.header('X-Forwarded-Protocol') || req.protocol,
 			host: req.get('host'),
-			pathname: path
+			pathname: encodeURI(path)
 		});
 		return fullUrl
 

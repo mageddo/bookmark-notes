@@ -53,7 +53,6 @@ module.exports.controller = function(app) {
 					},
 					getURL(){
 						return function(path, render){
-							console.debug(req);
 							return utils.getURL(req, render(path))
 						};
 					}

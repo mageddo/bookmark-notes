@@ -14,13 +14,13 @@
 
 	<br/>
 	{{#prev.name}}
-	<a class="pull-left" href="/bookmark/{{prev.id}}/{{prev.name}}">
+	<a class="pull-left" href="{{#getURL}}/bookmark/{{prev.id}}/{{prev.name}}{{/getURL}}">
 		<span style="font-size:20px" class="glyphicon glyphicon-step-backward"></span> {{prev.name}}
 	</a>
 	{{/prev.name}}
 
 	{{#next.name}}
-	<a class="pull-right" href="/bookmark/{{next.id}}/{{next.name}}">
+	<a class="pull-right" href="{{#getURL}}/bookmark/{{next.id}}/{{next.name}}{{/getURL}}">
 		{{next.name}}
 		<span style="font-size:20px" class="glyphicon glyphicon-step-forward"></span>
 	</a>

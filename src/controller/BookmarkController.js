@@ -1,4 +1,4 @@
-var url = require("url"), util = require('util'), fs = require('fs');
+var url = require("url"), util = require('util'), fs = require('fs'), utils = require('../core/utils');
 var marked = require('../../public/js/marked.min.js');
 var hljs = require('highlight.js');
 module.exports.controller = function(app) {
@@ -198,6 +198,11 @@ module.exports.controller = function(app) {
 					return function(name, parser){
 						return encodeURIComponent(parser(name));
 					}
+				},
+				getURL(){
+					return function(path, render){
+						return utils.getURL(req, render(path))
+					};
 				}
 			});
 
