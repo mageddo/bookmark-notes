@@ -190,7 +190,7 @@ module.exports.controller = function(app) {
 			res.render('bookmarkView', {
 				prev: bookmark.prev,
 				next: bookmark.next,
-				layout: false,
+				layout: 'publicLayout',
 				id: id,
 				title: title,
 				content: content,

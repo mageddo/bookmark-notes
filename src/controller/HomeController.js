@@ -17,7 +17,7 @@ module.exports.controller = function(app) {
 			var pageSize = 10, pages = Math.ceil(size / pageSize), startPage = 0;
 			if (page + 1 > pages){
 				return res.render('index', {
-					layout: false,
+					layout: 'publicLayout',
 					msg: 'No results'
 				});
 			} else if(page > 0){
@@ -35,7 +35,7 @@ module.exports.controller = function(app) {
 				return res.render("index", {
 					nextPage: page + 2,
 					hasMore: pages > page + 1,
-					layout: false,
+					layout: 'publicLayout',
 					bookmarks: data,
 					toTagArray(){
 						return function(render){
