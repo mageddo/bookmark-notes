@@ -17,6 +17,7 @@ module.exports.controller = function(app) {
 			var pageSize = 10, pages = Math.ceil(size / pageSize), startPage = 0;
 			if (page + 1 > pages){
 				return res.render('index', {
+					title: 'Not found',
 					layout: 'publicLayout',
 					msg: 'No results'
 				});
@@ -33,6 +34,7 @@ module.exports.controller = function(app) {
 					});
 				}
 				return res.render("index", {
+					title: page == 0 ? 'Home' : 'Page ' + (page + 1),
 					nextPage: page + 2,
 					hasMore: pages > page + 1,
 					layout: 'publicLayout',
