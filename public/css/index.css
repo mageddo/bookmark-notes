@@ -2,3 +2,11 @@ body {
 	min-height: 2000px;
 	padding-top: 70px;
 }
+
+.btn-tag {
+	background: #E1ECF4;
+	color: #39739d;
+	font-size: 9pt;
+	padding: 4px 10px;
+	border-radius: 0px
+}

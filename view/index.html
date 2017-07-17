@@ -22,14 +22,20 @@
 <div class="container" style="min-height:500px">
 	{{#bookmarks}}
 	<div>
-		<h4><a href="/bookmark/{{id}}">{{name}}</a></h4>
+		<h4><a href="/bookmark/{{id}}/{{name}}">{{name}}</a></h4>
 		{{#toTagArray}}{{/toTagArray}}
 		{{#tags}}
-			<span class="btn btn-default">{{.}}</span>
+			<a href="#" class="btn btn-tag">{{.}}</a>
 		{{/tags}}
 		<hr>
 	</div>
 	{{/bookmarks}}
+
+	{{#hasMore}}
+		<a href="?page={{nextPage}}" >More...</a>
+	{{/hasMore}}
+
+
 </div>
 <!-- Footer -->
 <footer>

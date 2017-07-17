@@ -15,14 +15,21 @@ module.exports = function(app) {
 			});
 		},
 
-		getRecentBookmarks(from, to, callback){
+		getRecentBookmarks(pageSize, offset, callback){
 			app.db.all(`SELECT b.id, b.name, GROUP_CONCAT(t.name) as tags FROM bookmark b
 				LEFT JOIN tagBookmark tb ON tb.bookmarkId = b.id
 				LEFT JOIN tag t on t.id = tb.tagId
 			WHERE b.deleted = 0 AND b.visibility = 1
 			GROUP BY b.id
 			ORDER BY b.id DESC
-			LIMIT ?,?`, [from, to], callback);
+			LIMIT ?,?`, [offset, pageSize], callback);
+		},
+
+		countPublicNotDeletedBookmarks(callback){
+			app.db.each(`SELECT COUNT(1) AS COUNT FROM bookmark b
+				WHERE b.deleted = 0 AND b.visibility = 1`, function(err, data){
+					callback(err, !err ? data['COUNT'] : null)
+				})
 		},
 
 		/*
