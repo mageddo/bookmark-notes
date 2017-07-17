@@ -14,7 +14,7 @@ module.exports.controller = function(app) {
 				});
 			}
 
-			var pageSize = 2, pages = Math.ceil(size / pageSize), startPage = 0;
+			var pageSize = 10, pages = Math.ceil(size / pageSize), startPage = 0;
 			if (page + 1 > pages){
 				return res.render('index', {
 					layout: false,
