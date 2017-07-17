@@ -19,3 +19,7 @@ body {
 	float: none;
 	margin: 0 auto;
 }
+
+.row-result h4:first-letter {
+	text-transform: uppercase;
+}

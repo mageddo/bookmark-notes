@@ -2,7 +2,7 @@ var LOG_FILE = __dirname + "/../../logs/log.log";
 
 module.exports.controller = function(app) {
 
-	var m = require("../model/BookmarkModel")(app), url = require('url');
+	var m = require("../model/BookmarkModel")(app), url = require('url'), utils = require('../core/utils');
 
 	app.get("/", function(req, res){
 
@@ -19,7 +19,12 @@ module.exports.controller = function(app) {
 				return res.render('index', {
 					title: 'Not found',
 					layout: 'publicLayout',
-					msg: 'No results'
+					msg: 'No results',
+					getURL(){
+						return function(path, render){
+							return utils.getURL(req, render(path))
+						};
+					}
 				});
 			} else if(page > 0){
 				startPage = page * pageSize;
@@ -45,7 +50,13 @@ module.exports.controller = function(app) {
 								this.tags = this.tags.split(',');
 							}
 						}
-					 }
+					},
+					getURL(){
+						return function(path, render){
+							console.debug(req);
+							return utils.getURL(req, render(path))
+						};
+					}
 				});
 			})
 

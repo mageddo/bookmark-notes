@@ -1,7 +1,7 @@
 <div class="container" style="min-height:500px">
 	{{#bookmarks}}
-	<div>
-		<h4><a href="/bookmark/{{id}}/{{name}}">
+	<div class="row-result">
+		<h4><a href="{{#getURL}}/bookmark/{{id}}/{{name}}{{/getURL}}">
 			{{#name}}
 				{{name}}
 			{{/name}}
@@ -24,7 +24,7 @@
 	{{#hasMore}}
 	<div class="row more-results">
 		<div class="col-lg-5 col-centered">
-			<a class="btn btn-info center-block" style="width:100%" href="?page={{nextPage}}" >More results ...</a>
+			<a class="btn btn-info center-block" style="width:100%" href="{{#getURL}}{{/getURL}}?page={{nextPage}}" >More results ...</a>
 		</div>
 	</div>
 	{{/hasMore}}
