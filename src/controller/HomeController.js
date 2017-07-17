@@ -15,10 +15,10 @@ module.exports.controller = function(app) {
 			}
 
 			var pageSize = 2, pages = Math.ceil(size / pageSize), startPage = 0;
-			if (page > pages){
-				return res.render('400', {
+			if (page + 1 > pages){
+				return res.render('index', {
 					layout: false,
-					msg: "Invalid page number: " + page
+					msg: 'No results'
 				});
 			} else if(page > 0){
 				startPage = page * pageSize;

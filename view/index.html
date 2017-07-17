@@ -31,8 +31,15 @@
 	</div>
 	{{/bookmarks}}
 
+	{{#msg}}
+		{{msg}}
+	{{/msg}}
+
 	{{#hasMore}}
-		<a href="?page={{nextPage}}" >More...</a>
+	<br/>
+	<div class="row">
+		<a class="col-md-2 col-md-offset-5" href="?page={{nextPage}}" >More results...</a>
+	</div>
 	{{/hasMore}}
 
 
