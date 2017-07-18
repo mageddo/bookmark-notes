@@ -23,3 +23,7 @@ body {
 .row-result h4:first-letter {
 	text-transform: uppercase;
 }
+
+#page-title {
+	margin-bottom: 20px;
+}

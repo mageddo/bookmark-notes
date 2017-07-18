@@ -40,6 +40,7 @@ module.exports.controller = function(app) {
 				}
 				return res.render("index", {
 					title: page == 0 ? 'Home' : 'Page ' + (page + 1),
+					pageTitle: page == 0 ? null : 'Page ' + (page + 1),
 					nextPage: page + 2,
 					hasMore: pages > page + 1,
 					layout: 'publicLayout',

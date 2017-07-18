@@ -1,4 +1,9 @@
 <div class="container" style="min-height:500px">
+
+	{{#pageTitle}}
+	<h1 id="page-title">{{pageTitle}}</h1>
+	{{/pageTitle}}
+
 	{{#bookmarks}}
 	<div class="row-result">
 		<h4><a href="{{#getURL}}/bookmark/{{id}}/{{name}}{{/getURL}}">
@@ -17,6 +22,7 @@
 	</div>
 	{{/bookmarks}}
 
+	<!-- possible error -->
 	{{#msg}}
 		{{msg}}
 	{{/msg}}
