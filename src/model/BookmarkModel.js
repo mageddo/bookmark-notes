@@ -14,45 +14,62 @@ module.exports = function(app) {
 				}
 			});
 		},
+
+		getRecentBookmarks(pageSize, offset, callback){
+			app.db.all(`SELECT b.id, b.name, GROUP_CONCAT(t.name) as tags FROM bookmark b
+				LEFT JOIN tagBookmark tb ON tb.bookmarkId = b.id
+				LEFT JOIN tag t on t.id = tb.tagId
+			WHERE b.deleted = 0 AND b.visibility = 1
+			GROUP BY b.id
+			ORDER BY b.id DESC
+			LIMIT ?,?`, [offset, pageSize], callback);
+		},
+
+		countPublicNotDeletedBookmarks(callback){
+			app.db.each(`SELECT COUNT(1) AS COUNT FROM bookmark b
+				WHERE b.deleted = 0 AND b.visibility = 1`, function(err, data){
+					callback(err, !err ? data['COUNT'] : null)
+				})
+		},
+
 		/*
 			traz o bookmark por id e traz o bookmark anterior e o proximo a este
-
 			traz apenas bookmarks que sejam publicos e nao deletados
-
 		 */
 		getBookmarkByIdWithNavigation: function(id, callback){
-				app.db.all(`SELECT id, name, visibility, html FROM bookmark
-						WHERE id IN(
-								(SELECT max(id) FROM bookmark WHERE id < ? AND deleted = 0 AND visibility = 1),
-								?,
-								(SELECT min(id) FROM bookmark WHERE id > ? AND deleted = 0 AND visibility = 1)
-						)
-						AND deleted = 0 AND visibility = 1;`, [id, id, id], function(err, data){
+			app.db.all(`SELECT id, name, visibility, html FROM bookmark
+					WHERE id IN(
+							(SELECT max(id) FROM bookmark WHERE id < ? AND deleted = 0 AND visibility = 1),
+							?,
+							(SELECT min(id) FROM bookmark WHERE id > ? AND deleted = 0 AND visibility = 1)
+					)
+					AND deleted = 0 AND visibility = 1;`, [id, id, id], function(err, data){
 
-					var foundId = -1;
-					data.map((v, i) => {
-						if(v.id == id){
-							foundId = i;
-						}
-					});
-					if(foundId == -1){
-						data = [];
-					}
-					if(data){
-						if(!data.length){
-							callback({status: 404, message: "No registers"}, data);
-						}else{
-							callback(err, {
-								prev: data[foundId-1],
-								bookmark: data[foundId],
-								next: data[foundId+1]
-							});
-						}
-					}else{
-						callback(err, data);
+				console.debug('m=getBookmarkByIdWithNavigation, bkid=%d, err=%s', id, err)
+				var foundId = -1;
+				data.map((v, i) => {
+					if(v.id == id){
+						foundId = i;
 					}
 				});
-			},
+				if(foundId == -1){
+					data = [];
+				}
+				if(data){
+					if(!data.length){
+						callback({status: 404, message: "No registers"}, data);
+					}else{
+						callback(err, {
+							prev: data[foundId-1],
+							bookmark: data[foundId],
+							next: data[foundId+1]
+						});
+					}
+				}else{
+					callback(err, data);
+				}
+			});
+		},
 		updateBookmark: function(bookmark, callback){
 			console.debug('m=updateBookmark, status=begin, bookmark=%j', bookmark);
 			app.db.run("UPDATE bookmark SET name=?, link=?, html=?, visibility=? WHERE id=?",

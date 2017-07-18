@@ -1,4 +1,4 @@
-var url = require("url"), util = require('util'), fs = require('fs');
+var url = require("url"), util = require('util'), fs = require('fs'), utils = require('../core/utils');
 var marked = require('../../public/js/marked.min.js');
 var hljs = require('highlight.js');
 module.exports.controller = function(app) {
@@ -183,21 +183,27 @@ module.exports.controller = function(app) {
 						}
 					});
 			}else{
-				title = util.format("Bookmark '%s' not found", req.params.description);
+				title = util.format("Bookmark '%s' not found", req.params.description || req.params.id);
 				content = "";
 			}
 
 			res.render('bookmarkView', {
 				prev: bookmark.prev,
 				next: bookmark.next,
-				layout: false,
+				layout: 'publicLayout',
 				id: id,
 				title: title,
 				content: content,
+				description: utils.clearHTML(content).replace(/[\r\n]+/, "").substring(0, 160),
 				encode: function(){
 					return function(name, parser){
 						return encodeURIComponent(parser(name));
 					}
+				},
+				getURL(){
+					return function(path, render){
+						return utils.getURL(req, render(path))
+					};
 				}
 			});
 

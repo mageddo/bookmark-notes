@@ -51,6 +51,7 @@ app.use(function(req, res, next){
 });
 
 // whitelist urls
+app.whitelist(/^\/?$/);
 app.whitelist(/^\/bookmark\/[0-9]+\/?.*$/);
 app.whitelist(/^\/css\//);
 app.whitelist(/^\/fonts\//);
@@ -61,11 +62,11 @@ app.whitelist(/^\/highlight\//);
 	app.db = process.db = connector.open();
 	function setupLogger(){
 		var logger = require('./logger')(app);
-    process.c = app.c = logger;
+		process.c = app.c = logger;
 		app.log = process.log = function(){
 			app.c.info.apply(app.c, arguments);
 		}
-	  
+
 	}
 };
 
