@@ -194,6 +194,7 @@ module.exports.controller = function(app) {
 				id: id,
 				title: title,
 				content: content,
+				description: utils.clearHTML(content).replace(/[\r\n]+/, "").substring(0, 160),
 				encode: function(){
 					return function(name, parser){
 						return encodeURIComponent(parser(name));
