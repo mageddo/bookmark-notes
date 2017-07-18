@@ -32,6 +32,10 @@ release {
 	failOnPublishNeeded = false
 	failOnUnversionedFiles = false
 	buildTasks = []
+	git {
+		requireBranch = ''
+		pushToRemote = ''
+	}
 }
 
 
