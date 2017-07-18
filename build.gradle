@@ -2,9 +2,7 @@ plugins {
   id 'net.researchgate.release' version '2.4.0'
 }
 
-
 defaultTasks 'info'
-
 
 ext {
 	BOOKMARKS_TAG = project.version
@@ -13,16 +11,21 @@ ext {
 	BOOKMARKS_BASE = "/var/lib/mageddo/bookmarks-node"
 	BOOKMARKS_INTERNAL_BASE = "/opt/bookmarks"
 }
-def lastVersion = project.version
-beforeReleaseBuild << {
-	println "> upgrading docker-compose version from: ${lastVersion} to ${project.version}"
-	def f = new File("${project.projectDir}/docker-compose.yml")
-	if(!f.exists()){
-		println "docker-compose file not found"
-		System.exit(-1)
-	}
-	f.write(f.text.replaceAll("(image:.*:)(.*)", "\$1${project.version}"))
+
+checkCommitNeeded.doFirst {
+
+	println "> upgrading docker-compose version=${project.version}"
+
+	updateVersion("${project.projectDir}/docker-compose.yml", "(image:.*:)(.*)", "\$1${project.version}")
+
+	def sout = new StringBuilder()
+	def proc = ['git', 'commit', '-a', "-m [Gradle Release Plugin] - releasing '${project.version}'."].execute()
+	proc.consumeProcessOutput(sout, sout)
+	proc.waitForOrKill(3000)
+	println "> $sout"
+
 }
+
 release {
 	project.ext.set("release.useAutomaticVersion", true)
 	failOnCommitNeeded = false
@@ -159,4 +162,16 @@ def removeImage(String image){
 	proc.consumeProcessOutput(buff, buff)
 	proc.waitForOrKill(10000);
 	//println buff
+}
+
+void updateVersion(f, pattern, replace){
+
+	f = file(f)
+	println "> updating version in: ${f}"
+	if(!f.exists()){
+		println "file ${f} not found"
+		System.exit(-1)
+	}
+	f.write(f.text.replaceAll(pattern, replace))
+
 }
