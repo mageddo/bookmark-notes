@@ -11,6 +11,7 @@
 	* Tag list to filter your bookmarks
 * [Logviewer](#008)
 * Mobile friendly
+* [Make your bookmarks public](#009)
 
 
 # Build and Run With Docker (Fast Way)
@@ -78,3 +79,9 @@ See page [log page](http://127.0.0.1:3000/logviewer/#)
 ### <div id="008">Logviewer</div>
 
 ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/008-logviewer.jpg)
+
+### <div id="009">Make your bookmarks public</div>
+
+![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/010-turn-it-public.png)
+![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/009-public-bookmark-view.png)
+
