@@ -257,9 +257,11 @@ function cb(editMode){
 		};
 	};
 
-	$('.painel-acoes li .toggle-scroll').click(function(){
-		 $(this).parent().toggleClass("active");
-		 $(this).parents(".mg-code").find('pre').toggleClass("with-scroll");
+	$('.painel-acoes li .toggle-scroll').click(function(e){
+		e.preventDefault();
+		e.stopPropagation();
+		$(this).parent().toggleClass("active");
+		$(this).parents(".mg-code").find('pre').toggleClass("with-scroll");
 	});
 
 function parseCode(content){
