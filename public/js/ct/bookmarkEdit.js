@@ -23,7 +23,7 @@ function cb(editMode){
 				theme: "ace/theme/tomorrow_night",
 				onPreview: function (content, callback) {
 					callback(parseCode(content, callback));
-					$(".md-preview a").click(function(e){
+					$(".md-preview a").not('.skipped').click(function(e){
 						e.stopPropagation();
 						this.target = "_blank";
 					});
@@ -257,13 +257,19 @@ function cb(editMode){
 		};
 	};
 
+	$("body").delegate('.painel-acoes li a', 'click', function(){
+		console.debug('enable/disable scroll');
+		 $(this).parent().toggleClass("active");
+		 $(this).parents(".mg-code").find('pre').toggleClass("with-scroll");
+	});
+
 function parseCode(content){
 	var renderer = new marked.Renderer();
 	renderer.code = function(code, lang){
 		var hasLanguage = hljs.listLanguages().filter(name => name == lang).length > 0;
 		var parsedCode = hasLanguage ? hljs.highlight(lang, code) : hljs.highlightAuto(code);
 		console.debug('m=parseCode, lang=%s', lang, parsedCode);
-		return '<div class="mg-code"><pre><code>' + parsedCode.value + '</pre></code></div>';
+		return Mustache.render($('#tplCodeBlock').html(), {code: parsedCode.value});
 	};
 	return marked(content, {
 		renderer: renderer

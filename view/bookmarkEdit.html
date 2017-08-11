@@ -20,7 +20,7 @@
 					<div class="form-group col-xs-6 col-sm-3">
 						<label for="iptTag" >Tags </label><br />
 						<select id="iptTag" class="js-data-example-ajax" name="tag[]" multiple="multiple" style="width: 200px">
-							{{#tags}}
+							{{#tags}}s
 								<option value="{{name}}">{{name}}</option>
 							{{/tags}}
 						</select>
@@ -46,6 +46,14 @@ var tagsToEdit = {{#stringify}}{{/stringify}};
 <div class="clearfix">
 {{.}}
 </div>
+</script>
+<script type="text/template" id="tplCodeBlock">
+	<div class="mg-code">
+		<ul class="nav nav-pills painel-acoes">
+			<li role="presentation" class="active"><a href="#" class="skipped">Scroll Disable/Enable</a></li>
+		</ul>
+		<pre><code>{{{code}}}</code></pre>
+	</div>
 </script>
 <script type="text/template" id="tplNoResults">
 <li class="select2-results__option select2-results__option" id="btnNewTag">	
