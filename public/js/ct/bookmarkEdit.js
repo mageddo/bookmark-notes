@@ -257,11 +257,11 @@ function cb(editMode){
 		};
 	};
 
-	$('.painel-acoes li .toggle-scroll').click(function(e){
-		e.preventDefault();
-		e.stopPropagation();
+	$('body').off('click', '.painel-acoes li .toggle-scroll').on('click', '.painel-acoes li .toggle-scroll', function(e){
 		$(this).parent().toggleClass("active");
 		$(this).parents(".mg-code").find('pre').toggleClass("with-scroll");
+		e.preventDefault();
+		e.stopPropagation();
 	});
 
 function parseCode(content){
