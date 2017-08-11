@@ -258,11 +258,13 @@ function cb(editMode){
 	};
 
 function parseCode(content){
+	var renderer = new marked.Renderer();
+	renderer.code = function(code, lang){
+		console.debug('m=parseCode, lang=%s', lang);
+		return '<div class="mg-code"><pre><code>' + hljs.highlightAuto(code).value + '</pre></code></div>';
+	};
 	return marked(content, {
-		highlight: function (code, lang, callback) {
-			var parsedCode = hljs.highlightAuto(code).value;
-			return parsedCode;
-		}
+		renderer: renderer
 	});
 }
 
