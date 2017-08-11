@@ -47,6 +47,14 @@ var tagsToEdit = {{#stringify}}{{/stringify}};
 {{.}}
 </div>
 </script>
+<script type="text/template" id="tplCodeBlock">
+	<div class="mg-code">
+		<ul class="nav nav-pills painel-acoes">
+			<li role="presentation" ><a href="#" class="skipped glyphicon glyphicon-eye-open" title="Show code scroll"></a></li>
+		</ul>
+		<pre><code>{{{code}}}</code></pre>
+	</div>
+</script>
 <script type="text/template" id="tplNoResults">
 <li class="select2-results__option select2-results__option" id="btnNewTag">	
 	<a style="color: black; cursor:pointer">{{.}}<i class="glyphicon glyphicon-cloud pull-right" style="font-size: 20px;"></i></a>
