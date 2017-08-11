@@ -50,7 +50,10 @@ var tagsToEdit = {{#stringify}}{{/stringify}};
 <script type="text/template" id="tplCodeBlock">
 	<div class="mg-code">
 		<ul class="nav nav-pills painel-acoes">
-			<li role="presentation" ><a href="#" class="skipped glyphicon glyphicon-eye-open" title="Show code scroll"></a></li>
+			{{#overflown}}
+			<li role="presentation" ><a href="#" class="toggle-scroll skipped glyphicon glyphicon-eye-open" title="Show code scroll"></a></li>
+			{{/overflown}}
+			<li role="presentation" class="pull-right" ><a href="#" class="skipped glyphicon glyphicon-option-vertical"></a></li>
 		</ul>
 		<pre><code>{{{code}}}</code></pre>
 	</div>
