@@ -260,8 +260,10 @@ function cb(editMode){
 function parseCode(content){
 	var renderer = new marked.Renderer();
 	renderer.code = function(code, lang){
-		console.debug('m=parseCode, lang=%s', lang);
-		return '<div class="mg-code"><pre><code>' + hljs.highlightAuto(code).value + '</pre></code></div>';
+		var hasLanguage = hljs.listLanguages().filter(name => name == lang).length > 0;
+		var parsedCode = hasLanguage ? hljs.highlight(lang, code) : hljs.highlightAuto(code);
+		console.debug('m=parseCode, lang=%s', lang, parsedCode);
+		return '<div class="mg-code"><pre><code>' + parsedCode.value + '</pre></code></div>';
 	};
 	return marked(content, {
 		renderer: renderer
