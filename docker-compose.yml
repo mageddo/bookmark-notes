@@ -2,7 +2,7 @@ version: '2'
 services:
   prod:
     container_name: bookmarks-node
-    image: defreitas/bookmark-notes:2.2.0
+    image: defreitas/bookmark-notes:2.2.1
     hostname: bookmarks.mageddo
     ports:
       - 3000:3000
