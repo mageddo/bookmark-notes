@@ -257,7 +257,7 @@ function cb(editMode){
 		};
 	};
 
-	$("body").delegate('.painel-acoes li a', 'click', function(){
+	$("body").delegate('.painel-acoes li .toggle-scroll', 'click', function(){
 		 $(this).parent().toggleClass("active");
 		 $(this).parents(".mg-code").find('pre').toggleClass("with-scroll");
 	});
@@ -267,7 +267,7 @@ function parseCode(content){
 	renderer.code = function(code, lang){
 		var hasLanguage = hljs.listLanguages().filter(name => name == lang).length > 0;
 		var parsedCode = hasLanguage ? hljs.highlight(lang, code) : hljs.highlightAuto(code);
-		return Mustache.render($('#tplCodeBlock').html(), {code: parsedCode.value});
+		return Mustache.render($('#tplCodeBlock').html(), {code: parsedCode.value, overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7 });
 	};
 	return marked(content, {
 		renderer: renderer
