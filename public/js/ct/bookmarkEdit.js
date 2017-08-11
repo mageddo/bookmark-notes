@@ -257,7 +257,7 @@ function cb(editMode){
 		};
 	};
 
-	$("body").delegate('.painel-acoes li .toggle-scroll', 'click', function(){
+	$('.painel-acoes li .toggle-scroll').click(function(){
 		 $(this).parent().toggleClass("active");
 		 $(this).parents(".mg-code").find('pre').toggleClass("with-scroll");
 	});
