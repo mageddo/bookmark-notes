@@ -218,6 +218,18 @@ function cb(editMode){
 		refreshBookmarkList();
 	}
 	function getSt(editMode){
+
+		var formData = getFormData();
+		// public link
+		$("#visible").change(function(){
+			var linkSpan = $(".public-link");
+			if(this.checked && editMode){
+				linkSpan.html('<a target="_blank" href="/bookmark/'+ formData[0].value +'/'+ (formData[1].value.replace(/\s/g, '-')) +'">bookmark</a>');
+			} else {
+				linkSpan.html('bookmark');
+			}
+		}).trigger('change');
+
 		var title = mg.modal.modal().find(".title");
 		if(editMode){
 			title.html("Edit");
@@ -231,7 +243,7 @@ function cb(editMode){
 				$.ajax({
 					url: "/api/bookmark",
 					type: 'POST',
-					data: getFormData(),
+					data: formData,
 					success: function () {
 						successEvent(1);
 						console.debug("editado");
@@ -245,7 +257,7 @@ function cb(editMode){
 				$.ajax({
 					url: "/api/bookmark",
 					type: 'PUT',
-					data: getFormData(),
+					data: formData,
 					success: function (id) {
 						st = getSt(editMode = true);
 						console.debug("cadastrado");
