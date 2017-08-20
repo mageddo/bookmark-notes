@@ -177,7 +177,7 @@ module.exports.controller = function(app) {
 		console.info('m=/bookmark/:id/:description, status=begin, id=%s, desc=%s', req.params.id, req.params.description);
 		m.getBookmarkByIdWithNavigation(req.params.id, (err, bookmark) => {
 
-			console.debug("M=getPublicBookmark, status=loaded, bookmark=%j", bookmark);
+			console.debug("M=getPublicBookmark, status=loaded, bookmark=%j", bookmark.bookmark.id);
 			var content, title, id;
 			if(bookmark.bookmark != null){
 					id = bookmark.bookmark.id;

@@ -110,6 +110,11 @@ function cb(editMode){
 		});
 		i.attr("tabindex", '3');
 
+		setTimeout(function(){
+			$(".btn-fullscren").trigger("click");
+			$('#editor-mb').trigger('focus').selectRange(0).scrollTop(0);
+		}, 200);
+
 		mg.modal.close(function(){
 			console.debug('m=modal-close-cb, modalCloseClicked=%s', window.modalCloseClick);
 			if(!window.modalCloseClick){
