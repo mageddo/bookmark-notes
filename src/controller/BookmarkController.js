@@ -185,7 +185,7 @@ module.exports.controller = function(app) {
 
 					// if you make changes here probably you also want to change  public/js/ct/bookmarkEdit.js#267
 					content = parseCode(`
-					<div class="mg-code">
+					<div class="mg-code" lang="{{lang}}">
 						<ul class="nav nav-pills painel-acoes">
 							<li role="presentation" style="visibility: hidden;" class="pull-right" ><a href="#" class="skipped glyphicon glyphicon-option-vertical"></a></li>
 						</ul>
@@ -303,12 +303,13 @@ module.exports.controller = function(app) {
 	}
 };
 
+var languagesMap = {};
+hljs.listLanguages().forEach(lang => languagesMap[lang] = true)
 function parseCode(template, content){
 	var renderer = new marked.Renderer();
 	renderer.code = function(code, lang){
-		var hasLanguage = hljs.listLanguages().filter(name => name == lang).length > 0;
-		var parsedCode = hasLanguage ? hljs.highlight(lang, code) : hljs.highlightAuto(code);
-		return mustache.render(template, {code: parsedCode.value, overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7 });
+		var parsedCode = languagesMap[lang] ? hljs.highlight(lang, code) : hljs.highlightAuto(code);
+		return mustache.render(template, {lang: lang, code: parsedCode.value, overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7 });
 	};
 	return marked(content, {
 		renderer: renderer
