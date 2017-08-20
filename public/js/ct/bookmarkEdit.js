@@ -265,8 +265,10 @@ function cb(editMode){
 		e.stopPropagation();
 	});
 
+// if you change here maybe also want to change  src/controller/BookmarkController.js#306
 var languagesMap = null;
 function parseCode(content){
+
 	if(languagesMap == null){
 		languagesMap = {};
 		hljs.listLanguages().forEach(lang => languagesMap[lang] = true)
@@ -275,7 +277,18 @@ function parseCode(content){
 	renderer.code = function(code, lang){
 		var parsedCode = languagesMap[lang] ? hljs.highlight(lang, code) : hljs.highlightAuto(code);
 		return Mustache.render($('#tplCodeBlock').html(), {lang: lang, code: parsedCode.value, overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7 });
-	};
+	}
+	renderer.table = function(header, body) {
+		 return '<table class="table table-bordered table-striped">\n'
+			 + '<thead>\n'
+			 + header
+			 + '</thead>\n'
+			 + '<tbody>\n'
+			 + body
+			 + '</tbody>\n'
+			 + '</table>\n';
+	}
+
 	return marked(content, {
 		renderer: renderer
 	})

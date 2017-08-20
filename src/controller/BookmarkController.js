@@ -310,7 +310,17 @@ function parseCode(template, content){
 	renderer.code = function(code, lang){
 		var parsedCode = languagesMap[lang] ? hljs.highlight(lang, code) : hljs.highlightAuto(code);
 		return mustache.render(template, {lang: lang, code: parsedCode.value, overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7 });
-	};
+	}
+	renderer.table = function(header, body) {
+		return '<table class="table table-bordered table-striped">\n'
+			+ '<thead>\n'
+			+ header
+			+ '</thead>\n'
+			+ '<tbody>\n'
+			+ body
+			+ '</tbody>\n'
+			+ '</table>\n';
+	}
 	return marked(content, {
 		renderer: renderer
 	})
