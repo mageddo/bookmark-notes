@@ -110,10 +110,6 @@ function cb(editMode){
 		});
 		i.attr("tabindex", '3');
 
-		setTimeout(function(){
-			$("#iptName").trigger("focus");
-		}, 500);
-
 		mg.modal.close(function(){
 			console.debug('m=modal-close-cb, modalCloseClicked=%s', window.modalCloseClick);
 			if(!window.modalCloseClick){
