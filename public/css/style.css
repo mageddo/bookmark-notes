@@ -166,6 +166,11 @@ pre {
 	overflow-y: hidden;
 }
 
+.md-preview pre code {
+	white-space: pre;
+}
+
+
 .with-scroll {
 	overflow-y: auto;
 }

@@ -56,7 +56,11 @@ body {
 	background: #FFF;
 }
 
-pre {
+.public-content pre {
 	max-height: 300px;
 	overflow: auto;
+}
+
+.public-content pre code {
+	white-space: pre;
 }
