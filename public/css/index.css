@@ -27,3 +27,40 @@ body {
 #page-title {
 	margin-bottom: 20px;
 }
+
+/* code block panel */
+
+.mg-code ul li a {
+	padding: 4px 15px;
+	border-radius: 4px 0px 0px 0px;
+	border-right: 1px solid #e4e4e4;
+	background: #f5f5f5;
+	margin-bottom: 1px;
+}
+.mg-code ul {
+	background: #f5f5f5;
+}
+
+.mg-code pre {
+	border-top: 1px solid #e4e4e4 !important;
+	border-radius: 0px;
+	border: 0px;
+	margin: 0px;
+	background: transparent;
+}
+
+.mg-code {
+	border: 1px solid #ddd;
+	margin: 0px 0px 10px;
+	border-radius: 4px;
+	background: #FFF;
+}
+
+.public-content pre {
+	max-height: 300px;
+	overflow: auto;
+}
+
+.public-content pre code {
+	white-space: pre;
+}

@@ -33,27 +33,11 @@
 .no-padding{
 	padding: 0px;
 }
-h1, h2, h3, h4, h5, h6{
-	margin: 0px;
-}
-h1{
+
+.modal-header h1 {
 	font-size: 26px;
 }
-h2{
-	font-size: 24px;
-}
-h3{
-	font-size: 22px;
-}
-h4{
-	font-size: 20px;
-}
-h5{
-	font-size: 20px;
-}
-h6{
-	font-size: 18px;
-}
+
 .divItemBody img{
 	width: 100%;
 }
@@ -164,7 +148,13 @@ input:checked + .slider:before{
 pre {
 	max-height: 150px;
 	overflow-y: hidden;
+	overflow-x: auto;
 }
+
+.modal-body pre code {
+	white-space: pre;
+}
+
 
 .with-scroll {
 	overflow-y: auto;

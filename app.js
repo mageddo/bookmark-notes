@@ -1,12 +1,12 @@
 var express = require('express'),
 	app = express(),
-  http = require('http'),
+	http = require('http'),
 	path = require('path'),
 	bodyParser = require('body-parser'),
 	mustacheLayout = require('mustache-layout'),
 	fs = require('fs'),
-  conf = require("./src/core/Setup")(app),
-  em = require("./src/core/ErrorManager")(app);
+	conf = require("./src/core/Setup")(app),
+	em = require("./src/core/ErrorManager")(app);
 
 // some environment variables
 app.set('port', process.env.PORT || 3000);
@@ -28,21 +28,21 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.locals({
-  'appName': "Bookmarks"
+	'appName': "Bookmarks"
 });
 
 // dynamically include routes (Controller)
 try{
-  fs.readdirSync('./src/controller').forEach(function (file) {
-    if(file.substr(-3) === '.js') {
-    	process.c.debug("loading: %s", file);
-      route = require('./src/controller/' + file);
-      route.controller(app);
-    }
-  });
+	fs.readdirSync('./src/controller').forEach(function (file) {
+		if(file.substr(-3) === '.js') {
+			process.c.debug("loading: %s", file);
+			route = require('./src/controller/' + file);
+			route.controller(app);
+		}
+	});
 }catch(e){
-  process.c.error("erro fatal sistema: ", e.toString());
+	process.c.error("erro fatal sistema: ", e.stack);
 }
 app.listen(app.get('port'), function(){
-  process.c.log('Express server listening on port ' + app.get('port'));
+	process.c.log('Express server listening on port ' + app.get('port'));
 });

@@ -111,8 +111,9 @@ function cb(editMode){
 		i.attr("tabindex", '3');
 
 		setTimeout(function(){
-			$("#iptName").trigger("focus");
-		}, 500);
+			$(".btn-fullscren").trigger("click");
+			$('#editor-mb').trigger('focus').selectRange(0).scrollTop(0);
+		}, 200);
 
 		mg.modal.close(function(){
 			console.debug('m=modal-close-cb, modalCloseClicked=%s', window.modalCloseClick);
@@ -217,6 +218,18 @@ function cb(editMode){
 		refreshBookmarkList();
 	}
 	function getSt(editMode){
+
+		// public link
+		$("#visible").change(function(){
+			var formData = getFormData();
+			var linkSpan = $(".public-link");
+			if(this.checked && editMode){
+				linkSpan.html('<a target="_blank" href="/bookmark/'+ formData[0].value +'/'+ (formData[1].value.replace(/\s/g, '-')) +'">bookmark</a>');
+			} else {
+				linkSpan.html('bookmark');
+			}
+		}).trigger('change');
+
 		var title = mg.modal.modal().find(".title");
 		if(editMode){
 			title.html("Edit");
@@ -264,16 +277,33 @@ function cb(editMode){
 		e.stopPropagation();
 	});
 
+// if you change here maybe also want to change  src/controller/BookmarkController.js#306
+var languagesMap = null;
 function parseCode(content){
+
+	if(languagesMap == null){
+		languagesMap = {};
+		hljs.listLanguages().forEach(lang => languagesMap[lang] = true)
+	}
 	var renderer = new marked.Renderer();
 	renderer.code = function(code, lang){
-		var hasLanguage = hljs.listLanguages().filter(name => name == lang).length > 0;
-		var parsedCode = hasLanguage ? hljs.highlight(lang, code) : hljs.highlightAuto(code);
-		return Mustache.render($('#tplCodeBlock').html(), {code: parsedCode.value, overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7 });
-	};
+		var parsedCode = languagesMap[lang] ? hljs.highlight(lang, code) : hljs.highlightAuto(code);
+		return Mustache.render($('#tplCodeBlock').html(), {lang: lang, code: parsedCode.value, overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7 });
+	}
+	renderer.table = function(header, body) {
+		 return '<table class="table table-bordered table-striped">\n'
+			 + '<thead>\n'
+			 + header
+			 + '</thead>\n'
+			 + '<tbody>\n'
+			 + body
+			 + '</tbody>\n'
+			 + '</table>\n';
+	}
+
 	return marked(content, {
 		renderer: renderer
-	});
+	})
 }
 
 };cb($(".ctBookmarkNew").data("edit-mode"));

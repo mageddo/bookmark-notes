@@ -1,6 +1,8 @@
 var url = require("url"), util = require('util'), fs = require('fs'), utils = require('../core/utils');
 var marked = require('../../public/js/marked.min.js');
 var hljs = require('highlight.js');
+var mustache = require('mustache');
+
 module.exports.controller = function(app) {
 	var m = require("../model/BookmarkModel")(app);
 	var mTag = require("../model/TagModel")(app);
@@ -168,20 +170,27 @@ module.exports.controller = function(app) {
 		});
 	});
 
+	/**
+	 * Public bookmark view
+	 */
 	app.get('/bookmark/:id/:description', function(req, res) {
 		console.info('m=/bookmark/:id/:description, status=begin, id=%s, desc=%s', req.params.id, req.params.description);
 		m.getBookmarkByIdWithNavigation(req.params.id, (err, bookmark) => {
 
-			console.debug("M=getPublicBookmark, status=loaded, bookmark=%j", bookmark);
+			console.debug("M=getPublicBookmark, status=loaded, bookmark=%j", bookmark.bookmark.id);
 			var content, title, id;
 			if(bookmark.bookmark != null){
 					id = bookmark.bookmark.id;
 					title = bookmark.bookmark.name;
-					content = marked(bookmark.bookmark.html, {
-						highlight: function (code, lang, callback) {
-							return hljs.highlightAuto(code).value;
-						}
-					});
+
+					// if you make changes here probably you also want to change  public/js/ct/bookmarkEdit.js#267
+					content = parseCode(`
+					<div class="mg-code" lang="{{lang}}">
+						<ul class="nav nav-pills painel-acoes">
+							<li role="presentation" style="visibility: hidden;" class="pull-right" ><a href="#" class="skipped glyphicon glyphicon-option-vertical"></a></li>
+						</ul>
+						<pre><code>{{{code}}}</code></pre>
+					</div>`, bookmark.bookmark.html);
 			}else{
 				title = util.format("Bookmark '%s' not found", req.params.description || req.params.id);
 				content = "";
@@ -294,14 +303,35 @@ module.exports.controller = function(app) {
 	}
 };
 
-
+var languagesMap = {};
+hljs.listLanguages().forEach(lang => languagesMap[lang] = true)
+function parseCode(template, content){
+	var renderer = new marked.Renderer();
+	renderer.code = function(code, lang){
+		var parsedCode = languagesMap[lang] ? hljs.highlight(lang, code) : hljs.highlightAuto(code);
+		return mustache.render(template, {lang: lang, code: parsedCode.value, overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7 });
+	}
+	renderer.table = function(header, body) {
+		return '<table class="table table-bordered table-striped">\n'
+			+ '<thead>\n'
+			+ header
+			+ '</thead>\n'
+			+ '<tbody>\n'
+			+ body
+			+ '</tbody>\n'
+			+ '</table>\n';
+	}
+	return marked(content, {
+		renderer: renderer
+	})
+}
 
 function toTags(tags){
- return tags.map(function(tagName){
-   return {
-     name: tagName
-   };
- });
+	return tags.map(function(tagName){
+		return {
+			name: tagName
+		};
+	});
 }
 
 function getVisibilityFlag(){
