@@ -219,9 +219,9 @@ function cb(editMode){
 	}
 	function getSt(editMode){
 
-		var formData = getFormData();
 		// public link
 		$("#visible").change(function(){
+			var formData = getFormData();
 			var linkSpan = $(".public-link");
 			if(this.checked && editMode){
 				linkSpan.html('<a target="_blank" href="/bookmark/'+ formData[0].value +'/'+ (formData[1].value.replace(/\s/g, '-')) +'">bookmark</a>');
@@ -243,7 +243,7 @@ function cb(editMode){
 				$.ajax({
 					url: "/api/bookmark",
 					type: 'POST',
-					data: formData,
+					data: getFormData(),
 					success: function () {
 						successEvent(1);
 						console.debug("editado");
@@ -257,7 +257,7 @@ function cb(editMode){
 				$.ajax({
 					url: "/api/bookmark",
 					type: 'PUT',
-					data: formData,
+					data: getFormData(),
 					success: function (id) {
 						st = getSt(editMode = true);
 						console.debug("cadastrado");
