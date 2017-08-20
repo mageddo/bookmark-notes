@@ -264,16 +264,20 @@ function cb(editMode){
 		e.stopPropagation();
 	});
 
+var languagesMap = null;
 function parseCode(content){
+	if(languagesMap == null){
+		languagesMap = {};
+		hljs.listLanguages().forEach(lang => languagesMap[lang] = true)
+	}
 	var renderer = new marked.Renderer();
 	renderer.code = function(code, lang){
-		var hasLanguage = hljs.listLanguages().filter(name => name == lang).length > 0;
-		var parsedCode = hasLanguage ? hljs.highlight(lang, code) : hljs.highlightAuto(code);
-		return Mustache.render($('#tplCodeBlock').html(), {code: parsedCode.value, overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7 });
+		var parsedCode = languagesMap[lang] ? hljs.highlight(lang, code) : hljs.highlightAuto(code);
+		return Mustache.render($('#tplCodeBlock').html(), {lang: lang, code: parsedCode.value, overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7 });
 	};
 	return marked(content, {
 		renderer: renderer
-	});
+	})
 }
 
 };cb($(".ctBookmarkNew").data("edit-mode"));
