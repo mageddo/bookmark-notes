@@ -164,9 +164,10 @@ input:checked + .slider:before{
 pre {
 	max-height: 150px;
 	overflow-y: hidden;
+	overflow-x: auto;
 }
 
-.md-preview pre code {
+.editor-preview pre code {
 	white-space: pre;
 }
 
