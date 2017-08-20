@@ -167,7 +167,7 @@ pre {
 	overflow-x: auto;
 }
 
-.editor-preview pre code {
+.modal-body pre code {
 	white-space: pre;
 }
 
