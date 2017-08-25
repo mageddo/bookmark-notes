@@ -265,8 +265,9 @@ module.exports.controller = function(app) {
 		app.log("existem tags para serem cadastradas");
 		var tagsToCad = toTags(req.body.tag);
 		app.log("cadastrando tags que ainda não o foram..");
-	  mTag.mergeTag(tagsToCad, function(err, tags){
-	  	if(err){
+		mTag.mergeTag(tagsToCad, function(err, tags){
+			if(err){
+				console.error('m=mergeTag, error=%s', err);
 				app.em._500({
 					message: "Não foi possível cadastrar as novas tags",
 					res: res,
@@ -275,10 +276,11 @@ module.exports.controller = function(app) {
 				m.rollback();
 				return;
 	  	}
-			app.log("tags foram cadastradas, as relacionadas a esse bookmark são...", tags);
+			app.log("tags foram cadastradas, as relacionadas a esse bookmark são...", tags.map(t => t.slug));
 			app.log("associando as novas");
 			m.associateTagsToBookmarkById(function(err){
 				if(err){
+					console.error('m=associateTagsToBookmarkById, error=%s', err);
 					app.em._500({
 						message: "Não foi possível associar o bookmark com as tags",
 						res: res,

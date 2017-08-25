@@ -7,6 +7,7 @@ module.exports.controller = function(app) {
 		var queryData = url.parse(req.url, true).query;
 		tagM.searchTagsByName(queryData.q, function(err, tags){
 			if(err){
+				console.error('m=searchTagsByName, err=%s', err);
 				app.em._500({
 					message: util.format("Erro ao buscar tags por: %s", queryData.q),
 					stacktrace: err,

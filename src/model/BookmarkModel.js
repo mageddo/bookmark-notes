@@ -77,7 +77,7 @@ module.exports = function(app) {
 			});
 		},
 		updateBookmark: function(bookmark, callback){
-			console.debug('m=updateBookmark, status=begin, bookmark=%j', bookmark);
+			console.debug('m=updateBookmark, status=begin, bookmark=%s', bookmark.id);
 			app.db.run("UPDATE bookmark SET nam_bookmark=?, des_link=?, des_html=?, num_visibility=? WHERE idt_bookmark=?",
 				[bookmark.name, bookmark.link, bookmark.html, getVisibilityFlag(bookmark.visible), bookmark.id],
 				callback);
@@ -180,11 +180,11 @@ module.exports = function(app) {
 				return ;
 			}
 			var sql = util.format(
-			"INSERT INTO tag_Bookmark (idt_tag, idt_boookmark) \n\
+			"INSERT INTO tag_Bookmark (idt_tag, idt_bookmark) \n\
 				SELECT * FROM (	%s ) as rel \n\
 				WHERE NOT EXISTS ( \n\
-				SELECT 1 FROM tag_Bookmark t2 WHERE t2.idt_tag = rel.idt_tag AND t2.idt_bookmark = rel.idt_bookmark \n\
-		    )", mapearTagBookmarkInserir(tags, bookmarkId)
+					SELECT 1 FROM tag_Bookmark t2 WHERE t2.idt_tag = rel.tagId AND t2.idt_bookmark = rel.bookmarkId \n\
+				)", mapearTagBookmarkInserir(tags, bookmarkId)
 			);
 			app.db.run(sql, callback);
 		},

@@ -10,8 +10,8 @@ module.exports = function(app){
 		},
 		searchTagsByName: function(queryName, callback){
 			app.db.all(`
-				SELECT t.idt_tag id, t.NAM_TAG as name, t.COD_SLUG as slug, tb.idt_bookmark bookmarkId
-				FROM tag WHERE nam_tag LIKE ?
+				SELECT t.idt_tag id, t.NAM_TAG as name, t.COD_SLUG as slug
+				FROM tag t WHERE nam_tag LIKE ?
 			`, ['%' + queryName + '%'], callback);
 		},
 		insertTag: function(tag, callback){
@@ -27,7 +27,7 @@ module.exports = function(app){
 			var tagsParams = slugs.map(function(){
 			 return "?";
 			}).join(",");
-			app.db.all("SELECT * FROM TAG WHERE cod_slug in (" + tagsParams + ")", slugs, callback);
+			app.db.all("SELECT idt_tag id, nam_tag name, cod_slug slug FROM TAG WHERE cod_slug in (" + tagsParams + ")", slugs, callback);
 		},
 		mergeTag: function(tags, callback){
 			_tags = tags;
@@ -47,7 +47,7 @@ module.exports = function(app){
 					%s \n\
 				) as tags \n\
 				WHERE NOT EXISTS ( \n\
-			    SELECT 1 FROM tag t2 WHERE t2.slug = tags.slug \n\
+					SELECT 1 FROM tag t2 WHERE t2.cod_slug = tags.slug \n\
 				);", mapearTagsInserir(tags)
 			);
 			app.db.run(sql,function(err, rows){
