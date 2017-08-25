@@ -2,17 +2,24 @@ var util = require("util");
 module.exports = function(app){
 	return {
 		getTagsByBoomarkId: function(bookmarkId, callback){
-			app.db.all("SELECT * FROM tagView WHERE bookmarkId = ?", [bookmarkId], callback);
+			app.db.all(`
+				SELECT t.idt_tag id, t.NAM_TAG as name, t.COD_SLUG as slug, tb.idt_bookmark bookmarkId FROM tag t
+				LEFT JOIN tag_Bookmark tb
+				ON t.idt_tag = tb.idt_tag
+				WHERE tb.idt_bookmark = ?`, [bookmarkId], callback);
 		},
 		searchTagsByName: function(queryName, callback){
-			app.db.all("SELECT * FROM tag WHERE name LIKE ?", ['%' + queryName + '%'], callback);
+			app.db.all(`
+				SELECT t.idt_tag id, t.NAM_TAG as name, t.COD_SLUG as slug, tb.idt_bookmark bookmarkId
+				FROM tag WHERE nam_tag LIKE ?
+			`, ['%' + queryName + '%'], callback);
 		},
 		insertTag: function(tag, callback){
 			tag.slug = this.toSlug(tag.name);
 			if(!tag.slug){
 				callback("Pass a valid tag");
 			}else{
-				app.db.run("INSERT INTO tag (name, slug) VALUES ($name, $slug)", mapName(tag), callback);
+				app.db.run("INSERT INTO tag (nam_tag, cod_slug) VALUES ($name, $slug)", mapName(tag), callback);
 			}
 
 		},
@@ -20,7 +27,7 @@ module.exports = function(app){
 			var tagsParams = slugs.map(function(){
 			 return "?";
 			}).join(",");
-			app.db.all("SELECT * FROM TAG WHERE slug in (" + tagsParams + ")", slugs, callback);
+			app.db.all("SELECT * FROM TAG WHERE cod_slug in (" + tagsParams + ")", slugs, callback);
 		},
 		mergeTag: function(tags, callback){
 			_tags = tags;
@@ -35,7 +42,7 @@ module.exports = function(app){
 
 			var that = this,
 			sql = util.format(
-				"INSERT INTO tag (name, slug) \n\
+				"INSERT INTO tag (nam_tag, cod_slug) \n\
 				SELECT name, slug FROM( \n\
 					%s \n\
 				) as tags \n\
@@ -74,7 +81,7 @@ module.exports = function(app){
 			var DEFAULT = 1;
 			props = props || "id";
 			n = n || DEFAULT;
-			app.db.all("SELECT "+ props +" FROM tag ORDER BY id DESC LIMIT ?", [n], function(err, rows){
+			app.db.all("SELECT "+ props +" FROM tag ORDER BY idt_tag DESC LIMIT ?", [n], function(err, rows){
 				if(n == DEFAULT)
 					rows = rows && rows[0];
 				callback(err, rows);

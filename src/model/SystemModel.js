@@ -9,7 +9,7 @@ module.exports = function(app){
 		},
 
 		getSystemProperty(name, callback){
-			app.db.each("SELECT value FROM systemProperty WHERE name = ?", name, (err, systemProperty) => {
+			app.db.each("SELECT DES_VALUE AS value FROM SYSTEM_PROPERTY WHERE NAM_PROPERTY = ?", name, (err, systemProperty) => {
 				callback(systemProperty ? systemProperty.value : null);
 			});
 		}
