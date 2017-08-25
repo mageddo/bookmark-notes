@@ -12,7 +12,7 @@ module.exports.controller = function(app) {
 			app.db.exec("BEGIN");
 			m.insertBookmark(req.body, function(err){
 				if(err){
-				app.log("m=updateBookmark, status=error, err=%j", err);
+					app.log("m=insertBookmark, status=error, err=%j", err);
 					app.em._500({
 						message: "Não foi possível cadastrar o bookmark",
 						stacktrace: err,

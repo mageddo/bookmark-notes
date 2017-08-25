@@ -78,10 +78,12 @@ module.exports = function(app) {
 		},
 		updateBookmark: function(bookmark, callback){
 			console.debug('m=updateBookmark, status=begin, bookmark=%s', bookmark.id);
-			app.db.run("UPDATE bookmark SET nam_bookmark=?, des_link=?, des_html=?, num_visibility=? WHERE idt_bookmark=?",
-				[bookmark.name, bookmark.link, bookmark.html, getVisibilityFlag(bookmark.visible), bookmark.id],
-				callback);
-			console.debug('m=updateBookmark, status=success');
+			app.db.run(`UPDATE bookmark SET
+				nam_bookmark=?, des_link=?, des_html=?, num_visibility=?, dat_update=current_timestamp
+				WHERE idt_bookmark=?
+			`,
+			[bookmark.name, bookmark.link, bookmark.html, getVisibilityFlag(bookmark.visible), bookmark.id], callback);
+			console.info('m=updateBookmark, status=success, bookmark=%s', bookmark.id);
 		},
 		deleteBookmark: function(bookmarkId, callback){
 			app.db.run("UPDATE bookmark SET flg_deleted=1 WHERE idt_bookmark=?", [bookmarkId], callback);
@@ -198,7 +200,7 @@ module.exports = function(app) {
 		},
 		insertBookmark: function(bookmark, callback){
 			app.db.run(
-				"INSERT INTO bookmark (nam_bookmark,des_link,des_html,num_visibility) VALUES (?,?,?,?)",
+				"INSERT INTO bookmark (nam_bookmark,des_link,des_html,num_visibility, flg_deleted, flg_archived) VALUES (?,?,?,?, 0, 0)",
 				[bookmark.name, bookmark.link, bookmark.html, getVisibilityFlag(bookmark.visible)],
 			 	callback
 		 	);
