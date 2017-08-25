@@ -27,7 +27,7 @@ module.exports = function(app) {
 				LEFT JOIN TAG T ON T.IDT_TAG = TB.IDT_TAG
 			WHERE B.FLG_DELETED = 0 AND B.num_visibility = 1
 			GROUP BY B.IDT_BOOKMARK
-			ORDER BY B.ID_BOOKMARK DESC
+			ORDER BY B.IDT_BOOKMARK DESC
 			LIMIT ?,?`, [offset, pageSize], callback);
 		},
 
@@ -43,15 +43,18 @@ module.exports = function(app) {
 			traz apenas bookmarks que sejam publicos e nao deletados
 		 */
 		getBookmarkByIdWithNavigation: function(id, callback){
-			app.db.all(`SELECT idt_bokmark as id, nam_boookmark as name, num_visibility as visibility, des_html as html FROM bookmark
-					WHERE idt_bokmark IN(
-							(SELECT max(id_bookmark) FROM bookmark WHERE idt_bookmark < ? AND flg_deleted = 0 AND num_visibility = 1),
+			app.db.all(`SELECT idt_bookmark as id, nam_bookmark as name, num_visibility as visibility, des_html as html FROM bookmark
+					WHERE idt_bookmark IN(
+							(SELECT max(idt_bookmark) FROM bookmark WHERE idt_bookmark < ? AND flg_deleted = 0 AND num_visibility = 1),
 							?,
-							(SELECT min(idt_bokmark) FROM bookmark WHERE idt_bokmark > ? AND flg_deleted = 0 AND num_visibility = 1)
+							(SELECT min(idt_bookmark) FROM bookmark WHERE idt_bookmark > ? AND flg_deleted = 0 AND num_visibility = 1)
 					)
 					AND flg_deleted = 0 AND num_visibility = 1;`, [id, id, id], function(err, data){
 
 				console.debug('m=getBookmarkByIdWithNavigation, bkid=%d, err=%s', id, err)
+				if(err){
+					return callback(err, null);
+				}
 				var foundId = -1;
 				data.map((v, i) => {
 					if(v.id == id){
