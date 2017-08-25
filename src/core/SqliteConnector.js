@@ -4,9 +4,9 @@
  */
 const sqlite3 = require('sqlite3').verbose(),
 			fs = require('fs');
+			async = require('async');
 var con;
 module.exports = {
-	version: "1.7",
 	close: function(db){
 		try{
 			db.close();
@@ -25,14 +25,24 @@ module.exports = {
 			console.log('arquivo do banco de dados nao existe', file);
 			buildDatabase(con, 0);
 		}
-		var currentVersion = this.version;
-		console.info("m=open, status=connected, db=%s, currentVersion=%d", file, currentVersion);
-		require('../model/SystemModel')({db: con}).getSystemVersion(version => {
-			console.info("m=getSystemVersionCb, dbversion=%d, currentVersion=%d", version, currentVersion);
-			if(version < this.version){
-				console.info("m=getSystemVersionCb, status=buildingFrom, version=%d", version);
-				buildDatabase(con, version);
-			}
+		console.info("m=open, status=connected, db=%s", file);
+		require('../model/SystemModel')({db: con}).getSystemVersion(currentVersion => {
+
+			console.info("m=getSystemVersionCb, dbVersion=%d", currentVersion);
+			var versions = getDBSQL(currentVersion);
+			console.info('m=buildDatabase, status=get-versions, versions=%d', versions.length);
+			async.eachSeries(versions, function (version, callback) {
+
+				console.info('m=buildDatabase, status=before-execute, version=%s', version.version);
+				con.exec(version.sql, function(err){
+					console.info('m=buildDatabase, status=executed, version=%s, err=%s', version.version, err);
+					callback();
+				});
+
+			}, function() {
+					console.info('database updated');
+			});
+
 		})
 
 
@@ -40,15 +50,6 @@ module.exports = {
 	}
 };
 
-function buildDatabase(con, fromVersion){
-	var versions = getDBSQL(fromVersion);
-	console.info('m=buildDatabase, status=get-versions');
-	versions.forEach(v => {
-		console.info('m=buildDatabase, status=executing, version=%d', v.version);
-		con.exec(v.sql);
-		console.info('m=buildDatabase, status=executed');
-	});
-}
 
 function getDBSQL(fromVersion){
 
