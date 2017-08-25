@@ -25,7 +25,7 @@ module.exports = function(app) {
 			app.db.all(`SELECT b.IDT_BOOKMARK as id, b.NAM_BOOKMARK as name, GROUP_CONCAT(t.NAM_TAG) as tags FROM BOOKMARK B
 				LEFT JOIN TAG_BOOKMARK TB ON TB.IDT_BOOKMARK = B.IDT_BOOKMARK
 				LEFT JOIN TAG T ON T.IDT_TAG = TB.IDT_TAG
-			WHERE B.FLG_DELETED = 0 AND B.FLG_VISIBILITY = 1
+			WHERE B.FLG_DELETED = 0 AND B.num_visibility = 1
 			GROUP BY B.IDT_BOOKMARK
 			ORDER BY B.ID_BOOKMARK DESC
 			LIMIT ?,?`, [offset, pageSize], callback);
@@ -33,7 +33,7 @@ module.exports = function(app) {
 
 		countPublicNotDeletedBookmarks(callback){
 			app.db.each(`SELECT COUNT(1) AS COUNT FROM bookmark b
-				WHERE b.flg_deleted = 0 AND b.flg_visibility = 1`, function(err, data){
+				WHERE b.flg_deleted = 0 AND b.num_visibility = 1`, function(err, data){
 					callback(err, !err ? data['COUNT'] : null)
 				})
 		},
@@ -43,13 +43,13 @@ module.exports = function(app) {
 			traz apenas bookmarks que sejam publicos e nao deletados
 		 */
 		getBookmarkByIdWithNavigation: function(id, callback){
-			app.db.all(`SELECT idt_bokmark as id, nam_boookmark as name, flg_visibility as visibility, des_html as html FROM bookmark
+			app.db.all(`SELECT idt_bokmark as id, nam_boookmark as name, num_visibility as visibility, des_html as html FROM bookmark
 					WHERE idt_bokmark IN(
-							(SELECT max(id_bookmark) FROM bookmark WHERE idt_bookmark < ? AND flg_deleted = 0 AND flg_visibility = 1),
+							(SELECT max(id_bookmark) FROM bookmark WHERE idt_bookmark < ? AND flg_deleted = 0 AND num_visibility = 1),
 							?,
-							(SELECT min(idt_bokmark) FROM bookmark WHERE idt_bokmark > ? AND flg_deleted = 0 AND flg_visibility = 1)
+							(SELECT min(idt_bokmark) FROM bookmark WHERE idt_bokmark > ? AND flg_deleted = 0 AND num_visibility = 1)
 					)
-					AND flg_deleted = 0 AND flg_visibility = 1;`, [id, id, id], function(err, data){
+					AND flg_deleted = 0 AND num_visibility = 1;`, [id, id, id], function(err, data){
 
 				console.debug('m=getBookmarkByIdWithNavigation, bkid=%d, err=%s', id, err)
 				var foundId = -1;
@@ -78,7 +78,7 @@ module.exports = function(app) {
 		},
 		updateBookmark: function(bookmark, callback){
 			console.debug('m=updateBookmark, status=begin, bookmark=%j', bookmark);
-			app.db.run("UPDATE bookmark SET nam_bookmark=?, des_link=?, des_html=?, flg_visibility=? WHERE idt_bookmark=?",
+			app.db.run("UPDATE bookmark SET nam_bookmark=?, des_link=?, des_html=?, num_visibility=? WHERE idt_bookmark=?",
 				[bookmark.name, bookmark.link, bookmark.html, getVisibilityFlag(bookmark.visible), bookmark.id],
 				callback);
 			console.debug('m=updateBookmark, status=success');
@@ -160,12 +160,12 @@ module.exports = function(app) {
 		getBookmarks: function(indice, callback){
 			app.db.serialize(function(){
 				app.db.all(`WITH LIST AS (
-					SELECT * FROM bookmark
+						SELECT * FROM bookmark
 					)
 					SELECT
-					idt_bokmark as id, nam_boookmark as name,
-					flg_visibility as visibility, des_html as html,
-					(SELECT COUNT(id) FROM LIST) as length
+					idt_bookmark as id, nam_bookmark as name,
+					num_visibility as visibility, des_html as html,
+					(SELECT COUNT(idt_bookmark) FROM LIST) as length
 					FROM LIST WHERE flg_deleted=0 LIMIT $indice, $indiceLimite`,
 					{
 						"$indice": indice,
@@ -198,7 +198,7 @@ module.exports = function(app) {
 		},
 		insertBookmark: function(bookmark, callback){
 			app.db.run(
-				"INSERT INTO bookmark (nam_bookmark,des_link,des_html,flg_visibility) VALUES (?,?,?,?)",
+				"INSERT INTO bookmark (nam_bookmark,des_link,des_html,num_visibility) VALUES (?,?,?,?)",
 				[bookmark.name, bookmark.link, bookmark.html, getVisibilityFlag(bookmark.visible)],
 			 	callback
 		 	);

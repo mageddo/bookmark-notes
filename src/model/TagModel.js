@@ -78,7 +78,7 @@ module.exports = function(app){
 			return name.toLocaleLowerCase().replace(/[^a-z0-9\ \-_]+/g, "").trim().replace(/[\ _]+/g, "\-");
 		},
 		getTags: function(callback){
-			app.db.all("SELECT id, name, slug FROM tag ORDER BY name", [], callback);
+			app.db.all("SELECT idt_tag as id, nam_tag as name, cod_slug as slug FROM tag ORDER BY nam_tag", [], callback);
 		}
 	};
 };

@@ -13,27 +13,27 @@ module.exports.controller = function(app) {
 					res: res
 				});
 			}else{
-	  		res.send(tags);
-	  	}
+				res.send(tags);
+			}
 		});
 	});
 	app.put('/api/tag', function(req, res) {
 		tagM.insertTag(req.body, function(err, tags){
-	  	res.send();
+			res.send();
 		});
 	});
 	app.get('/api/tag', function(req, res) {
-	  tagM.getTags(function(err, rows){
-	  	if(err){
-	  		app.em._500({
-	  			message: "Opa, encontramos um problema ao carregar os bookmarks",
-	  			stacktrace: err,
-	  			res: res
-	  		});
-	  	}else{
-	  		res.send(rows);
-	  	}
-	  });
+		tagM.getTags(function(err, rows){
+			if(err){
+				app.em._500({
+					message: "Opa, encontramos um problema ao carregar os bookmarks",
+					stacktrace: err.stack,
+					res: res
+				});
+			}else{
+				res.send(rows);
+			}
+		});
 	});
 
 };

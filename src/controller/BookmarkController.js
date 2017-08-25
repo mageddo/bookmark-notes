@@ -117,7 +117,7 @@ module.exports.controller = function(app) {
 					app.em._500({
 						message: "Bookmarks não puderam ser listados",
 						res: res,
-						stacktrace: err
+						stacktrace: err.stack
 					})
 				}
 		});
