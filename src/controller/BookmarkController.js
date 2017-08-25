@@ -37,7 +37,7 @@ module.exports.controller = function(app) {
 	app.delete('/api/bookmark', function(req, res) {
 		app.db.serialize(function(){
 			app.db.exec("BEGIN");
-			app.log("apagando o id: " + req.body.id);
+			app.c.info("m=delete, status=begin, bookmark=%s", req.body.id);
 			m.deleteBookmark(req.body.id, function(err){
 				if(err){
 					app.em._500({
@@ -47,7 +47,7 @@ module.exports.controller = function(app) {
 					})
 					m.rollback();
 				}else{
-					app.c.debug("bookmark deletado");
+					app.c.info("m=delete, status=success, bookmark=%s", req.body.id);
 					app.db.exec("COMMIT");
 					res.end();
 				}

@@ -89,8 +89,8 @@ module.exports = function(app) {
 			app.db.run("UPDATE bookmark SET flg_deleted=1 WHERE idt_bookmark=?", [bookmarkId], callback);
 		},
 		recoverBookmark: function(bookmarkId){
-			app.c.info("recuperando", bookmarkId);
 			app.db.run("UPDATE bookmark SET flg_deleted=0 WHERE idt_bookmark=?", [bookmarkId]);
+			app.c.info("m=recoverBookmark, status=success, bookmark=%s", bookmarkId);
 		},
 		deleteBookmarkPermanently: function(bookmarkId, callback){
 			app.db.run("DELETE FROM TAG_BOOKMARK WHERE IDT_BOOKMARK = ?", [bookmarkId], function(err){
