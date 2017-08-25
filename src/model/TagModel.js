@@ -72,22 +72,6 @@ module.exports = function(app){
 			return filtered;
 		},
 		/**
-		 * 
-		 * Retorna os ultimos elementos inseridos
-		 * @param n quantidade dos ultimos elementos a inserir, 1 é default
-		 * @param props os parametros a serem retornados, id é o default
-		 */
-		getLastInserted: function(callback, n, props){
-			var DEFAULT = 1;
-			props = props || "id";
-			n = n || DEFAULT;
-			app.db.all("SELECT "+ props +" FROM tag ORDER BY idt_tag DESC LIMIT ?", [n], function(err, rows){
-				if(n == DEFAULT)
-					rows = rows && rows[0];
-				callback(err, rows);
-			});
-		},
-		/**
 		 * converte uma string irregular para um formato de chave aceito
 		 */
 		toSlug: function(name){
