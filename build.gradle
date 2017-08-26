@@ -27,7 +27,7 @@ checkCommitNeeded.doFirst {
 }
 
 release {
-	project.ext.set("release.useAutomaticVersion", true)
+	project.ext.set("release.useAutomaticVersion", false)
 	failOnCommitNeeded = false
 	failOnPublishNeeded = false
 	failOnUnversionedFiles = false
@@ -47,68 +47,6 @@ task 'info' << {
 	"""
 }
 
-/**
- * roda o sistema em modo dev
- * este método já chama o build e up necessário
- */
-task 'build' (dependsOn: [
-		'docker-build', 'docker-up'
-]) << {
-
-}
-
-/**
- * roda o sistema em modo dev
- * este método já chama o build e up necessário
- */
-task 'build-prod' (dependsOn: [
-		'docker-build', 'docker-up-prod'
-]) << {
-
-}
-
-/**
- * roda o php em modo dev
- * este método já chama o build e up necessário
- */
-task 'docker-build' (type:Exec) {
-	commandLine = ['docker', 'build', '--rm', '--tag',
-								 "${IMAGE_NAME}", '.'
-	]
-}
-
-/**
- * roda o sistema para dev
- */
-task 'docker-up' (type:Exec) {
-	def pwd = new File(".").absolutePath
-	removeContainer(CONTAINER_NAME)
-	commandLine = [
-			'docker', 'run', '-d', '--hostname', 'bookmarks.mageddo',
-			'--publish', '3000:3000',
-			'--expose', '3000',
-			'--env', 'MG_MODE=debug',
-			'--volume', "${pwd}:${BOOKMARKS_INTERNAL_BASE}",
-			'--volume', "${BOOKMARKS_BASE}/db:${BOOKMARKS_INTERNAL_BASE}/db",
-			'--name', CONTAINER_NAME, IMAGE_NAME
-	]
-}
-
-/**
- * roda o sistema para prod
- */
-task 'docker-up-prod' (type:Exec) {
-	removeContainer(CONTAINER_NAME)
-	commandLine = getProdParams()
-}
-
-/**
- * apaga todas as imagens e containers
- * gerados por este projeto
- */
-task 'docker-clear' << {
-	removeImage(IMAGE_NAME)
-}
 
 /**
  * Pega a última imagem builda (rode gradle build para isso) e
@@ -143,30 +81,6 @@ def getProdParams(){
 	]
 }
 
-def removeLast(String str) {
-	str.substring(0, str.indexOf("\n"));
-}
-def getTheTag(){
-	def tag = ['git', 'tag', '-l', '--sort=-taggerdate'].execute().text;
-	logger.info("M=getTheTag, length={}", tag.length())
-	if(tag.length() != 1)
-		return removeLast(tag)
-	return '1.0.0'
-}
-def removeContainer(String image){
-	def buff = new StringBuffer();
-	def proc = ['docker', 'rm', '-f', image].execute();
-	proc.consumeProcessOutput(buff, buff)
-	proc.waitForOrKill(10000);
-	//println buff
-}
-def removeImage(String image){
-	def buff = new StringBuffer();
-	def proc = ['docker', 'rmi', '-f', image].execute();
-	proc.consumeProcessOutput(buff, buff)
-	proc.waitForOrKill(10000);
-	//println buff
-}
 
 void updateVersion(f, pattern, replace){
 
