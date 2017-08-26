@@ -36,7 +36,7 @@ module.exports.controller = function(app) {
 
 			console.debug('m=getRecentBookmarks, start=%d, size=%d, page=%d, pages=%d', startPage, size, page, pages)
 			m.getRecentBookmarks(pageSize, startPage, function(err, data){
-				console.debug('m=getRecentBookmarks, err=%s, size=%d', err)
+				console.debug('m=getRecentBookmarks, err=%j', err)
 				if(err){
 					return res.render('503', {
 						layout: false
