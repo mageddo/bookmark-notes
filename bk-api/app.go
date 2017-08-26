@@ -2,7 +2,7 @@ package main
 
 import (
 	_ "github.com/mageddo/bookmark-notes/controller"
-
+	_ "github.com/mageddo/bookmark-notes/log"
 	"fmt"
 	"net/http"
 )
