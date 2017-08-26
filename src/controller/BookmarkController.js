@@ -327,7 +327,7 @@ function parseCode(template, content){
 			+ '</tbody>\n'
 			+ '</table>\n';
 	}
-	return marked(content, {
+	return marked(content || '', {
 		renderer: renderer
 	})
 }
