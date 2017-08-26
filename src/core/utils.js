@@ -10,6 +10,9 @@ module.exports = {
 		return fullUrl
 
 	},
+	getSEOURL(req, path){
+		return this.getURL(req, path.replace(/\s/g, '-').toLowerCase())
+	},
 	clearHTML(html){
 		return html.replace(/<\/?[^>]+(>|$)/g, "");
 	}

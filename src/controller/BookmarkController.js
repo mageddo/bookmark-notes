@@ -6,6 +6,7 @@ var mustache = require('mustache');
 module.exports.controller = function(app) {
 	var m = require("../model/BookmarkModel")(app);
 	var mTag = require("../model/TagModel")(app);
+	var config = require('config');
 
 	app.put('/api/bookmark', function(req, res) {
 		app.db.serialize(function(){
@@ -197,6 +198,7 @@ module.exports.controller = function(app) {
 			}
 
 			res.render('bookmarkView', {
+				analytics: config.get('analytics.id'),
 				prev: bookmark.prev,
 				next: bookmark.next,
 				layout: 'publicLayout',
@@ -211,7 +213,7 @@ module.exports.controller = function(app) {
 				},
 				getURL(){
 					return function(path, render){
-						return utils.getURL(req, render(path))
+						return utils.getSEOURL(req, render(path))
 					};
 				}
 			});
