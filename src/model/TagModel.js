@@ -2,17 +2,24 @@ var util = require("util");
 module.exports = function(app){
 	return {
 		getTagsByBoomarkId: function(bookmarkId, callback){
-			app.db.all("SELECT * FROM tagView WHERE bookmarkId = ?", [bookmarkId], callback);
+			app.db.all(`
+				SELECT t.idt_tag id, t.NAM_TAG as name, t.COD_SLUG as slug, tb.idt_bookmark bookmarkId FROM tag t
+				LEFT JOIN tag_Bookmark tb
+				ON t.idt_tag = tb.idt_tag
+				WHERE tb.idt_bookmark = ?`, [bookmarkId], callback);
 		},
 		searchTagsByName: function(queryName, callback){
-			app.db.all("SELECT * FROM tag WHERE name LIKE ?", ['%' + queryName + '%'], callback);
+			app.db.all(`
+				SELECT t.idt_tag id, t.NAM_TAG as name, t.COD_SLUG as slug
+				FROM tag t WHERE nam_tag LIKE ?
+			`, ['%' + queryName + '%'], callback);
 		},
 		insertTag: function(tag, callback){
 			tag.slug = this.toSlug(tag.name);
 			if(!tag.slug){
 				callback("Pass a valid tag");
 			}else{
-				app.db.run("INSERT INTO tag (name, slug) VALUES ($name, $slug)", mapName(tag), callback);
+				app.db.run("INSERT INTO tag (nam_tag, cod_slug) VALUES ($name, $slug)", mapName(tag), callback);
 			}
 
 		},
@@ -20,7 +27,7 @@ module.exports = function(app){
 			var tagsParams = slugs.map(function(){
 			 return "?";
 			}).join(",");
-			app.db.all("SELECT * FROM TAG WHERE slug in (" + tagsParams + ")", slugs, callback);
+			app.db.all("SELECT idt_tag id, nam_tag name, cod_slug slug FROM TAG WHERE cod_slug in (" + tagsParams + ")", slugs, callback);
 		},
 		mergeTag: function(tags, callback){
 			_tags = tags;
@@ -35,12 +42,12 @@ module.exports = function(app){
 
 			var that = this,
 			sql = util.format(
-				"INSERT INTO tag (name, slug) \n\
+				"INSERT INTO tag (nam_tag, cod_slug) \n\
 				SELECT name, slug FROM( \n\
 					%s \n\
 				) as tags \n\
 				WHERE NOT EXISTS ( \n\
-			    SELECT 1 FROM tag t2 WHERE t2.slug = tags.slug \n\
+					SELECT 1 FROM tag t2 WHERE t2.cod_slug = tags.slug \n\
 				);", mapearTagsInserir(tags)
 			);
 			app.db.run(sql,function(err, rows){
@@ -65,29 +72,13 @@ module.exports = function(app){
 			return filtered;
 		},
 		/**
-		 * 
-		 * Retorna os ultimos elementos inseridos
-		 * @param n quantidade dos ultimos elementos a inserir, 1 é default
-		 * @param props os parametros a serem retornados, id é o default
-		 */
-		getLastInserted: function(callback, n, props){
-			var DEFAULT = 1;
-			props = props || "id";
-			n = n || DEFAULT;
-			app.db.all("SELECT "+ props +" FROM tag ORDER BY id DESC LIMIT ?", [n], function(err, rows){
-				if(n == DEFAULT)
-					rows = rows && rows[0];
-				callback(err, rows);
-			});
-		},
-		/**
 		 * converte uma string irregular para um formato de chave aceito
 		 */
 		toSlug: function(name){
 			return name.toLocaleLowerCase().replace(/[^a-z0-9\ \-_]+/g, "").trim().replace(/[\ _]+/g, "\-");
 		},
 		getTags: function(callback){
-			app.db.all("SELECT id, name, slug FROM tag ORDER BY name", [], callback);
+			app.db.all("SELECT idt_tag as id, nam_tag as name, cod_slug as slug FROM tag ORDER BY nam_tag", [], callback);
 		}
 	};
 };

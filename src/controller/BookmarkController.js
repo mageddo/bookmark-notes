@@ -6,13 +6,14 @@ var mustache = require('mustache');
 module.exports.controller = function(app) {
 	var m = require("../model/BookmarkModel")(app);
 	var mTag = require("../model/TagModel")(app);
+	var config = require('config');
 
 	app.put('/api/bookmark', function(req, res) {
 		app.db.serialize(function(){
 			app.db.exec("BEGIN");
 			m.insertBookmark(req.body, function(err){
 				if(err){
-				app.log("m=updateBookmark, status=error, err=%j", err);
+					app.log("m=insertBookmark, status=error, err=%j", err);
 					app.em._500({
 						message: "Não foi possível cadastrar o bookmark",
 						stacktrace: err,
@@ -37,7 +38,7 @@ module.exports.controller = function(app) {
 	app.delete('/api/bookmark', function(req, res) {
 		app.db.serialize(function(){
 			app.db.exec("BEGIN");
-			app.log("apagando o id: " + req.body.id);
+			app.c.info("m=delete, status=begin, bookmark=%s", req.body.id);
 			m.deleteBookmark(req.body.id, function(err){
 				if(err){
 					app.em._500({
@@ -47,7 +48,7 @@ module.exports.controller = function(app) {
 					})
 					m.rollback();
 				}else{
-					app.c.debug("bookmark deletado");
+					app.c.info("m=delete, status=success, bookmark=%s", req.body.id);
 					app.db.exec("COMMIT");
 					res.end();
 				}
@@ -117,7 +118,7 @@ module.exports.controller = function(app) {
 					app.em._500({
 						message: "Bookmarks não puderam ser listados",
 						res: res,
-						stacktrace: err
+						stacktrace: err.stack
 					})
 				}
 		});
@@ -197,6 +198,9 @@ module.exports.controller = function(app) {
 			}
 
 			res.render('bookmarkView', {
+				analytics: config.get('analytics.id'),
+				creationDate: toSQLDate(bookmark.bookmark.creationDate),
+				updateDate: toSQLDate(bookmark.bookmark.updateDate),
 				prev: bookmark.prev,
 				next: bookmark.next,
 				layout: 'publicLayout',
@@ -211,7 +215,7 @@ module.exports.controller = function(app) {
 				},
 				getURL(){
 					return function(path, render){
-						return utils.getURL(req, render(path))
+						return utils.getSEOURL(req, render(path))
 					};
 				}
 			});
@@ -265,8 +269,9 @@ module.exports.controller = function(app) {
 		app.log("existem tags para serem cadastradas");
 		var tagsToCad = toTags(req.body.tag);
 		app.log("cadastrando tags que ainda não o foram..");
-	  mTag.mergeTag(tagsToCad, function(err, tags){
-	  	if(err){
+		mTag.mergeTag(tagsToCad, function(err, tags){
+			if(err){
+				console.error('m=mergeTag, error=%s', err);
 				app.em._500({
 					message: "Não foi possível cadastrar as novas tags",
 					res: res,
@@ -275,10 +280,11 @@ module.exports.controller = function(app) {
 				m.rollback();
 				return;
 	  	}
-			app.log("tags foram cadastradas, as relacionadas a esse bookmark são...", tags);
+			app.log("tags foram cadastradas, as relacionadas a esse bookmark são...", tags.map(t => t.slug));
 			app.log("associando as novas");
 			m.associateTagsToBookmarkById(function(err){
 				if(err){
+					console.error('m=associateTagsToBookmarkById, error=%s', err);
 					app.em._500({
 						message: "Não foi possível associar o bookmark com as tags",
 						res: res,
@@ -321,7 +327,7 @@ function parseCode(template, content){
 			+ '</tbody>\n'
 			+ '</table>\n';
 	}
-	return marked(content, {
+	return marked(content || '', {
 		renderer: renderer
 	})
 }
@@ -343,4 +349,11 @@ function getVisibilityFlag(){
 		}
 		return "";
 	}
+}
+
+function toSQLDate(d){
+	if(d){
+		return d.substring(0, d.length-3)
+	}
+	return ''
 }

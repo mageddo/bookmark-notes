@@ -2,7 +2,11 @@ var LOG_FILE = __dirname + "/../../logs/log.log";
 
 module.exports.controller = function(app) {
 
-	var m = require("../model/BookmarkModel")(app), url = require('url'), utils = require('../core/utils');
+	var m = require("../model/BookmarkModel")(app),
+	url = require('url'),
+	utils = require('../core/utils'),
+	config = require('config')
+	;
 
 	app.get("/", function(req, res){
 
@@ -32,13 +36,14 @@ module.exports.controller = function(app) {
 
 			console.debug('m=getRecentBookmarks, start=%d, size=%d, page=%d, pages=%d', startPage, size, page, pages)
 			m.getRecentBookmarks(pageSize, startPage, function(err, data){
-				console.debug('m=getRecentBookmarks, err=%s, size=%d', err, data.length)
+				console.debug('m=getRecentBookmarks, err=%j', err)
 				if(err){
 					return res.render('503', {
 						layout: false
 					});
 				}
 				return res.render("index", {
+					analytics: config.get('analytics.id'),
 					title: page == 0 ? 'Home' : 'Page ' + (page + 1),
 					pageTitle: page == 0 ? null : 'Page ' + (page + 1),
 					description: 'Technology posts based on my practice experience',
@@ -55,7 +60,7 @@ module.exports.controller = function(app) {
 					},
 					getURL(){
 						return function(path, render){
-							return utils.getURL(req, render(path).replace(/\s/g, '-').toLowerCase())
+							return utils.getSEOURL(req, render(path))
 						};
 					}
 				});

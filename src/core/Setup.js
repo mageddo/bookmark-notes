@@ -1,5 +1,6 @@
 var fs = require('fs'), auth = require('http-auth'),
 		connector = require("./SqliteConnector");
+
 module.exports = function(app){
 	process.app = app;
 
