@@ -199,6 +199,8 @@ module.exports.controller = function(app) {
 
 			res.render('bookmarkView', {
 				analytics: config.get('analytics.id'),
+				creationDate: toSQLDate(bookmark.bookmark.creationDate),
+				updateDate: toSQLDate(bookmark.bookmark.updateDate),
 				prev: bookmark.prev,
 				next: bookmark.next,
 				layout: 'publicLayout',
@@ -347,4 +349,11 @@ function getVisibilityFlag(){
 		}
 		return "";
 	}
+}
+
+function toSQLDate(d){
+	if(d){
+		return d.substring(0, d.length-3)
+	}
+	return ''
 }

@@ -10,7 +10,12 @@
 <div class="container public-content">
 	<h1 class="row-bordered" id="page-title">{{title}}</h1>
 	<div class="pull-right" style="font-size: 10px;padding-right: 10px;">
-		<strong>Published</strong>: 2017-08-20 23:51, <strong>Updated</strong>: 2017-08-25 23:51
+		{{#creationDate}}
+		<strong>Published</strong>: {{creationDate}},
+		{{/creationDate}}
+		{{#updateDate}}
+		<strong>Updated</strong>: {{updateDate}}
+		{{/updateDate}}
 	</div>
 	<br/>
 	{{{content}}}

@@ -43,7 +43,9 @@ module.exports = function(app) {
 			traz apenas bookmarks que sejam publicos e nao deletados
 		 */
 		getBookmarkByIdWithNavigation: function(id, callback){
-			app.db.all(`SELECT idt_bookmark as id, nam_bookmark as name, num_visibility as visibility, des_html as html FROM bookmark
+			app.db.all(`SELECT idt_bookmark as id, nam_bookmark as name, num_visibility as visibility, des_html as html,
+					dat_creation as creationDate, dat_update as updateDate
+					FROM bookmark
 					WHERE idt_bookmark IN(
 							(SELECT max(idt_bookmark) FROM bookmark WHERE idt_bookmark < ? AND flg_deleted = 0 AND num_visibility = 1),
 							?,
