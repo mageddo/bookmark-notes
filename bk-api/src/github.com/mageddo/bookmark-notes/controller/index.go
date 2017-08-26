@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"github.com/mageddo/go-logging"
 	"context"
-	"github.com/mageddo/bookmark-notes/log"
 )
 
 type Method string
@@ -16,11 +15,6 @@ const (
 	PATCH Method = "PATCH"
 	DELETE Method = "DELETE"
 )
-
-type Map struct {
-	method Method
-	path string
-}
 
 type Message struct {
 	Code int `json:"code"`
@@ -58,7 +52,7 @@ func handle(method Method, path string, fn func(context.Context, http.ResponseWr
 	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 
 		ctx := logging.NewContext()
-		logger := log.NewLogger(ctx)
+		logger := logging.NewLog(ctx)
 
 		found := r.Method == string(method)
 		logger.Debugf("method=%s, path=%s, found=%t", r.Method, r.URL.Path, found)

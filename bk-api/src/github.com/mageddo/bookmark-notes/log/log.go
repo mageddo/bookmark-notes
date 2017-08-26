@@ -3,13 +3,9 @@ package log
 import (
 	"github.com/mageddo/go-logging"
 	"os"
-	"context"
 )
 
-var logger logging.Log
-
 func init(){
-	logger = logging.MustGetLogger("main")
 	mode := "DEV"
 	backend := logging.NewLogBackend(os.Stdout, "", 0)
 
@@ -31,12 +27,4 @@ func init(){
 		logging.SetBackend(leveledBackend)
 		break;
 	}
-}
-
-func Logger() logging.Log {
-	return logger
-}
-
-func NewLogger(ctx context.Context) logging.Log {
-	return logging.NewLogWithContext(ctx, logger)
 }

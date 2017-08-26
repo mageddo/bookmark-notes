@@ -1,9 +1,10 @@
 package main
 
 import (
-	"net/http"
 	_ "github.com/mageddo/bookmark-notes/controller"
+
 	"fmt"
+	"net/http"
 )
 
 func main(){
