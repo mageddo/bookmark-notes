@@ -44,3 +44,7 @@ wiki/
 *.iml
 .gradle/
 files/libs
+
+
+## go files
+bk-api/pkg
