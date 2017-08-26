@@ -12,12 +12,9 @@ type SiteMapService struct {
 }
 
 func (s *SiteMapService) LoadSiteMap() (string, error) {
-	s.logger.Debugf("status=begin")
 	return s.bookmarkDAO.LoadSiteMap()
 }
 
 func NewSiteMapService(ctx context.Context) SiteMapService {
-	return SiteMapService{logging.NewLog(ctx),
-		&dao.BookmarkDAOSQLite{},
-	}
+	return SiteMapService{logging.NewLog(ctx), dao.NewBookmarkDAO(ctx) }
 }
