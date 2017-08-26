@@ -12,7 +12,7 @@ ext {
 	BOOKMARKS_INTERNAL_BASE = "/opt/bookmarks"
 }
 
-checkCommitNeeded.doFirst {
+confirmReleaseVersion.doLast {
 
 	println "> upgrading docker-compose version=${project.version}"
 
