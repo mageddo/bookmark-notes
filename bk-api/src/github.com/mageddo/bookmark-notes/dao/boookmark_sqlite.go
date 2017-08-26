@@ -2,15 +2,15 @@ package dao
 
 import (
 	"github.com/mageddo/bookmark-notes/db"
-	"bytes"
 	"github.com/mageddo/go-logging"
+	"github.com/mageddo/bookmark-notes/entity"
 )
 
 type BookmarkDAOSQLite struct {
 	logger logging.Log
 }
 
-func (dao *BookmarkDAOSQLite) LoadSiteMap() (string, error) {
+func (dao *BookmarkDAOSQLite) LoadSiteMap() ([]entity.BookmarkEntity, error) {
 
 	conn := db.GetConn()
 
@@ -21,23 +21,26 @@ func (dao *BookmarkDAOSQLite) LoadSiteMap() (string, error) {
 	//rowsAffected, _ := result.RowsAffected()
 	//dao.logger.Debugf("updated=%d", rowsAffected)
 
-	rows, err := conn.Query("SELECT NAM_BOOKMARK FROM BOOKMARK")
+	rows, err := conn.Query(`
+		SELECT * FROM (
+		SELECT IDT_BOOKMARK, NAM_BOOKMARK, DAT_UPDATE
+		FROM BOOKMARK
+		ORDER BY IDT_BOOKMARK DESC
+	) LIMIT 0, 100000`)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	defer rows.Close()
 
-	buff := bytes.Buffer{}
+	bookmarks := new([]entity.BookmarkEntity)
 	for rows.Next() {
-		var name string;
-		rows.Scan(&name)
-
-		buff.WriteString(name)
-		buff.WriteString("\n")
+		var b = entity.BookmarkEntity{}
+		rows.Scan(&b.Id, &b.Name, &b.Update)
+		*bookmarks = append(*bookmarks, b)
 	}
 
-	//dao.logger.Debugf("open-conn=%d", conn.Stats().OpenConnections)
+	dao.logger.Debugf("status=success, qtd=%d", len(*bookmarks))
 
-	return buff.String(), nil
+	return *bookmarks, nil
 }
