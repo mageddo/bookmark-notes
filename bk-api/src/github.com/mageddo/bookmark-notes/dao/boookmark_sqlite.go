@@ -74,3 +74,45 @@ func (dao *BookmarkDAOSQLite) GetBookmarks(offset, quantity int) ([]entity.Bookm
 	return *bookmarks, length, nil
 
 }
+
+func (dao *BookmarkDAOSQLite) GetBookmarksByTagSlug(slug string, offset, quantity int) ([]entity.BookmarkEntity, int, error) {
+
+	dao.logger.Infof("status=prepare, slug=%s, offset=%d, quantity=%d", slug, offset, quantity)
+	conn := db.GetConn()
+	stm, err := conn.Prepare(`WITH FILTER AS (
+		SELECT DISTINCT B.* FROM TAG_BOOKMARK TB
+			INNER JOIN BOOKMARK B ON B.IDT_BOOKMARK = TB.IDT_BOOKMARK
+			WHERE IDT_TAG IN (
+				SELECT T.IDT_TAG FROM TAG T
+					WHERE T.COD_SLUG = ?
+			)
+			AND B.FLG_DELETED = 0
+	)
+	SELECT idt_bookmark, nam_bookmark,
+		des_link, (SELECT COUNT(idt_bookmark) FROM FILTER) AS LENGTH,
+		SUBSTR(des_html, 0, 160) as HTML
+	FROM FILTER LIMIT ?, ?`)
+
+	if err != nil {
+		dao.logger.Errorf("status=prepare, slug=%s, err=%v", slug, err)
+		return nil, -1, err
+	}
+	defer stm.Close()
+
+	rows, err := stm.Query(slug, offset, quantity)
+	if err != nil {
+		dao.logger.Errorf("status=query, slug=%s, err=%v", slug, err)
+		return nil, -1, err
+	}
+	defer rows.Close()
+
+	var length int
+	bookmarks := new([]entity.BookmarkEntity)
+	for rows.Next() {
+		b := entity.BookmarkEntity{}
+		rows.Scan(&b.Id, &b.Name, &b.Link, &length, &b.HTML)
+		*bookmarks = append(*bookmarks, b)
+	}
+	dao.logger.Infof("status=success, slug=%s, offset=%d, quantity=%d, length=%d", slug, offset, quantity, len(*bookmarks))
+	return *bookmarks, length, nil
+}

@@ -9,6 +9,7 @@ import (
 type BookmarkDAO interface {
 	LoadSiteMap() ([]entity.BookmarkEntity, error)
 	GetBookmarks(offset, quantity int) ([]entity.BookmarkEntity, int, error)
+	GetBookmarksByTagSlug(slug string, offset, quantity int) ([]entity.BookmarkEntity, int, error)
 }
 
 func NewBookmarkDAO(ctx context.Context) *BookmarkDAOSQLite {

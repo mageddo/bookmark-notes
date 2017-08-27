@@ -120,7 +120,11 @@ module.exports.controller = function(app) {
 		request(apiURL + '/api/v1.0/bookmark?from=' + from + '&quantity=100', function (err, response, body) {
 			console.debug('M=GET /api/bookmark, error=%s', err);
 			if(err != null || response.statusCode != 200){
-				res.status(500).send('')
+				app.em._500({
+					res: res,
+					message: "Could not get bookmarks temporally",
+					stacktrace: err
+				});
 				return ;
 			}
 			res.header('Content-Type', 'application/json')
