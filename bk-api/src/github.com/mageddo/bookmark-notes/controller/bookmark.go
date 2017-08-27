@@ -36,8 +36,7 @@ func init(){
 		bookmarks, length, err := sc.GetBookmarks(from, quantity, tagSlug, searchQuery)
 		if err != nil {
 
-			w.WriteHeader(400)
-			logger.Errorf("status=failed-load-bookmark, err=%v", err, errQtd)
+			logger.Warningf("status=failed-load-bookmark, err=%v, errQtd=%v", err, errQtd)
 			if serr, ok := err.(*errors.ServiceError); ok {
 				BadRequest(w, serr.Error())
 			}else{

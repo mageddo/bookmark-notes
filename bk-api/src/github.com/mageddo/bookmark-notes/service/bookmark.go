@@ -31,7 +31,7 @@ func (s *BookmarkService) GetBookmarks(offset, quantity int, tag, query string) 
 		if len(query) < SEARCH_MIN_SIZE {
 			return nil, -1, errors.NewServiceError(fmt.Sprintf("Search text must have %d characters at least", SEARCH_MIN_SIZE))
 		}
-		// TODO
+		return s.bookmarkDAO.GetBookmarksByNameOrHTML(query, offset, quantity);
 	}
 	return s.bookmarkDAO.GetBookmarks(offset, quantity)
 }
