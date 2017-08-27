@@ -10,11 +10,18 @@ services:
     environment:
       - HOSTNAMES=bookmarks-node.mageddo
       - PROFILE=PROD
+      - NODE_ENV=prod
     volumes:
       - /var/lib/mageddo/bookmarks-node/db:/opt/bookmarks/db
       - /var/lib/mageddo/bookmarks-node/logs:/opt/bookmarks/logs
       - /var/lib/mageddo/bookmarks-node/conf:/opt/bookmarks/conf
     network_mode: bridge
+
+  # compile the prod app package
+  prod-app-build-bk:
+    extends: prod-app-bk
+    build:
+      context: .
 
   # compile the prod api package
   prod-api-build-bk:
