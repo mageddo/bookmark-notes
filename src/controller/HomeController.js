@@ -73,7 +73,7 @@ module.exports.controller = function(app) {
 
 	app.get("/sitemap.xml", function(req, res){
 		var apiURL = config.get('api.url')
-		request(apiURL + '/sitemap.xml?url=' + utils.getURL(req, ''), function (err, response, body) {
+		request(apiURL + '/api/v1.0/sitemap?url=' + utils.getURL(req, ''), function (err, response, body) {
 			console.debug('error=%s, response=%s', err, response);
 			if(err != null || response.statusCode != 200){
 				res.status(503).send('')
