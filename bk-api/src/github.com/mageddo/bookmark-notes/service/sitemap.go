@@ -7,6 +7,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"github.com/mageddo/bookmark-notes/entity"
+	"github.com/mageddo/bookmark-notes/util/date"
 )
 
 type SiteMapService struct {
@@ -26,12 +27,11 @@ func (s *SiteMapService) LoadSiteMap() (string, error) {
 		type BookmarkVO entity.BookmarkEntity
 		jsonWriter.Encode(&struct {
 			*BookmarkVO
-			update string
-		}{(*BookmarkVO)(&b), b.Update.Format("2006-01-02 15:04:05")})
-		//&struct {
-		//
-		//	Name string
-		//}{(*BookmarkVO)(&b), *b.Name}
+			Update *string `json:"update"`
+		}{
+			(*BookmarkVO)(&b),
+			date.GetFormattedDate(b.Update),
+		})
 
 	}
 	return buff.String(), err
@@ -40,3 +40,4 @@ func (s *SiteMapService) LoadSiteMap() (string, error) {
 func NewSiteMapService(ctx context.Context) SiteMapService {
 	return SiteMapService{logging.NewLog(ctx), dao.NewBookmarkDAO(ctx) }
 }
+
