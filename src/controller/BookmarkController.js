@@ -153,7 +153,6 @@ module.exports.controller = function(app) {
 	});
 
 	app.get('/api/bookmark/:id', function(req, res) {
-//		var id = url.parse(req.url, true).query.id;
 		m.getBookmarkById(req.params.id, function(err, data){
 			res.send(data);
 		});
