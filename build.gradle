@@ -2,21 +2,12 @@ plugins {
   id 'net.researchgate.release' version '2.4.0'
 }
 
-defaultTasks 'info'
-
-ext {
-	BOOKMARKS_TAG = project.version
-	CONTAINER_NAME = "bookmarks-node"
-	IMAGE_NAME = "reg.mageddo.com:5000/mageddo/${CONTAINER_NAME}:$BOOKMARKS_TAG"
-	BOOKMARKS_BASE = "/var/lib/mageddo/bookmarks-node"
-	BOOKMARKS_INTERNAL_BASE = "/opt/bookmarks"
-}
-
 confirmReleaseVersion.doLast {
 
 	println "> upgrading docker-compose version=${project.version}"
 
 	updateVersion("${project.projectDir}/docker-compose.yml", "(image:.*:)(.*)", "\$1${project.version}")
+	updateVersion("${project.projectDir}/VERSION", '(\\d+\\.\\d\\.+\\d+)', "${project.version}")
 
 	def sout = new StringBuilder()
 	def proc = ['git', 'commit', '-a', "-m [Gradle Release Plugin] - releasing '${project.version}'."].execute()
@@ -37,50 +28,6 @@ release {
 		pushToRemote = ''
 	}
 }
-
-
-task 'info' << {
-	println """
-	tag      : ${project.BOOKMARKS_TAG}
-	container: ${project.CONTAINER_NAME}
-	image    : ${project.IMAGE_NAME}
-	"""
-}
-
-
-/**
- * Pega a última imagem builda (rode gradle build para isso) e
- * sobe para produção, obs: o seu ssh precisa estar configurado para logar automaticamente no
- * usuário elvis e a pasta ~/Downloads/scripts precisa estar em produção
- */
-task deployProd(type: Exec) {
-	def PROD_PARAMS = toProdParams();
-	commandLine = [
-			'sh', '-c', "./deployProd ${IMAGE_NAME} '${PROD_PARAMS}' ${CONTAINER_NAME}"
-	]
-}
-
-def toProdParams(){
-	def params = getProdParams();
-	def str = "";
-	for(String param: params){
-		str += param;
-		str += " ";
-	}
-	return str;
-}
-def getProdParams(){
-	return [
-			'docker', 'run', '-d', '--hostname', 'bookmarks.mageddo',
-			'--publish', '3000:3000',
-			'--expose', '3000',
-			'--env', 'MG_MODE=production',
-			'--volume', "${BOOKMARKS_BASE}/db:${BOOKMARKS_INTERNAL_BASE}/db",
-			'--volume', "${BOOKMARKS_BASE}/logs:${BOOKMARKS_INTERNAL_BASE}/logs",
-			'--name', CONTAINER_NAME, IMAGE_NAME
-	]
-}
-
 
 void updateVersion(f, pattern, replace){
 
