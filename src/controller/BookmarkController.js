@@ -4,9 +4,11 @@ var hljs = require('highlight.js');
 var mustache = require('mustache');
 
 module.exports.controller = function(app) {
+
 	var m = require("../model/BookmarkModel")(app);
 	var mTag = require("../model/TagModel")(app);
 	var config = require('config');
+	var request = require('request')
 
 	app.put('/api/bookmark', function(req, res) {
 		app.db.serialize(function(){
@@ -111,18 +113,22 @@ module.exports.controller = function(app) {
 
 
 	app.get('/api/bookmark', function(req, res) {
-		m.getBookmarks(url.parse(req.url, true).query.indice || 0, function(err, data){
-				if(!err){
-					res.send(data);
-				}else{
-					app.em._500({
-						message: "Bookmarks não puderam ser listados",
-						res: res,
-						stacktrace: err.stack
-					})
-				}
+
+		var apiURL = config.get('api.url');
+		var from = url.parse(req.url, true).query.indice || 0;
+
+		request(apiURL + '/api/v1.0/bookmark?from=' + from + '&quantity=100', function (err, response, body) {
+			console.debug('error=%s', err, response);
+			if(err != null || response.statusCode != 200){
+				res.status(500).send('')
+				return ;
+			}
+			res.header('Content-Type', 'application/json')
+			res.send(body);
 		});
+
 	});
+
 	app.get('/api/bookmark/search', function(req, res) {
 		var query = url.parse(req.url, true).query;
 		if(query.tag){

@@ -164,23 +164,6 @@ module.exports = function(app) {
 					callback);
 			});
 		},
-		getBookmarks: function(indice, callback){
-			app.db.serialize(function(){
-				app.db.all(`WITH LIST AS (
-						SELECT * FROM bookmark
-					)
-					SELECT
-					idt_bookmark as id, nam_bookmark as name,
-					num_visibility as visibility, des_html as html,
-					(SELECT COUNT(idt_bookmark) FROM LIST) as length
-					FROM LIST WHERE flg_deleted=0 LIMIT $indice, $indiceLimite`,
-					{
-						"$indice": indice,
-						"$indiceLimite": indice + 100
-					},
-					callback);
-			});
-		},
 		associateTagsToBookmarkById: function(callback, bookmarkId, tags){
 			if(!tags.length){
 				setTimeout(callback(null));

@@ -69,7 +69,7 @@ func (dao *BookmarkDAOSQLite) GetBookmarks(offset, quantity int) ([]entity.Bookm
 		rows.Scan(&b.Id, &b.Name, &b.Visibility, &b.HTML, &length)
 		*bookmarks = append(*bookmarks, b)
 	}
-	dao.logger.Infof("status=success, offset=%d, quantity=%d, length=%d, bookmarks=%d, time=%s", offset, quantity, length,
+	dao.logger.Infof("status=success, offset=%d, quantity=%d, length=%d, bookmarks=%d, time=%d", offset, quantity, length,
 		len(*bookmarks), time.Now().UnixNano() - timer.UnixNano())
 	return *bookmarks, length, nil
 
