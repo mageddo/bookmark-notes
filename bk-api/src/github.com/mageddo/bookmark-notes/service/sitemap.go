@@ -4,10 +4,10 @@ import (
 	"github.com/mageddo/go-logging"
 	"context"
 	"github.com/mageddo/bookmark-notes/dao"
-	"bytes"
 	"encoding/json"
 	"github.com/mageddo/bookmark-notes/entity"
 	"github.com/mageddo/bookmark-notes/util/date"
+	"io"
 )
 
 type SiteMapService struct {
@@ -15,13 +15,12 @@ type SiteMapService struct {
 	bookmarkDAO dao.BookmarkDAO
 }
 
-func (s *SiteMapService) LoadSiteMap() (string, error) {
+func (s *SiteMapService) LoadSiteMap(w io.Writer) (error) {
 	bookmarks, err := s.bookmarkDAO.LoadSiteMap()
 	if err != nil {
-		return "", err
+		return err
 	}
-	buff := bytes.Buffer{}
-	jsonWriter := json.NewEncoder(&buff)
+	jsonWriter := json.NewEncoder(w)
 	for _, b := range bookmarks {
 
 		type BookmarkVO entity.BookmarkEntity
@@ -34,7 +33,7 @@ func (s *SiteMapService) LoadSiteMap() (string, error) {
 		})
 
 	}
-	return buff.String(), err
+	return err
 }
 
 func NewSiteMapService(ctx context.Context) SiteMapService {
