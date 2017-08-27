@@ -5,7 +5,8 @@ module.exports.controller = function(app) {
 	var m = require("../model/BookmarkModel")(app),
 	url = require('url'),
 	utils = require('../core/utils'),
-	config = require('config')
+	config = require('config'),
+	request = require('request')
 	;
 
 	app.get("/", function(req, res){
@@ -68,6 +69,19 @@ module.exports.controller = function(app) {
 
 		})
 
+	});
+
+	app.get("/sitemap.xml", function(req, res){
+		var apiURL = config.get('api.url')
+		request(apiURL + '/sitemap.xml?url=' + utils.getURL(req, ''), function (err, response, body) {
+			console.debug('error=%s, response=%s', err, response);
+			if(err != null || response.statusCode != 200){
+				res.status(503).send('')
+				return ;
+			}
+			res.header('Content-Type', 'application/xml')
+			res.send(body);
+		});
 	});
 
 	app.get("/_/bookmarks", function(req, res){

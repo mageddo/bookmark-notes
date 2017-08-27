@@ -1,0 +1,3 @@
+rootProject.name  = 'bookmark-notes'
+
+include ':bk-api'

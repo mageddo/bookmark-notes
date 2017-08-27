@@ -1,6 +1,7 @@
 version: '2'
 services:
-  prod:
+  # Run prod image
+  prod-app-bk:
     container_name: bookmarks-node
     image: defreitas/bookmark-notes:2.7.0
     hostname: bookmarks.mageddo
@@ -8,20 +9,42 @@ services:
       - 3000:3000
     environment:
       - HOSTNAMES=bookmarks-node.mageddo
+      - PROFILE=PROD
     volumes:
       - /var/lib/mageddo/bookmarks-node/db:/opt/bookmarks/db
       - /var/lib/mageddo/bookmarks-node/logs:/opt/bookmarks/logs
       - /var/lib/mageddo/bookmarks-node/conf:/opt/bookmarks/conf
     network_mode: bridge
-  dev:
-    extends: prod
-    build:
-      context: .
-      dockerfile: Dockerfile
+
+  # compile the prod api package
+  prod-api-build-bk:
+    image: golang:1.7.4
+    volumes:
+      - $PWD:/app
+    command: bash -c "./builder build"
+    environment:
+      - TERM=xterm
+      - GOPATH=/app/bk-api
+    working_dir: /app
+    network_mode: bridge
+
+  # useful to run api for development
+  prod-api-compiler-bk:
+    extends: prod-api-build-bk
+    volumes:
+      - /var/lib/mageddo/bookmarks-node/db:/opt/bookmarks/db
+    working_dir: /app/bk-api/src
+    command: tail -f /dev/null
+    hostname: bk-api.dev
+
+  # run app for development
+  dev-app-bk:
+    extends: prod-app-bk
+    image: node:5.4.0-slim
     environment:
       - MG_MODE=debug
       - NODE_CONFIG_DIR=conf
     volumes:
       - ./:/opt/bookmarks
       - ./files/prod:/opt/bookmarks/prod/sql
-    command: bash -c 'npm install && sleep infinity'
+    command: bash -c 'npm install && tail -f /dev/null'
