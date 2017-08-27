@@ -32,7 +32,7 @@ func (s *SiteMapService) LoadSiteMap(w io.Writer, url string) (error) {
 		%s
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
-	</url>`, fmt.Sprintf("%s/%d/%s", url, b.Id, strings.Replace(strings.ToLower(*b.Name), " ", "-", -1)),
+	</url>`, fmt.Sprintf("%s/bookmark/%d/%s", url, b.Id, strings.Replace(strings.ToLower(*b.Name), " ", "-", -1)),
 			optional.OfNullable(b.Update).
 			Map(func(date interface{}) interface{}{
 				return fmt.Sprintf(`<lastmod>%s</lastmod>`, date.(*time.Time).Format("2006-01-02"))
