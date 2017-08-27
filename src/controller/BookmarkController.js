@@ -117,8 +117,9 @@ module.exports.controller = function(app) {
 
 		var from = url.parse(req.url, true).query.indice || 0;
 		var apiURL = config.get('api.url');
+		var restURL = apiURL + '/api/v1.0/bookmark?from=' + from + '&quantity=' + PAGE_SIZE
 
-		request(apiURL + '/api/v1.0/bookmark?from=' + from + '&quantity=' + PAGE_SIZE, function (err, response, body) {
+		request.get({url: restURL, json: true}, function (err, response, body) {
 			console.info('M=GET /api/bookmark, error=%s, code=%d', err, response && response.statusCode);
 			if(err != null || response.statusCode != 200){
 				console.info('M=GET /api/bookmark, error=%s, code=%d, body=%j', err, response && response.statusCode, body);
