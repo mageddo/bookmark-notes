@@ -32,7 +32,7 @@ case $1 in
 			./github.com/mageddo/bookmark-notes/.../ && \
 		go build -v -o ../../build/bk-api && \
 		cd ../../build/ && \
-		tar -cvf bk-api-$VERSION.tgz * && \
+		tar -acvf bk-api-$VERSION.tgz * && \
 		cd ../
 
 		echo "build success"
