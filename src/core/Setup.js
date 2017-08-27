@@ -6,7 +6,7 @@ module.exports = function(app){
 
 	// se a variável não estiver setada ou setada com o valor debug então é modo debug
 	app.profile = process.env['NODE_ENV'] || 'dev'
-	app.debug = app.profile == 'dev';
+	app.debug = process.debug = app.profile == 'dev';
 	setupLogger();
 	console.info('m=coresetup, profile=%s', app.profile);
 

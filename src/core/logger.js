@@ -69,8 +69,8 @@ function logger(app){
 						stringify: function(log){
 							return JSON.stringify(log);
 						},
-						maxsize: 62914560, // 60m
-						zippedArchive: true
+						maxsize: 62914560 // 60m
+
 					})
 				]
 			};
