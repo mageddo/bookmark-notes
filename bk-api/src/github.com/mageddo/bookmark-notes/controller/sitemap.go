@@ -12,7 +12,7 @@ func init(){
 		sc := service.NewSiteMapService(ctx)
 		logger := logging.NewLog(ctx)
 
-		err := sc.LoadSiteMap(w)
+		err := sc.LoadSiteMap(w, r.URL.Query().Get("url"))
 		if err != nil {
 			logger.Errorf("status=could-not-load, err=%+v", err)
 		}
