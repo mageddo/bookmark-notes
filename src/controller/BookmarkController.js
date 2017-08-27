@@ -2,6 +2,7 @@ var url = require("url"), util = require('util'), fs = require('fs'), utils = re
 var marked = require('../../public/js/marked.min.js');
 var hljs = require('highlight.js');
 var mustache = require('mustache');
+var PAGE_SIZE = 100
 
 module.exports.controller = function(app) {
 
@@ -114,52 +115,55 @@ module.exports.controller = function(app) {
 
 	app.get('/api/bookmark', function(req, res) {
 
-		var apiURL = config.get('api.url');
 		var from = url.parse(req.url, true).query.indice || 0;
+		var apiURL = config.get('api.url');
 
-		request(apiURL + '/api/v1.0/bookmark?from=' + from + '&quantity=100', function (err, response, body) {
-			console.debug('M=GET /api/bookmark, error=%s', err);
-			if(err != null || response.statusCode != 200){
+		request(apiURL + '/api/v1.0/bookmark?from=' + from + '&quantity=' + PAGE_SIZE, function (err, response, body) {
+			console.debug('M=GET /api/bookmark, error=%s, code=%d', err, response.statusCode);
+			if(err != null){
 				app.em._500({
 					res: res,
 					message: "Could not get bookmarks temporally",
 					stacktrace: err
 				});
 				return ;
+			}else if(response.statusCode != 200){
+				app.em._500({
+					res: res,
+					message: body.message,
+					stacktrace: err
+				});
+			} else {
+				res.header('Content-Type', 'application/json')
+				res.send(body);
 			}
-			res.header('Content-Type', 'application/json')
-			res.send(body);
 		});
 
 	});
 
 	app.get('/api/bookmark/search', function(req, res) {
+
 		var query = url.parse(req.url, true).query;
-		if(query.tag){
-			m.searchBookmarksByTagAndNameOrHTML(query, function(err, data){
-				if(!err){
-					res.send(data);
-				}else{
-					app.em._500({
-						res: res,
-						message: "Bookmarks não puderam ser buscados",
-						stacktrace: err
-					});
-				}
-			});
-		}else{
-			m.searchBookmarksByNameOrHTML(query.query, query.indice || 0, function(err, data){
-				if(!err){
-					res.send(data);
-				}else{
-					app.em._500({
-						res: res,
-						message: "Bookmarks não puderam ser buscados",
-						stacktrace: err
-					});
-				}
-			});
-		}
+		var apiURL = config.get('api.url');
+		var restURL = util.format(
+			'%s/api/v1.0/bookmark?from=%d&quantity=%d&tag=%s&query=%s',
+			 apiURL, query.indice || 0, PAGE_SIZE, query.tag || '', query.query || ''
+		);
+
+		request.get({url: restURL, json: true}, function (err, response, body) {
+			console.debug('M=GET /api/bookmark/search, error=%s, code=%d', err, response && response.statusCode);
+			if(err != null || response.statusCode != 200){
+				console.error('M=GET /api/bookmark/search, status=error, error=%s, code=%d, body=%j', err, response && response.statusCode, body);
+				app.em._400({
+					res: res,
+					message: (body && body.message) || "Could not get bookmarks temporally",
+					stacktrace: err
+				});
+			} else {
+				res.header('Content-Type', 'application/json')
+				res.send(body);
+			}
+		});
 	});
 
 	app.get('/api/bookmark/:id', function(req, res) {

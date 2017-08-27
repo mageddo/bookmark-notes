@@ -16,6 +16,7 @@ func init(){
 
 	Get("/api/v1.0/bookmark", func(ctx context.Context, w http.ResponseWriter, r *http.Request){
 
+		w.Header().Set("Content-Type", "application/json")
 
 		logger := logging.NewLog(ctx)
 		from, err := strconv.Atoi(r.URL.Query().Get("from"))
