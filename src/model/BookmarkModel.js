@@ -106,64 +106,6 @@ module.exports = function(app) {
 					callback(err);
 			});
 		},
-		searchBookmarksByNameOrHTML: function(query, indice, callback){
-			app.db.serialize(function(){
-				app.db.all(
-					`
-					WITH FILTER AS (
-						SELECT DISTINCT(idt_bookmark), * FROM (
-							SELECT b.* FROM bookmark b
-							LEFT JOIN (
-								SELECT t.NAM_TAG as tagName, tb.* FROM tag_Bookmark tb
-								INNER JOIN tag t ON t.idt_tag = tb.idt_tag
-							) tags
-							ON tags.idt_bookmark = b.idt_bookmark
-								WHERE flg_deleted=0 AND ( nam_bookmark LIKE $query OR des_html LIKE $query )
-						)
-					)
-					SELECT
-						idt_bookmark as id, nam_bookmark as name,
-						des_link as link, (SELECT COUNT(idt_bookmark) FROM FILTER) AS length,
-						des_html as html
-						FROM FILTER LIMIT $indice, $indiceLimite
-					`,
-					{
-						"$query": '%' + query + '%',
-						"$indice": indice,
-						"$indiceLimite": indice + 100
-					},
-					callback);
-			});
-		},
-		searchBookmarksByTagAndNameOrHTML: function(data, callback){
-			data.indice = data.indice || 0;
-			app.db.serialize(function(){
-				app.db.all(
-					`
-					WITH FILTER AS (
-						SELECT DISTINCT(idt_bookmark), * FROM (
-							SELECT b.* FROM bookmark b
-							LEFT JOIN (
-								SELECT t.nam_tag as tagName, tb.*, t.cod_slug FROM tag_Bookmark tb
-								INNER JOIN tag t ON t.idt_tag = tb.idt_tag
-							) tags ON tags.idt_bookmark = b.idt_bookmark
-							WHERE tags.COD_SLUG = $tag AND b.flg_deleted=0
-						)
-					)
-					SELECT
-						idt_bookmark as id, nam_bookmark as name,
-						des_link as link, (SELECT COUNT(idt_bookmark) FROM FILTER) AS length,
-						des_html as html
-						FROM FILTER LIMIT $indice, $indiceLimite
-					`,
-					{
-						"$indice": data.indice,
-						"$indiceLimite": data.indice + 100,
-						"$tag": data.tag
-					},
-					callback);
-			});
-		},
 		associateTagsToBookmarkById: function(callback, bookmarkId, tags){
 			if(!tags.length){
 				setTimeout(callback(null));
