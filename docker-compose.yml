@@ -1,15 +1,5 @@
 version: '2'
 services:
-  prod-api-build-bk: # base compiler
-    image: golang:1.7.4
-    volumes:
-      - $PWD:/app
-    command: bash -c "./builder build"
-    environment:
-      - TERM=xterm
-      - GOPATH=/app/bk-api
-    working_dir: /app
-    network_mode: bridge
   prod-app-bk:
     container_name: bookmarks-node
     image: defreitas/bookmark-notes:2.7.0
@@ -23,15 +13,23 @@ services:
       - /var/lib/mageddo/bookmarks-node/logs:/opt/bookmarks/logs
       - /var/lib/mageddo/bookmarks-node/conf:/opt/bookmarks/conf
     network_mode: bridge
+  prod-api-build-bk:
+    image: golang:1.7.4
+    volumes:
+      - $PWD:/app
+    command: bash -c "./builder build"
+    environment:
+      - TERM=xterm
+      - GOPATH=/app/bk-api
+    working_dir: /app
+    network_mode: bridge
   dev-app-bk:
     extends: prod-app-bk
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: node:5.4.0-slim
     environment:
       - MG_MODE=debug
       - NODE_CONFIG_DIR=conf
     volumes:
       - ./:/opt/bookmarks
       - ./files/prod:/opt/bookmarks/prod/sql
-    command: bash -c 'npm install && sleep infinity'
+    command: bash -c 'npm install && tail -f /dev/null'

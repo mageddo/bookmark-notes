@@ -16,6 +16,8 @@ COPY conf "${app}/conf"
 COPY conf "${app}/conf.default"
 COPY files/prod "${app}/files/prod"
 
-
-EXPOSE 3000
-CMD ["npm", "start"]
+ENV TMP_NAME=/tmp/bookmark-notes.tgz
+RUN apt-get update && apt-get install -y curl
+RUN mkdir /bk-api && curl -L https://github.com/mageddo/bookmark-notes/releases/download/2.1.0/bookmark-notes-2.1.0.tgz > $TMP_NAME && \
+	tar -xvf $TMP_NAME -C /app/ && rm -f $TMP_NAME
+CMD ["bash", "-c", "nohup npm start & /app/bookmark-notes"]
