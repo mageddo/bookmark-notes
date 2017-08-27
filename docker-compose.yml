@@ -30,8 +30,10 @@ services:
 
   # useful to run api for development
   prod-api-compiler-bk:
-    working_dir: /app/bk-api
     extends: prod-api-build-bk
+    volumes:
+      - /var/lib/mageddo/bookmarks-node/db:/opt/bookmarks/db
+    working_dir: /app/bk-api/src
     command: tail -f /dev/null
     hostname: bk-api.dev
 
