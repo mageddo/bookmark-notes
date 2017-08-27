@@ -1,4 +1,4 @@
-FROM node:2.8.0-slim
+FROM node:5.4.0-slim
 
 ENV NODE_ENV dev
 ENV app /opt/bookmarks
