@@ -2,7 +2,7 @@ version: '2'
 services:
   # Run prod image
   prod-app-bk:
-    container_name: bookmarks-node
+    container_name: bookmarks-node-prod
     image: defreitas/bookmark-notes:2.8.0
     hostname: bookmarks.mageddo
     ports:
@@ -11,6 +11,7 @@ services:
       - HOSTNAMES=bookmarks-node.mageddo
       - PROFILE=PROD
       - NODE_ENV=prod
+      - NODE_CONFIG_DIR=conf
     volumes:
       - /var/lib/mageddo/bookmarks-node/db:/opt/bookmarks/db
       - /var/lib/mageddo/bookmarks-node/logs:/opt/bookmarks/logs
