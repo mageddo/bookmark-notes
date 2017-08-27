@@ -18,6 +18,6 @@ COPY files/prod "${app}/files/prod"
 
 ENV TMP_NAME=/tmp/bookmark-notes.tgz
 RUN apt-get update && apt-get install -y curl
-RUN mkdir /bk-api && curl -L https://github.com/mageddo/bookmark-notes/releases/download/2.8.0/bookmark-notes-2.8.0.tgz > $TMP_NAME && \
+RUN mkdir /bk-api && curl -L https://github.com/mageddo/bookmark-notes/releases/download/2.8.0/bk-api-2.8.0.tgz > $TMP_NAME && \
 	tar -xvf $TMP_NAME -C /app/ && rm -f $TMP_NAME
 CMD ["bash", "-c", "nohup npm start & /app/bookmark-notes"]
