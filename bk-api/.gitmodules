@@ -5,3 +5,7 @@
 [submodule "src/github.com/mageddo/go-logging"]
 	path = src/github.com/mageddo/go-logging
 	url  = https://github.com/mageddo/go-logging
+
+[submodule "src/github.com/mageddo/go-optional"]
+	path = src/github.com/mageddo/go-optional
+	url  = https://github.com/mageddo/go-optional

@@ -7,8 +7,8 @@ import (
 
 func init(){
 	mode := "DEV"
-	f, _ := os.Open(os.DevNull)
-	backend := logging.NewLogBackend(f, "", 0)
+	//f, _ := os.Open(os.DevNull)
+	backend := logging.NewLogBackend(os.Stdout, "", 0)
 
 	// setando o log dependendo do ambiente
 	switch mode {
