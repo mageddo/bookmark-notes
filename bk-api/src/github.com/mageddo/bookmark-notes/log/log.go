@@ -4,6 +4,7 @@ import (
 	"github.com/mageddo/go-logging"
 	"os"
 	"github.com/mageddo/bookmark-notes/utils"
+	"fmt"
 )
 
 func init(){
@@ -29,4 +30,5 @@ func init(){
 		logging.SetBackend(leveledBackend)
 		break;
 	}
+	fmt.Println("log configured")
 }

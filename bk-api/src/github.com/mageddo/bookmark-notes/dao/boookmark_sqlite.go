@@ -14,17 +14,13 @@ func (dao *BookmarkDAOSQLite) LoadSiteMap() ([]entity.BookmarkEntity, error) {
 
 	conn := db.GetConn()
 
-	//result, err := conn.Exec("UPDATE BOOKMARK SET NAM_BOOKMARK='from bk-api' WHERE IDT_BOOKMARK= 1")
-	//if err != nil {
-	//	return "", err
-	//}
-	//rowsAffected, _ := result.RowsAffected()
-	//dao.logger.Debugf("updated=%d", rowsAffected)
-
 	rows, err := conn.Query(`
 		SELECT * FROM (
 		SELECT IDT_BOOKMARK, NAM_BOOKMARK, DAT_UPDATE
 		FROM BOOKMARK
+		WHERE NUM_VISIBILITY = 1
+		AND FLG_DELETED = 0
+		AND FLG_ARCHIVED = 0
 		ORDER BY IDT_BOOKMARK DESC
 	) LIMIT 0, 100000`)
 	if err != nil {
