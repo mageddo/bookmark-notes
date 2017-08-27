@@ -1,5 +1,6 @@
 version: '2'
 services:
+  # Run prod image
   prod-app-bk:
     container_name: bookmarks-node
     image: defreitas/bookmark-notes:2.7.0
@@ -8,11 +9,14 @@ services:
       - 3000:3000
     environment:
       - HOSTNAMES=bookmarks-node.mageddo
+      - PROFILE=PROD
     volumes:
       - /var/lib/mageddo/bookmarks-node/db:/opt/bookmarks/db
       - /var/lib/mageddo/bookmarks-node/logs:/opt/bookmarks/logs
       - /var/lib/mageddo/bookmarks-node/conf:/opt/bookmarks/conf
     network_mode: bridge
+
+  # compile the prod api package
   prod-api-build-bk:
     image: golang:1.7.4
     volumes:
@@ -23,6 +27,15 @@ services:
       - GOPATH=/app/bk-api
     working_dir: /app
     network_mode: bridge
+
+  # useful to run api for development
+  prod-api-compiler-bk:
+    working_dir: /app/bk-api
+    extends: prod-api-build-bk
+    command: tail -f /dev/null
+    hostname: bk-api.dev
+
+  # run app for development
   dev-app-bk:
     extends: prod-app-bk
     image: node:5.4.0-slim
