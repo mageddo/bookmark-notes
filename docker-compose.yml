@@ -3,7 +3,7 @@ services:
   # Run prod image
   prod-app-bk:
     container_name: bookmarks-node
-    image: defreitas/bookmark-notes:2.7.0
+    image: defreitas/bookmark-notes:2.8.0
     hostname: bookmarks.mageddo
     ports:
       - 3000:3000
