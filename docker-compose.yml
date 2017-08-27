@@ -49,9 +49,11 @@ services:
   dev-app-bk:
     extends: prod-app-bk
     image: node:5.4.0-slim
+    container_name: bookmarks-node
     environment:
       - MG_MODE=debug
       - NODE_CONFIG_DIR=conf
+      - NODE_ENV=dev
     volumes:
       - ./:/opt/bookmarks
       - ./files/prod:/opt/bookmarks/prod/sql
