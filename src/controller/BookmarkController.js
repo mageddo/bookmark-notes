@@ -119,20 +119,15 @@ module.exports.controller = function(app) {
 		var apiURL = config.get('api.url');
 
 		request(apiURL + '/api/v1.0/bookmark?from=' + from + '&quantity=' + PAGE_SIZE, function (err, response, body) {
-			console.info('M=GET /api/bookmark, error=%s, code=%d', err, response.statusCode);
-			if(err != null){
+			console.info('M=GET /api/bookmark, error=%s, code=%d', err, response && response.statusCode);
+			if(err != null || response.statusCode != 200){
+				console.info('M=GET /api/bookmark, error=%s, code=%d, body=%j', err, response && response.statusCode, body);
 				app.em._500({
 					res: res,
-					message: "Could not get bookmarks temporally",
+					message: (body && body.message) || "Could not get bookmarks temporally",
 					stacktrace: err
 				});
 				return ;
-			}else if(response.statusCode != 200){
-				app.em._500({
-					res: res,
-					message: body.message,
-					stacktrace: err
-				});
 			} else {
 				res.header('Content-Type', 'application/json')
 				res.send(body);
