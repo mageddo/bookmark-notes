@@ -3,10 +3,11 @@ package log
 import (
 	"github.com/mageddo/go-logging"
 	"os"
+	"github.com/mageddo/bookmark-notes/utils"
 )
 
 func init(){
-	mode := "DEV"
+	mode := utils.GetProfile()
 	//f, _ := os.Open(os.DevNull)
 	backend := logging.NewLogBackend(os.Stdout, "", 0)
 

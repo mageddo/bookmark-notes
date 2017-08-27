@@ -1,6 +1,16 @@
 version: '2'
 services:
-  prod:
+  prod-api-build-bk: # base compiler
+    image: golang:1.7.4
+    volumes:
+      - $PWD:/app
+    command: bash -c "./builder build"
+    environment:
+      - TERM=xterm
+      - GOPATH=/app/bk-api
+    working_dir: /app
+    network_mode: bridge
+  prod-app-bk:
     container_name: bookmarks-node
     image: defreitas/bookmark-notes:2.7.0
     hostname: bookmarks.mageddo
@@ -13,8 +23,8 @@ services:
       - /var/lib/mageddo/bookmarks-node/logs:/opt/bookmarks/logs
       - /var/lib/mageddo/bookmarks-node/conf:/opt/bookmarks/conf
     network_mode: bridge
-  dev:
-    extends: prod
+  dev-app-bk:
+    extends: prod-app-bk
     build:
       context: .
       dockerfile: Dockerfile
