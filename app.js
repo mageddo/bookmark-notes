@@ -6,7 +6,8 @@ var express = require('express'),
 	mustacheLayout = require('mustache-layout'),
 	fs = require('fs'),
 	conf = require("./src/core/Setup")(app),
-	em = require("./src/core/ErrorManager")(app);
+	em = require("./src/core/ErrorManager")(app),
+	compression = require('compression');
 
 // some environment variables
 app.set('port', process.env.PORT || 3000);
@@ -15,8 +16,17 @@ app.set('view engine', 'html');
 app.set("view options", {layout: true});
 app.em = em;
 
-//app.use(express.favicon());
-// app.use(express.logger('dev'));
+app.use(compression({
+	filter: function (req, res) {
+		if (req.headers['x-no-compression']) {
+			// don't compress responses with this request header
+			return false
+		}
+		// fallback to standard filter function
+		return compression.filter(req, res)
+	}
+}))
+
 mustacheLayout.debug(false);
 app.engine("html", mustacheLayout);
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -26,6 +36,7 @@ app.use(express.cookieParser('your secret here'));
 app.use(express.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.locals({
 	'appName': "Bookmarks"
