@@ -4,8 +4,9 @@ import (
 	"github.com/mageddo/go-logging"
 	"context"
 	"github.com/mageddo/bookmark-notes/dao"
-	"fmt"
 	"bytes"
+	"encoding/json"
+	"github.com/mageddo/bookmark-notes/entity"
 )
 
 type SiteMapService struct {
@@ -19,9 +20,19 @@ func (s *SiteMapService) LoadSiteMap() (string, error) {
 		return "", err
 	}
 	buff := bytes.Buffer{}
+	jsonWriter := json.NewEncoder(&buff)
 	for _, b := range bookmarks {
-		//fmt.Fprintf(&buff, "id=%d, name=%s, update=%s\n", b.Id, b.Name, b.Update)
-		fmt.Fprintf(&buff, "%+v\n", b)
+
+		type BookmarkVO entity.BookmarkEntity
+		jsonWriter.Encode(&struct {
+			*BookmarkVO
+			update string
+		}{(*BookmarkVO)(&b), b.Update.Format("2006-01-02 15:04:05")})
+		//&struct {
+		//
+		//	Name string
+		//}{(*BookmarkVO)(&b), *b.Name}
+
 	}
 	return buff.String(), err
 }
