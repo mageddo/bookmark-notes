@@ -119,7 +119,7 @@ module.exports.controller = function(app) {
 		var apiURL = config.get('api.url');
 
 		request(apiURL + '/api/v1.0/bookmark?from=' + from + '&quantity=' + PAGE_SIZE, function (err, response, body) {
-			console.debug('M=GET /api/bookmark, error=%s, code=%d', err, response.statusCode);
+			console.info('M=GET /api/bookmark, error=%s, code=%d', err, response.statusCode);
 			if(err != null){
 				app.em._500({
 					res: res,
@@ -151,7 +151,7 @@ module.exports.controller = function(app) {
 		);
 
 		request.get({url: restURL, json: true}, function (err, response, body) {
-			console.debug('M=GET /api/bookmark/search, error=%s, code=%d', err, response && response.statusCode);
+			console.info('M=GET /api/bookmark/search, error=%s, code=%d', err, response && response.statusCode);
 			if(err != null || response.statusCode != 200){
 				console.error('M=GET /api/bookmark/search, status=error, error=%s, code=%d, body=%j', err, response && response.statusCode, body);
 				app.em._400({
