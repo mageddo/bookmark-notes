@@ -6,8 +6,7 @@ var express = require('express'),
 	mustacheLayout = require('mustache-layout'),
 	fs = require('fs'),
 	conf = require("./src/core/Setup")(app),
-	em = require("./src/core/ErrorManager")(app),
-	compression = require('compression');
+	em = require("./src/core/ErrorManager")(app);
 
 // some environment variables
 app.set('port', process.env.PORT || 3000);
@@ -15,17 +14,6 @@ app.set('views', './view');
 app.set('view engine', 'html');
 app.set("view options", {layout: true});
 app.em = em;
-
-app.use(compression({
-	filter: function (req, res) {
-		if (req.headers['x-no-compression']) {
-			// don't compress responses with this request header
-			return false
-		}
-		// fallback to standard filter function
-		return compression.filter(req, res)
-	}
-}))
 
 mustacheLayout.debug(false);
 app.engine("html", mustacheLayout);
