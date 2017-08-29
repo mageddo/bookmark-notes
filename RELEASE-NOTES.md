@@ -3,6 +3,7 @@
 * Moving bookmark search  apis to the bk-api project
 * Reduce the bookmark description to 160 characters  in search API
 * Disabling code auto-syntax detection to increase page parse
+* fixing first deploy database build
 
 # 2.2.4
 * Get bookmark link when it turn public
