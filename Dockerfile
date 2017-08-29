@@ -25,7 +25,7 @@ COPY conf "${APP_PATH}/conf.default"
 COPY files/prod "${APP_PATH}/files/prod"
 
 # INSTALLING API FILES
-COPY build/ /tmp/
+ADD build/* /tmp/
 
 # GETTING API FILES FROM WEB
 RUN if [ "$DOWNLOAD_API_FROM_REMOTE" = "1" ] ; then apt-get update && apt-get install -y curl && \
@@ -33,4 +33,4 @@ RUN if [ "$DOWNLOAD_API_FROM_REMOTE" = "1" ] ; then apt-get update && apt-get in
 
 RUN mkdir -p $API_PATH && tar -xvf /tmp/bk-api*.tgz -C $API_PATH && rm -rf /tmp/*
 
-CMD ["bash", "-c", "npm start & /bk-api/bk-api && tail -f /dev/null"]
+CMD ["bash", "-c", "npm start & /bk-api/bk-api & tail -f /dev/null"]
