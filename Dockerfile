@@ -31,6 +31,6 @@ COPY build/ /tmp/
 RUN if [ "$DOWNLOAD_API_FROM_REMOTE" = "1" ] ; then apt-get update && apt-get install -y curl && \
 	curl -L https://github.com/mageddo/bookmark-notes/releases/download/2.8.2/bk-api-2.8.2.tgz > /tmp/bk-api.tgz ; fi
 
-RUN mkdir -p $API_PATH && tar -xvf /tmp/bk-api-*.tgz -C $API_PATH && rm -rf /tmp/*
+RUN mkdir -p $API_PATH && tar -xvf /tmp/bk-api*.tgz -C $API_PATH && rm -rf /tmp/*
 
 CMD ["bash", "-c", "npm start & /bk-api/bk-api && tail -f /dev/null"]
