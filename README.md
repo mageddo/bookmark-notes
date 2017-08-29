@@ -31,7 +31,15 @@
 
 # Building from source (You probably don't want that)
 
-	$ docker-compose up prod-api-build-bk && docker-compose build prod-app-build-bk
+	$ docker-compose up prod-api-build-bk && docker-compose build prod-build-bk
+
+Then
+
+	$ docker run --rm -p 3000:3000 --name bookmarks defreitas/bookmark-notes:<docker-compose-tag>
+
+if you have problems to stop the container try
+
+	$ docker kill bookmarks
 
 
 # Logs
