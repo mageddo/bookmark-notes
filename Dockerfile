@@ -27,7 +27,7 @@ COPY files/prod "${APP_PATH}/files/prod"
 # INSTALLING API FILES
 ADD build/*tgz $API_PATH
 
-RUN if [ "x$DOWNLOAD_API_FROM_REMOTE" = "1" ] ; then apt-get update && apt-get install -y curl && \
+RUN if [ "$DOWNLOAD_API_FROM_REMOTE" = "1" ] ; then apt-get update && apt-get install -y curl && \
 	mkdir $API_PATH && curl -L https://github.com/mageddo/bookmark-notes/releases/download/2.8.1/bk-api-2.8.1.tgz > $TMP_NAME && \
 	tar -xvf $TMP_NAME -C $API_PATH && rm -f $TMP_NAME; fi
 
