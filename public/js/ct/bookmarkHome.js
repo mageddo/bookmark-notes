@@ -2,13 +2,13 @@
 var lastConf;
 
 $.ajaxSetup({
-  cache: !mg.defaults.debug,
-  error: function(req){
-  	if(req.getResponseHeader('catch'))
-    	mg.notify.error(req.responseJSON.message);
-    else
-    	mg.notify.error("Temporiamente indisponível...");
-  }
+	cache: !mg.defaults.debug,
+	error: function(req){
+		if(req.getResponseHeader('catch'))
+			mg.notify.error(req.responseJSON.message);
+		else
+			mg.notify.error("Temporiamente indisponível...");
+	}
 });
 
 // carregando as tags no meu
@@ -24,11 +24,11 @@ $.ajax({
 		});
 		$(".aMenuLink").click(function(){
 			var conf = {
-		    url: "/api/bookmark/search",
-		    data: {tag: $(this).data("tag").slug, indice: 0},
-		    success:function(data){
-		      populaTabela(data);
-		    }
+				url: "/api/bookmark/search",
+				data: {tag: $(this).data("tag").slug, indice: 0},
+				success:function(data){
+					populaTabela(data);
+				}
 			};
 			$.ajax(conf);
 			lastConf = conf;
@@ -78,11 +78,11 @@ $("#iptSearch").keyup(function(){
 	var key = this.value;
 	mg.delay(function(){
 		var conf = {
-	    url: "/api/bookmark/search",
-	    data: {query: key, indice: 0},
-	    success:function(data){
-	      populaTabela(data);
-	    }
+			url: "/api/bookmark/search",
+			data: {query: key, indice: 0},
+			success:function(data){
+				populaTabela(data);
+			}
 		};
 		$.ajax(conf);
 		lastConf = conf;

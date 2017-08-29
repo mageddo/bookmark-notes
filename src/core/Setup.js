@@ -5,9 +5,10 @@ module.exports = function(app){
 	process.app = app;
 
 	// se a variável não estiver setada ou setada com o valor debug então é modo debug
-	app.debug = process.debug = !process.env['MG_MODE'] || process.env['MG_MODE'] === 'debug';
+	app.profile = process.env['NODE_ENV'] || 'dev'
+	app.debug = process.debug = app.profile == 'dev';
 	setupLogger();
-	console.info('Rodando em modo: ', process.env['MG_MODE']);
+	console.info('m=coresetup, profile=%s', app.profile);
 
 // system faltal error
 	process.on('uncaughtException', function (error) {

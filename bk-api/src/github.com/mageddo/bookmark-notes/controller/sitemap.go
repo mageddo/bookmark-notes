@@ -8,7 +8,8 @@ import (
 )
 
 func init(){
-	Get("/sitemap.xml", func(ctx context.Context, w http.ResponseWriter, r *http.Request){
+	Get("/api/v1.0/sitemap", func(ctx context.Context, w http.ResponseWriter, r *http.Request){
+
 		sc := service.NewSiteMapService(ctx)
 		logger := logging.NewLog(ctx)
 

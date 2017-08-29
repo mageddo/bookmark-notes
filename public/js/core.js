@@ -76,7 +76,7 @@
 				.modal("show");
 		}).error(function(error){
 			// TODO EFS fazer isso buscar de um template
-			$(container).html("Erorr on load " + url + "<br/>" + error);
+			$(container).html("Error on load " + url + "<br/>" + error);
 		});
 	}
 	mg.clearSelection = function() {

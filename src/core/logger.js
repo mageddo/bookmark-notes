@@ -5,21 +5,21 @@ function logger(app){
 
 	// Set up logger
 	var customColors = {
-	  trace: 'white',
-	  debug: 'white',
-	  info: 'blue',
-	  warn: 'yellow',
-	  error: 'red',
-	  severe: 'purple'
+		trace: 'white',
+		debug: 'white',
+		info: 'blue',
+		warn: 'yellow',
+		error: 'red',
+		severe: 'purple'
 	};
 	var levels = {
-    trace: 0,
-    debug: 1,
-    info: 2,
-    warn: 3,
-    error: 4,
-    severe: 5
-  };
+		trace: 0,
+		debug: 1,
+		info: 2,
+		warn: 3,
+		error: 4,
+		severe: 5
+	};
 	var logger = new(winston.Logger)(getConfig(app.debug));
 	winston.addColors(customColors);
 
@@ -33,11 +33,6 @@ function logger(app){
 		}
 	});
 
-	if(app.debug){
-		logger.info("debug mode...");
-	}else{
-	  logger.info("production mode...");
-	}
 	// configurando no logger padrao
 	console.log = logger.info.bind(logger);
 	console.debug = logger.debug.bind(logger);
@@ -49,35 +44,35 @@ function logger(app){
 		if(debug){
 			return {
 				// colors: customColors,
-			  // levels: levels,
-			  transports: [
-				  new(winston.transports.Console)({
-				    level: "debug",
-				    colorize: true,
-				    timestamp: function(){
-				    	return dateformat.asString('yyyy-MM-dd hh:mm:ss:SSS', new Date());
-				    }
-				  })
-			  ]
+				// levels: levels,
+				transports: [
+					new(winston.transports.Console)({
+						level: "debug",
+						colorize: true,
+						timestamp: function(){
+							return dateformat.asString('yyyy-MM-dd hh:mm:ss:SSS', new Date());
+						}
+					})
+				]
 			};
 		}else{
 			return {
 				// levels: levels,
-			  transports: [
-				  new (winston.transports.File)({
-				    level: "info",
-				 		filename: 'logs/log.log',
-				 		timestamp: function(){
-				    	return dateformat.asString('yyyy-MM-dd hh:mm:ss:SSS', new Date());
-				    },
-				    json: true,
-				    stringify: function(log){
-  						// var e = new Error('tracer');
-  						// log.stack = e.stack;
-  						return JSON.stringify(log);
-				    }
+				transports: [
+					new (winston.transports.File)({
+						level: "info",
+						filename: 'logs/log.log',
+						timestamp: function(){
+							return dateformat.asString('yyyy-MM-dd hh:mm:ss:SSS', new Date());
+						},
+						json: true,
+						stringify: function(log){
+							return JSON.stringify(log);
+						},
+						maxsize: 62914560 // 60m
+
 					})
-			  ]
+				]
 			};
 		}
 	}

@@ -15,8 +15,6 @@ app.set('view engine', 'html');
 app.set("view options", {layout: true});
 app.em = em;
 
-//app.use(express.favicon());
-// app.use(express.logger('dev'));
 mustacheLayout.debug(false);
 app.engine("html", mustacheLayout);
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -26,6 +24,7 @@ app.use(express.cookieParser('your secret here'));
 app.use(express.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.locals({
 	'appName': "Bookmarks"

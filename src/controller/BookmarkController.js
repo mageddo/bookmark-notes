@@ -2,11 +2,14 @@ var url = require("url"), util = require('util'), fs = require('fs'), utils = re
 var marked = require('../../public/js/marked.min.js');
 var hljs = require('highlight.js');
 var mustache = require('mustache');
+var PAGE_SIZE = 100
 
 module.exports.controller = function(app) {
+
 	var m = require("../model/BookmarkModel")(app);
 	var mTag = require("../model/TagModel")(app);
 	var config = require('config');
+	var request = require('request')
 
 	app.put('/api/bookmark', function(req, res) {
 		app.db.serialize(function(){
@@ -111,49 +114,55 @@ module.exports.controller = function(app) {
 
 
 	app.get('/api/bookmark', function(req, res) {
-		m.getBookmarks(url.parse(req.url, true).query.indice || 0, function(err, data){
-				if(!err){
-					res.send(data);
-				}else{
-					app.em._500({
-						message: "Bookmarks não puderam ser listados",
-						res: res,
-						stacktrace: err.stack
-					})
-				}
+
+		var from = url.parse(req.url, true).query.indice || 0;
+		var apiURL = config.get('api.url');
+		var restURL = apiURL + '/api/v1.0/bookmark?from=' + from + '&quantity=' + PAGE_SIZE
+
+		request.get({url: restURL, json: true}, function (err, response, body) {
+			console.info('M=GET /api/bookmark, error=%s, code=%d', err, response && response.statusCode);
+			if(err != null || response.statusCode != 200){
+				console.info('M=GET /api/bookmark, error=%s, code=%d, body=%j', err, response && response.statusCode, body);
+				app.em._500({
+					res: res,
+					message: (body && body.message) || "Could not get bookmarks temporally",
+					stacktrace: err
+				});
+				return ;
+			} else {
+				res.header('Content-Type', 'application/json')
+				res.send(body);
+			}
 		});
+
 	});
+
 	app.get('/api/bookmark/search', function(req, res) {
+
 		var query = url.parse(req.url, true).query;
-		if(query.tag){
-			m.searchBookmarksByTagAndNameOrHTML(query, function(err, data){
-				if(!err){
-					res.send(data);
-				}else{
-					app.em._500({
-						res: res,
-						message: "Bookmarks não puderam ser buscados",
-						stacktrace: err
-					});
-				}
-			});
-		}else{
-			m.searchBookmarksByNameOrHTML(query.query, query.indice || 0, function(err, data){
-				if(!err){
-					res.send(data);
-				}else{
-					app.em._500({
-						res: res,
-						message: "Bookmarks não puderam ser buscados",
-						stacktrace: err
-					});
-				}
-			});
-		}
+		var apiURL = config.get('api.url');
+		var restURL = util.format(
+			'%s/api/v1.0/bookmark?from=%d&quantity=%d&tag=%s&query=%s',
+			 apiURL, query.indice || 0, PAGE_SIZE, query.tag || '', query.query || ''
+		);
+
+		request.get({url: restURL, json: true}, function (err, response, body) {
+			console.info('M=GET /api/bookmark/search, error=%s, code=%d', err, response && response.statusCode);
+			if(err != null || response.statusCode != 200){
+				console.error('M=GET /api/bookmark/search, status=error, error=%s, code=%d, body=%j', err, response && response.statusCode, body);
+				app.em._400({
+					res: res,
+					message: (body && body.message) || "Could not get bookmarks temporally",
+					stacktrace: err
+				});
+			} else {
+				res.header('Content-Type', 'application/json')
+				res.send(body);
+			}
+		});
 	});
 
 	app.get('/api/bookmark/:id', function(req, res) {
-//		var id = url.parse(req.url, true).query.id;
 		m.getBookmarkById(req.params.id, function(err, data){
 			res.send(data);
 		});
