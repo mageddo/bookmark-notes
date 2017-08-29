@@ -1,4 +1,4 @@
-# 2.9.0
+# 2.8.1
 * Using gzip for all plain text URLs (only for the site, at nginx level)
 * Moving bookmark search  apis to the bk-api project
 * Reduce the bookmark description to 160 characters  in search API
