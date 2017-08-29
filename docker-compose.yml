@@ -3,7 +3,7 @@ services:
   # Run prod image
   prod-app-bk:
     container_name: bookmarks-node-prod
-    image: defreitas/bookmark-notes:2.8.0
+    image: defreitas/bookmark-notes:2.8.2
     hostname: bookmarks.mageddo
     ports:
       - 3000:3000
@@ -18,13 +18,15 @@ services:
       - /var/lib/mageddo/bookmarks-node/conf:/opt/bookmarks/conf
     network_mode: bridge
 
-  # compile the prod app package
-  prod-app-build-bk:
+  # compile the whole apk for production
+  prod-build-bk:
     extends: prod-app-bk
     build:
       context: .
+      args:
+        - DOWNLOAD_API_FROM_REMOTE=0
 
-  # compile the prod api package
+  # compile only the prod api package
   prod-api-build-bk:
     image: golang:1.7.4
     volumes:

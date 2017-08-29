@@ -14,7 +14,7 @@
 * [Make your bookmarks public](#009)
 
 
-# Build and Run With Docker (Fast Way)
+# Running With Docker
 
 1. Run image
 
@@ -29,21 +29,17 @@
 3. That's it :)
 
 
-# Build and Run With Docker (Customized way)
+# Building from source (You probably don't want that)
 
-1. Run from docker-compose.yml in the project
+	$ docker-compose up prod-api-build-bk && docker-compose build prod-build-bk
 
-		$ docker-compose docker-compose up prod
+Then
 
-2. Access browser [http://localhost:3000](http://localhost:3000)
-3. That's it :)
+	$ docker run --rm -p 3000:3000 --name bookmarks defreitas/bookmark-notes:<docker-compose-tag>
 
-# Build and Run Without Docker
+if you have problems to stop the container try
 
-	$ npm install && npm start
-	2017-07-07 11:20:49:849 - info: m=buildDatabase, status=executed
-	2017-07-07 11:20:49:849 - info: m=buildDatabase, status=executing, version=1.7
-	2017-07-07 11:20:49:850 - info: m=buildDatabase, status=executed
+	$ docker kill bookmarks
 
 
 # Logs

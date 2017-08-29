@@ -22,7 +22,7 @@ case $1 in
 		echo "starting build"
 		VERSION=`cat VERSION`
 
-		rm -rf build/ && \
+		rm -rf build/* && \
 		mkdir -p build/ && \
 		cd bk-api/ && \
 		git submodule init && \

@@ -24,28 +24,12 @@ module.exports = {
 		if(!fs.existsSync(file)){
 			console.log('arquivo do banco de dados nao existe', file);
 			buildDatabase(con, 0);
+		}else{
+			console.info("m=open, status=connected, db=%s", file);
+			require('../model/SystemModel')({db: con}).getSystemVersion(currentVersion => {
+				buildDatabase(con, currentVersion)
+			})
 		}
-		console.info("m=open, status=connected, db=%s", file);
-		require('../model/SystemModel')({db: con}).getSystemVersion(currentVersion => {
-
-			console.info("m=getSystemVersionCb, dbVersion=%d", currentVersion);
-			var versions = getDBSQL(currentVersion);
-			console.info('m=buildDatabase, status=get-versions, versions=%d', versions.length);
-			async.eachSeries(versions, function (version, callback) {
-
-				console.info('m=buildDatabase, status=before-execute, version=%s', version.version);
-				con.exec(version.sql, function(err){
-					console.info('m=buildDatabase, status=executed, version=%s, err=%s', version.version, err);
-					callback();
-				});
-
-			}, function() {
-					console.info('database updated');
-			});
-
-		})
-
-
 		return con;
 	}
 };
@@ -80,4 +64,21 @@ function getDBSQL(fromVersion){
 	console.info('m=getDBSQL, status=success, size=%d', r.length);
 	return r;
 
+}
+
+function buildDatabase(con, currentVersion){
+	console.info("m=getSystemVersionCb, dbVersion=%d", currentVersion);
+	var versions = getDBSQL(currentVersion);
+	console.info('m=buildDatabase, status=get-versions, versions=%d', versions.length);
+	async.eachSeries(versions, function (version, callback) {
+
+		console.info('m=buildDatabase, status=before-execute, version=%s', version.version);
+		con.exec(version.sql, function(err){
+			console.info('m=buildDatabase, status=executed, version=%s, err=%s', version.version, err);
+			callback();
+		});
+
+	}, function() {
+			console.info('database updated');
+	});
 }

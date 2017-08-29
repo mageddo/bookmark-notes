@@ -6,9 +6,12 @@ confirmReleaseVersion.doLast {
 
 	println "> upgrading docker-compose version=${project.version}"
 
-	updateVersion("${project.projectDir}/docker-compose.yml", "(image:defreitas/bookmark-notes.*:)(.*)", "\$1${project.version}")
+	updateVersion("${project.projectDir}/docker-compose.yml", "(defreitas/bookmark-notes:)(.*)", "\$1${project.version}")
 	updateVersion("${project.projectDir}/VERSION", '(\\d+\\.\\d\\.+\\d+)', "${project.version}")
-	updateVersion("${project.projectDir}/Dockerfile", '(\\/.*)(\\d+\\.\\d\\.+\\d+)', "\$1${project.version}")
+	updateVersion(
+		"${project.projectDir}/Dockerfile", 'download\\/(\\d+\\.\\d\\.+\\d+)\\/bk-api-(\\d+\\.\\d\\.+\\d+)',
+		"download/${project.version}/bk-api-${project.version}"
+	)
 
 	def sout = new StringBuilder()
 	def proc = ['git', 'commit', '-a', "-m [Gradle Release Plugin] - releasing '${project.version}'."].execute()
