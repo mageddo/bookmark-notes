@@ -24,13 +24,12 @@ module.exports = {
 		if(!fs.existsSync(file)){
 			console.log('arquivo do banco de dados nao existe', file);
 			buildDatabase(con, 0);
+		}else{
+			console.info("m=open, status=connected, db=%s", file);
+			require('../model/SystemModel')({db: con}).getSystemVersion(currentVersion => {
+				buildDatabase(con, currentVersion)
+			})
 		}
-		console.info("m=open, status=connected, db=%s", file);
-		require('../model/SystemModel')({db: con}).getSystemVersion(currentVersion => {
-			buildDatabase(con, currentVersion)
-		})
-
-
 		return con;
 	}
 };

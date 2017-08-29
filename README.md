@@ -29,7 +29,9 @@
 3. That's it :)
 
 
-# Building from source
+# Building from source (You probably don't want that)
+
+	$ docker-compose up prod-api-build-bk && docker-compose build prod-app-build-bk
 
 
 # Logs

@@ -41,7 +41,7 @@ function logger(app){
 	console.error = logger.error.bind(logger);
 
 	function getConfig(debug){
-		if(debug){
+		if(true){ // ever using console log
 			return {
 				// colors: customColors,
 				// levels: levels,
