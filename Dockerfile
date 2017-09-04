@@ -20,8 +20,8 @@ COPY src "${APP_PATH}/src"
 COPY view "${APP_PATH}/view"
 COPY public "${APP_PATH}/public"
 COPY app.js "${APP_PATH}"
-COPY conf "${APP_PATH}/conf"
-COPY conf "${APP_PATH}/conf.default"
+COPY conf.default "${APP_PATH}/conf"
+COPY conf.default "${APP_PATH}/conf.default"
 COPY files/prod "${APP_PATH}/files/prod"
 
 # INSTALLING API FILES
