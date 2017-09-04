@@ -1,4 +1,4 @@
-# 2.9.2
+# 2.9.0
 * Prevent user from accidentally get out of creation/edition page
 
 # 2.8.2
