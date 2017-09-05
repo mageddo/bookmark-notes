@@ -24,8 +24,9 @@ case $1 in
 
 		rm -rf $BUILD_PATH/* && \
 		cd $APP_PATH && \
-		go test -cover=false \
-			./bk-api/.../ && \
+		go get -u github.com/golang/dep/cmd/dep && \
+		dep ensure -v && \
+		go test -cover=false $APP_PATH/bk-api/.../ && \
 		go build -v -o $BUILD_PATH/bk-api && \
 		sh -c "cd $BUILD_PATH && tar -acvf bk-api-$VERSION.tgz *"
 
