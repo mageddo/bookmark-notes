@@ -1,3 +1,6 @@
+# 2.9.1
+* Fixing HTML not rendering when code in plain mode
+
 # 2.8.2
 * Using gzip for all plain text URLs (only for the site, at nginx level)
 * Moving bookmark search  apis to the bk-api project
