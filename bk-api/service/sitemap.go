@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/mageddo/go-logging"
 	"context"
-	"github.com/mageddo/bookmark-notes/dao"
+	"bk-api/dao"
 	"io"
 	"fmt"
 	"github.com/mageddo/go-optional"

@@ -2,12 +2,12 @@ package service
 
 import (
 	"github.com/mageddo/go-logging"
-	"github.com/mageddo/bookmark-notes/dao"
+	"bk-api/dao"
 	"context"
-	"github.com/mageddo/bookmark-notes/entity"
+	"bk-api/entity"
 	"strings"
 	"fmt"
-	"github.com/mageddo/bookmark-notes/errors"
+	"bk-api/errors"
 )
 
 const (

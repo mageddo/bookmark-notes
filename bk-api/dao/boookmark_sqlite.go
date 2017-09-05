@@ -1,9 +1,9 @@
 package dao
 
 import (
-	"github.com/mageddo/bookmark-notes/db"
+	"bk-api/db"
 	"github.com/mageddo/go-logging"
-	"github.com/mageddo/bookmark-notes/entity"
+	"bk-api/entity"
 	"time"
 )
 

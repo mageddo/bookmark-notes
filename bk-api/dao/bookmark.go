@@ -3,7 +3,7 @@ package dao
 import (
 	"context"
 	"github.com/mageddo/go-logging"
-	"github.com/mageddo/bookmark-notes/entity"
+	"bk-api/entity"
 )
 
 type BookmarkDAO interface {

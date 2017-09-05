@@ -3,13 +3,13 @@ package controller
 import (
 	"context"
 	"net/http"
-	"github.com/mageddo/bookmark-notes/service"
+	"bk-api/service"
 	"github.com/mageddo/go-logging"
 	"strconv"
 	"encoding/json"
-	"github.com/mageddo/bookmark-notes/entity"
+	"bk-api/entity"
 	"fmt"
-	"github.com/mageddo/bookmark-notes/errors"
+	"bk-api/errors"
 )
 
 func init(){

@@ -29,9 +29,9 @@
 3. That's it :)
 
 
-# Building from source (You probably don't want that)
+# Building from source (You probably don't need to do that)
 
-	$ docker-compose up prod-api-build-bk && docker-compose build prod-build-bk
+	$ docker-compose up --force-recreate prod-api-build-bk && docker-compose build prod-build-bk
 
 Then
 

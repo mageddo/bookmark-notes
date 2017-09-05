@@ -38,7 +38,7 @@
 *.ico
 node_modules
 **.db
-db/
+/db/
 wiki/
 .idea/
 *.iml
@@ -51,3 +51,5 @@ bk-api/pkg
 
 ## Build files
 build
+
+/bk-api/vendor*

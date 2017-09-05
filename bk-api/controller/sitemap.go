@@ -3,7 +3,7 @@ package controller
 import (
 	"net/http"
 	"context"
-	"github.com/mageddo/bookmark-notes/service"
+	"bk-api/service"
 	"github.com/mageddo/go-logging"
 )
 
