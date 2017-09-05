@@ -1,8 +1,8 @@
 package main
 
 import (
-	_ "github.com/mageddo/bk-api/controller"
-	_ "github.com/mageddo/bk-api/log"
+	_ "bk-api/controller"
+	_ "bk-api/log"
 	"net/http"
 	"github.com/mageddo/go-logging"
 )
@@ -14,6 +14,5 @@ func main(){
 	if err := http.ListenAndServe(":3131", nil); err != nil {
 		logger.Errorf("error=%v", err)
 	}
-
 }
 

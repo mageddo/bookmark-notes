@@ -3,7 +3,7 @@ package log
 import (
 	"github.com/mageddo/go-logging"
 	"os"
-	"github.com/mageddo/bookmark-notes/utils"
+	"bk-api/utils"
 	"fmt"
 )
 
