@@ -53,7 +53,10 @@ services:
   # run app for development
   dev-app-bk:
     extends: prod-app-bk
-    image: node:5.4.0-slim
+    build:
+       context: .
+       args:
+        - DOWNLOAD_API_FROM_REMOTE=0
     container_name: bookmarks-node
     environment:
       - MG_MODE=debug

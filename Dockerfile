@@ -25,7 +25,7 @@ COPY conf "${APP_PATH}/conf.default"
 COPY files/prod "${APP_PATH}/files/prod"
 
 # INSTALLING API FILES
-ADD build/* /tmp/
+COPY build/* /tmp/
 
 # GETTING API FILES FROM WEB
 RUN if [ "$DOWNLOAD_API_FROM_REMOTE" = "1" ] ; then apt-get update && apt-get install -y curl && \
