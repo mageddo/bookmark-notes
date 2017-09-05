@@ -32,6 +32,7 @@ services:
     volumes:
       - $PWD/bk-api:/go/src/bk-api/
       - $PWD/build:/go/build
+      - ./VERSION:/VERSION
     command: bash -c "./builder build"
     environment:
       - BUILD_PATH=/go/build
