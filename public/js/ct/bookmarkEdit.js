@@ -287,8 +287,11 @@ function parseCode(content){
 	}
 	var renderer = new marked.Renderer();
 	renderer.code = function(code, lang){
-		var parsedCode = languagesMap[lang] ? hljs.highlight(lang, code) : {value: code}; // MG-40 hljs.highlightAuto(code) it is slow (1-2 seconds to parse)
-		return Mustache.render($('#tplCodeBlock').html(), {lang: lang, code: parsedCode.value, overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7 });
+		var parsedCode = languagesMap[lang] ? hljs.highlight(lang, code) : {value: code, plain: true}; // MG-40 hljs.highlightAuto(code) it is slow (1-2 seconds to parse)
+		return Mustache.render($('#tplCodeBlock').html(), {
+			lang: lang, code: parsedCode.value, plain: parsedCode.plain,
+			overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7
+		});
 	}
 	renderer.table = function(header, body) {
 		 return '<table class="table table-bordered table-striped">\n'
