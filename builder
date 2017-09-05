@@ -22,18 +22,12 @@ case $1 in
 		echo "starting build"
 		VERSION=`cat VERSION`
 
-		rm -rf build/* && \
-		mkdir -p build/ && \
-		cd bk-api/ && \
-		git submodule init && \
-		git submodule update && \
-		cd src/ && \
+		rm -rf $BUILD_PATH/* && \
+		cd $APP_PATH && \
 		go test -cover=false \
-			./github.com/mageddo/bookmark-notes/.../ && \
-		go build -v -o ../../build/bk-api && \
-		cd ../../build/ && \
-		tar -acvf bk-api-$VERSION.tgz * && \
-		cd ../
+			./bk-api/.../ && \
+		go build -v -o $BUILD_PATH/bk-api && \
+		sh -c "cd $BUILD_PATH && tar -acvf bk-api-$VERSION.tgz *"
 
 		echo "build success"
 
