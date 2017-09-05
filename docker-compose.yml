@@ -28,14 +28,14 @@ services:
 
   # compile only the prod api package
   prod-api-build-bk:
-    image: golang:1.7.4
+    image: golang:1.9
     volumes:
-      - $PWD:/app
+      - $PWD/bk-api:/go/src/bk-api/
     command: bash -c "./builder build"
     environment:
       - TERM=xterm
-      - GOPATH=/app/bk-api
-    working_dir: /app
+      - GOPATH=/go
+    working_dir: /go/src/bk-api/
     network_mode: bridge
 
   # useful to run api for development
@@ -43,7 +43,6 @@ services:
     extends: prod-api-build-bk
     volumes:
       - /var/lib/mageddo/bookmarks-node/db:/opt/bookmarks/db
-    working_dir: /app/bk-api/src
     command: tail -f /dev/null
     hostname: bk-api.dev
 

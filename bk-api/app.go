@@ -1,8 +1,8 @@
 package main
 
 import (
-	_ "github.com/mageddo/bookmark-notes/controller"
-	_ "github.com/mageddo/bookmark-notes/log"
+	_ "github.com/mageddo/bk-api/controller"
+	_ "github.com/mageddo/bk-api/log"
 	"net/http"
 	"github.com/mageddo/go-logging"
 )
