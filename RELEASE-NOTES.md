@@ -1,5 +1,5 @@
 # 2.9.2
-* 
+* Fix container stop taking forever
 
 # 2.9.1
 * Fixing HTML not rendering when code in plain mode
