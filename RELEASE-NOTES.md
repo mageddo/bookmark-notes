@@ -1,3 +1,6 @@
+# 2.9.0
+* Prevent user from accidentally get out of creation/edition page
+
 # 2.8.2
 * Using gzip for all plain text URLs (only for the site, at nginx level)
 * Moving bookmark search  apis to the bk-api project
