@@ -16,6 +16,7 @@ ENV NODE_CONFIG_DIR=conf
 
 ARG DOWNLOAD_API_FROM_REMOTE=1
 
+COPY bookmark-notes "${APP_PATH}"
 COPY src "${APP_PATH}/src"
 COPY view "${APP_PATH}/view"
 COPY public "${APP_PATH}/public"
@@ -33,4 +34,4 @@ RUN if [ "$DOWNLOAD_API_FROM_REMOTE" = "1" ] ; then apt-get update && apt-get in
 
 RUN mkdir -p $API_PATH && tar -xvf /tmp/bk-api*.tgz -C $API_PATH && rm -rf /tmp/*
 
-CMD ["bash", "-c", "npm start & /bk-api/bk-api & tail -f /dev/null"]
+CMD $APP_PATH/bookmark-notes
