@@ -22,7 +22,7 @@ confirmReleaseVersion.doLast {
 }
 
 release {
-	project.ext.set("release.useAutomaticVersion", false)
+	project.ext.set("release.useAutomaticVersion", true)
 	failOnCommitNeeded = false
 	failOnPublishNeeded = false
 	failOnUnversionedFiles = false

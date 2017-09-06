@@ -1,5 +1,7 @@
 function cb(editMode){
 
+	window.onbeforeunload = function(){return "";};
+
 	var isMobile = mg.isMobile,
 		st = getSt(editMode),
 		editorEl = $("#txtDescription"),

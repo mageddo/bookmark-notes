@@ -196,5 +196,10 @@ function eventosTabela(){
 			}
 		})
 	});
+
+	$('#modal').on('hidden.bs.modal', function() {
+		console.debug('closing');
+		window.onbeforeunload = null;
+	});
 }
 })();
