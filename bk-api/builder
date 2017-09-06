@@ -6,17 +6,6 @@ CUR_DIR=$PWD
 
 case $1 in
 
-	pull-all )
-		git pull
-		for i in `git submodule | awk '{print $2}'`; do
-				echo "pulling $i"
-				cd $i
-				git pull
-				cd $CUR_DIR
-
-		done;
-	;;
-
 	build )
 
 		echo "starting build"

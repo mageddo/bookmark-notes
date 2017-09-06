@@ -20,7 +20,6 @@
 #  name = "github.com/x/y"
 #  version = "2.4.0"
 
-
 [[constraint]]
   name = "github.com/mageddo/go-logging"
   revision = "7a44b89dd8729895685b465e309f2c8253be6a42"
@@ -32,3 +31,7 @@
 [[constraint]]
   name = "github.com/mattn/go-sqlite3"
   version = "1.2.0"
+
+[[constraint]]
+  name = "golang.org/x/net"
+  revision = "66aacef3dd8a676686c7ae3716979581e8b03c47"
