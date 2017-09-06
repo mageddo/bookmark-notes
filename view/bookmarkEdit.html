@@ -55,7 +55,7 @@ var tagsToEdit = {{#stringify}}{{/stringify}};
 			{{/overflown}}
 			<li role="presentation" class="pull-right" ><a href="#" class="skipped glyphicon glyphicon-option-vertical"></a></li>
 		</ul>
-		<pre><code>{{{code}}}</code></pre>
+		<pre><code>{{#plain}}{{code}}{{/plain}}{{^plain}}{{{code}}}{{/plain}}</code></pre>
 	</div>
 </script>
 <script type="text/template" id="tplNoResults">

@@ -1,3 +1,6 @@
+# 2.9.1
+* Fixing HTML not rendering when code in plain mode
+
 # 2.9.0
 * Prevent user from accidentally get out of creation/edition page
 
