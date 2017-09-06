@@ -34,5 +34,4 @@
 
 [[constraint]]
   name = "golang.org/x/net"
-  packages = ["context"]
   revision = "66aacef3dd8a676686c7ae3716979581e8b03c47"
