@@ -21,17 +21,16 @@ func init (){
 var tablesCreated = false
 func BuildDatabase(){
 	ctx := logging.NewContext()
-	logger := logging.NewLog(ctx)
+	//logger := logging.NewLog(ctx)
 	utilsDao := dao.NewUtilsDAO(ctx)
 	if !tablesCreated {
 		if err := utilsDao.CreateTables(); err != nil {
-			logger.Fatal(err)
+			log.Fatal(err)
 		}
-
 		tablesCreated = true
 	}
 	if err := utilsDao.TruncateTables(); err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	}
 }
 

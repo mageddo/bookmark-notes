@@ -4,6 +4,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	"database/sql"
 	"bk-api/utils"
+	"bk-api/env"
 )
 
 var readOnlyDB *sql.DB
@@ -14,7 +15,7 @@ func init() {
 	//db, err = sql.Open("sqlite3", "/var/lib/mageddo/bookmarks-node/db/bookmarks.db?mode=ro")
 
 	readOnlyDB, err = sql.Open("sqlite3", utils.GetConfig().DatabaseURL)
-	readOnlyDB.SetMaxOpenConns(5)
+	readOnlyDB.SetMaxOpenConns(utils.GetConfig().Connections)
 	if (err != nil) {
 		panic(err)
 	}
@@ -32,7 +33,7 @@ func GetROConn() *sql.DB {
 }
 
 func GetConn() *sql.DB {
-	if utils.IsTestProfile() {
+	if env.IsTestProfile() {
 		return readOnlyDB
 	}
 	return db

@@ -12,4 +12,3 @@ type UtilsDAO interface {
 func NewUtilsDAO(ctx context.Context) *UtilsDAOSQLite {
 	return &UtilsDAOSQLite{logging.NewLog(ctx)}
 }
-

@@ -1,3 +1,4 @@
 {
-	"databaseUrl": "/opt/bookmarks/db/bookmarks.db"
+	"databaseUrl": "/opt/bookmarks/db/bookmarks.db",
+	"connections": 6
 }
