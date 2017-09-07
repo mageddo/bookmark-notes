@@ -16,7 +16,7 @@ var regex = regexp.MustCompile("[\t\n]+")
 
 func TestGetV1_0Success(t *testing.T){
 
-	now, err := time.Parse("2016-01-02", "2017-08-07")
+	now, err := time.Parse("2006-01-02", "2017-08-07")
 	if err != nil {
 		t.Fatal(err)
 	}
