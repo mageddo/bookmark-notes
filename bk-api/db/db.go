@@ -11,7 +11,7 @@ var db *sql.DB
 func init() {
 	var err error
 	//db, err = sql.Open("sqlite3", "/var/lib/mageddo/bookmarks-node/db/bookmarks.db?mode=ro")
-	
+
 	db, err = sql.Open("sqlite3", utils.GetConfig().DatabaseURL)
 	db.SetMaxOpenConns(5)
 	if (err != nil) {
@@ -19,6 +19,6 @@ func init() {
 	}
 }
 
-func GetConn() *sql.DB {
+func GetROConn() *sql.DB {
 	return db
 }
