@@ -55,8 +55,15 @@ CREATE TABLE SYSTEM_PROPERTY (
 
 func (dao *UtilsDAOSQLite) TruncateTables() error {
 	dao.logger.Info("status=begin")
+
 	conn := db.GetConn()
-	rows, err := conn.Query(`SELECT name FROM sqlite_master WHERE type='table'`);
+	tx , err := conn.Begin()
+	if err != nil {
+		dao.logger.Errorf("error=cannot-open-tx, err=%v", err)
+		return err
+	}
+
+	rows, err := tx.Query(`SELECT name FROM sqlite_master WHERE type='table'`);
 	if err != nil {
 		dao.logger.Errorf("status=get-tables, err=%v", err)
 		return err
@@ -67,14 +74,16 @@ func (dao *UtilsDAOSQLite) TruncateTables() error {
 
 		var name string
 		rows.Scan(&name)
-		_, err := conn.Exec(fmt.Sprintf("SELECT * FROM %s", name))
+		dao.logger.Debugf("table=%s", name)
+		_, err := tx.Exec(fmt.Sprintf("DELETE FROM %s", name))
 		if err != nil {
 			dao.logger.Errorf("status=delete-rows, err=%v", err)
 			return err
 		}
 		dao.logger.Info("table=%s", name)
-
 	}
+	tx.Commit()
+
 	dao.logger.Info("status=success")
 	return nil
 }
