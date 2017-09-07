@@ -33,5 +33,6 @@ RUN if [ "$DOWNLOAD_API_FROM_REMOTE" = "1" ] ; then apt-get update && apt-get in
 	curl -L https://github.com/mageddo/bookmark-notes/releases/download/2.9.2/bk-api-2.9.2.tgz > /tmp/bk-api.tgz ; fi
 
 RUN mkdir -p $API_PATH && tar -xvf /tmp/bk-api*.tgz -C $API_PATH && rm -rf /tmp/*
+COPY bk-api/conf $API_PATH/conf
 
 CMD $APP_PATH/bookmark-notes
