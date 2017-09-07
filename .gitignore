@@ -51,5 +51,6 @@ bk-api/pkg
 
 ## Build files
 build
+*.lock
 
 /bk-api/vendor*
