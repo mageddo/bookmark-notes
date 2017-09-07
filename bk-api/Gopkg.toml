@@ -35,3 +35,9 @@
 [[constraint]]
   name = "golang.org/x/net"
   revision = "66aacef3dd8a676686c7ae3716979581e8b03c47"
+
+# test dependencies
+
+[[constraint]]
+  name = "github.com/stretchr/testify"
+  version = "v1.1.4"

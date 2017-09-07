@@ -35,10 +35,11 @@ services:
       - ./VERSION:/VERSION
     command: bash -c "./builder build"
     environment:
-      - BUILD_PATH=/go/build
-      - APP_PATH=/go/src/bk-api
       - TERM=xterm
+      - BUILD_PATH=/go/build
       - GOPATH=/go
+      - APP_PATH=/go/src/bk-api
+      - MG_WORK_DIR=/go/src/bk-api
     working_dir: /go/src/bk-api/
     network_mode: bridge
 
@@ -47,7 +48,7 @@ services:
     extends: prod-api-build-bk
     volumes:
       - /var/lib/mageddo/bookmarks-node/db:/opt/bookmarks/db
-    command: tail -f /dev/null
+    command: bash -c "go install -v bk-api/vendor/github.com/mattn/go-sqlite3 && tail -f /dev/null"
     hostname: bk-api.dev
 
   # run app for development

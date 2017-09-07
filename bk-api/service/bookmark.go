@@ -8,6 +8,8 @@ import (
 	"strings"
 	"fmt"
 	"bk-api/errors"
+	"database/sql"
+	"bk-api/db"
 )
 
 const (
@@ -15,6 +17,7 @@ const (
 )
 
 type BookmarkService struct {
+	ctx context.Context
 	logger logging.Log
 	bookmarkDAO dao.BookmarkDAO
 }
@@ -36,7 +39,13 @@ func (s *BookmarkService) GetBookmarks(offset, quantity int, tag, query string) 
 	return s.bookmarkDAO.GetBookmarks(offset, quantity)
 }
 
+func (dao *BookmarkService) SaveBookmark(bookmark *entity.BookmarkEntity) error {
+	return db.Execute(func(tx *sql.Tx) error {
+		return dao.bookmarkDAO.SaveBookmark(tx, bookmark)
+	}, db.GetConn(), dao.ctx)
+
+}
 
 func NewBookmarkService(ctx context.Context) *BookmarkService {
-	return &BookmarkService{logging.NewLog(ctx), dao.NewBookmarkDAO(ctx)}
+	return &BookmarkService{ctx, logging.NewLog(ctx), dao.NewBookmarkDAO(ctx)}
 }

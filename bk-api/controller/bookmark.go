@@ -12,9 +12,13 @@ import (
 	"bk-api/errors"
 )
 
+const (
+	BOOKMARK_V1 = "/api/v1.0/bookmark"
+)
+
 func init(){
 
-	Get("/api/v1.0/bookmark", func(ctx context.Context, w http.ResponseWriter, r *http.Request){
+	Get(BOOKMARK_V1, func(ctx context.Context, w http.ResponseWriter, r *http.Request){
 
 		w.Header().Set("Content-Type", "application/json")
 
