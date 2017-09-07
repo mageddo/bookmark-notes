@@ -13,7 +13,7 @@ type BookmarkDAOSQLite struct {
 
 func (dao *BookmarkDAOSQLite) LoadSiteMap() ([]entity.BookmarkEntity, error) {
 
-	conn := db.GetConn()
+	conn := db.GetROConn()
 
 	rows, err := conn.Query(`
 		SELECT * FROM (
@@ -45,7 +45,7 @@ func (dao *BookmarkDAOSQLite) LoadSiteMap() ([]entity.BookmarkEntity, error) {
 func (dao *BookmarkDAOSQLite) GetBookmarks(offset, quantity int) ([]entity.BookmarkEntity, int, error) {
 
 	timer := time.Now()
-	conn := db.GetConn()
+	conn := db.GetROConn()
 	stm, err := conn.Prepare(`WITH LIST AS (
 		SELECT * FROM bookmark
 	)
@@ -77,7 +77,7 @@ func (dao *BookmarkDAOSQLite) GetBookmarks(offset, quantity int) ([]entity.Bookm
 
 func (dao *BookmarkDAOSQLite) GetBookmarksByNameOrHTML(query string, offset, quantity int) ([]entity.BookmarkEntity, int, error) {
 	dao.logger.Infof("status=begin, query=%s, offset=%d, quantity=%d", query, offset, quantity)
-	conn := db.GetConn()
+	conn := db.GetROConn()
 	stm, err := conn.Prepare(`
 		WITH FILTER AS (
 			SELECT * FROM BOOKMARK B
@@ -116,7 +116,7 @@ func (dao *BookmarkDAOSQLite) GetBookmarksByNameOrHTML(query string, offset, qua
 func (dao *BookmarkDAOSQLite) GetBookmarksByTagSlug(slug string, offset, quantity int) ([]entity.BookmarkEntity, int, error) {
 
 	dao.logger.Infof("status=begin, slug=%s, offset=%d, quantity=%d", slug, offset, quantity)
-	conn := db.GetConn()
+	conn := db.GetROConn()
 	stm, err := conn.Prepare(`WITH FILTER AS (
 		SELECT DISTINCT B.* FROM TAG_BOOKMARK TB
 			INNER JOIN BOOKMARK B ON B.IDT_BOOKMARK = TB.IDT_BOOKMARK

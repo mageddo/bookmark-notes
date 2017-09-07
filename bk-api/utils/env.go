@@ -12,3 +12,7 @@ func GetProfile() string {
 	}
 	return strings.ToLower(mode)
 }
+
+func IsTestProfile() bool {
+	return GetProfile() == "test"
+}
