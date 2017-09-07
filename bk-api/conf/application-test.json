@@ -1,4 +1,4 @@
 {
-	"databaseUrl": "/tmp/xdb.db",
+	"databaseUrl": ":memory:",
 	"connections": 1
 }
