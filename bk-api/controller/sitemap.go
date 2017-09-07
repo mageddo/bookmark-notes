@@ -16,6 +16,7 @@ func init(){
 		err := sc.LoadSiteMap(w, r.URL.Query().Get("url"))
 		if err != nil {
 			logger.Errorf("status=could-not-load, err=%+v", err)
+			BadRequest(w, "Could not load sitemap")
 		}
 
 	})

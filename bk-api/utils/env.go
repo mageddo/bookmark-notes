@@ -8,7 +8,7 @@ import (
 func GetProfile() string {
 	mode := os.Getenv("PROFILE")
 	if len(mode) == 0 {
-		mode = "DEV"
+		mode = "dev"
 	}
-	return strings.ToUpper(mode)
+	return strings.ToLower(mode)
 }
