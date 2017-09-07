@@ -19,9 +19,10 @@ func init (){
 
 var tablesCreated = false
 func BuildDatabase(){
+
 	ctx := logging.NewContext()
-	//logger := logging.NewLog(ctx)
 	utilsDao := dao.NewUtilsDAO(ctx)
+
 	if !tablesCreated {
 		if err := utilsDao.CreateTables(); err != nil {
 			log.Fatal(err)
