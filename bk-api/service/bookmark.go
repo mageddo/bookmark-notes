@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	SEARCH_MIN_SIZE = 4
+	SEARCH_MIN_SIZE = 3
 )
 
 type BookmarkService struct {
