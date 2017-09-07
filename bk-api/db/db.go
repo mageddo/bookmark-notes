@@ -19,6 +19,7 @@ func init() {
 	}
 }
 
+// Read only connection
 func GetROConn() *sql.DB {
 	return db
 }
