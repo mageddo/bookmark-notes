@@ -5,6 +5,8 @@ import (
 	"github.com/mageddo/go-logging"
 	"bk-api/entity"
 	"time"
+	"database/sql"
+	"bk-api/utils"
 )
 
 type BookmarkDAOSQLite struct {
@@ -156,18 +158,18 @@ func (dao *BookmarkDAOSQLite) GetBookmarksByTagSlug(slug string, offset, quantit
 	return *bookmarks, length, nil
 }
 
-func (dao *BookmarkDAOSQLite) SaveBookmark(bookmark *entity.BookmarkEntity) error {
+func (dao *BookmarkDAOSQLite) SaveBookmark(tx *sql.Tx, bookmark *entity.BookmarkEntity) error {
 
-	conn := db.GetConn()
-	stm, err := conn.Prepare(`INSERT INTO BOOKMARK
+	stm, err := tx.Prepare(`INSERT INTO BOOKMARK
 	(
 		NAM_BOOKMARK, DES_LINK,
 		DES_HTML, FLG_DELETED,
-		FLG_ARCHIVED, NUM_VISIBILITY
+		FLG_ARCHIVED, NUM_VISIBILITY, DAT_UPDATE
 	) VALUES (
 		?, ?,
 		?, ?,
-		?, ?
+		?, ?,
+		?
 	)`)
 
 	if err != nil {
@@ -179,7 +181,8 @@ func (dao *BookmarkDAOSQLite) SaveBookmark(bookmark *entity.BookmarkEntity) erro
 
 	r, err := stm.Exec(bookmark.Name, bookmark.Link,
 		bookmark.HTML, 0,
-		0, bookmark.Visibility)
+		0, bookmark.Visibility,
+		utils.Now())
 
 	if err != nil {
 		dao.logger.Errorf("status=cannot-insert, error=%+v", err)
