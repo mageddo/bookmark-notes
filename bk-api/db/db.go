@@ -13,8 +13,6 @@ var db *sql.DB
 
 func init() {
 	var err error
-	//db, err = sql.Open("sqlite3", "/var/lib/mageddo/bookmarks-node/db/bookmarks.db?mode=ro")
-
 	readOnlyDB, err = sql.Open("sqlite3", utils.GetConfig().DatabaseURL)
 	readOnlyDB.SetMaxOpenConns(utils.GetConfig().Connections)
 	if (err != nil) {
