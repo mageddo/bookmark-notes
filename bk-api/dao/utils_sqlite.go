@@ -74,13 +74,13 @@ func (dao *UtilsDAOSQLite) TruncateTables() error {
 
 		var name string
 		rows.Scan(&name)
-		dao.logger.Debugf("table=%s", name)
+		dao.logger.Debugf("status=before, table=%s", name)
 		_, err := tx.Exec(fmt.Sprintf("DELETE FROM %s", name))
 		if err != nil {
 			dao.logger.Errorf("status=delete-rows, err=%v", err)
 			return err
 		}
-		dao.logger.Info("table=%s", name)
+		dao.logger.Debugf("status=success, table=%s", name)
 	}
 	tx.Commit()
 

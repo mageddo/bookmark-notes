@@ -113,6 +113,7 @@ func (dao *BookmarkDAOSQLite) GetBookmarksByNameOrHTML(query string, offset, qua
 	dao.logger.Infof("status=success, size=%d, query=%s", len(*bookmarks), query)
 	return *bookmarks, length, nil
 }
+
 func (dao *BookmarkDAOSQLite) GetBookmarksByTagSlug(slug string, offset, quantity int) ([]entity.BookmarkEntity, int, error) {
 
 	dao.logger.Infof("status=begin, slug=%s, offset=%d, quantity=%d", slug, offset, quantity)
@@ -153,4 +154,34 @@ func (dao *BookmarkDAOSQLite) GetBookmarksByTagSlug(slug string, offset, quantit
 	}
 	dao.logger.Infof("status=success, slug=%s, offset=%d, quantity=%d, length=%d", slug, offset, quantity, len(*bookmarks))
 	return *bookmarks, length, nil
+}
+
+func (dao *BookmarkDAOSQLite) SaveBookmark(bookmark *entity.BookmarkEntity) error {
+
+	conn := db.GetConn()
+	r, err := conn.Exec(`INSERT INTO BOOKMARK
+	(
+		NAM_BOOKMARK, DES_LINK,
+		DES_HTML, FLG_DELETED,
+		FLG_ARCHIVED, NUM_VISIBILITY
+	) VALUES (
+		?, ?,
+		?, ?
+		?, ?
+	)`, bookmark.Name, bookmark.Link,
+			bookmark.HTML, 0,
+			0, bookmark.Visibility)
+
+	if err != nil {
+		dao.logger.Errorf("status=cannot-insert, error=%+v", err)
+		return err
+	}
+
+	id, err := r.LastInsertId()
+	if err != nil {
+		dao.logger.Errorf("status=cannot-getid, error=%+v", err)
+		return err
+	}
+	bookmark.Id = int(id)
+	return nil
 }
