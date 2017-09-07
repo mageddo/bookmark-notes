@@ -159,18 +159,27 @@ func (dao *BookmarkDAOSQLite) GetBookmarksByTagSlug(slug string, offset, quantit
 func (dao *BookmarkDAOSQLite) SaveBookmark(bookmark *entity.BookmarkEntity) error {
 
 	conn := db.GetConn()
-	r, err := conn.Exec(`INSERT INTO BOOKMARK
+	stm, err := conn.Prepare(`INSERT INTO BOOKMARK
 	(
 		NAM_BOOKMARK, DES_LINK,
 		DES_HTML, FLG_DELETED,
 		FLG_ARCHIVED, NUM_VISIBILITY
 	) VALUES (
 		?, ?,
+		?, ?,
 		?, ?
-		?, ?
-	)`, bookmark.Name, bookmark.Link,
-			bookmark.HTML, 0,
-			0, bookmark.Visibility)
+	)`)
+
+	if err != nil {
+		dao.logger.Errorf("status=cannot-prepare, err=%v", err)
+		return err
+	}
+
+	defer stm.Close()
+
+	r, err := stm.Exec(bookmark.Name, bookmark.Link,
+		bookmark.HTML, 0,
+		0, bookmark.Visibility)
 
 	if err != nil {
 		dao.logger.Errorf("status=cannot-insert, error=%+v", err)
@@ -183,5 +192,6 @@ func (dao *BookmarkDAOSQLite) SaveBookmark(bookmark *entity.BookmarkEntity) erro
 		return err
 	}
 	bookmark.Id = int(id)
+	dao.logger.Infof("status=success, id=%d", id)
 	return nil
 }

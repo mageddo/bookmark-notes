@@ -4,7 +4,6 @@ import (
 	"testing"
 	"github.com/stretchr/testify/assert"
 	"bk-api/test"
-	"fmt"
 	"bk-api/dao"
 	"github.com/mageddo/go-logging"
 	"bk-api/entity"
@@ -13,15 +12,26 @@ import (
 // /api/v1.0/sitemap
 func TestGetV1_0Success(t *testing.T){
 
+	expectedXML := `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<url>
+		<loc>/bookmark/1/x</loc>
+		
+		<changefreq>weekly</changefreq>
+		<priority>1</priority>
+	</url></urlset>
+`
+
 	ctx := logging.NewContext()
 	test.BuildDatabase()
 
-	name := "X"
-	dao.NewBookmarkDAO(ctx).SaveBookmark(&entity.BookmarkEntity{Name: &name})
+	dao.NewBookmarkDAO(ctx).SaveBookmark(entity.NewBookmarkWithNameAndVisibility("X", entity.PUBLIC))
 
 	resp, c, err := test.NewReq("GET", "/api/v1.0/sitemap")
-	fmt.Println(resp, c, err)
+
+	assert.Nil(t, err)
 	assert.Equal(t, 200, c)
-	assert.Equal(t, "x", resp)
+	assert.Equal(t, len(expectedXML), len(resp))
+	assert.Equal(t, expectedXML, resp)
 
 }

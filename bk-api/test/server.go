@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"log"
 	"bytes"
-	"os"
 	"bk-api/dao"
 	"github.com/mageddo/go-logging"
 )
@@ -52,7 +51,7 @@ func NewReq(method, path string, rds ...io.Reader) (string, int, error) {
 	}
 
 	buff := bytes.NewBufferString("")
-	if _, err := io.Copy(os.Stdout, res.Body); err != nil {
+	if _, err := io.Copy(buff, res.Body); err != nil {
 		return "", -1, err
 	}
 	return buff.String(), res.StatusCode, nil
