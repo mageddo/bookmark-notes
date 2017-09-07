@@ -16,6 +16,15 @@ var regex = regexp.MustCompile("[\t\n]+")
 
 func TestGetV1_0Success(t *testing.T){
 
+	now, err := time.Parse("2016-01-02", "2017-08-07")
+	if err != nil {
+		t.Fatal(err)
+	}
+	utils.SetNow(now)
+
+	ctx := logging.NewContext()
+	test.BuildDatabase()
+
 	expectedXML := regex.ReplaceAllString(`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
@@ -27,14 +36,6 @@ func TestGetV1_0Success(t *testing.T){
 </urlset>
 `, "")
 
-	now, err := time.Parse("2016-01-02", "2017-08-07")
-	if err != nil {
-		t.Fatal(err)
-	}
-	utils.SetNow(now)
-
-	ctx := logging.NewContext()
-	test.BuildDatabase()
 
 	service.NewBookmarkService(ctx).SaveBookmark(entity.NewBookmarkWithNameAndVisibility("X", entity.PUBLIC))
 
@@ -58,6 +59,9 @@ func TestGetV1_0CustomBaseURLSuccess(t *testing.T){
 	}
 	utils.SetNow(now)
 
+	ctx := logging.NewContext()
+	test.BuildDatabase()
+
 	expectedXML := regex.ReplaceAllString(`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
@@ -75,8 +79,6 @@ func TestGetV1_0CustomBaseURLSuccess(t *testing.T){
 </urlset>
 `, "")
 
-	ctx := logging.NewContext()
-	test.BuildDatabase()
 
 	service.NewBookmarkService(ctx).SaveBookmark(entity.NewBookmarkWithNameAndVisibility("X", entity.PUBLIC))
 	service.NewBookmarkService(ctx).SaveBookmark(entity.NewBookmarkWithNameAndVisibility("X2", entity.PUBLIC))
