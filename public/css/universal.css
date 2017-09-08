@@ -6,9 +6,21 @@
 	height: 34px;
 }
 
+.png-active {
+	background-color: #e6e6e6
+}
+
 /**
  * Text format
  */
 li,p {
 	text-align: justify;
+}
+
+.line-wrap-off {
+	white-space: pre;
+}
+
+.line-wrap-on {
+	white-space: normal;
 }

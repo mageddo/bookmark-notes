@@ -113,7 +113,6 @@ input:checked + .slider:before{
 	color: #505050;
 	tab-size: 2;
 	outline: none;
-	white-space: nowrap;
 	line-height: 150%;
 }
 
