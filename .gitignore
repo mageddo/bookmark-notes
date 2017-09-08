@@ -28,14 +28,6 @@
 *.tar.xz
 *.tar.bz2
 
-# images
-*.png
-*.PNG
-*.gif
-*.GIF
-*.jpeg
-*.JPEG
-*.ico
 node_modules
 **.db
 /db/
