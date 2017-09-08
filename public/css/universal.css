@@ -1,0 +1,22 @@
+/**
+ * Text format
+ */
+li,p {
+	text-align: justify;
+}
+
+.line-wrap-off {
+	white-space: pre;
+}
+
+.line-wrap-on {
+	white-space: normal;
+}
+
+
+/**
+ * Code format
+ */
+.mg-code pre code {
+	white-space: pre;
+}

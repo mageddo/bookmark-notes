@@ -1,3 +1,7 @@
+# 2.10.0
+* Format paragraph and lists justified
+* Mobile Word/Wrap Button
+
 # 2.9.2
 * Fix container stop taking forever
 
