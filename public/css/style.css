@@ -150,11 +150,6 @@ pre {
 	overflow-x: auto;
 }
 
-.modal-body pre code {
-	white-space: pre;
-}
-
-
 .with-scroll {
 	overflow-y: auto;
 }
@@ -190,3 +185,20 @@ pre {
 	border-radius: 4px;
 	background: #FFF;
 }
+
+
+/**
+ *
+ */
+.glyphicon-line-wrap {
+	background-image: url("/img/line-wrap-24.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	width: 42px;
+	height: 34px;
+}
+
+.png-active {
+	background-color: #e6e6e6
+}
+

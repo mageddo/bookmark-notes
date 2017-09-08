@@ -146,7 +146,7 @@ function cb(editMode){
 		btnEditorPanel.append('&nbsp;');
 		btnEditorPanel.append('<a class="'+ btnVisualizeSlc +'  btn btn-default btn-visualize-common glyphicon glyphicon-eye-open" href="#"></a>');
 		btnEditorPanel.append('&nbsp;');
-		btnEditorPanel.append('<a class="'+ btnLineWrap +'  btn btn-default btn-linewrap-common glyphicon glyphicon-line-wrap" href="#"></a>');
+		btnEditorPanel.append('<a class="'+ btnLineWrap +'  btn btn-default btn-linewrap-common glyphicon glyphicon-line-wrap png-active" href="#"></a>');
 		btnEditorPanel.append('&nbsp;');
 		btnEditorPanel.append('<a class=" btn-tab  btn btn-default glyphicon glyphicon-indent-left" href="#"></a>');
 		btnEditorPanel.append('&nbsp;');
@@ -154,7 +154,7 @@ function cb(editMode){
 		if(fullscreen){
 			btnEditorPanel.append('<a class="btn-bk-save btn btn-success glyphicon glyphicon-floppy-save pull-right" href="#"></a>');
 		}
-		editorPanel.append('<textarea id="'+ editorId  +'" class="editor-common line-wrap-off"></textarea><div class="'+ editorPreviewSlc +'"></div>');
+		editorPanel.append('<textarea id="'+ editorId  +'" class="editor-common line-wrap-on"></textarea><div class="'+ editorPreviewSlc +'"></div>');
 
 		var editor = editorPanel.find("#" + editorId);
 		var btnVisualize = btnEditorPanel.find("." + btnVisualizeSlc);

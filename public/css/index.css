@@ -63,14 +63,11 @@ body {
 	background: #FFF;
 }
 
-.public-content pre {
+.mg-code pre {
 	max-height: 300px;
 	overflow: auto;
 }
 
-.public-content pre code {
-	white-space: pre;
-}
 
 img {
 	max-width: 100%
