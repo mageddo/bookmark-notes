@@ -1,0 +1,14 @@
+.glyphicon-line-wrap {
+	background-image: url("/img/line-wrap-24.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	width: 42px;
+	height: 34px;
+}
+
+/**
+ * Text format
+ */
+li,p {
+	text-align: justify;
+}

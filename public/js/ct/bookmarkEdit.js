@@ -135,7 +135,7 @@ function cb(editMode){
 	}
 
 	/*
-		Mount mobile painel
+		Mount mobile panel
 	*/
 	function getMobileEditor(editorId, editorPreviewSlc, btnVisualizeSlc, btnEditSlc, btnFullScreenSlc, text, fullscreen){
 		var editorPanel = $('<div class="editor-panel" />'),
@@ -145,6 +145,8 @@ function cb(editMode){
 		btnEditorPanel.append('<a class="' + btnEditSlc + '  btn btn-default btn-edit-common glyphicon glyphicon-pencil active" href="#"></a>');
 		btnEditorPanel.append('&nbsp;');
 		btnEditorPanel.append('<a class="'+ btnVisualizeSlc +'  btn btn-default btn-visualize-common glyphicon glyphicon-eye-open" href="#"></a>');
+		btnEditorPanel.append('&nbsp;');
+		btnEditorPanel.append('<a class="'+ btnVisualizeSlc +'  btn btn-default btn-visualize-common glyphicon glyphicon-line-wrap" href="#"></a>');
 		btnEditorPanel.append('&nbsp;');
 		btnEditorPanel.append('<a class=" btn-tab  btn btn-default glyphicon glyphicon-indent-left" href="#"></a>');
 		btnEditorPanel.append('&nbsp;');

@@ -75,9 +75,3 @@ img {
 	max-width: 100%
 }
 
-/**
- * Text format
- */
-li,p {
-	text-align: justify;
-}

@@ -1,4 +1,7 @@
 # 2.9.2
+* Format paragraph and lists justified
+
+# 2.9.2
 * Fix container stop taking forever
 
 # 2.9.1
