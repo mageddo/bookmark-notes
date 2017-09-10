@@ -9,7 +9,7 @@ REPO_URL=mageddo/bookmark-notes
 API_PATH=${API_PATH:-$CUR_DIR}
 BUILD_PATH=${BUILD_PATH:-$API_PATH/build}
 
-echo "CURRENT_BRANCH=$CURRENT_BRANCH"
+if [ "$REPO_TOKEN" = "" ] ; then echo "REPO_TOKEN cannot be empty"; exit -1; fi
 
 create_release(){
 
@@ -67,15 +67,15 @@ case $1 in
 		# setup user
 		ACTUAL_USER=`git config user.name`
 		ACTUAL_EMAIL=`git config user.email`
-		AUTHOR="${ACTUAL_USER:-CI BOT} <${ACTUAL_EMAIL:-ci@mageddo.com}>"
+		AUTHOR="${ACTUAL_USER:-CI BOT} <${ACTUAL_EMAIL:-ci-bot@mageddo.com}>"
+		REMOTE="https://${REPO_TOKEN}@github.com/${REPO_URL}.git"
 
-		git remote remove origin  && git remote add origin https://${REPO_TOKEN}@github.com/$REPO_URL.git
 		git checkout -b build_branch ${CURRENT_BRANCH}
 		echo "> Repository added, currentBranch=${CURRENT_BRANCH}"
 
 		git commit --author="$AUTHOR" -am "Releasing ${APP_VERSION}" # if there is nothing to commit the program will exits
 		git tag ${APP_VERSION}
-		git push origin "build_branch:${CURRENT_BRANCH}"
+		git push "$REMOTE" "build_branch:${CURRENT_BRANCH}"
 		git status
 		echo "> Branch pushed - Branch $CURRENT_BRANCH"
 
