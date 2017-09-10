@@ -64,12 +64,10 @@ case $1 in
 
 	upload-release )
 
-		git status
-		echo "${APP_VERSION}"
-
 		git commit -am "Releasing ${APP_VERSION}"
 		git tag ${APP_VERSION}
-		git push origin "build_branch:${TRAVIS_BRANCH}"
+		echo "teste" &> /dev/stdout
+		git push origin "build_branch:${TRAVIS_BRANCH}" &> /dev/stdout
 		git status
 		echo "> Branch pushed - Branch $TRAVIS_BRANCH"
 
