@@ -79,7 +79,7 @@ case $1 in
 		echo "> Branch pushed - Branch $TRAVIS_BRANCH"
 
 		create_release
-		
+
 		echo "> Release created with id $TAG_ID"
 
 		SOURCE_FILE="build/bk-api-$APP_VERSION.tgz"
