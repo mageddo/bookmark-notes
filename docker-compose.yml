@@ -45,6 +45,7 @@ services:
 
   # useful to run api for development
   prod-api-compiler-bk:
+    container_name: prod-api-compiler-bk
     extends: prod-api-build-bk
     volumes:
       - /var/lib/mageddo/bookmarks-node/db:/opt/bookmarks/db
@@ -53,6 +54,7 @@ services:
 
   # run app for development
   dev-app-bk:
+    container_name: dev-app-bk
     extends: prod-app-bk
     build:
        context: .
