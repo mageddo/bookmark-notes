@@ -39,7 +39,7 @@ case $1 in
 #	)
 
 		sed -i -E "s/(defreitas\\/bookmark-notes:)[0-9]+\.[0-9]+\.[0-9]+/\1$APP_VERSION/g" docker-compose.yml
-		sed -i -E "s/download\\/([0-9]+\.[0-9]+\.[0-9]+)\\/(bk-api-[0-9]+\.[0-9]+\.[0-9]+)/download/$APP_VERSION/bk-api-$APP_VERSION/g" Dockerfile
+		sed -i -E "s/download\\/([0-9]+\.[0-9]+\.[0-9]+)\\/(bk-api-[0-9]+\.[0-9]+\.[0-9]+)/download\\/$APP_VERSION\\/bk-api-$APP_VERSION/g" Dockerfile
 
 		echo "starting build"
 
