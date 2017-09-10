@@ -67,9 +67,12 @@ function listar(){
 		dataType: "json",
 		success: function (data) {
 			populaTabela(data);
-		}
+		},
+		key: 'bookmark-list'
 	}
-	$.ajax(conf);
+
+	mg.ajax(conf);
+
 	lastConf = conf;
 };listar();
 
@@ -82,9 +85,10 @@ $("#iptSearch").keyup(function(){
 			data: {query: key, indice: 0},
 			success:function(data){
 				populaTabela(data);
-			}
+			},
+			key: 'bookmark-list'
 		};
-		$.ajax(conf);
+		mg.ajax(conf);
 		lastConf = conf;
 	}, 500);
 });
