@@ -44,6 +44,8 @@ services:
     working_dir: /go/src/bk-api/
     network_mode: bridge
 
+## TO DEVELOPMENT
+
   # useful to run api for development
   prod-api-compiler-bk:
     container_name: prod-api-compiler-bk

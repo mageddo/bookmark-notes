@@ -1,0 +1,18 @@
+sudo: required
+
+services:
+  - docker
+
+install:
+
+  - source ./builder setup-repository
+
+script: docker-compose up --abort-on-container-exit prod-api-build-bk
+
+after_success:
+  - source ./builder upload-release
+
+branches:
+  only:
+  - feature/MG-405
+  - master
