@@ -65,13 +65,21 @@ case $1 in
 	upload-release )
 
 		git commit -am "Releasing ${APP_VERSION}"
+		echo "$? commit"
+
 		git tag ${APP_VERSION}
-		echo "teste" &> /dev/stdout
-		git push origin "build_branch:${TRAVIS_BRANCH}" &> /dev/stdout
+		echo "$? tag"
+
+		git push origin "build_branch:${TRAVIS_BRANCH}"
+		echo "$? push"
+
 		git status
+		echo "$? status"
+
 		echo "> Branch pushed - Branch $TRAVIS_BRANCH"
 
 		create_release
+		
 		echo "> Release created with id $TAG_ID"
 
 		SOURCE_FILE="build/bk-api-$APP_VERSION.tgz"
