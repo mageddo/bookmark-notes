@@ -5,13 +5,13 @@ services:
 
 install:
 
-  - source ./builder setup-repository
-  - source ./builder apply-version
+  - ./builder setup-repository
+  - ./builder apply-version
 
 script: docker-compose up --abort-on-container-exit prod-api-build-bk
 
 after_success:
-  - source ./builder upload-release
+  - ./builder upload-release
 
 branches:
   only:
