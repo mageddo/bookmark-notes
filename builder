@@ -65,7 +65,7 @@ case $1 in
 	upload-release )
 
 		# setup user
-		if [ `git config user.email` = "" ] ; then
+		if [ "`git config user.email`" = "" ] ; then
 			echo '> Setting git credentials'
 			git config user.email = 'ci@mageddo.com'
 			git config user.name = 'CI Bot'
