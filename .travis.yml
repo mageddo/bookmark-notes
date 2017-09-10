@@ -6,6 +6,7 @@ services:
 install:
 
   - source ./builder setup-repository
+  - source ./builder apply-version
 
 script: docker-compose up --abort-on-container-exit prod-api-build-bk
 

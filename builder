@@ -28,18 +28,14 @@ upload_file(){
 
 case $1 in
 
+	apply-version )
+
+	sed -i -E "s/(defreitas\\/bookmark-notes:)[0-9]+\.[0-9]+\.[0-9]+/\1$APP_VERSION/g" docker-compose.yml
+	sed -i -E "s/download\\/([0-9]+\.[0-9]+\.[0-9]+)\\/(bk-api-[0-9]+\.[0-9]+\.[0-9]+)/download\\/$APP_VERSION\\/bk-api-$APP_VERSION/g" Dockerfile
+
+	;;
+
 	build )
-
-		# updating files version
-#	updateVersion("${project.projectDir}/docker-compose.yml", "(defreitas/bookmark-notes:)(.*)", "\$1${project.version}")
-#	updateVersion("${project.projectDir}/VERSION", '(\\d+\\.\\d\\.+\\d+)', "${project.version}")
-#	updateVersion(
-#		"${project.projectDir}/Dockerfile", 'download\\/(\\d+\\.\\d\\.+\\d+)\\/bk-api-(\\d+\\.\\d\\.+\\d+)',
-#		"download/${project.version}/bk-api-${project.version}"
-#	)
-
-		sed -i -E "s/(defreitas\\/bookmark-notes:)[0-9]+\.[0-9]+\.[0-9]+/\1$APP_VERSION/g" docker-compose.yml
-		sed -i -E "s/download\\/([0-9]+\.[0-9]+\.[0-9]+)\\/(bk-api-[0-9]+\.[0-9]+\.[0-9]+)/download\\/$APP_VERSION\\/bk-api-$APP_VERSION/g" Dockerfile
 
 		echo "starting build"
 
