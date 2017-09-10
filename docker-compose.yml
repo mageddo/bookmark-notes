@@ -31,6 +31,7 @@ services:
     image: golang:1.9
     volumes:
       - $PWD/bk-api:/go/src/bk-api/
+      - ./builder:/go/src/bk-api/builder
       - $PWD/build:/go/build
       - ./VERSION:/VERSION
     command: bash -c "./builder build"
