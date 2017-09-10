@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
@@ -64,19 +64,10 @@ case $1 in
 
 	upload-release )
 
-		echo "before commit "
-		git commit -am "Releasing ${APP_VERSION}"
-		echo "$? commit"
-
+		git commit -am "Releasing ${APP_VERSION}" # if there is nothing to commit the program will exits
 		git tag ${APP_VERSION}
-		echo "$? tag"
-
 		git push origin "build_branch:${TRAVIS_BRANCH}"
-		echo "$? push"
-
 		git status
-		echo "$? status"
-
 		echo "> Branch pushed - Branch $TRAVIS_BRANCH"
 
 		create_release
