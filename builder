@@ -65,17 +65,15 @@ case $1 in
 	upload-release )
 
 		# setup user
-		if [ "`git config user.email`" = "" ] ; then
-			echo '> Setting git credentials'
-			git config user.email = 'ci@mageddo.com'
-			git config user.name = 'CI Bot'
-		fi
+		ACTUAL_USER=`git config user.name`
+		ACTUAL_EMAIL=`git config user.email`
+		AUTHOR="${ACTUAL_USER:-CI BOT} <${ACTUAL_EMAIL:-ci@mageddo.com}>"
 
 		git remote remove origin  && git remote add origin https://${REPO_TOKEN}@github.com/$REPO_URL.git
 		git checkout -b build_branch ${CURRENT_BRANCH}
 		echo "> Repository added, currentBranch=${CURRENT_BRANCH}"
 
-		git commit -am "Releasing ${APP_VERSION}" # if there is nothing to commit the program will exits
+		git commit --author="$AUTHOR" -am "Releasing ${APP_VERSION}" # if there is nothing to commit the program will exits
 		git tag ${APP_VERSION}
 		git push origin "build_branch:${CURRENT_BRANCH}"
 		git status
