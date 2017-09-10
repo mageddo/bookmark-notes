@@ -9,6 +9,9 @@ REPO_URL=mageddo/bookmark-notes
 API_PATH=${API_PATH:-$CUR_DIR}
 BUILD_PATH=${BUILD_PATH:-$API_PATH/build}
 
+echo "CURRENT_BRANCH=$TRAVIS_BRANCH"
+exit 0;
+
 create_release(){
 
 	PAYLOAD=`echo '{
@@ -29,12 +32,18 @@ upload_file(){
 "https://uploads.github.com/repos/$REPO_URL/releases/$TAG_ID/assets?name=$TARGET_FILE&access_token=$REPO_TOKEN"
 }
 
+apply_version(){
+
+	sed -i -E "s/(defreitas\\/bookmark-notes:)[0-9]+\.[0-9]+\.[0-9]+/\1$APP_VERSION/g" docker-compose.yml
+	sed -i -E "s/download\\/([0-9]+\.[0-9]+\.[0-9]+)\\/(bk-api-[0-9]+\.[0-9]+\.[0-9]+)/download\\/$APP_VERSION\\/bk-api-$APP_VERSION/g" Dockerfile
+
+}
+
 case $1 in
 
 	apply-version )
 
-	sed -i -E "s/(defreitas\\/bookmark-notes:)[0-9]+\.[0-9]+\.[0-9]+/\1$APP_VERSION/g" docker-compose.yml
-	sed -i -E "s/download\\/([0-9]+\.[0-9]+\.[0-9]+)\\/(bk-api-[0-9]+\.[0-9]+\.[0-9]+)/download\\/$APP_VERSION\\/bk-api-$APP_VERSION/g" Dockerfile
+		apply_version
 
 	;;
 
@@ -54,15 +63,11 @@ case $1 in
 
 	;;
 
-	setup-repository )
+	upload-release )
 
 		git remote remove origin  && git remote add origin https://${REPO_TOKEN}@github.com/$REPO_URL.git
 		git checkout -b build_branch ${TRAVIS_BRANCH}
 		echo "> Repository added, travisBranch=${TRAVIS_BRANCH}"
-
-	;;
-
-	upload-release )
 
 		git commit -am "Releasing ${APP_VERSION}" # if there is nothing to commit the program will exits
 		git tag ${APP_VERSION}

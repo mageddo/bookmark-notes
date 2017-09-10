@@ -1,6 +1,9 @@
 version: '2'
 services:
-  # Run prod image
+
+### PRODUCTION RUN
+
+# Run prod image
   prod-app-bk:
     container_name: bookmarks-node-prod
     image: defreitas/bookmark-notes:2.10.0
@@ -17,6 +20,8 @@ services:
       - /var/lib/mageddo/bookmarks-node/logs:/opt/bookmarks/logs
       - /var/lib/mageddo/bookmarks-node/conf:/opt/bookmarks/conf
     network_mode: bridge
+
+## PRODUCTION BUILD
 
   # compile the whole apk for production
   prod-build-bk:
@@ -42,7 +47,14 @@ services:
     working_dir: /app
     network_mode: bridge
 
-## TO DEVELOPMENT
+  prod-ci-deploy:
+    extends: prod-api-build-bk
+#    command: bash -c "/app/builder apply-version && /app/builder build && ./builder upload-release"
+    command: bash -c "/app/builder apply-version"
+    environment:
+      - TRAVIS_BRANCH=$TRAVIS_BRANCH
+
+## DEVELOPMENT
 
   # useful to run api for development
   prod-api-compiler-bk:
