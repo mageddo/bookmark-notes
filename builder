@@ -3,8 +3,11 @@
 set -e
 
 CUR_DIR=`pwd`
-APP_VERSION=$(cat /VERSION)
+APP_VERSION=$(cat VERSION)
 REPO_URL=mageddo/bookmark-notes
+
+API_PATH=${API_PATH:-$CUR_DIR}
+BUILD_PATH=${BUILD_PATH:-$API_PATH/build}
 
 create_release(){
 

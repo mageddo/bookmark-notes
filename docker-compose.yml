@@ -3,7 +3,7 @@ services:
   # Run prod image
   prod-app-bk:
     container_name: bookmarks-node-prod
-    image: defreitas/bookmark-notes:2.10.0
+    image: defreitas/bookmark-notes:2.10.2
     hostname: bookmarks.mageddo
     ports:
       - 3000:3000
@@ -32,12 +32,11 @@ services:
     volumes:
       - $PWD/bk-api:/go/src/bk-api/
       - $PWD:/app
-      - ./VERSION:/VERSION
     command: bash -c "/app/builder apply-version && /app/builder build"
     environment:
       - TERM=xterm
-      - BUILD_PATH=/app/build
       - GOPATH=/go
+      - BUILD_PATH=/app/build
       - API_PATH=/go/src/bk-api
       - MG_WORK_DIR=/go/src/bk-api
     working_dir: /app
