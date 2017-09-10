@@ -81,21 +81,19 @@ function listar(){
 };listar();
 
 // busca de bookmarks
-$("#iptSearch").keyup(function(){
-	var key = this.value;
-	mg.delay(function(){
-		var conf = {
-			url: "/api/bookmark/search",
-			data: {query: key, indice: 0},
-			success:function(data){
-				populaTabela(data);
-			},
-			key: 'bookmark-list'
-		};
-		mg.ajax(conf);
-		lastConf = conf;
-	}, 500);
-});
+$("#search-form").submit(function(e){
+	e.preventDefault();
+	var conf = {
+		url: "/api/bookmark/search",
+		data: {query: $("#iptSearch").val(), indice: 0},
+		success:function(data){
+			populaTabela(data);
+		},
+		key: 'bookmark-list'
+	};
+	mg.ajax(conf);
+	lastConf = conf;
+})
 
 function populaTabela(data){
 	var html = $("#tplBookmark").html();
