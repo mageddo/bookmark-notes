@@ -33,13 +33,14 @@ services:
       - $PWD/bk-api:/go/src/bk-api/
       - $PWD:/app
       - ./VERSION:/VERSION
-    command: bash -c "/app/builder build"
+    command: bash -c "/app/builder apply-version && /app/builder build"
     environment:
       - TERM=xterm
       - BUILD_PATH=/app/build
       - GOPATH=/go
       - API_PATH=/go/src/bk-api
       - MG_WORK_DIR=/go/src/bk-api
+    working_dir: /app
     network_mode: bridge
 
 ## TO DEVELOPMENT
