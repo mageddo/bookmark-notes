@@ -9,8 +9,7 @@ REPO_URL=mageddo/bookmark-notes
 API_PATH=${API_PATH:-$CUR_DIR}
 BUILD_PATH=${BUILD_PATH:-$API_PATH/build}
 
-echo "CURRENT_BRANCH=$TRAVIS_BRANCH"
-exit 0;
+echo "CURRENT_BRANCH=$CURRENT_BRANCH"
 
 create_release(){
 
@@ -21,7 +20,7 @@ create_release(){
 		"body": "",
 		"draft": false,
 		"prerelease": true
-	}' | sed -e "s/VERSION/$APP_VERSION/" | sed -e "s/TARGET/$TRAVIS_BRANCH/"` && \
+	}' | sed -e "s/VERSION/$APP_VERSION/" | sed -e "s/TARGET/$CURRENT_BRANCH/"` && \
 	TAG_ID=`curl -i -s -f -X POST "https://api.github.com/repos/$REPO_URL/releases?access_token=$REPO_TOKEN" \
 --data "$PAYLOAD" | grep -o -E 'id": [0-9]+'| awk '{print $2}' | head -n 1`
 
@@ -66,14 +65,14 @@ case $1 in
 	upload-release )
 
 		git remote remove origin  && git remote add origin https://${REPO_TOKEN}@github.com/$REPO_URL.git
-		git checkout -b build_branch ${TRAVIS_BRANCH}
-		echo "> Repository added, travisBranch=${TRAVIS_BRANCH}"
+		git checkout -b build_branch ${CURRENT_BRANCH}
+		echo "> Repository added, currentBranch=${CURRENT_BRANCH}"
 
 		git commit -am "Releasing ${APP_VERSION}" # if there is nothing to commit the program will exits
 		git tag ${APP_VERSION}
-		git push origin "build_branch:${TRAVIS_BRANCH}"
+		git push origin "build_branch:${CURRENT_BRANCH}"
 		git status
-		echo "> Branch pushed - Branch $TRAVIS_BRANCH"
+		echo "> Branch pushed - Branch $CURRENT_BRANCH"
 
 		create_release
 

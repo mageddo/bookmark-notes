@@ -47,12 +47,13 @@ services:
     working_dir: /app
     network_mode: bridge
 
+  # build the api and make the github release
   prod-ci-deploy:
     extends: prod-api-build-bk
-#    command: bash -c "/app/builder apply-version && /app/builder build && ./builder upload-release"
-    command: bash -c "/app/builder apply-version"
+    command: bash -c "/app/builder apply-version && /app/builder build && ./builder upload-release"
     environment:
-      - TRAVIS_BRANCH=$TRAVIS_BRANCH
+      - CURRENT_BRANCH=$TRAVIS_BRANCH # current branch name
+      - REPO_TOKEN=$REPO_TOKEN # github token to deploy the binary
 
 ## DEVELOPMENT
 
