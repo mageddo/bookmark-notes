@@ -1,3 +1,7 @@
+# 2.10.1
+* Initial results replace search results
+* Format blockquote like StackOverflow
+
 # 2.10.0
 * Format paragraph and lists justified
 * Mobile Word/Wrap Button
