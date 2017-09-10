@@ -174,4 +174,40 @@
 			}
 		});
 	};
+
+	mg.cancelAjax = (ajaxReq) => {
+		console.debug('m=cancelAjax, req=%o', ajaxReq);
+		if(ajaxReq){
+			ajaxReq.abort();
+		}
+	}
+
+	/**
+	 * Make a ajax request and allow only just request per key.
+	 *
+	 * ex: ajax('a', {url: '/abc'}); ajax({key: 'a', url: '/abc'})
+	 *
+	 */
+	var requests = {};
+	mg.ajax = function(){
+
+		var key, opts;
+		if (arguments.length == 1) {
+			opts = arguments['0']
+			key = opts.key;
+		} else {
+			key = arguments['0']
+			opts = arguments['1']
+		}
+
+		console.debug('m=ajax, key=%s, opts=%o, foundKey=%o', key, opts, requests[key]);
+
+		// cancel request with that key
+		mg.cancelAjax(requests[key]);
+
+		// new request
+		requests[key] = $.ajax(opts);
+
+	}
+
 })(window, document, jQuery);

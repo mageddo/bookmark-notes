@@ -1,3 +1,10 @@
+# 2.10.1
+* Initial results replace search results
+* Format blockquote like StackOverflow
+* Prevent page reload when type enter in search
+* Disabling auto search, now you must to type enter after type your search
+* Prevent save double click
+
 # 2.10.0
 * Format paragraph and lists justified
 * Mobile Word/Wrap Button

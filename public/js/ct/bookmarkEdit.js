@@ -257,6 +257,8 @@ function cb(editMode){
 
 		return editMode ? {
 			save: function(e){
+				var submitBtn = $("#frmBookmarkEdit *[type=submit]")
+					.prop("disabled", true);
 				e.preventDefault();
 				$.ajax({
 					url: "/api/bookmark",
@@ -267,11 +269,16 @@ function cb(editMode){
 						console.debug("editado");
 						originalData = JSON.stringify(getFormData());
 					}
+				}).always(function(){
+					submitBtn.prop("disabled", false);
 				})
 			}
 			} : {
 			save: function(e){
 				e.preventDefault();
+				var submitBtn = $("#frmBookmarkEdit *[type=submit]")
+					.prop("disabled", true);
+
 				$.ajax({
 					url: "/api/bookmark",
 					type: 'PUT',
@@ -283,6 +290,8 @@ function cb(editMode){
 						successEvent();
 						originalData = JSON.stringify(getFormData());
 					}
+				}).always(function(){
+					submitBtn.prop("disabled", false);
 				})
 			}
 		};

@@ -20,3 +20,10 @@ li,p {
 .mg-code pre code {
 	white-space: pre;
 }
+
+
+blockquote {
+	font-size: 14px;
+	background-color: #FFF8DC;
+	border-left: 2px solid #ffeb8e;
+}
