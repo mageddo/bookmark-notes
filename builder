@@ -64,6 +64,13 @@ case $1 in
 
 	upload-release )
 
+		# setup user
+		if [ `git config user.email` = "" ] ; then
+			echo '> Setting git credentials'
+			git config user.email = 'ci@mageddo.com'
+			git config user.name = 'CI Bot'
+		fi
+
 		git remote remove origin  && git remote add origin https://${REPO_TOKEN}@github.com/$REPO_URL.git
 		git checkout -b build_branch ${CURRENT_BRANCH}
 		echo "> Repository added, currentBranch=${CURRENT_BRANCH}"
