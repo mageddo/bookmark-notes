@@ -64,6 +64,9 @@ case $1 in
 
 	upload-release )
 
+		git status
+		echo "${APP_VERSION}"
+
 		git commit -am "Releasing ${APP_VERSION}"
 		git tag ${APP_VERSION}
 		git push origin "build_branch:${TRAVIS_BRANCH}"
