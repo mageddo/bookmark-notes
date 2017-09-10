@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -64,6 +64,7 @@ case $1 in
 
 	upload-release )
 
+		echo "before commit "
 		git commit -am "Releasing ${APP_VERSION}"
 		echo "$? commit"
 
