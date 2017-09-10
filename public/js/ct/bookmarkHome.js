@@ -6,8 +6,12 @@ $.ajaxSetup({
 	error: function(req){
 		if(req.getResponseHeader('catch'))
 			mg.notify.error(req.responseJSON.message);
-		else
-			mg.notify.error("Temporiamente indisponível...");
+		else {
+			console.debug('m=ajax-intercept, status=cannot-catch-error', req)
+			if (req.status != 0 ){
+				mg.notify.error("Temporiamente indisponível...");
+			}
+		}
 	}
 });
 
