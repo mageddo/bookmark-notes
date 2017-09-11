@@ -7,6 +7,5 @@ script: docker-compose up --abort-on-container-exit prod-ci-deploy
 
 branches:
   only:
-  - feature/MG-405
   - master
 
