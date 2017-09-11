@@ -1,6 +1,9 @@
 version: '2'
 services:
-  # Run prod image
+
+### PRODUCTION RUN
+
+# Run prod image
   prod-app-bk:
     container_name: bookmarks-node-prod
     image: defreitas/bookmark-notes:2.10.0
@@ -18,6 +21,8 @@ services:
       - /var/lib/mageddo/bookmarks-node/conf:/opt/bookmarks/conf
     network_mode: bridge
 
+## PRODUCTION BUILD
+
   # compile the whole apk for production
   prod-build-bk:
     extends: prod-app-bk
@@ -31,17 +36,28 @@ services:
     image: golang:1.9
     volumes:
       - $PWD/bk-api:/go/src/bk-api/
-      - $PWD/build:/go/build
-      - ./VERSION:/VERSION
-    command: bash -c "./builder build"
+      - $PWD:/app
+    command: bash -c "/app/builder apply-version && /app/builder build"
     environment:
       - TERM=xterm
-      - BUILD_PATH=/go/build
       - GOPATH=/go
-      - APP_PATH=/go/src/bk-api
+      - BUILD_PATH=/app/build
+      - API_PATH=/go/src/bk-api
       - MG_WORK_DIR=/go/src/bk-api
-    working_dir: /go/src/bk-api/
+    working_dir: /app
     network_mode: bridge
+
+  # build the api and make the github release
+  prod-ci-deploy:
+    extends: prod-api-build-bk
+    command: bash -c "/app/builder validate-release || exit 0 && /app/builder apply-version && /app/builder build && /app/builder upload-release"
+    environment:
+      - CURRENT_BRANCH=$TRAVIS_BRANCH # current branch name
+      - REPO_TOKEN=$REPO_TOKEN # github token to deploy the binary
+    volumes:
+      - $HOME/.gitconfig:/root/.gitconfig
+
+## DEVELOPMENT
 
   # useful to run api for development
   prod-api-compiler-bk:
