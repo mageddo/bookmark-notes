@@ -46,7 +46,7 @@ case $1 in
 
 	build )
 
-		echo "starting build"
+		echo "starting build $APP_VERSION"
 
 		go get -v github.com/golang/dep/cmd/dep && \
 		rm -rf ${BUILD_PATH}/* && \
