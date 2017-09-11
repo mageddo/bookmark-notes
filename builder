@@ -18,7 +18,7 @@ create_release(){
 		"body": "",
 		"draft": false,
 		"prerelease": true
-	}' | sed -e "s/VERSION/$APP_VERSION/" | sed -e "s/TARGET/$CURRENT_BRANCH/"` && \
+	}' | sed -E "s/VERSION/$APP_VERSION/" | sed -E "s/TARGET/$CURRENT_BRANCH/"` && \
 	TAG_ID=`curl -i -s -f -X POST "https://api.github.com/repos/$REPO_URL/releases?access_token=$REPO_TOKEN" \
 --data "$PAYLOAD" | grep -o -E 'id": [0-9]+'| awk '{print $2}' | head -n 1`
 
