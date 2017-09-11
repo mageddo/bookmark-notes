@@ -9,8 +9,6 @@ REPO_URL=mageddo/bookmark-notes
 API_PATH=${API_PATH:-$CUR_DIR}
 BUILD_PATH=${BUILD_PATH:-$API_PATH/build}
 
-if [ "$REPO_TOKEN" = "" ] ; then echo "REPO_TOKEN cannot be empty"; exit 1; fi
-
 create_release(){
 
 	PAYLOAD=`echo '{
@@ -63,6 +61,8 @@ case $1 in
 	;;
 
 	upload-release )
+
+		if [ "$REPO_TOKEN" = "" ] ; then echo "REPO_TOKEN cannot be empty"; exit 1; fi
 
 		# setup user
 		ACTUAL_USER=`git config user.name || echo ''`
