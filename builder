@@ -65,6 +65,11 @@ case $1 in
 
 		if [ "$REPO_TOKEN" = "" ] ; then echo "REPO_TOKEN cannot be empty"; exit 1; fi
 
+		if git rev-parse "$APP_VERSION^{}" >/dev/null 2>&1; then
+			echo "> Version already exists $APP_VERSION"
+			exit 3
+		fi
+
 		if [ "`git config user.email || echo ''`" = "" ]; then
 			echo '> custom config'
 			git config user.name `git config user.name || echo 'CI BOT'`
