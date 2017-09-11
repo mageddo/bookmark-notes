@@ -177,11 +177,7 @@ function cb(editMode){
 	}
 	function getEditorValue(){
 		var mobileValue = $("#text-editor").val(), value = $("#txtDescription").markdownEditor('content');
-		console.debug('m=getEditorValue, isMobile=%s', isMobile);
-		if(isMobile){
-			return mobileValue;
-		}
-		return value;
+		return mobileValue;
 	}
 	function setEditorValue(val){
 		return $("#txtDescription").markdownEditor('setContent', val);

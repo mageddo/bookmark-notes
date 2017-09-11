@@ -126,11 +126,17 @@ input:checked + .slider:before{
 	padding: 10px 5px;
 	height: 100%;
 }
-.mobile-full-screen-modal .editor-panel {
-	height: 90%;
+.editor-panel {
+	height: 100%;
+	display: flex;
 }
-.mobile-full-screen-modal textarea {
+
+.editor-panel .btn-editor-panel {
 	min-height: 100%;
+}
+.editor-panel textarea {
+	min-height: 100%;
+	width: 100%;
 }
 .editor-preview {
 	border: 1px solid #CECBCB;

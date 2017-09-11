@@ -204,7 +204,7 @@ module.exports.controller = function(app) {
 
 
 	app.get('/mobile/bookmark/new', function(req, res) {
-		res.render('bookmarkEdit', {
+		res.render('mobile/bookmarkEdit', {
 			layout: false,
 			stringify: function(){
 				return function(){
@@ -219,7 +219,7 @@ module.exports.controller = function(app) {
 		var query = url.parse(req.url, true).query;
 		m.getBookmarkById(query.id, function(err, bookmark){
 			mTag.getTagsByBoomarkId(query.id, function(err, tags){
-				res.render('bookmarkEdit', {
+				res.render('mobile/bookmarkEdit', {
 					layout: false,
 					bookmark: bookmark,
 					tags: tags,

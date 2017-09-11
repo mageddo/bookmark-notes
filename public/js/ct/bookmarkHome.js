@@ -52,7 +52,7 @@ $(window).resize(function(){
 
 $(".bookmarkNew").click(function(e){
 	 if(mg.isMobile){
-			mg.popUpScreen("/mobile/bookmark/new");
+			mg.popUpScreen2("/mobile/bookmark/new");
 	 }else{
 			mg.popUpScreen("/bookmark/new");
 	 }
