@@ -5,10 +5,6 @@ services:
 
 script: docker-compose up --abort-on-container-exit prod-ci-deploy
 
-install:
-
-  - if git rev-parse "`cat VERSION`^{}" >/dev/null 2>&1; then echo "> Version already exists $APP_VERSION"; exit 3; fi
-
 branches:
   only:
   - feature/MG-405
