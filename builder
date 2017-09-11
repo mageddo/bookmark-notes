@@ -65,16 +65,21 @@ case $1 in
 
 		if [ "$REPO_TOKEN" = "" ] ; then echo "REPO_TOKEN cannot be empty"; exit 1; fi
 
-		# setup user
-		ACTUAL_USER=`git config user.name || echo ''`
-		ACTUAL_EMAIL=`git config user.email || echo ''`
-		AUTHOR="${ACTUAL_USER:-CI BOT} <${ACTUAL_EMAIL:-ci-bot@mageddo.com}>"
+		if [ "`git config user.email || echo ''`" = "" ]; then
+			echo '> custom config'
+			git config user.name `git config user.name || echo 'CI BOT'`
+			git config user.email `git config user.email || echo 'ci-bot@mageddo.com'`
+		fi
+		echo '> config'
+		git config -l
+		echo ''
+
 		REMOTE="https://${REPO_TOKEN}@github.com/${REPO_URL}.git"
 
 		git checkout -b build_branch ${CURRENT_BRANCH}
 		echo "> Repository added, currentBranch=${CURRENT_BRANCH}"
 
-		git commit --author="$AUTHOR" -am "Releasing ${APP_VERSION}" # if there is nothing to commit the program will exits
+		git commit -am "Releasing ${APP_VERSION}" # if there is nothing to commit the program will exits
 		git tag ${APP_VERSION}
 		git push "$REMOTE" "build_branch:${CURRENT_BRANCH}"
 		git status
