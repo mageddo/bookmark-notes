@@ -35,7 +35,10 @@
 
 # Building from source (You probably don't need to do that)
 
-	$ docker-compose up --force-recreate prod-api-build-bk && docker-compose build prod-build-bk
+```bash
+$ docker-compose up --abort-on-container-exit --force-recreate prod-api-build-bk && \
+docker-compose build prod-build-bk
+```
 
 Then
 
