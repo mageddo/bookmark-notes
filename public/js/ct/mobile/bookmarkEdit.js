@@ -1,5 +1,14 @@
 function cb(editMode){
 
+	/**
+	 * Events
+	 */
+
+	$(".btn-fullscreen").click(function(){
+		$(".fields").slideToggle();
+	});
+
+	// tag search
 	var combo = $(".js-data-example-ajax")
 	combo.select2({
 		tags: true, tokenSeparators: [',', '\t', '	'],
