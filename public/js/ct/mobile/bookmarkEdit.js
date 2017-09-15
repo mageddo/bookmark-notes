@@ -111,6 +111,7 @@
 	i.attr("tabindex", '3');
 
 	if(ctx.editMode){
+		items.btnFullScreen.trigger("click");
 		editionMode();
 	}
 
@@ -143,6 +144,8 @@
 					console.debug("cadastrado");
 					items.form.prop("id").value = id;
 					successEvent(false);
+
+					items.btnFullScreen.trigger("click");
 					editionMode();
 				}
 			}).always(function(){
@@ -152,10 +155,6 @@
 	});
 
 	function editionMode(){
-
-		if(!ctx.editMode){
-			items.btnFullScreen.trigger("click")
-		}
 
 		ctx.editMode = true;
 		var formData = getFormData();
