@@ -126,8 +126,7 @@
 		}
 	};
 
-	mg.insertAtCaret = function(selec, text) {
-		var txtarea = $(selec).get(0);
+	mg.insertAtCaret = function(txtarea, text) {
 		if (!txtarea) { return; }
 		console.debug('m=insertAtCaret, status=begin');
 		var scrollPos = txtarea.scrollTop;

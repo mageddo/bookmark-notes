@@ -15,6 +15,8 @@
 		this.linkContainer = this.modal.find(".link-container")
 		this.btnLink = this.modal.find(".btn-public-link")
 		this.iptVisible = this.form.find("#visible")
+		this.btnLineWrap = this.modal.find(".btn-linewrap")
+		this.btnTab = this.modal.find(".btn-tab")
 	}
 
 	var ctx = {
@@ -47,6 +49,24 @@
 		items.editor.addClass("hidden");
 		items.preview.removeClass("hidden").html(parseCode(items.editor.val()))
 	})
+
+	items.btnLineWrap.click(function(){
+
+		if(items.editor.hasClass("line-wrap-on")){
+			items.editor.removeClass("line-wrap-on")
+			items.editor.addClass("line-wrap-off")
+		}else{
+			items.editor.removeClass("line-wrap-off")
+			items.editor.addClass("line-wrap-on")
+		}
+		$(this).toggleClass("png-active");
+
+	});
+
+	items.btnTab.click(function(e){
+		e.preventDefault();
+		mg.insertAtCaret(items.editor.get(0), '\t');
+	});
 
 	// tag search
 	var combo = $(".js-data-example-ajax")
