@@ -14,6 +14,7 @@
 		this.btnCloseEditor = this.modal.find(".btn-close-modal")
 		this.linkContainer = this.modal.find(".link-container")
 		this.btnLink = this.modal.find(".btn-public-link")
+		this.iptVisible = this.form.find("#visible")
 	}
 
 	var ctx = {
@@ -116,10 +117,10 @@
 				type: 'PUT',
 				data: getFormData(),
 				success: function (id) {
-					editionMode();
 					console.debug("cadastrado");
 					items.form.prop("id").value = id;
 					successEvent(false);
+					editionMode();
 				}
 			}).always(function(){
 				submitBtn.prop("disabled", false);
@@ -129,7 +130,12 @@
 
 	function editionMode(){
 		ctx.editMode = true;
-		items.btnLink.removeClass('hidden')
+		var formData = getFormData();
+
+		if(items.iptVisible.prop("checked")){
+			items.btnLink.removeClass('hidden');
+			items.btnLink.prop("href", '/bookmark/' + formData[0].value + '/' + (formData[1].value.replace(/\s/g, '-')))
+		}
 	}
 
 	function successEvent(editMode){
