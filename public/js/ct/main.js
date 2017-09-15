@@ -11,7 +11,8 @@ function parseCode(content){
 	renderer.code = function(code, lang){
 		console.debug('onparse=begin, code=%s, lang=%s', code, lang)
 		var parsedCode = languagesMap[lang] ? hljs.highlight(lang, code) : {value: code, plain: true}; // MG-40 hljs.highlightAuto(code) it is slow (1-2 seconds to parse)
-		return Mustache.render($('#tplCodeBlock').html(), {
+		console.debug('onparse=parsed, parsedCode=%o', parsedCode)
+		return Mustache.render($('#tplCodeBlock-2').html(), {
 			lang: lang, code: parsedCode.value, plain: parsedCode.plain,
 			overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7
 		});
@@ -27,9 +28,7 @@ function parseCode(content){
 			 + '</table>\n';
 	}
 
-	console.debug('parsing, ',marked(content, {
-                            		renderer: renderer
-                            	}));
+	console.debug('parsing, ',marked(content, {renderer: renderer}));
 	return marked(content, {
 		renderer: renderer
 	})

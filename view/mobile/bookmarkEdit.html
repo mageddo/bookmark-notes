@@ -41,7 +41,7 @@
 			<a class="btn-fullscreen btn btn-default glyphicon glyphicon-fullscreen" href="#"></a>
 			<button type="submit" class="btn btn-success glyphicon glyphicon-floppy-save pull-right" ></button>
 		</div>
-		<textarea id="md-editor" class="editor-common line-wrap-on"></textarea>
+		<textarea id="md-editor" class="editor-common line-wrap-on">{{ bookmark.html }}</textarea>
 		<div class="editor-preview hidden"></div>
 	</div>
 </form>
@@ -50,3 +50,15 @@ var tagsToEdit = {{#stringify}}{{/stringify}};
 </script>
 <script src="/js/ct/bookmarkEditCommon.js"></script>
 <script src="/js/ct/mobile/bookmarkEdit.js"></script>
+<script type="text/template" id="tplCodeBlock-2">
+	<div class="mg-code" lang="{{lang}}">
+		<ul class="nav nav-pills painel-acoes">
+			{{#overflown}}
+			<li role="presentation" ><a href="#" class="toggle-scroll skipped glyphicon glyphicon-eye-open" title="Show code scroll"></a></li>
+			{{/overflown}}
+			<li role="presentation" class="pull-right" ><a href="#" class="skipped glyphicon glyphicon-option-vertical"></a></li>
+		</ul>
+		<pre><code>{{#plain}}{{code}}{{/plain}}{{^plain}}{{{code}}}{{/plain}}</code></pre>
+	</div>
+</script>
+</html>

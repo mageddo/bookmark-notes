@@ -127,7 +127,7 @@ function populaTabela(data){
 function abrirTelaEdicao(e){
 	var that = $(this);
 	if(this == e.target || that.hasClass("divItemBody") || that.hasClass("divItemHead")){
-		mg.popUpScreen(mg.isMobile ? "/mobile/bookmark/edit" : "/bookmark/edit", {
+		mg.popUpScreen2(mg.isMobile ? "/mobile/bookmark/edit" : "/bookmark/edit", {
 			data: { 
 				id: that.parents(".divItem").data("id"),
 				editMode: true
