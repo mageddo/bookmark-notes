@@ -3,10 +3,35 @@ function cb(editMode){
 	/**
 	 * Events
 	 */
+	 var items = {
+		btnEditor: $(".btn-edit"),
+		btnVisualize: $(".btn-visualize"),
+		editor: $("#md-editor"),
+		preview: $(".editor-preview")
+	 }
 
 	$(".btn-fullscreen").click(function(){
 		$(".fields").slideToggle();
-	});
+	})
+
+	items.btnEditor.click(function(){
+
+		items.btnEditor.addClass("active");
+		items.btnVisualize.removeClass("active");
+
+		items.editor.removeClass("hidden");
+		items.preview.addClass("hidden");
+
+	})
+
+	items.btnVisualize.click(function(){
+
+		items.btnEditor.removeClass("active");
+		items.btnVisualize.addClass("active");
+
+		items.editor.addClass("hidden");
+		items.preview.removeClass("hidden").html(parseCode(items.editor.val()))
+	})
 
 	// tag search
 	var combo = $(".js-data-example-ajax")
@@ -33,7 +58,7 @@ function cb(editMode){
 			},
 			cache: true
 		}
-	});
+	})
 
 	combo.val(tagsToEdit).trigger("change");
 	var i = combo.next().find(".select2-selection ul");

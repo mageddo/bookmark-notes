@@ -106,7 +106,7 @@ input:checked + .slider:before{
 	text-align: center;
 }
 
-#text-editor, #editor-mb {
+#text-editor, #md-editor {
 	width: 100%;
 	font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
 	font-size: 13px;
@@ -114,17 +114,9 @@ input:checked + .slider:before{
 	tab-size: 2;
 	outline: none;
 	line-height: 150%;
-}
-
-.mobile-full-screen-modal {
-	position: fixed;
-	top: 0px;
-	left: 0px;
-	z-index: 3000;
-	background: #ffffff;
-	width: 100%;
-	padding: 10px 5px;
-	height: 100%;
+	border: 1px solid #CCC;
+	border-left: 0px;
+	border-right: 0px;
 }
 
 #bookmarkForm {
@@ -136,6 +128,11 @@ input:checked + .slider:before{
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+	margin: 0px 5px;
+}
+
+.btn-editor-panel {
+	margin-top: 2px;
 }
 
 .editor-panel textarea {
@@ -143,12 +140,11 @@ input:checked + .slider:before{
 	flex: 1;
 	resize: none;
 }
+
 .editor-preview {
-	border: 1px solid #CECBCB;
 	margin: 10px 0px;
 	padding: 5px;
-	max-height: 100%;
-	overflow-y: auto;
+
 }
 
 .editor-common {
