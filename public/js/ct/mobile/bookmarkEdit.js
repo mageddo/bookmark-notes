@@ -1,17 +1,31 @@
-function cb(editMode){
+(function(){
+
 
 	/**
 	 * Events
 	 */
-	 var items = {
-		btnEditor: $(".btn-edit"),
-		btnVisualize: $(".btn-visualize"),
-		editor: $("#md-editor"),
-		preview: $(".editor-preview")
-	 }
+	var items = new function(){
+		this.btnEditor = $(".btn-edit")
+		this.btnVisualize = $(".btn-visualize")
+		this.editor = $("#md-editor")
+		this.preview = $(".editor-preview")
+		this.form = $("#bookmarkForm")
+		this.modal = $(".modal-editor")
+		this.btnCloseEditor = this.modal.find(".btn-close-modal")
+		this.linkContainer = this.modal.find(".link-container")
+		this.btnLink = this.modal.find(".btn-public-link")
+	}
+
+	var ctx = {
+		editMode: items.form.data('edit-mode')
+	};
 
 	$(".btn-fullscreen").click(function(){
 		$(".fields").slideToggle();
+	})
+
+	items.btnCloseEditor.click(function(){
+		items.modal.addClass("hidden");
 	})
 
 	items.btnEditor.click(function(){
@@ -73,4 +87,72 @@ function cb(editMode){
 	});
 	i.attr("tabindex", '3');
 
-};cb($(".ctBookmarkNew").data("edit-mode"));
+	if(ctx.editMode){
+		editionMode();
+	}
+
+	items.form.submit(function(e){
+
+		e.preventDefault();
+		var submitBtn = items.form.find("*[type=submit]").prop("disabled", true);
+		(ctx.editMode ? function(e){
+
+			e.preventDefault();
+			$.ajax({
+				url: "/api/bookmark",
+				type: 'POST',
+				data: getFormData(),
+				success: function () {
+					successEvent(true);
+					console.debug("editado");
+				}
+			}).always(function(){
+				submitBtn.prop("disabled", false);
+			})
+		} : function(e){
+
+			$.ajax({
+				url: "/api/bookmark",
+				type: 'PUT',
+				data: getFormData(),
+				success: function (id) {
+					editionMode();
+					console.debug("cadastrado");
+					items.form.prop("id").value = id;
+					successEvent(false);
+				}
+			}).always(function(){
+				submitBtn.prop("disabled", false);
+			})
+		})(e)
+	});
+
+	function editionMode(){
+		ctx.editMode = true;
+		items.btnLink.removeClass('hidden')
+	}
+
+	function successEvent(editMode){
+		if(editMode)
+			mg.notify.info('Bookmark salvo com sucesso');
+		else
+			mg.notify.success('Bookmark cadastrado com sucesso');
+
+		refreshBookmarkList();
+	}
+
+	function getFormData(){
+		var data = items.form.serializeArray();
+		data.push({
+			name: "html",
+			value: getEditorValue()
+		});
+		return data;
+	}
+
+	function getEditorValue(){
+		return items.editor.val();
+	}
+
+
+})();

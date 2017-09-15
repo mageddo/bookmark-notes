@@ -1,0 +1,11 @@
+.ipt-name {
+	flex: 100;
+	width: auto;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+
+.btn-public-link {
+	flex: 1;
+}

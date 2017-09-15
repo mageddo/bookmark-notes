@@ -1,10 +1,14 @@
-<form class="form" role="search" id="bookmarkForm" >
+<link rel="stylesheet" href="/css/mobile/style.css" />
+<form class="form" role="search" id="bookmarkForm" data-edit-mode="{{editMode}}" >
 
 	<div class="fields">
 		<input type="hidden" value="{{{ bookmark.id }}}" name="id" />
 		<div class="form-group col-xs-12 col-md-12">
 			<label for="iptName" >Name </label>
-			<input id="iptName" type="text" class="form-control" tabindex="1" value="{{{ bookmark.name }}}" name="name" placeholder="bookmark name">
+			<div style="display: flex;" class="link-container">
+				<input id="iptName" type="text" class="form-control ipt-name" tabindex="1" value="{{{ bookmark.name }}}" name="name" placeholder="bookmark name">
+				<a class="btn btn-default hidden btn-public-link glyphicon glyphicon-new-window" href="#"></a>
+			</div>
 		</div>
 		<div class="form-group col-xs-12 col-sm-12 col-md-12">
 			<label for="iptLink" >Link </label>
@@ -29,12 +33,13 @@
 
 	<div class="editor-panel" >
 		<div class="btn-editor-panel" >
+			<a class="btn btn-close-modal btn-warning glyphicon glyphicon-arrow-left" href="#"></a>
 			<a class="btn-edit  btn btn-default btn-edit-common glyphicon glyphicon-pencil active" href="#"></a>&nbsp;
 			<a class="btn-visualize  btn btn-default btn-visualize-common glyphicon glyphicon-eye-open" href="#"></a>&nbsp;
 			<a class="btn-linewrap  btn btn-default btn-linewrap-common glyphicon glyphicon-line-wrap png-active" href="#"></a>&nbsp;
 			<a class="btn-tab  btn btn-default glyphicon glyphicon-indent-left" href="#"></a>&nbsp;
 			<a class="btn-fullscreen btn btn-default glyphicon glyphicon-fullscreen" href="#"></a>
-			<a class="btn-bk-save btn btn-success glyphicon glyphicon-floppy-save pull-right" href="#"></a>
+			<button type="submit" class="btn btn-success glyphicon glyphicon-floppy-save pull-right" ></button>
 		</div>
 		<textarea id="md-editor" class="editor-common line-wrap-on"></textarea>
 		<div class="editor-preview hidden"></div>
