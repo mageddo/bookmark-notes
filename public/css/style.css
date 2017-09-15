@@ -144,7 +144,7 @@ input:checked + .slider:before{
 .editor-preview {
 	margin: 10px 0px;
 	padding: 5px;
-
+	word-break: break-word;
 }
 
 .editor-common {
@@ -241,3 +241,5 @@ pre {
 .select2-selection {
 	border: 1px solid #CCC!important;
 }
+
+
