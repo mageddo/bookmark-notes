@@ -7,6 +7,7 @@
 	var items = new function(){
 		this.btnEditor = $(".btn-edit")
 		this.btnVisualize = $(".btn-visualize")
+		this.btnFullScreen = $(".btn-fullscreen")
 		this.editor = $("#md-editor")
 		this.preview = $(".editor-preview")
 		this.form = $("#bookmarkForm")
@@ -23,8 +24,9 @@
 		editMode: items.form.data('edit-mode')
 	};
 
-	$(".btn-fullscreen").click(function(){
+	items.btnFullScreen.click(function(){
 		$(".fields").slideToggle();
+		$(this).toggleClass("active");
 	})
 
 	items.btnCloseEditor.click(function(){
@@ -125,6 +127,7 @@
 				data: getFormData(),
 				success: function () {
 					successEvent(true);
+					editionMode();
 					console.debug("editado");
 				}
 			}).always(function(){
@@ -149,8 +152,14 @@
 	});
 
 	function editionMode(){
+
+		if(!ctx.editMode){
+			items.btnFullScreen.trigger("click")
+		}
+
 		ctx.editMode = true;
 		var formData = getFormData();
+
 
 		if(items.iptVisible.prop("checked")){
 			items.btnLink.removeClass('hidden');
