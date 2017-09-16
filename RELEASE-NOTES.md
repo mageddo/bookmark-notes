@@ -1,5 +1,6 @@
 # 2.11.1
-* Fixing new bookmark button lock
+* Fixing save button locks forever when bookmark is created
+* Updating readme
 
 # 2.11.0
 * WEB - Remove bootstrap modal, now page must open in fullscreen like another page 
