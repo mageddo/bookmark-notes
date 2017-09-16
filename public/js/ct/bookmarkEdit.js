@@ -1,12 +1,13 @@
 (function(items){
 
-	var edition = new BookmarkEdition(), items = edition.items, ctx = edition.ctx;
-	Object.assign(items, edition);
+	var edition = new BookmarkEdition(), ctx = edition.ctx;
+	items = Object.assign(edition.items, items);
 
-	items.btnTab.click(function(e){
-		e.preventDefault();
-		mg.insertAtCaret(items.editor.get(0), '\t');
-	});
+	edition.getEditorValue = function(){
+		console.debug('m=getEditorValue');
+		return this.items.editor.markdownEditor('content');
+	}
+
 
 	items.editorPanel = items.editor.markdownEditor({
 		preview: true,

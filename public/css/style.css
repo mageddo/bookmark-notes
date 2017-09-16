@@ -124,6 +124,21 @@ input:checked + .slider:before{
 	flex-direction: column;
 }
 
+.ipt-name {
+	flex: 100;
+	width: auto;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.btn-public-link {
+	flex: 1;
+}
+
+.md-toolbar {
+	border: none;
+}
+
 .editor-panel {
 	margin: 5px 5px;
 }

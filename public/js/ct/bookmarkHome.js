@@ -54,7 +54,7 @@ $(".bookmarkNew").click(function(e){
 	 if(mg.isMobile){
 			mg.popUpScreen2("/mobile/bookmark/new");
 	 }else{
-			mg.popUpScreen("/bookmark/new");
+			mg.popUpScreen2("/bookmark/new");
 	 }
 });
 
