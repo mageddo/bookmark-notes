@@ -99,6 +99,11 @@ BookmarkEdition.prototype.setup = function(){
 		})(e)
 	});
 
+	items.preview.find("a").not('.skipped').on('click', function(e){
+		e.stopPropagation();
+		this.target = "_blank";
+	});
+
 	function editionMode(){
 
 		ctx.editMode = true;

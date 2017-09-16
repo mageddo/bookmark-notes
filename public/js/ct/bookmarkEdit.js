@@ -8,10 +8,6 @@
 		theme: "ace/theme/tomorrow_night",
 		onPreview: function (content, callback) {
 			callback(parseCode(content, callback));
-			items.preview.find("a").not('.skipped').click(function(e){
-				e.stopPropagation();
-				this.target = "_blank";
-			});
 		}
 	});
 
