@@ -16,7 +16,7 @@
 * Mobile friendly
 * Make your bookmarks public
 
-[See more screenshots](https://github.com/mageddo/bookmark-notes/docs/index.html)
+[See more screenshots](https://mageddo.github.io/bookmark-notes/docs/)
 
 
 ### Running With Docker
