@@ -1,50 +1,18 @@
-function BookmarkEdition(){
+function BookmarkEdition(items){
+	this.items = Object.assign(this.getItems(), items);
+}
 
-	var items = this.items = this.getItems(), that = this;
+BookmarkEdition.prototype.setup = function(){
+
+	var items = this.items, that = this;
 	var ctx = this.ctx  = {
 		editMode: items.form.data('edit-mode')
 	};
 
-	items.btnFullScreen.click(function(){
-		$(".fields").slideToggle();
-		$(this).toggleClass("active");
-	})
-
-	items.btnCloseEditor.click(function(){
+	items.btnCloseEditor.dblclick(function(){
 		items.modal.addClass("hidden");
 	})
 
-	items.btnEditor.click(function(){
-
-		items.btnEditor.addClass("active");
-		items.btnVisualize.removeClass("active");
-
-		items.editor.removeClass("hidden");
-		items.preview.addClass("hidden");
-
-	})
-
-	items.btnVisualize.click(function(){
-
-		items.btnEditor.removeClass("active");
-		items.btnVisualize.addClass("active");
-
-		items.editor.addClass("hidden");
-		items.preview.removeClass("hidden").html(parseCode(items.editor.val()))
-	})
-
-	items.btnLineWrap.click(function(){
-
-		if(items.editor.hasClass("line-wrap-on")){
-			items.editor.removeClass("line-wrap-on")
-			items.editor.addClass("line-wrap-off")
-		}else{
-			items.editor.removeClass("line-wrap-off")
-			items.editor.addClass("line-wrap-on")
-		}
-		$(this).toggleClass("png-active");
-
-	});
 
 	// tag search
 	var combo = $(".js-data-example-ajax")
@@ -87,7 +55,7 @@ function BookmarkEdition(){
 	i.attr("tabindex", '3');
 
 	if(ctx.editMode){
-		items.btnFullScreen.trigger("click");
+		items.btnVisualize.trigger("click");
 		editionMode();
 	}
 
@@ -151,7 +119,6 @@ function BookmarkEdition(){
 
 		refreshBookmarkList();
 	}
-
 }
 
 BookmarkEdition.prototype.getFormData = function(){

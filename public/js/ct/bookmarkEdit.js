@@ -1,13 +1,7 @@
 (function(items){
 
-	var edition = new BookmarkEdition(), ctx = edition.ctx;
-	items = Object.assign(edition.items, items);
-
-	edition.getEditorValue = function(){
-		console.debug('m=getEditorValue');
-		return this.items.editor.markdownEditor('content');
-	}
-
+	var edition = new BookmarkEdition(items), ctx = edition.ctx;
+	items = edition.items;
 
 	items.editorPanel = items.editor.markdownEditor({
 		preview: true,
@@ -20,6 +14,16 @@
 			});
 		}
 	});
+
+	items.btnVisualize = items.editorPanel.find(".btn-preview");
+
+	edition.getEditorValue = function(){
+		console.debug('m=getEditorValue');
+		return this.items.editor.markdownEditor('content');
+	}
+
+	edition.setup();
+
 	var session = items.editorPanel.editor.getSession();
 	session.setUseSoftTabs(false);
 	session.setTabSize(2);
@@ -27,13 +31,9 @@
 		items.editorPanel.editor.focus();
 	});
 
-	if(ctx.editMode){
-		items.editorPanel.find(".btn-preview").trigger("click");
-	}
 
 })(new function(){
 	this.btnEditor = $(".btn-edit")
-	this.btnVisualize = $(".btn-visualize")
 	this.btnFullScreen = $(".btn-fullscreen")
 	this.editor = $("#md-editor")
 	this.preview = $(".editor-preview")
