@@ -1,18 +1,19 @@
 function BookmarkEdition(items){
-	this.items = Object.assign(this.getItems(), items);
+	this.items = items = Object.assign(this.getItems(), items);
+	this.ctx = {
+		editMode: items.form.data('edit-mode')
+	};
 }
 
 BookmarkEdition.prototype.setup = function(){
 
 	var items = this.items, that = this;
-	var ctx = this.ctx  = {
-		editMode: items.form.data('edit-mode')
-	};
+	var ctx = this.ctx;
 
-	items.btnCloseEditor.dblclick(function(){
+	items.btnCloseEditor.on('dblclick' + (mg.defaults.debug ? ' click' : ''), function(){
+		console.debug('closing');
 		items.modal.addClass("hidden");
-	})
-
+	});
 
 	// tag search
 	var combo = $(".js-data-example-ajax")
@@ -136,9 +137,6 @@ BookmarkEdition.prototype.getEditorValue = function(){
 
 BookmarkEdition.prototype.getItems = function getItems(){
 	return new function(){
-		this.btnEditor = $(".btn-edit")
-		this.btnVisualize = $(".btn-visualize")
-		this.btnFullScreen = $(".btn-fullscreen")
 		this.editor = $("#md-editor")
 		this.preview = $(".editor-preview")
 		this.form = $("#bookmarkForm")
@@ -147,7 +145,5 @@ BookmarkEdition.prototype.getItems = function getItems(){
 		this.linkContainer = this.modal.find(".link-container")
 		this.btnLink = this.modal.find(".btn-public-link")
 		this.iptVisible = this.form.find("#visible")
-		this.btnLineWrap = this.modal.find(".btn-linewrap")
-		this.btnTab = this.modal.find(".btn-tab")
 	}
 }
