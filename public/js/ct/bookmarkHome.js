@@ -51,7 +51,11 @@ $(window).resize(function(){
 })
 
 $(".bookmarkNew").click(function(e){
-	mg.popUpScreen("/bookmark/new");
+	 if(mg.isMobile){
+			mg.popUpScreen2("/mobile/bookmark/new");
+	 }else{
+			mg.popUpScreen2("/bookmark/new");
+	 }
 });
 
 function adaptarTamanhoMenu(){
@@ -123,7 +127,7 @@ function populaTabela(data){
 function abrirTelaEdicao(e){
 	var that = $(this);
 	if(this == e.target || that.hasClass("divItemBody") || that.hasClass("divItemHead")){
-		mg.popUpScreen("/bookmark/edit", {
+		mg.popUpScreen2(mg.isMobile ? "/mobile/bookmark/edit" : "/bookmark/edit", {
 			data: { 
 				id: that.parents(".divItem").data("id"),
 				editMode: true

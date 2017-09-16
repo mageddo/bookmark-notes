@@ -79,6 +79,21 @@
 			$(container).html("Error on load " + url + "<br/>" + error);
 		});
 	}
+
+	mg.popUpScreen2 = function(url, options,  container){
+		container = container || ".modal-editor";
+		options = options || {};
+		options.url = url;
+		$.ajax(options).done(function(data){
+			$(container)
+				.html(data)
+				.removeClass("hidden");
+		}).error(function(error){
+			// TODO EFS fazer isso buscar de um template
+			$(container).html("Error on load " + url + "<br/>" + error);
+		});
+	}
+
 	mg.clearSelection = function() {
 		if(document.selection && document.selection.empty) {
 			document.selection.empty();
@@ -111,8 +126,7 @@
 		}
 	};
 
-	mg.insertAtCaret = function(selec, text) {
-		var txtarea = $(selec).get(0);
+	mg.insertAtCaret = function(txtarea, text) {
 		if (!txtarea) { return; }
 		console.debug('m=insertAtCaret, status=begin');
 		var scrollPos = txtarea.scrollTop;

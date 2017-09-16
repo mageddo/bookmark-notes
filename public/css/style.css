@@ -1,27 +1,17 @@
-.white-popup{
-	background: #FFF;
-	margin: 20px auto;
-	padding: 20px;
-	position: relative;
-	width: auto;
-}
-.popuparea .modal-dialog{
-	margin-top: 0;
-}
 .select2-close-mask{
 	z-index: 2099;
 }
 .select2-dropdown{
 	z-index: 3051;
 }
-.navbar .mg-menu{
+.navbar .mg-menu {
 	background: white;
 	border: 1px solid #EEE;
 	left: 0;
 	overflow: auto;
 	position: absolute;
 }
-.navbar .menu-expand{
+.navbar .menu-expand {
 	background-color: transparent;
 	background-image: none;
 	border: 1px solid transparent;
@@ -56,6 +46,7 @@ ul li img{
 .switch input{
 	display: none;
 }
+
 .slider{
 	background-color: #ccc;
 	bottom: 0;
@@ -106,7 +97,7 @@ input:checked + .slider:before{
 	text-align: center;
 }
 
-#text-editor, #editor-mb {
+#text-editor, #md-editor {
 	width: 100%;
 	font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
 	font-size: 13px;
@@ -114,30 +105,49 @@ input:checked + .slider:before{
 	tab-size: 2;
 	outline: none;
 	line-height: 150%;
+	border: 1px solid #CCC;
+	border-left: 0px;
+	border-right: 0px;
 }
 
-.mobile-full-screen-modal {
-	position: fixed;
-	top: 0px;
-	left: 0px;
-	z-index: 3000;
-	background: #ffffff;
+#bookmarkForm {
+	display: flex;
+	flex-direction: column;
+}
+
+.ipt-name {
+	flex: 100;
+	width: auto;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.btn-public-link {
+	flex: 1;
+}
+
+.md-toolbar {
+	border: none;
+}
+
+.editor-panel {
+	margin: 5px 5px;
+}
+
+.btn-editor-panel {
+	margin-top: 2px;
+}
+
+.editor-panel textarea {
 	width: 100%;
-	padding: 10px 5px;
-	height: 100%;
+	flex: 1;
+	resize: none;
 }
-.mobile-full-screen-modal .editor-panel {
-	height: 90%;
-}
-.mobile-full-screen-modal textarea {
-	min-height: 100%;
-}
+
 .editor-preview {
-	border: 1px solid #CECBCB;
 	margin: 10px 0px;
 	padding: 5px;
-	max-height: 100%;
-	overflow-y: auto;
+	word-break: break-word;
 }
 
 .editor-common {
@@ -202,3 +212,48 @@ pre {
 	background-color: #e6e6e6
 }
 
+
+/**
+ * New area
+ */
+.modal-editor {
+	display: block;
+	position: fixed;
+	background: white;
+	top: 0;
+	left: 0;
+	z-index: 1030;
+	width: 100%;
+	height: 100%;
+	overflow-y: auto;
+}
+
+/**
+ * Tags combo
+ */
+.select2-dropdown {
+	z-index: 1031;
+}
+
+.select2-container--focus .select2-selection {
+	border: 1px solid #66afe9!important;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6)
+}
+
+.select2-selection {
+	border: 1px solid #CCC!important;
+}
+
+.btn-fab {
+	position: fixed !important;
+	right: 20px;
+	bottom: 20px;
+	border-radius: 50%;
+	padding: 10px;
+	z-index: 1;
+}
+
+.bookmarkNew .glyphicon {
+	font-size: 24px;
+	padding: 5px;
+}

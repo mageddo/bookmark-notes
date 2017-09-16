@@ -1,0 +1,18 @@
+.ipt-name {
+	flex: 100;
+	width: auto;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+
+.btn-public-link {
+	flex: 1;
+}
+
+.editor-panel {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	margin: 5px 5px;
+}

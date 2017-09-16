@@ -61,11 +61,12 @@ services:
 
   # useful to run api for development
   prod-api-compiler-bk:
-    container_name: prod-api-compiler-bk
     extends: prod-api-build-bk
+    container_name: prod-api-compiler-bk
     volumes:
       - /var/lib/mageddo/bookmarks-node/db:/opt/bookmarks/db
     command: bash -c "go install -v bk-api/vendor/github.com/mattn/go-sqlite3 && tail -f /dev/null"
+    working_dir: /go/src/bk-api
     hostname: bk-api.dev
 
   # run app for development

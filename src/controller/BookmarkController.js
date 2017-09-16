@@ -180,6 +180,64 @@ module.exports.controller = function(app) {
 		});
 	});
 
+	app.get('/bookmark/edit', function(req, res) {
+		var query = url.parse(req.url, true).query;
+		m.getBookmarkById(query.id, function(err, bookmark){
+			mTag.getTagsByBoomarkId(query.id, function(err, tags){
+				res.render('bookmarkEdit', {
+					layout: false,
+					bookmark: bookmark,
+					tags: tags,
+					editMode: query.editMode,
+					stringify: function(){
+						return function(val, render){
+							return JSON.stringify(this.tags.map(function(tag){
+								return tag.name;
+							}));
+						}
+					},
+					getVisibilityFlag: getVisibilityFlag
+				});
+			});
+		});
+	});
+
+
+	app.get('/mobile/bookmark/new', function(req, res) {
+		res.render('mobile/bookmarkEdit', {
+			layout: false,
+			stringify: function(){
+				return function(){
+					return '[]';
+				}
+			},
+			getVisibilityFlag: getVisibilityFlag
+		});
+	});
+
+	app.get('/mobile/bookmark/edit', function(req, res) {
+		var query = url.parse(req.url, true).query;
+		m.getBookmarkById(query.id, function(err, bookmark){
+			mTag.getTagsByBoomarkId(query.id, function(err, tags){
+				res.render('mobile/bookmarkEdit', {
+					layout: false,
+					bookmark: bookmark,
+					tags: tags,
+					editMode: query.editMode,
+					stringify: function(){
+						return function(val, render){
+							return JSON.stringify(this.tags.map(function(tag){
+								return tag.name;
+							}));
+						}
+					},
+					getVisibilityFlag: getVisibilityFlag
+				});
+			});
+		});
+	});
+
+
 	/**
 	 * Public bookmark view
 	 */
@@ -229,28 +287,6 @@ module.exports.controller = function(app) {
 				}
 			});
 
-		});
-	});
-
-	app.get('/bookmark/edit', function(req, res) {
-		var query = url.parse(req.url, true).query;
-		m.getBookmarkById(query.id, function(err, bookmark){
-			mTag.getTagsByBoomarkId(query.id, function(err, tags){
-				res.render('bookmarkEdit', {
-					layout: false,
-					bookmark: bookmark,
-					tags: tags,
-					editMode: query.editMode,
-					stringify: function(){
-						return function(val, render){
-							return JSON.stringify(this.tags.map(function(tag){
-								return tag.name;
-							}));
-						}
-					},
-					getVisibilityFlag: getVisibilityFlag
-				});
-			});
 		});
 	});
 
