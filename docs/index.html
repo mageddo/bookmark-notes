@@ -1,0 +1,72 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="https://rawgit.com/kenwheeler/slick/1.8.0/slick/slick.css"/>
+	<link rel="stylesheet" type="text/css" href="https://rawgit.com/kenwheeler/slick/1.8.0/slick/slick-theme.css"/>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="https://rawgit.com/kenwheeler/slick/1.8.0/slick/slick.min.js"></script>
+	<style>
+		.autoplay{
+			width: 60%;
+			border: 5px solid #EEE;
+			height: 350px;
+		}
+
+		.mg-slide .slide-title {
+			font-family: sans-serif, Helvetica;
+			font-size: 25px;
+			color: #505050;
+		}
+	</style>
+</head>
+<body>
+	<center>
+		<div class="autoplay">
+			<div class="mg-slide" >
+				<div class="slide-title">Bookmarks list like thumbs</div>
+				<img src="https://i.imgur.com/gruPMHb.png" />
+			</div>
+			<div class="mg-slide" >
+				<div class="slide-title">Markdown editor</div>
+				<img src="https://i.imgur.com/YoHcHjE.png" />
+			</div>
+			<div class="mg-slide" >
+				<div class="slide-title">Code highlight</div>
+				<img src="https://i.imgur.com/jwAg6Gk.png" />
+				<img src="https://i.imgur.com/2rK6SkP.png" />
+			</div>
+			<div class="mg-slide" >
+				<div class="slide-title">Tag you bookmark</div>
+				<img src="https://i.imgur.com/YgbnBGP.png" />
+			</div>
+			<div class="mg-slide" >
+				<div class="slide-title">Tag list filter</div>
+				<img src="https://i.imgur.com/Owf7uIa.png" />
+			</div>
+			<div class="mg-slide" >
+				<div class="slide-title">Search by everything</div>
+				<img src="https://i.imgur.com/F1L62MQ.jpg" />
+			</div>
+			<div class="mg-slide" >
+				<div class="slide-title">Logviewer</div>
+				<img src="https://i.imgur.com/FofEMTl.jpg" />
+			</div>
+			<div class="mg-slide" >
+				<div class="slide-title">Make your bookmarks public</div>
+				<img src="https://i.imgur.com/nwC1hfs.png" />
+				<img src="https://i.imgur.com/nIZoUlC.png" />
+			</div>
+
+		</div>
+	</center>
+	<script>
+	$('.autoplay').slick({
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		fade: true,
+		dots: true,
+		infinite: true,
+		autoplay: true,
+		autoplaySpeed: 2000
+	});
+	</script>
+</body>

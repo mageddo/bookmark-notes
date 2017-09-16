@@ -54,37 +54,3 @@ if you have problems to stop the container try
 See page [log page](http://127.0.0.1:3000/logviewer/#)
 
 ### Screenshots
-### <div id="001">Bookmarks list like thumbs</div>
-
-![](https://i.imgur.com/gruPMHb.png)
-
-### <div id="002">Markdown editor</div>
-
-![](https://i.imgur.com/YoHcHjE.png)
-
-### <div id="003">Code highlight</div>
-
-* ![](https://i.imgur.com/jwAg6Gk.png)
-* ![](https://i.imgur.com/2rK6SkP.png)
-
-### <div id="005">Tag you bookmark</div>
-
-![](https://i.imgur.com/YgbnBGP.png)
-
-### <div id="006">Tag list filter</div>
-
-![](https://i.imgur.com/Owf7uIa.png)
-
-### <div id="007">Search by everything</div>
-
-![](https://i.imgur.com/F1L62MQ.jpg)
-
-### <div id="008">Logviewer</div>
-
-![](https://i.imgur.com/FofEMTl.jpg)
-
-### <div id="009">Make your bookmarks public</div>
-
-![](https://i.imgur.com/nwC1hfs.png)<br/>
-![](https://i.imgur.com/nIZoUlC.png)
-
