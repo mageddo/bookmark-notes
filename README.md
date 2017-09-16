@@ -2,7 +2,7 @@
 	<a href="https://travis-ci.org/mageddo/bookmark-notes"><img src="https://travis-ci.org/mageddo/bookmark-notes.svg?branch=master" alt="Build Status"></img></a>
 </p>
 
-# Features
+### Features
 ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/001-bookmarks-list-thumb.jpg)
 
 * [Bookmarks list like thumbs](#001)
@@ -18,7 +18,7 @@
 * [Make your bookmarks public](#009)
 
 
-# Running With Docker
+### Running With Docker
 
 1. Run image
 
@@ -33,7 +33,7 @@
 3. That's it :)
 
 
-# Building from source (You probably don't need to do that)
+### Building from source (You probably don't need to do that)
 
 ```bash
 $ docker-compose up --abort-on-container-exit --force-recreate prod-api-build-bk && \
@@ -49,42 +49,42 @@ if you have problems to stop the container try
 	$ docker kill bookmarks
 
 
-# Logs
+### Logs
 
 See page [log page](http://127.0.0.1:3000/logviewer/#)
 
-# Screenshots
+### Screenshots
 ### <div id="001">Bookmarks list like thumbs</div>
 
-![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/001-bookmarks-list-thumb.jpg)
+![](https://i.imgur.com/gruPMHb.png)
 
 ### <div id="002">Markdown editor</div>
 
-![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/002-markdown-editor.jpg)
+![](https://i.imgur.com/YoHcHjE.png)
 
 ### <div id="003">Code highlight</div>
 
-* ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/003-code-highlight.jpg)
-* ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/004-code-highlight.jpg)
+* ![](https://i.imgur.com/jwAg6Gk.png)
+* ![](https://i.imgur.com/2rK6SkP.png)
 
 ### <div id="005">Tag you bookmark</div>
 
-![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/005-bookmark-tag.jpg)
+![](https://i.imgur.com/YgbnBGP.png)
 
 ### <div id="006">Tag list filter</div>
 
-![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/006-tag-list-filter.jpg)
+![](https://i.imgur.com/Owf7uIa.png)
 
 ### <div id="007">Search by everything</div>
 
-![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/007-search.jpg)
+![](https://i.imgur.com/F1L62MQ.jpg)
 
 ### <div id="008">Logviewer</div>
 
-![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/008-logviewer.jpg)
+![](https://i.imgur.com/FofEMTl.jpg)
 
 ### <div id="009">Make your bookmarks public</div>
 
-![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/010-turn-it-public.png)
-![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/009-public-bookmark-view.png)
+![](https://i.imgur.com/nwC1hfs.png)<br/>
+![](https://i.imgur.com/nIZoUlC.png)
 

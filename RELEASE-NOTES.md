@@ -1,3 +1,8 @@
+# 2.11.0
+* WEB - Remove bootstrap modal, now page must open in fullscreen like another page 
+* When saving a public bookmark show a button to it public link
+* Prevent save double click
+
 # 2.10.1
 * Initial results replace search results
 * Format blockquote like StackOverflow
