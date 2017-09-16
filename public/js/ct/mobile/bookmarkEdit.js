@@ -55,7 +55,6 @@
 
 
 })(new function(){
-
 	this.modal = $(".modal-editor")
 	this.btnEditor = $(".btn-edit")
 	this.btnVisualize = $(".btn-visualize")
