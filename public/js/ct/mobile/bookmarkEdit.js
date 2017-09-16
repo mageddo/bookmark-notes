@@ -3,6 +3,10 @@
 	var edition = new BookmarkEdition(items), ctx = edition.ctx;
 	items = edition.items;
 
+	edition.postCreate = function(){
+		items.btnFullScreen.trigger("click");
+	}
+
 	items.btnTab.click(function(e){
 		e.preventDefault();
 		mg.insertAtCaret(items.editor.get(0), '\t');

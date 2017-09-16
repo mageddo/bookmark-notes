@@ -90,7 +90,7 @@ BookmarkEdition.prototype.setup = function(){
 					items.form.prop("id").value = id;
 					successEvent(false);
 
-					items.btnFullScreen.trigger("click");
+					that.postCreate();
 					editionMode();
 				}
 			}).always(function(){
@@ -127,6 +127,9 @@ BookmarkEdition.prototype.setup = function(){
 	}
 }
 
+BookmarkEdition.prototype.postCreate = function(){
+
+}
 BookmarkEdition.prototype.getFormData = function(){
 	var data = this.items.form.serializeArray();
 	data.push({
