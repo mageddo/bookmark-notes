@@ -1,8 +1,8 @@
-# 2.11.1
+# 2.11.2
 * Fixing save button locks forever when bookmark is created
 * Updating readme
 
-# 2.11.0
+# 2.11.1
 * WEB - Remove bootstrap modal, now page must open in fullscreen like another page 
 * When saving a public bookmark show a button to it public link
 * Prevent save double click
