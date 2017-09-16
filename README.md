@@ -4,18 +4,19 @@
 
 ### Features
 ![](https://raw.githubusercontent.com/mageddo/bookmark-notes/master/files/screenshots/001-bookmarks-list-thumb.jpg)
-
-* [Bookmarks list like thumbs](#001)
-* [Markdown editor](#002)
-* [Code highlight](#003)
-* [Tag you bookmark](#005)
-* [Tag list filter](#006)
-* [Search by everything](#007)
+* Bookmarks list like thumbs
+* [Markdown editor
+* [Code highlight
+* [Tag you bookmark
+* [Tag list filter
+* [Search by everything
 	* Search field to find by bookmark name, content and tags names]
 	* Tag list to filter your bookmarks
-* [Logviewer](#008)
+* Logviewer
 * Mobile friendly
-* [Make your bookmarks public](#009)
+* Make your bookmarks public
+
+[See more screenshots](https://github.com/mageddo/bookmark-notes/docs/index.html)
 
 
 ### Running With Docker
@@ -53,4 +54,3 @@ if you have problems to stop the container try
 
 See page [log page](http://127.0.0.1:3000/logviewer/#)
 
-### Screenshots
