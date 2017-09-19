@@ -1,3 +1,6 @@
+# 2.11.3
+* Fix code scroll not working
+
 # 2.11.2
 * Fixing save button locks forever when bookmark is created
 * Updating readme
