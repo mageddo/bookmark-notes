@@ -3,6 +3,12 @@ function BookmarkEdition(items){
 	this.ctx = {
 		editMode: items.form.data('edit-mode')
 	};
+	$('body').off('click', '.painel-acoes li .toggle-scroll').on('click', '.painel-acoes li .toggle-scroll', function(e){
+		$(this).parent().toggleClass("active");
+		$(this).parents(".mg-code").find('pre').toggleClass("with-scroll");
+		e.preventDefault();
+		e.stopPropagation();
+	});
 }
 
 BookmarkEdition.prototype.setup = function(){
