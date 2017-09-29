@@ -1,3 +1,6 @@
+# 2.11.4
+* Fix preview link not opening in new tab after click in preview two times
+
 # 2.11.3
 * Fix code scroll not working
 
