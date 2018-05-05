@@ -11,10 +11,11 @@ function parseCode(content){
 	renderer.code = function(code, lang){
 		console.debug('onparse=begin, code=%s, lang=%s', code, lang)
 		var parsedCode = languagesMap[lang] ? hljs.highlight(lang, code) : {value: code, plain: true}; // MG-40 hljs.highlightAuto(code) it is slow (1-2 seconds to parse)
-		console.debug('onparse=parsed, parsedCode=%o', parsedCode)
+		console.debug('onparse=parsed, parsedCode=%o, length=%s', parsedCode, parsedCode.value.split(/\r\n|\r|\n/).length)
 		return Mustache.render($('#tplCodeBlock-2').html(), {
 			lang: lang, code: parsedCode.value, plain: parsedCode.plain,
-			overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7
+			overflown: mg.defaults.maxHeight / parsedCode.value.split(/\r\n|\r|\n/).length < 20,
+			maxHeight: mg.defaults.maxHeight
 		});
 	}
 	renderer.table = function(header, body) {

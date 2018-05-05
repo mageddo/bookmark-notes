@@ -171,6 +171,7 @@ module.exports.controller = function(app) {
 	app.get('/bookmark/new', function(req, res) {
 		res.render('bookmarkEdit', {
 			layout: false,
+			maxHeight: 250,
 			stringify: function(){
 				return function(){
 					return '[]';
@@ -186,6 +187,7 @@ module.exports.controller = function(app) {
 			mTag.getTagsByBoomarkId(query.id, function(err, tags){
 				res.render('bookmarkEdit', {
 					layout: false,
+					maxHeight: 250,
 					bookmark: bookmark,
 					tags: tags,
 					editMode: query.editMode,
@@ -206,6 +208,7 @@ module.exports.controller = function(app) {
 	app.get('/mobile/bookmark/new', function(req, res) {
 		res.render('mobile/bookmarkEdit', {
 			layout: false,
+			mobileMaxHeight: 250,
 			stringify: function(){
 				return function(){
 					return '[]';
@@ -221,6 +224,7 @@ module.exports.controller = function(app) {
 			mTag.getTagsByBoomarkId(query.id, function(err, tags){
 				res.render('mobile/bookmarkEdit', {
 					layout: false,
+					mobileMaxHeight: 250,
 					bookmark: bookmark,
 					tags: tags,
 					editMode: query.editMode,
@@ -360,7 +364,10 @@ function parseCode(template, content){
 	var renderer = new marked.Renderer();
 	renderer.code = function(code, lang){
 		var parsedCode = languagesMap[lang] ? hljs.highlight(lang, code) : hljs.highlightAuto(code);
-		return mustache.render(template, {lang: lang, code: parsedCode.value, overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7 });
+		return mustache.render(template, {
+			lang: lang, code: parsedCode.value, 
+			overflown: 450 / parsedCode.value.split(/\r\n|\r|\n/).length < 20
+		});
 	}
 	renderer.table = function(header, body) {
 		return '<table class="table table-bordered table-striped">\n'

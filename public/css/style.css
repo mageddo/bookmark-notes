@@ -155,14 +155,13 @@ textarea#md-editor {
 }
 
 pre {
-	max-height: 150px;
 	overflow-y: hidden;
 	overflow-x: auto;
 }
 
 .with-scroll {
 	overflow-y: auto;
-	max-height: inherit;
+	max-height: inherit !important;
 }
 
 .ace_searchbtn_close {
