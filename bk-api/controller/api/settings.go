@@ -28,7 +28,7 @@ func init() {
 		sc := service.NewSettingsService()
 		s, err := sc.GetSetting(key)
 		if err != nil {
-			log.Warningf("status=failed-load-bookmark, err=%v, errQtd=%v", err)
+			log.Warningf("status=failed-load-setting, err=%v", err)
 			if serr, ok := err.(*errors.ServiceError); ok {
 				BadRequest(w, serr.Error())
 			} else {
@@ -39,5 +39,8 @@ func init() {
 
 		writer := json.NewEncoder(w)
 		writer.Encode(s)
+
+		log.Infof("status=success, key=%s", key)
+
 	})
 }

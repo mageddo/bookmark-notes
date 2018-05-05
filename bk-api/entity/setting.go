@@ -5,5 +5,5 @@ import "time"
 type SettingEntity struct {
 	Key string
 	Value string
-	update *time.Time
+	UpdateDate *time.Time
 }

@@ -13,7 +13,7 @@ type SettingsService struct {
 }
 
 func (s *SettingsService) GetSetting(key string) (*entity.SettingEntity, error){
-	return s.settingsDAO.FindByKey(key), nil
+	return s.settingsDAO.FindByKey(key)
 }
 
 func (dao *SettingsService) SaveSetting(ctx context.Context, setting *entity.SettingEntity) error {
