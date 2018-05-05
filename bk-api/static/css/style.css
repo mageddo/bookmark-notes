@@ -260,3 +260,8 @@ pre {
 	font-size: 24px;
 	padding: 5px;
 }
+
+.col-centered {
+	float: none;
+	margin: 0 auto;
+}

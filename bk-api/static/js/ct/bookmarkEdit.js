@@ -17,7 +17,7 @@
 	edition.getEditorValue = function(){
 		console.debug('m=getEditorValue');
 		return this.items.editor.markdownEditor('content');
-	}
+	};
 
 	edition.setup();
 

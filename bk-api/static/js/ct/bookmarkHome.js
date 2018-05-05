@@ -37,6 +37,9 @@ $.ajax({
 			$.ajax(conf);
 			lastConf = conf;
 		});
+		$(".mg-btn-settings").click(function(){
+			mg.popUpScreen2("/static/html/settings.html");
+		});
 	}
 });
 
@@ -48,7 +51,8 @@ $('#menu-lateral').on('show.bs.collapse', function () {
 });
 $(window).resize(function(){
 	adaptarTamanhoMenu();
-})
+});
+
 
 $(".bookmarkNew").click(function(e){
 	 if(mg.isMobile){
