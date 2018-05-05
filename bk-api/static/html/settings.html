@@ -1,15 +1,8 @@
-<style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form {
-	font-family: Arial, Helvetica, sans-serif;
-	color: black
-}
-
-.bootstrap-iso form button, .bootstrap-iso form button:hover {
-	color: white !important;
-}
-
-.asteriskField {
-	color: red;
-}</style>
+<style>
+	.asteriskField {
+		color: red;
+	}
+</style>
 <link rel="stylesheet" href="/static/css/style.css"/>
 <div class="container">
 	<form class="form" role="search">
@@ -19,27 +12,28 @@
 				<button type="submit" class="btn btn-success glyphicon glyphicon-floppy-save pull-right"></button>
 			</div>
 		</div>
-	</form>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-6 col-sm-6 col-xs-12 col-centered">
-				<div class="form-group ">
-					<label class="control-label requiredField" for="codeBlockMaxWeight">
-						Code block Size
-						<span class="asteriskField">*</span>
-					</label>
-					<input class="form-control" id="codeBlockMaxWeight" name="codeBlockMaxWeight" type="number"/>
-				</div>
-				<div class="form-group ">
-					<label class="control-label requiredField" for="mobileCodeBlockMaxSize">
-						Mobile code block size
-						<span class="asteriskField">*</span>
-					</label>
-					<input class="form-control" id="mobileCodeBlockMaxSize" name="mobileCodeBlockMaxSize" type="number"/>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6 col-sm-6 col-xs-12 col-centered">
+					<h2 style="text-align: center; width: 100%">Settings</h2><br />
+					<div class="form-group ">
+						<label class="control-label requiredField" for="codeBlockMaxWeight">
+							Code block Size
+							<span class="asteriskField">*</span>
+						</label>
+						<input class="form-control" id="codeBlockMaxWeight" name="codeBlockMaxWeight" type="number"/>
+					</div>
+					<div class="form-group ">
+						<label class="control-label requiredField" for="mobileCodeBlockMaxSize">
+							Mobile code block size
+							<span class="asteriskField">*</span>
+						</label>
+						<input class="form-control" id="mobileCodeBlockMaxSize" name="mobileCodeBlockMaxSize" type="number"/>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</form>
 </div>
 
 <script>
