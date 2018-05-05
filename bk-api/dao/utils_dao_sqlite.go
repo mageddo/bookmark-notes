@@ -7,7 +7,6 @@ import (
 )
 
 type UtilsDAOSQLite struct {
-	logger logging.Log
 }
 
 func (dao *UtilsDAOSQLite) Exec(sql string, args ...string) error {
@@ -16,7 +15,7 @@ func (dao *UtilsDAOSQLite) Exec(sql string, args ...string) error {
 }
 
 func (dao *UtilsDAOSQLite) CreateTables() error {
-	dao.logger.Info("status=start")
+	logging.Info("status=start")
 
 	_, err := db.GetConn().Exec(`CREATE TABLE IF NOT EXISTS TAG (
 	IDT_TAG INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
@@ -50,23 +49,23 @@ CREATE TABLE IF NOT EXISTS SYSTEM_PROPERTY (
 	DAT_UPDATE DATETIME
 );
 `)
-	dao.logger.Infof("status=success, error=%v", err)
+	logging.Infof("status=success, error=%v", err)
 	return err
 }
 
 func (dao *UtilsDAOSQLite) TruncateTables() error {
-	dao.logger.Info("status=begin")
+	logging.Info("status=begin")
 
 	conn := db.GetConn()
 	tx , err := conn.Begin()
 	if err != nil {
-		dao.logger.Errorf("error=cannot-open-tx, err=%v", err)
+		logging.Errorf("error=cannot-open-tx, err=%v", err)
 		return err
 	}
 
 	rows, err := tx.Query(`SELECT name FROM sqlite_master WHERE type='table'`);
 	if err != nil {
-		dao.logger.Errorf("status=get-tables, err=%v", err)
+		logging.Errorf("status=get-tables, err=%v", err)
 		return err
 	}
 	defer rows.Close()
@@ -75,16 +74,16 @@ func (dao *UtilsDAOSQLite) TruncateTables() error {
 
 		var name string
 		rows.Scan(&name)
-		dao.logger.Debugf("status=before, table=%s", name)
+		logging.Debugf("status=before, table=%s", name)
 		_, err := tx.Exec(fmt.Sprintf("DELETE FROM %s", name))
 		if err != nil {
-			dao.logger.Errorf("status=delete-rows, err=%v", err)
+			logging.Errorf("status=delete-rows, err=%v", err)
 			return err
 		}
-		dao.logger.Debugf("status=success, table=%s", name)
+		logging.Debugf("status=success, table=%s", name)
 	}
 	tx.Commit()
 
-	dao.logger.Info("status=success")
+	logging.Info("status=success")
 	return nil
 }
