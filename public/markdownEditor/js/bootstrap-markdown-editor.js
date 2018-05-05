@@ -177,6 +177,8 @@
                         mdEditor.css('height', defaults.height);
                         mdPreview.css('height', defaults.height);
 
+                        $('.md-btn-save-form').hide();
+
                     } else {
                         fullscreen = true;
 
@@ -188,10 +190,13 @@
                         } else {
                             adjustFullscreenLayout(mdPreview);
                         }
+                        $('.md-btn-save-form').show();
                     }
 
                     editor.resize();
-                }
+                 } else if (btnType === 'save') {
+                    $("#bookmarkForm").trigger("submit");
+                 }
 
                 editor.focus();
             });
@@ -359,9 +364,15 @@
                 html += '</div>'; // .btn-group
 
                 if (options.fullscreen === true) {
+                    
+                    html += '<div class="btn-group pull-right">';
+                        html += '<button type="button" style="display:none" class="md-btn-save-form md-btn btn-sm btn btn-success glyphicon glyphicon-floppy-save" data-btn="save">' + options.label.btnSave + '</button>';
+                    html += '</div>'; // .btn-group
+
                     html += '<div class="btn-group pull-right">';
                         html += '<button type="button" class="md-btn btn btn-sm btn-default" data-btn="fullscreen"><span class="glyphicon glyphicon-fullscreen"></span> ' + options.label.btnFullscreen + '</button>';
                     html += '</div>'; // .btn-group
+
                 }
 
                 if (options.preview === true) {
@@ -406,6 +417,7 @@
             btnEdit: 'Edit',
             btnPreview: 'Preview',
             btnFullscreen: 'Fullscreen',
+            btnSave: '',
             loading: 'Loading'
         }
     };
