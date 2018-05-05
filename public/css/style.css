@@ -162,6 +162,7 @@ pre {
 
 .with-scroll {
 	overflow-y: auto;
+	max-height: inherit;
 }
 
 .ace_searchbtn_close {
