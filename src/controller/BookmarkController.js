@@ -1,5 +1,5 @@
 var url = require("url"), util = require('util'), fs = require('fs'), utils = require('../core/utils');
-var marked = require('../../public/js/marked.min.js');
+var marked = require('marked');
 var hljs = require('highlight.js');
 var mustache = require('mustache');
 var PAGE_SIZE = 100

@@ -1,4 +1,4 @@
-package controller
+package api
 
 import (
 	"context"
@@ -10,6 +10,7 @@ import (
 	"bk-api/entity"
 	"fmt"
 	"bk-api/errors"
+	. "bk-api/controller"
 )
 
 const (

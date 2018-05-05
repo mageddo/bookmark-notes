@@ -66,20 +66,6 @@
 		mg.notify.error(message);
 	}
 
-	mg.popUpScreen = function(url, options,  container){
-		container = container || ".popuparea";
-		options = options || {};
-		options.url = url;
-		$.ajax(options).done(function(data){
-			$(container)
-				.html(data)
-				.modal("show");
-		}).error(function(error){
-			// TODO EFS fazer isso buscar de um template
-			$(container).html("Error on load " + url + "<br/>" + error);
-		});
-	}
-
 	mg.popUpScreen2 = function(url, options,  container){
 		container = container || ".modal-editor";
 		options = options || {};
