@@ -9,8 +9,12 @@
 
 [[projects]]
   name = "github.com/mageddo/go-logging"
-  packages = ["."]
-  revision = "7a44b89dd8729895685b465e309f2c8253be6a42"
+  packages = [
+    ".",
+    "native",
+    "pkg/trace"
+  ]
+  revision = "25f075205b70b4f04aae1dbb3aebaa4fa10cad13"
 
 [[projects]]
   name = "github.com/mageddo/go-optional"
@@ -38,6 +42,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "ff16494bbb30e37cc74ff77cf789a551be99445ab7cf8e99dc33acf5fdbc5419"
+  inputs-digest = "ad1ca953a0bfc33fa35e43399ec83a41ad243c85f201dd0da038882d7aa9dbee"
   solver-name = "gps-cdcl"
   solver-version = 1

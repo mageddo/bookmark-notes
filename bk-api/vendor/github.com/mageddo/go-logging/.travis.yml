@@ -1,6 +1,7 @@
-language: go
-
-go:
-  - 1.0
-  - 1.1
-  - tip
+sudo: required
+services:
+  - docker
+script: docker-compose up --abort-on-container-exit ci-build-test
+branches:
+  only:
+  - master
