@@ -136,6 +136,9 @@ textarea#md-editor {
 
 .btn-editor-panel {
 	margin-top: 2px;
+    position: sticky;
+    top: 0;
+    background: white;
 }
 
 .editor-panel textarea {
