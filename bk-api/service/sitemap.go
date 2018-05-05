@@ -1,8 +1,6 @@
 package service
 
 import (
-	"github.com/mageddo/go-logging"
-	"context"
 	"bk-api/dao"
 	"io"
 	"fmt"
@@ -12,7 +10,6 @@ import (
 )
 
 type SiteMapService struct {
-	logger logging.Log
 	bookmarkDAO dao.BookmarkDAO
 }
 
@@ -43,7 +40,7 @@ func (s *SiteMapService) LoadSiteMap(w io.Writer, url string) (error) {
 	return err
 }
 
-func NewSiteMapService(ctx context.Context) SiteMapService {
-	return SiteMapService{logging.NewLog(ctx), dao.NewBookmarkDAO(ctx) }
+func NewSiteMapService() SiteMapService {
+	return SiteMapService{dao.NewBookmarkDAO() }
 }
 

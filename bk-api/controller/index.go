@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"github.com/mageddo/go-logging"
 	"context"
+	"bk-api/utils"
 )
 
 type Method string
@@ -51,13 +52,10 @@ func handle(method Method, path string, fn func(context.Context, http.ResponseWr
 
 	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 
-		ctx := logging.NewContext()
-		logger := logging.NewLog(ctx)
-
 		found := r.Method == string(method)
-		logger.Debugf("method=%s, path=%s, found=%t", r.Method, r.URL.Path, found)
+		logging.Debugf("method=%s, path=%s, found=%t", r.Method, r.URL.Path, found)
 		if found {
-			fn(ctx, w, r)
+			fn(utils.NextId(r.Context()), w, r)
 		} else {
 			http.NotFound(w, r)
 		}

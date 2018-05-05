@@ -23,26 +23,25 @@ func init(){
 
 		w.Header().Set("Content-Type", "application/json")
 
-		logger := logging.NewLog(ctx)
 		from, err := strconv.Atoi(r.URL.Query().Get("from"))
 		quantity, errQtd := strconv.Atoi(r.URL.Query().Get("quantity"))
 		tagSlug := r.URL.Query().Get("tag")
 		searchQuery := r.URL.Query().Get("query")
 
-		logger.Infof("status=begin, from=%d, quantity=%d, tag=%s, search=%s", from, quantity, tagSlug, searchQuery)
+		logging.Infof("status=begin, from=%d, quantity=%d, tag=%s, search=%s", from, quantity, tagSlug, searchQuery)
 
 		if err != nil || errQtd != nil {
 			BadRequest(w, "Please pass a valid offset and quantity")
-			logger.Infof("status=bad-parameters, err=%v, errQtd=%v", err, errQtd)
+			logging.Infof("status=bad-parameters, err=%v, errQtd=%v", err, errQtd)
 			return
 		}
 
 		writer := json.NewEncoder(w)
-		sc := service.NewBookmarkService(ctx)
+		sc := service.NewBookmarkService()
 		bookmarks, length, err := sc.GetBookmarks(from, quantity, tagSlug, searchQuery)
 		if err != nil {
 
-			logger.Warningf("status=failed-load-bookmark, err=%v, errQtd=%v", err, errQtd)
+			logging.Warningf("status=failed-load-bookmark, err=%v, errQtd=%v", err, errQtd)
 			if serr, ok := err.(*errors.ServiceError); ok {
 				BadRequest(w, serr.Error())
 			}else{

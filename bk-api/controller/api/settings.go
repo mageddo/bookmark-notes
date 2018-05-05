@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 	"bk-api/service"
-	"github.com/mageddo/go-logging"
+	log "github.com/mageddo/go-logging"
 	"encoding/json"
 	"bk-api/errors"
 	. "bk-api/controller"
@@ -17,9 +17,8 @@ func init() {
 
 		w.Header().Set("Content-Type", "application/json")
 
-		logger := logging.NewLog(ctx)
 		key := strings.TrimSpace(r.URL.Query().Get("key"))
-		logger.Infof("status=begin, key=%s", key)
+		log.Infof("status=begin, key=%s", key)
 
 		if key == "" {
 			BadRequest(w, "Please pass a valid key")
@@ -29,7 +28,7 @@ func init() {
 		sc := service.NewSettingsService()
 		s, err := sc.GetSetting(key)
 		if err != nil {
-			logger.Warningf("status=failed-load-bookmark, err=%v, errQtd=%v", err)
+			log.Warningf("status=failed-load-bookmark, err=%v, errQtd=%v", err)
 			if serr, ok := err.(*errors.ServiceError); ok {
 				BadRequest(w, serr.Error())
 			} else {

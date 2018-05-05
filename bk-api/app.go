@@ -10,10 +10,9 @@ import (
 
 func main(){
 
-	logger := logging.NewLog(logging.NewContext())
-	logger.Debugf("status=starting...")
+	logging.Debugf("status=starting...")
 	if err := http.ListenAndServe(":3131", nil); err != nil {
-		logger.Errorf("error=%v", err)
+		logging.Errorf("error=%v", err)
 	}
 }
 

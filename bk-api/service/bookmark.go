@@ -1,7 +1,6 @@
 package service
 
 import (
-	"github.com/mageddo/go-logging"
 	"bk-api/dao"
 	"context"
 	"bk-api/entity"
@@ -17,8 +16,6 @@ const (
 )
 
 type BookmarkService struct {
-	ctx context.Context
-	logger logging.Log
 	bookmarkDAO dao.BookmarkDAO
 }
 
@@ -42,10 +39,10 @@ func (s *BookmarkService) GetBookmarks(offset, quantity int, tag, query string) 
 func (dao *BookmarkService) SaveBookmark(bookmark *entity.BookmarkEntity) error {
 	return db.Execute(func(tx *sql.Tx) error {
 		return dao.bookmarkDAO.SaveBookmark(tx, bookmark)
-	}, db.GetConn(), dao.ctx)
+	}, db.GetConn(), context.Background())
 
 }
 
-func NewBookmarkService(ctx context.Context) *BookmarkService {
-	return &BookmarkService{ctx, logging.NewLog(ctx), dao.NewBookmarkDAO(ctx)}
+func NewBookmarkService() *BookmarkService {
+	return &BookmarkService{dao.NewBookmarkDAO()}
 }

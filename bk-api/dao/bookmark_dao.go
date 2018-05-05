@@ -1,8 +1,6 @@
 package dao
 
 import (
-	"context"
-	"github.com/mageddo/go-logging"
 	"bk-api/entity"
 	"database/sql"
 )
@@ -15,6 +13,6 @@ type BookmarkDAO interface {
 	SaveBookmark(tx *sql.Tx, bookmark *entity.BookmarkEntity) error
 }
 
-func NewBookmarkDAO(ctx context.Context) *BookmarkDAOSQLite {
-	return &BookmarkDAOSQLite{logging.NewLog(ctx)}
+func NewBookmarkDAO() *BookmarkDAOSQLite {
+	return &BookmarkDAOSQLite{}
 }
