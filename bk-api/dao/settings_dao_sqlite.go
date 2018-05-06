@@ -54,8 +54,19 @@ func (d *SettingsDAOSQLite) FindAll() (*[]entity.SettingEntity, error) {
 	return items, nil
 }
 
-func (d *SettingsDAOSQLite) Save(tx *sql.Tx, settingEntity *entity.SettingEntity) error {
-	return nil
+func (d *SettingsDAOSQLite) Save(tx *sql.Tx, settingEntity *entity.SettingEntity) (int64, error) {
+	r, err := tx.Exec(`
+		UPDATE SYSTEM_PROPERTY SET 
+			DAT_UPDATE = ?
+			DES_VALUE = ?
+		WHERE NAM_PROPERTY = ?
+	`, settingEntity.UpdateDate.Format("2006-01-02 15:04:05"), settingEntity.Value, settingEntity.Key)
+	if err != nil {
+		logging.Errorf("status=update-failed", err)
+		return 0, err
+	}
+	qtd, _ := r.RowsAffected()
+	return qtd, nil
 }
 
 func NewSettingsDAO() SettingsDAO {

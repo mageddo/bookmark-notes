@@ -6,7 +6,7 @@ import (
 )
 
 type SettingsDAO interface {
-	Save(tx *sql.Tx, settingEntity *entity.SettingEntity) error
+	Save(tx *sql.Tx, settingEntity *entity.SettingEntity) (int64, error)
 	FindByKey(key string) (*entity.SettingEntity, error)
 	FindAll() (*[]entity.SettingEntity, error)
 }

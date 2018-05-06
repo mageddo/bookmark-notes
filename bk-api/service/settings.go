@@ -6,6 +6,8 @@ import (
 	"bk-api/db"
 	"database/sql"
 	"context"
+	"time"
+	"github.com/mageddo/go-logging"
 )
 
 type SettingsService struct {
@@ -18,6 +20,18 @@ func (s *SettingsService) GetSetting(key string) (*entity.SettingEntity, error){
 
 func (s *SettingsService) FindAll() (*[]entity.SettingEntity, error){
 	return s.settingsDAO.FindAll()
+}
+
+func (s *SettingsService) UpdateValue(settings *[]entity.SettingEntity) (error){
+	for _, setting := range *settings {
+		t := time.Now()
+		setting.UpdateDate = &t
+		if err := s.SaveSetting(context.Background(), &setting); err != nil {
+			logging.Errorf("status=failed-save, setting=%s", setting.Key, err)
+			return err
+		}
+	}
+	return nil
 }
 
 func (s *SettingsService) FindAllAsMap() (map[string]*entity.SettingEntity, error){
@@ -34,7 +48,9 @@ func (s *SettingsService) FindAllAsMap() (map[string]*entity.SettingEntity, erro
 
 func (dao *SettingsService) SaveSetting(ctx context.Context, setting *entity.SettingEntity) error {
 	return db.Execute(func(tx *sql.Tx) error {
-		return dao.settingsDAO.Save(tx, setting)
+		affected, err := dao.settingsDAO.Save(tx, setting)
+		logging.Infof("status=complete, affected=%d, err=%s", affected, err)
+		return err
 	}, db.GetConn(), ctx)
 
 }
