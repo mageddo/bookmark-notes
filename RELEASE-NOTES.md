@@ -1,3 +1,6 @@
+# 2.12.6
+* fixing highlight in public view
+
 # 2.12.5
 * Fixing statics not found
 
