@@ -23,13 +23,16 @@
 
 1. Run image
 
-```
-$ docker run --rm -p 3000:3000 --name bookmarks defreitas/bookmark-notes
+```bash
+$ git clone https://github.com/mageddo/bookmark-notes.git && bookmark-notes && docker-compose up prod-dns-bk prod-app-bk prod-nginx-bk
 ...
-2017-07-06 23:14:13:942 - debug: loading: HomeController.js
-2017-07-06 23:14:13:942 - debug: loading: TagController.js
-2017-07-06 23:14:13:943 - debug: loading: TesteController.js
-2017-07-06 23:14:14:629 - info: m=getSystemVersionCb, dbversion=1.7, currentVersion=1.7
+2018/05/06 06:31:10 INFO f=index.go:64 pkg=bk-api/controller m=handle status=registering, path=GET /api/v1.0/settings/map
+2018/05/06 06:31:10 INFO f=index.go:64 pkg=bk-api/controller m=handle status=registering, path=GET /api/v1.0/settings
+2018/05/06 06:31:10 INFO f=index.go:64 pkg=bk-api/controller m=handle status=registering, path=PATCH /api/v1.0/settings
+2018/05/06 06:31:10 DEBUG f=app.go:13 pkg=main m=main status=starting...
+2018-05-06 06:31:10:977 - info: m=coresetup, profile=prod
+2018-05-06 06:31:11:429 - info: m=buildDatabase, status=get-versions, versions=0
+2018-05-06 06:31:11:430 - info: database updated
 ```
 
 2. Access browser [http://localhost:3000](http://localhost:3000)

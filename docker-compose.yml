@@ -27,6 +27,14 @@ services:
       -  ./nginx/conf.d/:/etc/nginx/conf.d
     network_mode: 'bridge'
 
+  prod-dns-bk:
+    image: defreitas/dns-proxy-server
+    hostname: dns.mageddo
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/resolv.conf:/etc/resolv.conf
+    network_mode: 'bridge'
+
 ## PRODUCTION BUILD
 
   # compile the whole apk for production
