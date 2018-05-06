@@ -36,9 +36,9 @@ func GetCallerFunction(backLevel int) *stack {
 		tryAgain = rx.MatchString(fn.Name())
 	}
 	if index := strings.LastIndex(fn.Name(), "."); index != -1 {
-		f, l := fn.FileLine(pc[i])
+		f, l := fn.FileLine(pc[i-1])
 		return &stack{f, f[strings.LastIndex(f, "/")+1:], l,
-		fn.Name(), fn.Name()[:index], fn.Name()[index + 1:],
+			fn.Name(), fn.Name()[:index], fn.Name()[index + 1:],
 		}
 	}
 	return nil

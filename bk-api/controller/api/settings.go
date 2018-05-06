@@ -20,26 +20,34 @@ func init() {
 		key := strings.TrimSpace(r.URL.Query().Get("key"))
 		log.Infof("status=begin, key=%s", key)
 
+		writer := json.NewEncoder(w)
+		sc := service.NewSettingsService()
 		if key == "" {
-			BadRequest(w, "Please pass a valid key")
+			rows, err := sc.FindAll()
+			if err != nil {
+				log.Warningf("status=failed-load-settings, err=%v", err)
+				if serr, ok := err.(*errors.ServiceError); ok {
+					BadRequest(w, serr.Error())
+				} else {
+					BadRequest(w, "Could not read settings")
+				}
+				return
+			}
+			writer.Encode(rows)
 			return
 		}
-
-		sc := service.NewSettingsService()
 		s, err := sc.GetSetting(key)
 		if err != nil {
 			log.Warningf("status=failed-load-setting, err=%v", err)
 			if serr, ok := err.(*errors.ServiceError); ok {
 				BadRequest(w, serr.Error())
 			} else {
-				BadRequest(w, "Could not read bookmarks")
+				BadRequest(w, "Could not read settings")
 			}
 			return
 		}
 
-		writer := json.NewEncoder(w)
 		writer.Encode(s)
-
 		log.Infof("status=success, key=%s", key)
 
 	})

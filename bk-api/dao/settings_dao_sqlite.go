@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"bk-api/db"
 	"github.com/mageddo/go-logging"
-	"runtime/debug"
 )
 
 type SettingsDAOSQLite struct {

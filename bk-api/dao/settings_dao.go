@@ -8,4 +8,5 @@ import (
 type SettingsDAO interface {
 	Save(tx *sql.Tx, settingEntity *entity.SettingEntity) error
 	FindByKey(key string) (*entity.SettingEntity, error)
+	FindAll() (*[]entity.SettingEntity, error)
 }

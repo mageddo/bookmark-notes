@@ -245,6 +245,37 @@ func TestStaticErrorf(t *testing.T){
 	}
 }
 
+func TestStaticErrorfUnknowFuncName(t *testing.T){
+
+	buff := new(bytes.Buffer)
+	setupStaticLoggerForTests(buff)
+	func(){
+		func() {
+			func() {
+				func() {
+					func() {
+						func() {
+							func() {
+								func() {
+									func() {
+										Errorf("name=%v", "elvis")
+									}()
+								}()
+							}()
+						}()
+					}()
+				}()
+			}()
+		}()
+
+	}()
+
+	expected := "ERROR f=logging_test.go:262 pkg=github.com/mageddo/go-logging.TestStaticErrorfUnknowFuncName.func1.1.1.1.1.1.1.1 m=1 name=elvis\n"
+	if actual := buff.String(); actual != expected {
+		t.Errorf("log format not expected, expected='%q', actual='%q'", expected, actual)
+	}
+}
+
 func TestStaticErrorfWithCallback(t *testing.T){
 
 	buff := new(bytes.Buffer)
