@@ -34,14 +34,14 @@ func (s *SettingsService) UpdateValue(settings *[]entity.SettingEntity) (error){
 	return nil
 }
 
-func (s *SettingsService) FindAllAsMap() (map[string]*entity.SettingEntity, error){
+func (s *SettingsService) FindAllAsMap() (map[string]entity.SettingEntity, error){
 	rows, err := s.settingsDAO.FindAll()
 	if err != nil {
 		return nil, err
 	}
-	m := make(map[string]*entity.SettingEntity)
+	m := make(map[string]entity.SettingEntity)
 	for _, v := range *rows {
-		m[v.Key] = &v
+		m[v.Key] = v
 	}
 	return m, nil
 }
@@ -49,7 +49,7 @@ func (s *SettingsService) FindAllAsMap() (map[string]*entity.SettingEntity, erro
 func (dao *SettingsService) SaveSetting(ctx context.Context, setting *entity.SettingEntity) error {
 	return db.Execute(func(tx *sql.Tx) error {
 		affected, err := dao.settingsDAO.Save(tx, setting)
-		logging.Infof("status=complete, affected=%d, err=%s", affected, err)
+		logging.Infof("status=complete, affected=%d, err=%v", affected, err)
 		return err
 	}, db.GetConn(), ctx)
 

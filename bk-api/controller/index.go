@@ -6,6 +6,8 @@ import (
 	"github.com/mageddo/go-logging"
 	"context"
 	"bk-api/utils"
+	"fmt"
+	"os"
 )
 
 type Method string
@@ -48,19 +50,38 @@ func Delete(path string, fn func(context.Context, http.ResponseWriter, *http.Req
 	handle(DELETE, path, fn)
 }
 
+func Patch(path string, fn func(context.Context, http.ResponseWriter, *http.Request)) {
+	handle(PATCH, path, fn)
+}
+
+var m = make(map[string]func(context.Context, http.ResponseWriter, *http.Request))
 func handle(method Method, path string, fn func(context.Context, http.ResponseWriter, *http.Request)) {
+	key := getKey(string(method), path)
+	if _, ok := m[key]; ok {
+		logging.Errorf("status-already-registered, key=%s", key)
+		os.Exit(-1)
+	}
+	logging.Infof("status=registering, path=%s", key)
+	m[key] = fn
+
+	if _, ok := m[path]; ok {
+		return
+	}
 
 	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
-
-		found := r.Method == string(method)
+		fn, found := m[getKey(r.Method, r.URL.Path)]
 		logging.Debugf("method=%s, path=%s, found=%t", r.Method, r.URL.Path, found)
 		if found {
 			fn(utils.NextId(r.Context()), w, r)
 		} else {
 			http.NotFound(w, r)
 		}
-
 	})
+	m[path] = nil
+}
+
+func getKey(m string, path string) string {
+	return fmt.Sprintf("%s %s", m, path)
 }
 
 

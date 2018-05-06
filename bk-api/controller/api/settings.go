@@ -9,6 +9,7 @@ import (
 	"bk-api/errors"
 	. "bk-api/controller"
 	"strings"
+	"bk-api/entity"
 )
 
 func init() {
@@ -70,6 +71,31 @@ func init() {
 
 		writer.Encode(s)
 		log.Infof("status=success, key=%s", key)
+	})
 
+
+	Patch("/api/v1.0/settings", func(ctx context.Context, w http.ResponseWriter, r *http.Request) {
+
+		w.Header().Set("Content-Type", "application/json")
+
+		log.Infof("status=begin")
+
+		reader := json.NewDecoder(r.Body)
+		sc := service.NewSettingsService()
+		settings := new([]entity.SettingEntity)
+		if err := reader.Decode(settings); err != nil {
+			BadRequest(w, "Invalid body")
+			return
+		}
+		err := sc.UpdateValue(settings)
+		if err != nil {
+			log.Warningf("status=failed-load-settings, err=%v", err)
+			if serr, ok := err.(*errors.ServiceError); ok {
+				BadRequest(w, serr.Error())
+			} else {
+				BadRequest(w, "Could not read settings")
+			}
+			return
+		}
 	})
 }
