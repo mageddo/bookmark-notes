@@ -8,7 +8,6 @@ import (
 	"log"
 	"bytes"
 	"bk-api/dao"
-	"github.com/mageddo/go-logging"
 )
 var Server *httptest.Server
 
@@ -20,8 +19,7 @@ func init (){
 var tablesCreated = false
 func BuildDatabase(){
 
-	ctx := logging.NewContext()
-	utilsDao := dao.NewUtilsDAO(ctx)
+	utilsDao := dao.NewUtilsDAO()
 
 	if !tablesCreated {
 		if err := utilsDao.CreateTables(); err != nil {

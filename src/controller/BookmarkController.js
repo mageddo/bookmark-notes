@@ -1,5 +1,5 @@
 var url = require("url"), util = require('util'), fs = require('fs'), utils = require('../core/utils');
-var marked = require('../../public/js/marked.min.js');
+var marked = require('marked');
 var hljs = require('highlight.js');
 var mustache = require('mustache');
 var PAGE_SIZE = 100
@@ -171,6 +171,7 @@ module.exports.controller = function(app) {
 	app.get('/bookmark/new', function(req, res) {
 		res.render('bookmarkEdit', {
 			layout: false,
+			maxHeight: 250,
 			stringify: function(){
 				return function(){
 					return '[]';
@@ -184,34 +185,66 @@ module.exports.controller = function(app) {
 		var query = url.parse(req.url, true).query;
 		m.getBookmarkById(query.id, function(err, bookmark){
 			mTag.getTagsByBoomarkId(query.id, function(err, tags){
-				res.render('bookmarkEdit', {
-					layout: false,
-					bookmark: bookmark,
-					tags: tags,
-					editMode: query.editMode,
-					stringify: function(){
-						return function(val, render){
-							return JSON.stringify(this.tags.map(function(tag){
-								return tag.name;
-							}));
-						}
-					},
-					getVisibilityFlag: getVisibilityFlag
+
+				var apiURL = config.get('api.url');
+				var restURL = util.format('%s/api/v1.0/settings?key=CODE_BLOCK_MAX_HEIGHT', apiURL);
+				request.get({url: restURL, json: true}, function (err, response, body) {
+					console.info('M=GET /api/settings, error=%s, code=%d', err, response && response.statusCode);
+					if(err != null || response.statusCode != 200){
+						console.error('M=GET /api/settings, status=error, error=%s, code=%d, body=%j', err, response && response.statusCode, body);
+						app.em._400({
+							res: res,
+							message: (body && body.message) || "Could not get configuration temporally",
+							stacktrace: err
+						});
+					} else {
+						res.render('bookmarkEdit', {
+							layout: false,
+							maxHeight: body.value,
+							bookmark: bookmark,
+							tags: tags,
+							editMode: query.editMode,
+							stringify: function(){
+								return function(val, render){
+									return JSON.stringify(this.tags.map(function(tag){
+										return tag.name;
+									}));
+								}
+							},
+							getVisibilityFlag: getVisibilityFlag
+						});
+					}
 				});
+				
 			});
 		});
 	});
 
 
 	app.get('/mobile/bookmark/new', function(req, res) {
-		res.render('mobile/bookmarkEdit', {
-			layout: false,
-			stringify: function(){
-				return function(){
-					return '[]';
-				}
-			},
-			getVisibilityFlag: getVisibilityFlag
+		var apiURL = config.get('api.url');
+		var restURL = util.format('%s/api/v1.0/settings?key=MOBILE_CODE_BLOCK_MAX_HEIGHT', apiURL);
+		request.get({url: restURL, json: true}, function (err, response, body) {
+			console.info('M=GET /api/settings, error=%s, code=%d', err, response && response.statusCode);
+			if(err != null || response.statusCode != 200){
+				console.error('M=GET /api/settings, status=error, error=%s, code=%d, body=%j', err, response && response.statusCode, body);
+				app.em._400({
+					res: res,
+					message: (body && body.message) || "Could not get configuration temporally",
+					stacktrace: err
+				});
+			} else {
+				res.render('mobile/bookmarkEdit', {
+					layout: false,
+					mobileMaxHeight: body.value,
+					stringify: function(){
+						return function(){
+							return '[]';
+						}
+					},
+					getVisibilityFlag: getVisibilityFlag
+				});
+			}
 		});
 	});
 
@@ -219,20 +252,36 @@ module.exports.controller = function(app) {
 		var query = url.parse(req.url, true).query;
 		m.getBookmarkById(query.id, function(err, bookmark){
 			mTag.getTagsByBoomarkId(query.id, function(err, tags){
-				res.render('mobile/bookmarkEdit', {
-					layout: false,
-					bookmark: bookmark,
-					tags: tags,
-					editMode: query.editMode,
-					stringify: function(){
-						return function(val, render){
-							return JSON.stringify(this.tags.map(function(tag){
-								return tag.name;
-							}));
-						}
-					},
-					getVisibilityFlag: getVisibilityFlag
+				var apiURL = config.get('api.url');
+				var restURL = util.format('%s/api/v1.0/settings?key=MOBILE_CODE_BLOCK_MAX_HEIGHT', apiURL);
+				request.get({url: restURL, json: true}, function (err, response, body) {
+					console.info('M=GET /api/settings, error=%s, code=%d', err, response && response.statusCode);
+					if(err != null || response.statusCode != 200){
+						console.error('M=GET /api/settings, status=error, error=%s, code=%d, body=%j', err, response && response.statusCode, body);
+						app.em._400({
+							res: res,
+							message: (body && body.message) || "Could not get configuration temporally",
+							stacktrace: err
+						});
+					} else {
+						res.render('mobile/bookmarkEdit', {
+							layout: false,
+							mobileMaxHeight: body.value,
+							bookmark: bookmark,
+							tags: tags,
+							editMode: query.editMode,
+							stringify: function(){
+								return function(val, render){
+									return JSON.stringify(this.tags.map(function(tag){
+										return tag.name;
+									}));
+								}
+							},
+							getVisibilityFlag: getVisibilityFlag
+						});
+					}
 				});
+				
 			});
 		});
 	});
@@ -360,7 +409,10 @@ function parseCode(template, content){
 	var renderer = new marked.Renderer();
 	renderer.code = function(code, lang){
 		var parsedCode = languagesMap[lang] ? hljs.highlight(lang, code) : hljs.highlightAuto(code);
-		return mustache.render(template, {lang: lang, code: parsedCode.value, overflown: parsedCode.value.split(/\r\n|\r|\n/).length > 7 });
+		return mustache.render(template, {
+			lang: lang, code: parsedCode.value, 
+			overflown: 450 / parsedCode.value.split(/\r\n|\r|\n/).length < 20
+		});
 	}
 	renderer.table = function(header, body) {
 		return '<table class="table table-bordered table-striped">\n'

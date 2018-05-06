@@ -8,8 +8,6 @@ services:
     container_name: bookmarks-node-prod
     image: defreitas/bookmark-notes:2.11.4
     hostname: bookmarks.mageddo
-    ports:
-      - 3000:3000
     environment:
       - HOSTNAMES=bookmarks-node.mageddo
       - PROFILE=PROD
@@ -56,6 +54,11 @@ services:
       - REPO_TOKEN=$REPO_TOKEN # github token to deploy the binary
     volumes:
       - $HOME/.gitconfig:/root/.gitconfig
+
+  # just in case of deps change
+  prod-api-install-deps-bk:
+    extends: prod-api-build-bk
+    command: bash -c "/app/builder deps"
 
 ## DEVELOPMENT
 

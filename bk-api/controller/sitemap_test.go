@@ -4,7 +4,6 @@ import (
 	"testing"
 	"github.com/stretchr/testify/assert"
 	"bk-api/test"
-	"github.com/mageddo/go-logging"
 	"bk-api/entity"
 	"bk-api/service"
 	"regexp"
@@ -22,7 +21,6 @@ func TestGetV1_0Success(t *testing.T){
 	}
 	utils.SetNow(now)
 
-	ctx := logging.NewContext()
 	test.BuildDatabase()
 
 	expectedXML := regex.ReplaceAllString(`<?xml version="1.0" encoding="UTF-8"?>
@@ -37,7 +35,7 @@ func TestGetV1_0Success(t *testing.T){
 `, "")
 
 
-	service.NewBookmarkService(ctx).SaveBookmark(entity.NewBookmarkWithNameAndVisibility("X", entity.PUBLIC))
+	service.NewBookmarkService().SaveBookmark(entity.NewBookmarkWithNameAndVisibility("X", entity.PUBLIC))
 
 	resp, c, err := test.NewReq("GET", "/api/v1.0/sitemap")
 
@@ -59,7 +57,6 @@ func TestGetV1_0CustomBaseURLSuccess(t *testing.T){
 	}
 	utils.SetNow(now)
 
-	ctx := logging.NewContext()
 	test.BuildDatabase()
 
 	expectedXML := regex.ReplaceAllString(`<?xml version="1.0" encoding="UTF-8"?>
@@ -80,9 +77,9 @@ func TestGetV1_0CustomBaseURLSuccess(t *testing.T){
 `, "")
 
 
-	service.NewBookmarkService(ctx).SaveBookmark(entity.NewBookmarkWithNameAndVisibility("X", entity.PUBLIC))
-	service.NewBookmarkService(ctx).SaveBookmark(entity.NewBookmarkWithNameAndVisibility("X2", entity.PUBLIC))
-	service.NewBookmarkService(ctx).SaveBookmark(entity.NewBookmarkWithNameAndVisibility("X3", entity.PRIVATE))
+	service.NewBookmarkService().SaveBookmark(entity.NewBookmarkWithNameAndVisibility("X", entity.PUBLIC))
+	service.NewBookmarkService().SaveBookmark(entity.NewBookmarkWithNameAndVisibility("X2", entity.PUBLIC))
+	service.NewBookmarkService().SaveBookmark(entity.NewBookmarkWithNameAndVisibility("X3", entity.PRIVATE))
 
 	resp, c, err := test.NewReq("GET", "/api/v1.0/sitemap?url=acme.com")
 

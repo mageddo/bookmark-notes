@@ -1,3 +1,9 @@
+# 2.12.0
+* Create a config panel to turn code block size configurable for mobile and desktop
+* Make code block collapsible
+* Tollbar must be fixed in mobile
+* Codeblock size now is configurable in settings page `Left top menu -> settings`
+
 # 2.11.4
 * Fix preview link not opening in new tab after click in preview two times
 

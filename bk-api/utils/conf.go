@@ -3,10 +3,10 @@ package utils
 import (
 	"os"
 	"encoding/json"
-	"bk-api/log"
 	"path/filepath"
 	"strings"
 	"bk-api/env"
+	"github.com/mageddo/go-logging"
 )
 
 type Configuration struct {
@@ -22,7 +22,7 @@ func init(){
 	decoder := json.NewDecoder(confFile)
 	err := decoder.Decode(&configuration)
 	if err != nil {
-		log.LOGGER.Fatalf("m=conf, status=loadconf, err=%v", err)
+		logging.Errorf("status=loadconf, err=%v", err)
 		os.Exit(-1)
 	}
 
@@ -39,7 +39,7 @@ func GetCurrentPath() string {
 		return currDIr
 	}
 	currentPath, _ := filepath.Abs(filepath.Dir(os.Args[0]))
-	log.LOGGER.Info("currentPath=%s", currentPath)
+	logging.Info("currentPath=%s", currentPath)
 	return currentPath
 
 }
@@ -53,6 +53,6 @@ func GetPath(path string) string {
 		currentPath = currentPath[0:len(currentPath)-1];
 	}
 	newPath := currentPath + path
-	log.LOGGER.Infof("newPath=%s", newPath)
+	logging.Infof("newPath=%s", newPath)
 	return newPath
 }

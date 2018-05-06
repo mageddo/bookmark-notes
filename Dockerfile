@@ -19,7 +19,6 @@ ARG DOWNLOAD_API_FROM_REMOTE=1
 COPY bookmark-notes "${APP_PATH}"
 COPY src "${APP_PATH}/src"
 COPY view "${APP_PATH}/view"
-COPY public "${APP_PATH}/public"
 COPY app.js "${APP_PATH}"
 COPY conf.default "${APP_PATH}/conf"
 COPY conf.default "${APP_PATH}/conf.default"

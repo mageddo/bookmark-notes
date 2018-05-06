@@ -44,14 +44,18 @@ case $1 in
 
 	;;
 
+	deps )
+
+		cd ${API_PATH} && go get -v github.com/golang/dep/cmd/dep && dep ensure -v
+
+	;;
+
 	build )
 
 		echo "starting build $APP_VERSION"
 
-		go get -v github.com/golang/dep/cmd/dep && \
 		rm -rf ${BUILD_PATH}/* && \
 		cd ${API_PATH} && \
-		dep ensure -v && \
 		go test -cover=false ./.../ && \
 		go build -v -o ${BUILD_PATH}/bk-api && \
 		sh -c "cd ${BUILD_PATH} && tar -acvf bk-api-$APP_VERSION.tgz *"

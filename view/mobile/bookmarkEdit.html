@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/css/mobile/style.css" />
+<link rel="stylesheet" href="/static/css/mobile/style.css" />
 <form class="form" role="search" id="bookmarkForm" data-edit-mode="{{editMode}}" >
 
 	<div class="fields">
@@ -47,18 +47,19 @@
 </form>
 <script>
 var tagsToEdit = {{#stringify}}{{/stringify}};
+mg.defaults.maxHeight = {{mobileMaxHeight}};
 </script>
-<script src="/js/ct/bookmarkEditCommon.js"></script>
-<script src="/js/ct/mobile/bookmarkEdit.js"></script>
+<script src="/static/js/ct/bookmarkEditCommon.js"></script>
+<script src="/static/js/ct/mobile/bookmarkEdit.js"></script>
 <script type="text/template" id="tplCodeBlock-2">
 	<div class="mg-code" lang="{{lang}}">
 		<ul class="nav nav-pills painel-acoes">
 			{{#overflown}}
-			<li role="presentation" ><a href="#" class="toggle-scroll skipped glyphicon glyphicon-eye-open" title="Show code scroll"></a></li>
+			<li role="presentation" ><a href="#" class="toggle-scroll skipped glyphicon glyphicon-eye-open" title="Maxmize code"></a></li>
 			{{/overflown}}
 			<li role="presentation" class="pull-right" ><a href="#" class="skipped glyphicon glyphicon-option-vertical"></a></li>
 		</ul>
-		<pre><code>{{#plain}}{{code}}{{/plain}}{{^plain}}{{{code}}}{{/plain}}</code></pre>
+		<pre style="max-height: {{maxHeight}}px" ><code>{{#plain}}{{code}}{{/plain}}{{^plain}}{{{code}}}{{/plain}}</code></pre>
 	</div>
 </script>
 </html>
