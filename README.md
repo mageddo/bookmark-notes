@@ -24,7 +24,7 @@
 1. Run image (It can take some seconds to server start to listen)
 
 ```bash
-$ git clone https://github.com/mageddo/bookmark-notes.git && bookmark-notes
+$ git clone https://github.com/mageddo/bookmark-notes.git && cd bookmark-notes
 $ docker-compose up prod-dns-bk prod-app-bk prod-nginx-bk
 ...
 2018/05/06 06:31:10 INFO f=index.go:64 pkg=bk-api/controller m=handle status=registering, path=GET /api/v1.0/settings/map
