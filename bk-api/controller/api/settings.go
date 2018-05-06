@@ -13,6 +13,27 @@ import (
 
 func init() {
 
+	Get("/api/v1.0/settings/map", func(ctx context.Context, w http.ResponseWriter, r *http.Request) {
+
+		w.Header().Set("Content-Type", "application/json")
+
+		log.Infof("status=begin")
+
+		writer := json.NewEncoder(w)
+		sc := service.NewSettingsService()
+		rows, err := sc.FindAllAsMap()
+		if err != nil {
+			log.Warningf("status=failed-load-settings, err=%v", err)
+			if serr, ok := err.(*errors.ServiceError); ok {
+				BadRequest(w, serr.Error())
+			} else {
+				BadRequest(w, "Could not read settings")
+			}
+			return
+		}
+		writer.Encode(rows)
+	})
+
 	Get("/api/v1.0/settings", func(ctx context.Context, w http.ResponseWriter, r *http.Request) {
 
 		w.Header().Set("Content-Type", "application/json")

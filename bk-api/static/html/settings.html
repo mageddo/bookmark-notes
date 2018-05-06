@@ -21,14 +21,14 @@
 							Code block Size
 							<span class="asteriskField">*</span>
 						</label>
-						<input class="form-control" id="codeBlockMaxWeight" name="codeBlockMaxWeight" type="number"/>
+						<input class="form-control" id="codeBlockMaxWeight" data-key="CODE_BLOCK_MAX_HEIGHT" name="prop" type="number"/>
 					</div>
 					<div class="form-group ">
 						<label class="control-label requiredField" for="mobileCodeBlockMaxSize">
 							Mobile code block size
 							<span class="asteriskField">*</span>
 						</label>
-						<input class="form-control" id="mobileCodeBlockMaxSize" name="mobileCodeBlockMaxSize" type="number"/>
+						<input class="form-control" id="mobileCodeBlockMaxSize" data-key="MOBILE_CODE_BLOCK_MAX_HEIGHT" name="prop" type="number"/>
 					</div>
 				</div>
 			</div>
@@ -41,11 +41,15 @@ $('.btn-close-modal').on('dblclick' + (mg.defaults.debug ? ' click' : ''), funct
 	$(".modal-editor").addClass("hidden");
 });
 $.ajax({
-	url: '/api/v2.0/settings'
+	url: '/api/v2.0/settings/map'
 }).done(function(data){
-	$(container)
-		.html(data)
-		.removeClass("hidden");
+	$("form input").each(function(){
+		var that = $(this);
+		var prop = data[that.data('key')];
+		if(prop != null){
+			that.val(prop.value);
+		}
+	})
 }).error(function(error){
 	// TODO EFS fazer isso buscar de um template
 	$(container).html("Error on load " + url + "<br/>" + error);
