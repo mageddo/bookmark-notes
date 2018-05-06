@@ -18,6 +18,14 @@ services:
       - /var/lib/mageddo/bookmarks-node/logs:/opt/bookmarks/logs
       - /var/lib/mageddo/bookmarks-node/conf:/opt/bookmarks/conf
     network_mode: bridge
+  
+  prod-nginx-bk:
+    image: nginx:1.10
+    hostname: bookmarks.intranet
+    container_name: bookmarks-app
+    volumes:
+      -  ./nginx/conf.d/:/etc/nginx/conf.d
+    network_mode: 'bridge'
 
 ## PRODUCTION BUILD
 

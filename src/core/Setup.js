@@ -37,6 +37,21 @@ if(!fs.existsSync(authPath)){
 	fs.appendFileSync(authPath, fs.readFileSync(originalAuthPath), {flag: 'w'});
 }
 
+var confPath = process.cwd() + "/conf/";
+var containsProps = fs.readdirSync(confPath).some(file => {
+  return file.endsWith('.properties')
+});
+if(!containsProps){
+	console.info("status=copying-properties")
+	var originalConf = process.cwd() + "/conf.default";
+	fs.readdirSync(originalConf).filter(file => {
+	  return file.endsWith('.properties')
+	}).forEach(f => {
+		console.info("status=copying-property, source=%s, target=%s", f, confPath + f);
+		fs.appendFileSync(confPath + f, fs.readFileSync(originalConf + '/' + f), {flag: 'w'});
+	});
+}
+
 var basicAuth = auth.basic({
 	realm: "Mageddo Bookmarks",
 	file: authPath
