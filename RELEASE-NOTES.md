@@ -1,3 +1,6 @@
+# 2.12.5
+* Fixing statics not found
+
 # 2.12.0
 * Create a config panel to turn code block size configurable for mobile and desktop
 * Make code block collapsible
