@@ -5,6 +5,7 @@ import (
 	"context"
 	"bk-api/service"
 	"github.com/mageddo/go-logging"
+	. "github.com/mageddo/go-httpmap"
 )
 
 func init(){
@@ -16,6 +17,5 @@ func init(){
 			logging.Errorf("status=could-not-load, err=%+v", err)
 			BadRequest(w, "Could not load sitemap")
 		}
-
 	})
 }

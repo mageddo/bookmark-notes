@@ -10,7 +10,7 @@ import (
 	"bk-api/entity"
 	"fmt"
 	"bk-api/errors"
-	. "bk-api/controller"
+	. "github.com/mageddo/go-httpmap"
 )
 
 const (

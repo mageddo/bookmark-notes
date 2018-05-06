@@ -37,9 +37,9 @@ type Log interface {
 
 }
 
-var l Log = New(native.NewGologPrinter(os.Stdout, "", log.LstdFlags), 3)
+var l Log = New(native.NewGologPrinter(os.Stdout, "", log.LstdFlags))
 func Debug(args ...interface{}) {
-	l.Debug(args...)
+	l.Debug(args)
 }
 
 func Debugf(format string, args ...interface{}){

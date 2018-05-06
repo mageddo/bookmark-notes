@@ -7,7 +7,7 @@ import (
 	log "github.com/mageddo/go-logging"
 	"encoding/json"
 	"bk-api/errors"
-	. "bk-api/controller"
+	. "github.com/mageddo/go-httpmap"
 	"strings"
 	"bk-api/entity"
 )

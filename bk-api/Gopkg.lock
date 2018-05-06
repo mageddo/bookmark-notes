@@ -8,13 +8,19 @@
   version = "v1.1.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/mageddo/go-httpmap"
+  packages = ["."]
+  revision = "51aa467628f65b9dfcd8c4888a7cbf33dd7b0982"
+
+[[projects]]
   name = "github.com/mageddo/go-logging"
   packages = [
     ".",
     "native",
     "pkg/trace"
   ]
-  revision = "ecd7dd80d405599fe8e18b5ceee28894ee61cc31"
+  revision = "46139c893695361b79a476c1ec8a773f7ce9939f"
 
 [[projects]]
   name = "github.com/mageddo/go-optional"
@@ -42,6 +48,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "5d5055d41c6ff514f1e1bdf404a2ad6fecffce0ac5e9a5e4ebe13fa7961d8c1c"
+  inputs-digest = "6c265e8201e7e07cd02bb827507306a53ac2bc7ca10d84a07af04d8696707182"
   solver-name = "gps-cdcl"
   solver-version = 1
