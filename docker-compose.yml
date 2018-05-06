@@ -6,7 +6,7 @@ services:
 # Run prod image
   prod-app-bk:
     container_name: bookmarks-node-prod
-    image: defreitas/bookmark-notes:2.12.5
+    image: defreitas/bookmark-notes:2.12.4
     hostname: bookmarks.mageddo
     environment:
       - HOSTNAMES=bookmarks-node.mageddo
