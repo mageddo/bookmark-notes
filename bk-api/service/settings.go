@@ -8,6 +8,7 @@ import (
 	"context"
 	"time"
 	"github.com/mageddo/go-logging"
+	"errors"
 )
 
 type SettingsService struct {
@@ -22,16 +23,24 @@ func (s *SettingsService) FindAll() (*[]entity.SettingEntity, error){
 	return s.settingsDAO.FindAll()
 }
 
-func (s *SettingsService) UpdateValue(settings *[]entity.SettingEntity) (error){
-	for _, setting := range *settings {
-		t := time.Now()
-		setting.UpdateDate = &t
-		if err := s.SaveSetting(context.Background(), &setting); err != nil {
-			logging.Errorf("status=failed-save, setting=%s", setting.Key, err)
-			return err
+func (s *SettingsService) UpdateValue(settings *[]entity.SettingEntity) (error) {
+	err := db.Execute(func(tx *sql.Tx) error {
+		for _, setting := range *settings {
+			if len(setting.Value) > 100 {
+				return errors.New("Value can't have more than 100 letters")
+			}
+			t := time.Now()
+			setting.UpdateDate = &t
+			affected, err := s.settingsDAO.Save(tx, &setting)
+			if err != nil {
+				logging.Errorf("status=failed-save, setting=%s", setting.Key, err)
+				return err
+			}
+			logging.Infof("status=complete, affected=%d, err=%v", affected, err)
 		}
-	}
-	return nil
+		return nil
+	}, db.GetConn(), context.Background())
+	return err
 }
 
 func (s *SettingsService) FindAllAsMap() (map[string]entity.SettingEntity, error){

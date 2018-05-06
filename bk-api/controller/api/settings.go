@@ -77,14 +77,18 @@ func init() {
 	Patch("/api/v1.0/settings", func(ctx context.Context, w http.ResponseWriter, r *http.Request) {
 
 		w.Header().Set("Content-Type", "application/json")
-
-		log.Infof("status=begin")
+		log.Infof("status=update-begin")
 
 		reader := json.NewDecoder(r.Body)
 		sc := service.NewSettingsService()
 		settings := new([]entity.SettingEntity)
 		if err := reader.Decode(settings); err != nil {
+			log.Errorf("status=invalid-body")
 			BadRequest(w, "Invalid body")
+			return
+		}
+		if len(*settings) == 0 {
+			w.WriteHeader(http.StatusNoContent)
 			return
 		}
 		err := sc.UpdateValue(settings)
@@ -93,9 +97,14 @@ func init() {
 			if serr, ok := err.(*errors.ServiceError); ok {
 				BadRequest(w, serr.Error())
 			} else {
-				BadRequest(w, "Could not read settings")
+				BadRequest(w, "Could not update settings")
 			}
 			return
 		}
+		data := new([]string)
+		for _, v := range *settings {
+			*data = append(*data, v.Key)
+		}
+		json.NewEncoder(w).Encode(data)
 	})
 }

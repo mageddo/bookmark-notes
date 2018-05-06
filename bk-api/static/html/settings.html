@@ -21,14 +21,14 @@
 							Code block Size
 							<span class="asteriskField">*</span>
 						</label>
-						<input class="form-control" id="codeBlockMaxWeight" class="mg-prop-key" name="CODE_BLOCK_MAX_HEIGHT" type="number"/>
+						<input class="form-control mg-prop-key" id="codeBlockMaxWeight" name="CODE_BLOCK_MAX_HEIGHT" type="number"/>
 					</div>
 					<div class="form-group ">
 						<label class="control-label requiredField" for="mobileCodeBlockMaxSize">
 							Mobile code block size
 							<span class="asteriskField">*</span>
 						</label>
-						<input class="form-control" id="mobileCodeBlockMaxSize" class="mg-prop-key" name="CODE_BLOCK_MAX_HEIGHT" type="number"/>
+						<input class="form-control mg-prop-key" id="mobileCodeBlockMaxSize" name="MOBILE_CODE_BLOCK_MAX_HEIGHT" type="number"/>
 					</div>
 				</div>
 			</div>
@@ -43,7 +43,7 @@ $('.btn-close-modal').on('dblclick' + (mg.defaults.debug ? ' click' : ''), funct
 $("#mg-frm-settings").submit(function(e){
 	e.preventDefault();
 	var props = [];
-	$(this).find("input.mg-prop-key").each(function(){
+	$(this).find(".mg-prop-key").each(function(){
 		var that = $(this);
 		props.push({key: that.prop("name"), value: that.val()});
 	});
@@ -51,8 +51,13 @@ $("#mg-frm-settings").submit(function(e){
 		url: '/api/v2.0/settings',
 		method: 'PATCH',
 		dataType: 'JSON',
+		contentType: 'application/json',
 		data: JSON.stringify(props)
-	}).done(function(){
+	}).done(function(data, txtStatus, r){
+		if (r.status == 204){
+			mg.notify.warn("Nothing to save");
+			return ;
+		}
 		mg.notify.success("All settings saved!");
 	}).error(function(){
 		mg.notify.error("Can't save settings");
