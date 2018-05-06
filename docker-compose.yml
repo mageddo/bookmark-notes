@@ -26,6 +26,7 @@ services:
     volumes:
       -  ./nginx/conf.d/:/etc/nginx/conf.d
     network_mode: 'bridge'
+    restart: always
 
   prod-dns-bk:
     image: defreitas/dns-proxy-server

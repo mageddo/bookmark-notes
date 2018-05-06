@@ -21,10 +21,11 @@
 
 ### Running With Docker
 
-1. Run image
+1. Run image (It can take some seconds to server start to listen)
 
 ```bash
-$ git clone https://github.com/mageddo/bookmark-notes.git && bookmark-notes && docker-compose up prod-dns-bk prod-app-bk prod-nginx-bk
+$ git clone https://github.com/mageddo/bookmark-notes.git && bookmark-notes
+$ docker-compose up prod-dns-bk prod-app-bk prod-nginx-bk
 ...
 2018/05/06 06:31:10 INFO f=index.go:64 pkg=bk-api/controller m=handle status=registering, path=GET /api/v1.0/settings/map
 2018/05/06 06:31:10 INFO f=index.go:64 pkg=bk-api/controller m=handle status=registering, path=GET /api/v1.0/settings
@@ -35,30 +36,5 @@ $ git clone https://github.com/mageddo/bookmark-notes.git && bookmark-notes && d
 2018-05-06 06:31:11:430 - info: database updated
 ```
 
-2. Access browser [http://localhost:3000](http://localhost:3000)
+2. Access browser [http://bookmarks.intranet](http://bookmarks.intranet)
 3. That's it :)
-
-
-### Building from source (You probably don't need to do that)
-
-```bash
-$ docker-compose up --abort-on-container-exit --force-recreate prod-api-build-bk && \
-docker-compose build prod-build-bk
-```
-
-Then
-
-```
-$ docker run --rm -p 3000:3000 --name bookmarks defreitas/bookmark-notes:<docker-compose-tag>
-```
-
-if you have problems to stop the container try
-
-```
-$ docker kill bookmarks
-````
-
-### Logs
-
-See page [log page](http://127.0.0.1:3000/logviewer/#)
-
