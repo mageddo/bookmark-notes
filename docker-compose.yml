@@ -8,8 +8,6 @@ services:
     container_name: bookmarks-node-prod
     image: defreitas/bookmark-notes:2.11.4
     hostname: bookmarks.mageddo
-    ports:
-      - 3000:3000
     environment:
       - HOSTNAMES=bookmarks-node.mageddo
       - PROFILE=PROD
