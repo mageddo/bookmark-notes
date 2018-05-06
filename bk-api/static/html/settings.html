@@ -37,7 +37,17 @@
 </div>
 
 <script>
-	$('.btn-close-modal').on('dblclick' + (mg.defaults.debug ? ' click' : ''), function () {
-		$(".modal-editor").addClass("hidden");
-	});
+$('.btn-close-modal').on('dblclick' + (mg.defaults.debug ? ' click' : ''), function () {
+	$(".modal-editor").addClass("hidden");
+});
+$.ajax({
+	url: '/api/v2.0/settings'
+}).done(function(data){
+	$(container)
+		.html(data)
+		.removeClass("hidden");
+}).error(function(error){
+	// TODO EFS fazer isso buscar de um template
+	$(container).html("Error on load " + url + "<br/>" + error);
+});
 </script>

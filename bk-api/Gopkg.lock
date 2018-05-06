@@ -14,7 +14,7 @@
     "native",
     "pkg/trace"
   ]
-  revision = "25f075205b70b4f04aae1dbb3aebaa4fa10cad13"
+  revision = "a782d406c99ed6c84a3c7af03c3b56cb686d2f61"
 
 [[projects]]
   name = "github.com/mageddo/go-optional"
@@ -42,6 +42,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "ad1ca953a0bfc33fa35e43399ec83a41ad243c85f201dd0da038882d7aa9dbee"
+  inputs-digest = "d6366929140c3c8f5821352841adb3ca1b12490baf6d364e42be48dd2e511391"
   solver-name = "gps-cdcl"
   solver-version = 1

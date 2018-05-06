@@ -22,7 +22,7 @@
 
 [[constraint]]
   name = "github.com/mageddo/go-logging"
-  revision = "25f075205b70b4f04aae1dbb3aebaa4fa10cad13"
+  revision = "a782d406c99ed6c84a3c7af03c3b56cb686d2f61"
 
 [[constraint]]
   name = "github.com/mageddo/go-optional"

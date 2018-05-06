@@ -46,7 +46,7 @@ case $1 in
 
 	deps )
 
-		go get -v github.com/golang/dep/cmd/dep && dep ensure -v
+		cd ${API_PATH} && go get -v github.com/golang/dep/cmd/dep && dep ensure -v
 
 	;;
 

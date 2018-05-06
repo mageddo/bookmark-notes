@@ -57,6 +57,11 @@ services:
     volumes:
       - $HOME/.gitconfig:/root/.gitconfig
 
+  # just in case of deps change
+  prod-api-install-deps-bk:
+    extends: prod-api-build-bk
+    command: bash -c "/app/builder deps"
+
 ## DEVELOPMENT
 
   # useful to run api for development
