@@ -1,5 +1,6 @@
 package com.mageddo.bookmarks;
 
+import static com.mageddo.db.DBUtils.template;
 import static spark.Spark.*;
 
 public class Main {
@@ -34,5 +35,12 @@ public class Main {
 		});
 
 		get("/", (request, response) -> "root");
+
+		get("/dual", (request, response) -> {
+			System.out.println("processing");
+			String r = String.valueOf(template().queryForList("SELECT * FROM bsk_item").get(0));
+			System.out.println("resulted");
+			return r;
+		});
 	}
 }
