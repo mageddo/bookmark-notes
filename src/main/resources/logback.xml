@@ -14,6 +14,7 @@
 	<root level="DEBUG">
 		<appender-ref ref="console"/>
 	</root>
+	<logger name="org.eclipse.jetty" level="INFO" />
 	<logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG" />
 	<logger name="org.apache.http.client.protocol.ResponseProcessCookies" level="ERROR" />
 </configuration>

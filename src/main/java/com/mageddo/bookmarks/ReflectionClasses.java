@@ -4,6 +4,9 @@ import com.mageddo.bookmarks.dao.BookmarkDAOSqlite;
 import com.mageddo.bookmarks.service.BookmarkService;
 import com.mageddo.controller.BookmarkController;
 import org.graalvm.nativeimage.RuntimeReflection;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -18,7 +21,10 @@ public class ReflectionClasses {
 			ApplicationContextProvider.class,
 			BookmarkService.class,
 			BookmarkDAOSqlite.class,
-			BookmarkController.class
+			BookmarkController.class,
+			NamedParameterJdbcTemplate.class,
+			JdbcTemplate.class,
+			DataSourceTransactionManager.class
 		};
 	}
 
@@ -53,6 +59,7 @@ public class ReflectionClasses {
 	private static void process(Class<?> clazz) {
 		try {
 			System.out.println("> Declaring class: " + clazz.getCanonicalName());
+			RuntimeReflection.register(clazz);
 			for (final Method method : clazz.getMethods()) {
 				System.out.println("\t> method: " + method.getName() + "(" + method.getParameterCount() + ")");
 				RuntimeReflection.register(method);

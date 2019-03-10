@@ -1,6 +1,8 @@
 package com.mageddo.bookmarks;
 
 import com.mageddo.controller.BookmarkController;
+import com.mageddo.db.DBUtils;
+import com.zaxxer.hikari.HikariDataSource;
 import org.graalvm.nativeimage.Feature;
 import org.springframework.boot.web.embedded.jetty.JettyReactiveWebServerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -22,6 +24,7 @@ public class Application implements Feature {
 			for (Class<?> bean : getBeans()) {
 				b.bean(bean);
 			}
+			b.bean(HikariDataSource.class, DBUtils::createDataSource);
 		});
 
 		a.enable(server(s -> {

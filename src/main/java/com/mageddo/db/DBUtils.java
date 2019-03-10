@@ -10,6 +10,8 @@ import javax.sql.DataSource;
 import java.util.Objects;
 import java.util.Properties;
 
+import static com.mageddo.bookmarks.ApplicationContextProvider.context;
+
 public final class DBUtils {
 
 	private static final DataSourceTransactionManager TX_MANAGER;
@@ -28,7 +30,7 @@ public final class DBUtils {
 	}
 
 	public static PlatformTransactionManager tx(){
-		return TX_MANAGER;
+		return context().getBean(PlatformTransactionManager.class);
 	}
 
 	public static JdbcTemplate template(){
@@ -39,7 +41,7 @@ public final class DBUtils {
 		return NAMED_JDBC_TEMPLATE;
 	}
 
-	private static HikariDataSource createDataSource() {
+	public static HikariDataSource createDataSource() {
 		final Properties props = Utils.loadProps();
 		final HikariDataSource ds = new HikariDataSource();
 		ds.setJdbcUrl(props.getProperty("spring.datasource.url"));
