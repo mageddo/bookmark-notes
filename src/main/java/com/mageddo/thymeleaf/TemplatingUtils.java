@@ -1,5 +1,6 @@
 package com.mageddo.thymeleaf;
 
+import com.mageddo.bookmarks.Main;
 import com.mageddo.db.Utils;
 import org.apache.commons.io.IOUtils;
 import org.thymeleaf.IEngineConfiguration;
@@ -59,7 +60,7 @@ public final class TemplatingUtils {
 			.ofNullable(Utils.getResourceAsStream("/" + resource))
 			.orElseGet(() -> {
 				try {
-					return Files.newInputStream(Paths.get(resource), StandardOpenOption.READ);
+					return Files.newInputStream(Paths.get(Main.getCurrentPath(), resource), StandardOpenOption.READ);
 				} catch (IOException e) {
 					throw new UncheckedIOException(e);
 				}

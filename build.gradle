@@ -57,7 +57,7 @@ task copyStatics() {
 	}
 }
 
-build.finalizedBy copyStatics
+nativeImage.finalizedBy copyStatics
 
 dependencies {
 	compile 'com.sparkjava:spark-core:2.8.0'

@@ -12,6 +12,7 @@ while [ -h "$PRG" ] ; do
     fi
 done
 SAVED="`pwd`"
-cd "`dirname \"$PRG\"`/" >/dev/null
+PRG_DIR="`dirname \"$PRG\"`/"
+cd ${PRG_DIR} >/dev/null
 
-./bookmarks-notes
+./bookmarks-notes ${PRG_DIR}
