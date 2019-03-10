@@ -1,3 +1,6 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+
 plugins {
 	id 'java'
 	id 'application'
@@ -19,7 +22,42 @@ graal {
 	mainClass 'com.mageddo.bookmarks.Main'
 	outputName project.name
 	option '--allow-incomplete-classpath'
+	option '--no-server'
 }
+
+task copyStatics() {
+
+	def binFilePath = "${project.buildDir}/graal/"
+	def distPath = "${binFilePath}/dist"
+
+	Files.walk(Paths.get(distPath))
+	.sorted(Comparator.reverseOrder())
+	.forEach({
+		try {
+			Files.deleteIfExists(it)
+		} catch(IOException e){
+			throw new UncheckedIOException(e)
+		}
+	})
+
+	/**
+	 * Copying static files
+	 */
+	ant.copy(
+		todir: binFilePath
+	){
+		fileset(dir: project.sourceSets.main.output.resourcesDir)
+	}
+
+	/**
+	 * Create a distribution file
+	 */
+	ant.zip(destfile: "${distPath}/${project.name}.zip"){
+		zipfileset("dir": binFilePath)
+	}
+}
+
+build.finalizedBy copyStatics
 
 dependencies {
 	compile 'com.sparkjava:spark-core:2.8.0'
@@ -34,8 +72,8 @@ dependencies {
 
 	compile group: 'org.thymeleaf', name: 'thymeleaf', version: '3.0.11.RELEASE'
 	compile group: 'com.sparkjava', name: 'spark-template-thymeleaf', version: '2.7.1'
+	compile group: 'commons-io', name: 'commons-io', version: '2.6'
 
 	testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.4.0'
-	testCompile group: 'commons-io', name: 'commons-io', version: '2.6'
 
 }

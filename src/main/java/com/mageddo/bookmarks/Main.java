@@ -4,7 +4,7 @@ import com.mageddo.commons.Maps;
 import com.mageddo.thymeleaf.TemplatingUtils;
 import spark.ModelAndView;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
 
 import static com.mageddo.db.DBUtils.template;
@@ -12,6 +12,8 @@ import static spark.Spark.*;
 
 public class Main {
 	public static void main(String[] args) {
+//		Runtime.getRuntime().
+		System.out.println("marombada" + Arrays.toString(args));
 
 		get("/hello", (request, response) -> "Hello World!");
 
@@ -49,6 +51,10 @@ public class Main {
 			String r = String.valueOf(template().queryForList("SELECT * FROM bsk_item").get(0));
 			System.out.println("resulted");
 			return r;
+		});
+
+		get("/props", (request, response) -> {
+			return String.valueOf(System.getProperties());
 		});
 	}
 }

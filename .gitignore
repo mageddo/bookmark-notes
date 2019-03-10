@@ -44,3 +44,5 @@ bk-api/pkg
 ## Build files
 build
 out/
+
+testing/
