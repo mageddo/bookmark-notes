@@ -53,14 +53,12 @@ public final class TemplatingUtils {
 	}
 
 	private static InputStream getResourceAsStream(String template) {
-		Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
 		final String resource = String.format("%s%s%s", DEFAULT_PREFIX, template, DEFAULT_SUFFIX);
-		System.out.println("current path " + path + " templateResource=" + resource + "resources =" + TemplatingUtils.class.getResource("/application.properties"));
 		return Optional
 			.ofNullable(Utils.getResourceAsStream("/" + resource))
 			.orElseGet(() -> {
 				try {
-					return Files.newInputStream(Paths.get(Main.getCurrentPath(), resource), StandardOpenOption.READ);
+					return Files.newInputStream(FileSystems.getDefault().getPath(resource), StandardOpenOption.READ);
 				} catch (IOException e) {
 					throw new UncheckedIOException(e);
 				}

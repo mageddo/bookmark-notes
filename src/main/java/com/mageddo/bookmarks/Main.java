@@ -4,10 +4,8 @@ import com.mageddo.commons.Maps;
 import com.mageddo.thymeleaf.TemplatingUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.thymeleaf.util.Validate;
 import spark.ModelAndView;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import static com.mageddo.db.DBUtils.template;
@@ -16,15 +14,8 @@ import static spark.Spark.*;
 public class Main {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Main.class);
-	private static String currentPath;
 
 	public static void main(String[] args) {
-
-		LOG.debug("status=start, args={}", Arrays.toString(args));
-		Validate.isTrue(args.length > 0, "Should contain at least the program path");
-		currentPath = args[0];
-
-		System.out.println("marombada" + Arrays.toString(args));
 
 		get("/hello", (request, response) -> "Hello World!");
 
@@ -69,7 +60,4 @@ public class Main {
 		});
 	}
 
-	public static String getCurrentPath() {
-		return currentPath;
-	}
 }

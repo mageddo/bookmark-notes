@@ -15,4 +15,4 @@ SAVED="`pwd`"
 PRG_DIR="`dirname \"$PRG\"`/"
 cd ${PRG_DIR} >/dev/null
 
-./bookmarks-notes ${PRG_DIR}
+./bookmark-notes

@@ -28,9 +28,10 @@ graal {
 task copyStatics() {
 
 	def binFilePath = "${project.buildDir}/graal/"
-	def distPath = "${binFilePath}/dist"
+	def distPath = Paths.get("${binFilePath}/dist")
 
-	Files.walk(Paths.get(distPath))
+	Files.createDirectories(distPath)
+	Files.walk(distPath)
 	.sorted(Comparator.reverseOrder())
 	.forEach({
 		try {
