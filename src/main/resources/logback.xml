@@ -11,7 +11,7 @@
 		</encoder>
 	</appender>
 
-	<root level="INFO">
+	<root level="DEBUG">
 		<appender-ref ref="console"/>
 	</root>
 	<logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG" />

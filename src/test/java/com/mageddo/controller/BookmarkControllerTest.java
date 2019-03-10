@@ -1,7 +1,6 @@
 package com.mageddo.controller;
 
 import com.mageddo.rawstringliterals.RawString;
-import com.mageddo.rawstringliterals.RawStrings;
 import com.mageddo.rawstringliterals.Rsl;
 import org.junit.jupiter.api.Test;
 import spark.Spark;
@@ -33,18 +32,18 @@ public class BookmarkControllerTest {
 //		now, err := time.Parse("2006-01-02", "2017-08-07")
 
 
-
-		service.NewBookmarkService().SaveBookmark(entity.NewBookmarkWithNameAndVisibility("X", entity.PUBLIC))
-
-		resp, c, err := test.NewReq("GET", "/api/v1.0/sitemap")
-
-		assert.Nil(t, err)
-		assert.Equal(t, 200, c)
-
-		resp = regex.ReplaceAllString(resp, "")
-
-		assert.Equal(t, len(expectedXML), len(resp))
-		assert.Equal(t, expectedXML, resp)
+//
+//		service.NewBookmarkService().SaveBookmark(entity.NewBookmarkWithNameAndVisibility("X", entity.PUBLIC))
+//
+//		resp, c, err := test.NewReq("GET", "/api/v1.0/sitemap")
+//
+//		assert.Nil(t, err)
+//		assert.Equal(t, 200, c)
+//
+//		resp = regex.ReplaceAllString(resp, "")
+//
+//		assert.Equal(t, len(expectedXML), len(resp))
+//		assert.Equal(t, expectedXML, resp)
 
 	}
 

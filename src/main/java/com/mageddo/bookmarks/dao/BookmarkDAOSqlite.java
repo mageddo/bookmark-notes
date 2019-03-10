@@ -29,7 +29,7 @@ public class BookmarkDAOSqlite implements BookmarkDAO {
 			AND FLG_DELETED = 0
 			AND FLG_ARCHIVED = 0
 			ORDER BY IDT_BOOKMARK DESC
-		) LIMIT 0, 100000
+		) T LIMIT 100000
 		*/
 		@RawString
 		final String sql = lateInit();

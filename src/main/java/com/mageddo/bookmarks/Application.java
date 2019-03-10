@@ -1,5 +1,6 @@
 package com.mageddo.bookmarks;
 
+import com.mageddo.controller.BookmarkController;
 import org.graalvm.nativeimage.Feature;
 import org.springframework.boot.web.embedded.jetty.JettyReactiveWebServerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -30,6 +31,7 @@ public class Application implements Feature {
 //				SampleHandler handler = s.ref(SampleHandler.class);
 //				r.GET("/", handler::hello);
 //				r.GET("/api", handler::json);
+				s.ref(BookmarkController.class).handle(r);
 				r.resources("/static/**", new ClassPathResource("static/"));
 
 			});

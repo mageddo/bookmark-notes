@@ -1,5 +1,8 @@
 package com.mageddo.bookmarks;
 
+import com.mageddo.bookmarks.dao.BookmarkDAOSqlite;
+import com.mageddo.bookmarks.service.BookmarkService;
+import com.mageddo.controller.BookmarkController;
 import org.graalvm.nativeimage.RuntimeReflection;
 
 import java.lang.reflect.Constructor;
@@ -13,6 +16,9 @@ public class ReflectionClasses {
 	static Class<?>[] getBeans(){
 		return new Class[]{
 			ApplicationContextProvider.class,
+			BookmarkService.class,
+			BookmarkDAOSqlite.class,
+			BookmarkController.class
 		};
 	}
 
@@ -21,6 +27,7 @@ public class ReflectionClasses {
 	 */
 	static Class<?>[] getClasses(){
 		return new Class[]{
+			java.sql.Statement[].class
 		};
 	}
 

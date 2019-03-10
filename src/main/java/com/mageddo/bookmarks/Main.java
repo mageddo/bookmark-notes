@@ -1,7 +1,6 @@
 package com.mageddo.bookmarks;
 
 import com.mageddo.commons.Maps;
-import com.mageddo.factory.ControllerFactory;
 import com.mageddo.thymeleaf.TemplatingUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +16,6 @@ public class Main {
 	private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
 	public static void main(String[] args) {
-
-		ControllerFactory.getInstance();
 
 		get("/hello", (request, response) -> "Hello World!");
 

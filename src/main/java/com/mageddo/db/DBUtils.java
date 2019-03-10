@@ -10,8 +10,6 @@ import javax.sql.DataSource;
 import java.util.Objects;
 import java.util.Properties;
 
-import static org.graalvm.nativeimage.RuntimeReflection.register;
-
 public final class DBUtils {
 
 	private static final DataSourceTransactionManager TX_MANAGER;
@@ -20,7 +18,6 @@ public final class DBUtils {
 	private static final NamedParameterJdbcTemplate NAMED_JDBC_TEMPLATE;
 
 	static {
-		register(java.sql.Statement[].class);
 		DATA_SOURCE = createDataSource();
 		TX_MANAGER = new DataSourceTransactionManager(DATA_SOURCE);
 		JDBC_TEMPLATE = new JdbcTemplate(DATA_SOURCE);

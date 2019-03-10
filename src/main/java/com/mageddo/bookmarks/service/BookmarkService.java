@@ -5,8 +5,8 @@ import com.mageddo.bookmarks.entity.BookmarkEntity;
 import com.mageddo.rawstringliterals.RawString;
 import com.mageddo.rawstringliterals.Rsl;
 
-import javax.servlet.ServletOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -21,14 +21,16 @@ public class BookmarkService {
 		this.bookmarkDAO = bookmarkDAO;
 	}
 
-	public void generateSiteMapXML(ServletOutputStream out, String url) throws IOException {
+	public void generateSiteMapXML(OutputStream out, String url) throws IOException {
+
+
 		/*
 		<?xml version="1.0" encoding="UTF-8"?>
 		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 		 */
 		@RawString
 		final String header = lateInit();
-		out.println(header);
+		out.write(header.getBytes());
 
 		/*
 		<url>
@@ -42,11 +44,11 @@ public class BookmarkService {
 		final String siteMapItem = lateInit();
 
 		for (final BookmarkEntity bookmarkEntity : bookmarkDAO.loadSiteMap()) {
-			out.println(String.format(
+			out.write(String.format(
 				siteMapItem, formatURL(url, bookmarkEntity), formatDate(bookmarkEntity.getLastUpdate())
-			));
+			).getBytes());
 		}
-		out.println( "</urlset>");
+		out.write( "</urlset>\n".getBytes());
 	}
 
 	private String formatDate(LocalDateTime date) {

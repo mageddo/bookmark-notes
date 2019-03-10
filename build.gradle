@@ -79,10 +79,8 @@ configurations.all {
 
 dependencies {
 
-	compileOnly('com.mageddo:rsl:1.0.0')
+	compile('com.mageddo:rsl:1.0.0')
 	annotationProcessor('com.mageddo:rsl-compiler:1.0.1')
-
-	testCompileOnly('com.mageddo:rsl:1.0.0')
 	testAnnotationProcessor('com.mageddo:rsl-compiler:1.0.1')
 	
 
