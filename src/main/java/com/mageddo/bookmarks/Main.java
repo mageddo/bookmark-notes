@@ -1,5 +1,12 @@
 package com.mageddo.bookmarks;
 
+import com.mageddo.commons.Maps;
+import com.mageddo.thymeleaf.TemplatingUtils;
+import spark.ModelAndView;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.mageddo.db.DBUtils.template;
 import static spark.Spark.*;
 
@@ -8,9 +15,10 @@ public class Main {
 
 		get("/hello", (request, response) -> "Hello World!");
 
-		post("/hello", (request, response) ->
-			"Hello World: " + request.body()
-		);
+		post("/hello", (request, response) -> {
+			Map<String, Object> model = Maps.of("name", "Elvis");
+			return TemplatingUtils.template().render(new ModelAndView(model,  "index"));
+		});
 
 		get("/private", (request, response) -> {
 			response.status(401);

@@ -32,4 +32,10 @@ dependencies {
 	compile group: 'net.java.dev.jna', name: 'jna-platform', version: '5.2.0'
 	compile group: 'org.graalvm.sdk', name: 'graal-sdk', version: '1.0.0-rc13'
 
+	compile group: 'org.thymeleaf', name: 'thymeleaf', version: '3.0.11.RELEASE'
+	compile group: 'com.sparkjava', name: 'spark-template-thymeleaf', version: '2.7.1'
+
+	testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.4.0'
+	testCompile group: 'commons-io', name: 'commons-io', version: '2.6'
+
 }
