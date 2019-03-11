@@ -1,4 +1,4 @@
-package com.mageddo.controller;
+package com.mageddo.bookmarks.controller;
 
 import com.mageddo.bookmarks.service.BookmarkService;
 import org.springframework.web.reactive.function.server.RouterFunctions;

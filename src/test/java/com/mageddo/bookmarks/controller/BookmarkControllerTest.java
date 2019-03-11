@@ -1,4 +1,4 @@
-package com.mageddo.controller;
+package com.mageddo.bookmarks.controller;
 
 import com.mageddo.rawstringliterals.RawString;
 import com.mageddo.rawstringliterals.Rsl;

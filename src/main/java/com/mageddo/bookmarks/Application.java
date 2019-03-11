@@ -1,7 +1,7 @@
 package com.mageddo.bookmarks;
 
 import com.mageddo.bookmarks.spring.TransactionalPostProcessor;
-import com.mageddo.controller.BookmarkController;
+import com.mageddo.bookmarks.controller.BookmarkController;
 import com.zaxxer.hikari.HikariDataSource;
 import org.graalvm.nativeimage.Feature;
 import org.springframework.boot.web.embedded.jetty.JettyReactiveWebServerFactory;

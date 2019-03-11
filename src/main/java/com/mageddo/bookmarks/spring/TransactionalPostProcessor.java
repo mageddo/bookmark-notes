@@ -25,11 +25,15 @@ public class TransactionalPostProcessor implements BeanPostProcessor {
 
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+
 		if (Modifier.isFinal(bean.getClass().getModifiers()) || !bean.getClass().isAnnotationPresent(Service.class)) {
 			return bean;
 		}
 		final ProxyFactory factory = new ProxyFactory(bean);
-		factory.setProxyTargetClass(true);
+		factory.setProxyTargetClass(false);
+		for (Class<?> anInterface : bean.getClass().getInterfaces()) {
+			factory.addInterface(anInterface);
+		}
 		factory.addAdvice(transactionInterceptor);
 		return factory.getProxy();
 	}
