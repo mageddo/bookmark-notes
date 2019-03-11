@@ -1,5 +1,7 @@
 package com.mageddo.bookmarks.spring;
 
+import org.apache.commons.lang3.StringUtils;
+import org.graalvm.nativeimage.RuntimeReflection;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -26,7 +28,11 @@ public class TransactionalPostProcessor implements BeanPostProcessor {
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 
-		if (Modifier.isFinal(bean.getClass().getModifiers()) || !bean.getClass().isAnnotationPresent(Service.class)) {
+		if (
+			StringUtils.isNotBlank(System.getProperty("org.graalvm.nativeimage.kind"))
+			|| Modifier.isFinal(bean.getClass().getModifiers())
+			|| !bean.getClass().isAnnotationPresent(Service.class)
+		) {
 			return bean;
 		}
 		final ProxyFactory factory = new ProxyFactory(bean);

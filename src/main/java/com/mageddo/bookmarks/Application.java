@@ -27,7 +27,6 @@ public class Application implements Feature {
 			for (Class<?> bean : getBeans()) {
 				b.bean(bean);
 			}
-			b.bean(TransactionalPostProcessor.class);
 			b.bean(HikariDataSource.class, () -> {
 				Environment props = b.ref(Environment.class);
 				final HikariDataSource ds = new HikariDataSource();
