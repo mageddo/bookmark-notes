@@ -2,20 +2,20 @@ package com.mageddo.bookmarks.service;
 
 import com.mageddo.bookmarks.dao.BookmarkDAO;
 import com.mageddo.bookmarks.entity.BookmarkEntity;
-import com.mageddo.db.DefaultTransactionDefinition;
 import com.mageddo.rawstringliterals.RawString;
 import com.mageddo.rawstringliterals.Rsl;
-import org.springframework.transaction.TransactionStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static com.mageddo.db.DBUtils.tx;
 import static com.mageddo.rawstringliterals.RawStrings.lateInit;
 
 @Rsl
+@Service
 public class BookmarkService {
 
 	private final BookmarkDAO bookmarkDAO;
@@ -24,12 +24,9 @@ public class BookmarkService {
 		this.bookmarkDAO = bookmarkDAO;
 	}
 
+	@Transactional
 	public void generateSiteMapXML(OutputStream out, String url) throws IOException {
 
-
-		final TransactionStatus ts = tx().getTransaction(new DefaultTransactionDefinition());
-
-		bookmarkDAO.insert();
 		/*
 		<?xml version="1.0" encoding="UTF-8"?>
 		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -49,7 +46,6 @@ public class BookmarkService {
 		@RawString
 		final String siteMapItem = lateInit();
 
-		tx().commit(ts);
 		for (final BookmarkEntity bookmarkEntity : bookmarkDAO.loadSiteMap()) {
 			out.write(String.format(
 				siteMapItem, formatURL(url, bookmarkEntity), formatDate(bookmarkEntity.getLastUpdate())
