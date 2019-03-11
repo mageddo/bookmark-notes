@@ -2,6 +2,7 @@ package com.mageddo.bookmarks;
 
 import com.mageddo.bookmarks.dao.BookmarkDAOSqlite;
 import com.mageddo.bookmarks.service.BookmarkService;
+import com.mageddo.bookmarks.spring.TransactionalPostProcessor;
 import com.mageddo.controller.BookmarkController;
 import org.graalvm.nativeimage.RuntimeReflection;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,8 +11,9 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.lang.reflect.UndeclaredThrowableException;
 
-public class ReflectionClasses {
+class ReflectionClasses {
 
 	/**
 	 * All classes defined here will have reflection support and be registered as spring beans
@@ -19,6 +21,7 @@ public class ReflectionClasses {
 	static Class<?>[] getBeans(){
 		return new Class[]{
 			ApplicationContextProvider.class,
+			TransactionalPostProcessor.class,
 			BookmarkService.class,
 			BookmarkDAOSqlite.class,
 			BookmarkController.class,
@@ -33,7 +36,8 @@ public class ReflectionClasses {
 	 */
 	static Class<?>[] getClasses(){
 		return new Class[]{
-			java.sql.Statement[].class
+			java.sql.Statement[].class,
+			UndeclaredThrowableException.class
 		};
 	}
 
