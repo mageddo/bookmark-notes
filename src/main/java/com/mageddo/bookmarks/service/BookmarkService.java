@@ -26,7 +26,7 @@ public class BookmarkService {
 
 	@Transactional
 	public void generateSiteMapXML(OutputStream out, String url) throws IOException {
-
+		System.out.println("generateSiteMapXML");
 		bookmarkDAO.insert();
 
 		/*

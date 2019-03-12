@@ -3,7 +3,6 @@ package com.mageddo.bookmarks;
 import com.mageddo.bookmarks.controller.BookmarkController;
 import com.mageddo.bookmarks.dao.BookmarkDAOSqlite;
 import com.mageddo.bookmarks.service.BookmarkService;
-import com.mageddo.bookmarks.spring.TransactionalPostProcessor;
 import org.graalvm.nativeimage.RuntimeReflection;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -21,7 +20,6 @@ class ReflectionClasses {
 	static Class<?>[] getBeans(){
 		return new Class[]{
 			ApplicationContextProvider.class,
-			TransactionalPostProcessor.class,
 			BookmarkDAOSqlite.class,
 			BookmarkController.class,
 			BookmarkService.class,

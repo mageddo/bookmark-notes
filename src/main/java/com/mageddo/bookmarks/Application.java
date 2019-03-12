@@ -1,7 +1,7 @@
 package com.mageddo.bookmarks;
 
-import com.mageddo.bookmarks.spring.TransactionalPostProcessor;
 import com.mageddo.bookmarks.controller.BookmarkController;
+import com.mageddo.commons.AgentLoaderUtils;
 import com.zaxxer.hikari.HikariDataSource;
 import org.graalvm.nativeimage.Feature;
 import org.springframework.boot.web.embedded.jetty.JettyReactiveWebServerFactory;
@@ -19,10 +19,10 @@ public class Application implements Feature {
 
 	static {
 		ReflectionClasses.setupClasses();
+		AgentLoaderUtils.loadAgents();
 	}
 
 	public static JafuApplication app = webApplication(a -> {
-
 		a.beans(b -> {
 			for (Class<?> bean : getBeans()) {
 				b.bean(bean);

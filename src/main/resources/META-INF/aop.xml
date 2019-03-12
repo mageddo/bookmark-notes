@@ -1,0 +1,11 @@
+<aspectj>
+	<aspects>
+		<aspect name="com.mageddo.bookmarks.aop.TransactionalAspectProcessor"/>
+		<!--<include within="com.mageddo..*"/>-->
+		<!--<exclude within="org.springframework..*"/>-->
+	</aspects>
+	<weaver options="-debug">
+		<include within="com.mageddo..*" />
+		<exclude within="org.springframework..*" />
+	</weaver>
+</aspectj>
