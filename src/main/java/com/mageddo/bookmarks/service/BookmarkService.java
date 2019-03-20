@@ -4,8 +4,7 @@ import com.mageddo.bookmarks.dao.BookmarkDAO;
 import com.mageddo.bookmarks.entity.BookmarkEntity;
 import com.mageddo.rawstringliterals.RawString;
 import com.mageddo.rawstringliterals.Rsl;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import io.micronaut.spring.tx.annotation.Transactional;
 
 import javax.inject.Singleton;
 import java.io.IOException;

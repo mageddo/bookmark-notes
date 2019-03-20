@@ -11,7 +11,7 @@ micronaut:
 ---
 datasources:
   default:
-    jdbcUrl: jdbc:postgresql://0.0.0.0:5433/db
+    jdbcUrl: jdbc:postgresql://postgresql-server.dev:5432/db?currentSchema=stg_mg
     username: root
     password: root
     driverClassName: org.postgresql.Driver

@@ -26,7 +26,7 @@ public class BookmarkController {
 		try {
 			final ByteArrayOutputStream out = new ByteArrayOutputStream();
 			this.bookmarkService.generateSiteMapXML(out, req.getPath());
-			return ok(new ByteArrayInputStream(out.toByteArray()));
+			return ok(new String(out.toByteArray()));
 		} catch (Exception e) {
 			return badRequest(e.getMessage());
 		}
