@@ -1,31 +1,26 @@
-package com.mageddo.bookmarks;
+package com.mageddo.config;
 
-import com.mageddo.bookmarks.controller.BookmarkController;
-import com.mageddo.bookmarks.dao.BookmarkDAOSqlite;
-import com.mageddo.bookmarks.service.BookmarkService;
+import com.oracle.svm.core.annotate.AutomaticFeature;
+import org.graalvm.nativeimage.Feature;
 import org.graalvm.nativeimage.RuntimeReflection;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.lang.reflect.UndeclaredThrowableException;
+import java.sql.Statement;
 
-class ReflectionClasses {
+@AutomaticFeature
+class ReflectionClasses implements Feature {
+
+	@Override
+	public void beforeAnalysis(BeforeAnalysisAccess access) {
+		setupClasses();
+	}
 
 	/**
 	 * All classes defined here will have reflection support and be registered as spring beans
 	 */
 	static Class<?>[] getBeans(){
 		return new Class[]{
-			ApplicationContextProvider.class,
-			BookmarkDAOSqlite.class,
-			BookmarkController.class,
-			BookmarkService.class,
-			NamedParameterJdbcTemplate.class,
-			JdbcTemplate.class,
-			DataSourceTransactionManager.class
 		};
 	}
 
@@ -34,8 +29,8 @@ class ReflectionClasses {
 	 */
 	static Class<?>[] getClasses(){
 		return new Class[]{
-			java.sql.Statement[].class,
-			UndeclaredThrowableException.class
+			Statement[].class,
+//			FruitEntity.class
 		};
 	}
 
@@ -75,3 +70,4 @@ class ReflectionClasses {
 		}
 	}
 }
+

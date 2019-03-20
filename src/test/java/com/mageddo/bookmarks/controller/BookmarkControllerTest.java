@@ -2,8 +2,7 @@ package com.mageddo.bookmarks.controller;
 
 import com.mageddo.rawstringliterals.RawString;
 import com.mageddo.rawstringliterals.Rsl;
-import org.junit.jupiter.api.Test;
-import spark.Spark;
+import org.junit.Test;
 
 import static com.mageddo.rawstringliterals.RawStrings.lateInit;
 
@@ -12,7 +11,6 @@ public class BookmarkControllerTest {
 
 	@Test
 	public void TestGetV1_0Success(){
-		Spark.port(48484);
 
 		/*
 		<?xml version="1.0" encoding="UTF-8"?>

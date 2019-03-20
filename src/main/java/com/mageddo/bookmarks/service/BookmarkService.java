@@ -7,6 +7,7 @@ import com.mageddo.rawstringliterals.Rsl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Singleton;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 import static com.mageddo.rawstringliterals.RawStrings.lateInit;
 
 @Rsl
-@Service
+@Singleton
 public class BookmarkService {
 
 	private final BookmarkDAO bookmarkDAO;

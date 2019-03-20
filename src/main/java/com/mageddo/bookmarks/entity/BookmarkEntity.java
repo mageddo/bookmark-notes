@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 import java.time.LocalDateTime;
 
 public class BookmarkEntity {
+
 	private Long id;
 	private String name;
 	private LocalDateTime lastUpdate;

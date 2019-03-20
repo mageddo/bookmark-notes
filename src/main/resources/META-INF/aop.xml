@@ -1,9 +1,0 @@
-<aspectj>
-	<weaver options="-verbose -showWeaveInfo">
-		<!-- weave only classes on this package -->
-		<include within="com.mageddo..*" />
-	</weaver>
-	<aspects>
-		<aspect name="com.mageddo.bookmarks.aop.TransactionalAspectProcessor"/>
-	</aspects>
-</aspectj>

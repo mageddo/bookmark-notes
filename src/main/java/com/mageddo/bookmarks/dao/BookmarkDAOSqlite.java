@@ -6,12 +6,14 @@ import com.mageddo.rawstringliterals.RawString;
 import com.mageddo.rawstringliterals.Rsl;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import javax.inject.Singleton;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.mageddo.rawstringliterals.RawStrings.lateInit;
 
 @Rsl
+@Singleton
 public class BookmarkDAOSqlite implements BookmarkDAO {
 
 	private final NamedParameterJdbcTemplate parameterJdbcTemplate;

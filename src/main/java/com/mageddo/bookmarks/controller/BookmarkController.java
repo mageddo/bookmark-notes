@@ -1,41 +1,35 @@
 package com.mageddo.bookmarks.controller;
 
 import com.mageddo.bookmarks.service.BookmarkService;
-import org.springframework.web.reactive.function.server.RouterFunctions;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-import static org.springframework.web.reactive.function.server.ServerResponse.badRequest;
-import static org.springframework.web.reactive.function.server.ServerResponse.ok;
+import static io.micronaut.http.HttpResponse.badRequest;
+import static io.micronaut.http.HttpResponse.ok;
 
+@Controller
 public class BookmarkController {
 
 	private final BookmarkService bookmarkService;
 
 	public BookmarkController(BookmarkService bookmarkService) {
-
 		this.bookmarkService = bookmarkService;
-
-//		get("api/v1.0/sitemap", (req, res) -> {
-//			try {
-//				this.bookmarkService.generateSiteMapXML(res.raw().getOutputStream(), req.url());
-//				return null;
-//			} catch (Exception e){
-//				halt(HttpStatus.BAD_REQUEST_400, "I don't think so!!!");
-//				return e.getMessage();
-//			}
-//		});
 	}
 
-	public void handle(RouterFunctions.Builder router) {
-		router.GET("/api/v1.0/sitemap", req -> {
-			try {
-				final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-				this.bookmarkService.generateSiteMapXML(bout, req.path());
-				return ok().syncBody(new String(bout.toByteArray()));
-			} catch (Exception e){
-				return badRequest().syncBody(e.getMessage());
-			}
-		});
+	@Get("/api/v1.0/sitemap")
+	public HttpResponse sitemap(HttpRequest req) {
+		try {
+			final ByteArrayOutputStream out = new ByteArrayOutputStream();
+			this.bookmarkService.generateSiteMapXML(out, req.getPath());
+			return ok(new ByteArrayInputStream(out.toByteArray()));
+		} catch (Exception e) {
+			return badRequest(e.getMessage());
+		}
+
 	}
 }
