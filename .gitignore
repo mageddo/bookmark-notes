@@ -43,3 +43,7 @@ bk-api/pkg
 
 ## Build files
 build
+
+*.ipr
+*.iws
+out/

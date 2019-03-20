@@ -17,6 +17,7 @@ services:
       - /var/lib/mageddo/bookmarks-node/db:/opt/bookmarks/db
       - /var/lib/mageddo/bookmarks-node/logs:/opt/bookmarks/logs
       - /var/lib/mageddo/bookmarks-node/conf:/opt/bookmarks/conf
+      - /etc/resolv.conf:/etc/resolv.conf
     network_mode: bridge
   
   prod-nginx-bk:
@@ -24,7 +25,8 @@ services:
     hostname: bookmarks.intranet
     container_name: bookmarks-app
     volumes:
-      -  ./nginx/conf.d/:/etc/nginx/conf.d
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+      - /etc/resolv.conf:/etc/resolv.conf
     network_mode: 'bridge'
     restart: always
 
