@@ -18,7 +18,7 @@ repositories {
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-def className = "com.mageddo.micronaut.Application"
+def className = "com.mageddo.Application"
 
 task debug(type: JavaExec){
 	debug = true
