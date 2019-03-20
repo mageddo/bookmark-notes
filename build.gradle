@@ -52,9 +52,7 @@ graal {
 dependencies {
 
 	compile 'com.zaxxer:HikariCP:3.3.1'
-	compile ("org.postgresql:postgresql:42.2.5")
-	compile group: 'net.java.dev.jna', name: 'jna', version: '5.2.0'
-	compile group: 'net.java.dev.jna', name: 'jna-platform', version: '5.2.0'
+	compile("org.xerial:sqlite-jdbc:3.27.2")
 
 	compile ("org.springframework:spring-jdbc:5.1.5.RELEASE")
 	compile ("io.micronaut:micronaut-spring:${micronautVersion}")
@@ -76,6 +74,8 @@ dependencies {
 	compile('com.mageddo:rsl:1.0.0')
 	annotationProcessor('com.mageddo:rsl-compiler:1.0.1')
 	testAnnotationProcessor('com.mageddo:rsl-compiler:1.0.1')
+
+	compile ("org.flywaydb:flyway-core:5.2.4")
 
 //	tag::graal[]
 	compile ("com.mageddo:graal-reflection-configuration:2.0.0")

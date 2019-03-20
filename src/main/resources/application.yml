@@ -11,10 +11,10 @@ micronaut:
 ---
 datasources:
   default:
-    jdbcUrl: jdbc:postgresql://postgresql-server.dev:5432/db?currentSchema=stg_mg
+    jdbcUrl: jdbc:sqlite:/var/lib/mageddo/bookmarks-node/db/bookmarks.db
     username: root
     password: root
-    driverClassName: org.postgresql.Driver
+    driverClassName: org.sqlite.JDBC
     connectionTestQuery: SELECT 1
     initializationFailTimeout: -1
     minimumIdle: 1
