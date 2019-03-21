@@ -10,7 +10,8 @@ public final class MigrationUtils {
 	public static void migrate(DatasourceConfiguration dc){
 		final Flyway flyway = Flyway
 			.configure()
-			.locations("db/migration/postgres")
+			.locations(System.getenv("MIGRATION_PATH"))
+//			.locations("classpath:db/migration/postgres")
 			.dataSource(dc.getJdbcUrl(), dc.getUsername(), dc.getPassword())
 			.load();
 		flyway.repair();
