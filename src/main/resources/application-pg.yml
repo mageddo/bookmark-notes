@@ -1,16 +1,4 @@
 ---
-micronaut:
-  application:
-    name: micronaut
-  router:
-    static-resources:
-      default:
-        mapping: /static/**
-        paths:
-          - classpath:static
-  views:
-    folder: templates
----
 datasources:
   default:
     jdbcUrl: jdbc:postgresql://localhost:5432/db

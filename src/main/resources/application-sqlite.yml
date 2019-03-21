@@ -1,0 +1,11 @@
+---
+datasources:
+  default:
+    jdbcUrl: jdbc:sqlite:/var/lib/mageddo/bookmarks-node/db/bookmarks.db
+    username: root
+    password: root
+    driverClassName: org.sqlite.JDBC
+    connectionTestQuery: SELECT 1
+    initializationFailTimeout: -1
+    minimumIdle: 1
+    maximumPoolSize: 10

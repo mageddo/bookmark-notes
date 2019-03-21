@@ -35,9 +35,9 @@ graal {
 	mainClass className
 	graalVersion(graalVMVersion)
 	outputName(project.name)
-	option("-H:IncludeResources=static/.*")
-	option("-H:IncludeResources=logback.xml|application.yml|views/.*")
-	option("-H:IncludeResources=application.properties")
+	option("-H:IncludeResources=db/.*|static/.*|templates/.*|.*.yml|.*.xml|.*/org/sqlite/.*|org/sqlite/.*")
+//	/org/sqlite/native/Linux/x86_64
+//	option("-H:IncludeResources=application.properties")
 	option("--allow-incomplete-classpath")
 	option("-H:ReflectionConfigurationFiles=build/reflect.json,graal/micronaut.json")
 	option("-H:+AllowVMInspection")
@@ -52,7 +52,12 @@ graal {
 dependencies {
 
 	compile 'com.zaxxer:HikariCP:3.3.1'
+
 	compile("org.xerial:sqlite-jdbc:3.27.2")
+	compile("org.postgresql:postgresql:42.2.5")
+
+//	compile group: 'net.java.dev.jna', name: 'jna', version: '5.2.0'
+//	compile group: 'net.java.dev.jna', name: 'jna-platform', version: '5.2.0'
 
 	compile ("org.springframework:spring-jdbc:5.1.5.RELEASE")
 	compile ("io.micronaut:micronaut-spring:${micronautVersion}")

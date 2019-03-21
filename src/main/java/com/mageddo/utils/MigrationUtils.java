@@ -8,10 +8,12 @@ public final class MigrationUtils {
 	}
 
 	public static void migrate(DatasourceConfiguration dc){
-		Flyway
+		final Flyway flyway = Flyway
 			.configure()
+			.locations("db/migration/postgres")
 			.dataSource(dc.getJdbcUrl(), dc.getUsername(), dc.getPassword())
-			.load()
-			.migrate();
+			.load();
+		flyway.repair();
+		flyway.migrate();
 	}
 }
