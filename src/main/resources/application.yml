@@ -1,5 +1,6 @@
 ---
 micronaut:
+  environments: pg
   application:
     name: micronaut
   router:
