@@ -58,9 +58,6 @@ dependencies {
 	compile("org.xerial:sqlite-jdbc:3.27.2")
 	compile("org.postgresql:postgresql:42.2.5")
 
-//	compile group: 'net.java.dev.jna', name: 'jna', version: '5.2.0'
-//	compile group: 'net.java.dev.jna', name: 'jna-platform', version: '5.2.0'
-
 	compile ("org.springframework:spring-jdbc:5.1.5.RELEASE")
 	compile ("io.micronaut:micronaut-spring:${micronautVersion}")
 
@@ -100,19 +97,11 @@ dependencies {
 
 task copyStatics() {
 	doLast {
+		
 		def binFilePath = "${project.buildDir}/graal/"
 		def distPath = Paths.get("${binFilePath}/dist")
 
-		Files.createDirectories(distPath)
-		Files.walk(distPath)
-			.sorted(Comparator.reverseOrder())
-			.forEach({
-			try {
-				Files.deleteIfExists(it)
-			} catch(IOException e){
-				throw new UncheckedIOException(e)
-			}
-		})
+		deleteRecursively(distPath)
 
 		/**
 		 * Copying static files
@@ -135,3 +124,16 @@ task copyStatics() {
 }
 
 nativeImage.finalizedBy(copyStatics)
+
+static void deleteRecursively(java.nio.file.Path distPath) {
+	Files.createDirectories(distPath)
+	Files.walk(distPath)
+		.sorted(Comparator.reverseOrder())
+		.forEach({
+		try {
+			Files.deleteIfExists(it)
+		} catch (IOException e) {
+			throw new UncheckedIOException(e)
+		}
+	})
+}
