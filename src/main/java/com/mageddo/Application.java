@@ -1,8 +1,7 @@
 package com.mageddo;
 
 import com.mageddo.config.ApplicationContextUtils;
-import com.mageddo.config.DatasourceConfiguration;
-import com.mageddo.utils.MigrationUtils;
+import com.mageddo.commons.MigrationUtils;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.runtime.Micronaut;
 import org.graalvm.nativeimage.Feature;

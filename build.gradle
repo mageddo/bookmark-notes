@@ -48,6 +48,8 @@ graal {
 	option("-H:+ReportUnsupportedElementsAtRuntime")
 	option("-H:EnableURLProtocols=http")
 	option("-Dfile.encoding=UTF-8")
+//	option("--jvm.Xmx=3G")
+	option("-J-Xmx5G")
 	option("--no-server")
 }
 
@@ -55,7 +57,7 @@ dependencies {
 
 	compile 'com.zaxxer:HikariCP:3.3.1'
 
-	compile("org.xerial:sqlite-jdbc:3.27.2")
+//	compile("org.xerial:sqlite-jdbc:3.27.2")
 	compile("org.postgresql:postgresql:42.2.5")
 
 	compile ("org.springframework:spring-jdbc:5.1.5.RELEASE")

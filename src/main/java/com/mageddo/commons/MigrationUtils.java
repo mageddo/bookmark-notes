@@ -1,4 +1,4 @@
-package com.mageddo.utils;
+package com.mageddo.commons;
 
 import io.micronaut.context.env.Environment;
 import org.flywaydb.core.Flyway;
