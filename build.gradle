@@ -97,7 +97,7 @@ dependencies {
 
 task copyStatics() {
 	doLast {
-		
+
 		def binFilePath = "${project.buildDir}/graal/"
 		def distPath = Paths.get("${binFilePath}/dist")
 
@@ -123,7 +123,8 @@ task copyStatics() {
 	}
 }
 
-nativeImage.finalizedBy(copyStatics)
+nativeImage.dependsOn(tasks.reflectConfigFiles)
+nativeImage.finalizedBy(tasks.copyStatics)
 
 static void deleteRecursively(java.nio.file.Path distPath) {
 	Files.createDirectories(distPath)
