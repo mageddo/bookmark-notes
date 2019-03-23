@@ -9,3 +9,7 @@ datasources:
     initializationFailTimeout: -1
     minimumIdle: 1
     maximumPoolSize: 10
+
+flyway:
+  locations-image: conf/db/migration/sqlite
+  locations-java: db/migration/sqlite

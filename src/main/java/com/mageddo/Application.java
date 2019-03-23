@@ -12,6 +12,6 @@ public class Application implements Feature {
 	public static void main(String[] args) {
 		ApplicationContext ctx = Micronaut.run(Application.class);
 		ApplicationContextUtils.context(ctx);
-		MigrationUtils.migrate(ctx.getBean(DatasourceConfiguration.class));
+		MigrationUtils.migrate(ctx.getEnvironment());
 	}
 }
