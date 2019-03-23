@@ -1,3 +1,6 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+
 buildscript {
 	repositories {
 		mavenLocal()
@@ -94,3 +97,41 @@ dependencies {
 	testCompile "junit:junit:4.12"
 
 }
+
+task copyStatics() {
+	doLast {
+		def binFilePath = "${project.buildDir}/graal/"
+		def distPath = Paths.get("${binFilePath}/dist")
+
+		Files.createDirectories(distPath)
+		Files.walk(distPath)
+			.sorted(Comparator.reverseOrder())
+			.forEach({
+			try {
+				Files.deleteIfExists(it)
+			} catch(IOException e){
+				throw new UncheckedIOException(e)
+			}
+		})
+
+		/**
+		 * Copying static files
+		 */
+		ant.copy(
+			todir: "${binFilePath}/conf"
+		){
+			fileset(dir: "${project.sourceSets.main.output.resourcesDir}"){
+				include(name: "db/**")
+			}
+		}
+
+		/**
+		 * Create a distribution file
+		 */
+		ant.zip(destfile: "${distPath}/${project.name}.zip"){
+			zipfileset("dir": binFilePath)
+		}
+	}
+}
+
+nativeImage.finalizedBy(copyStatics)
