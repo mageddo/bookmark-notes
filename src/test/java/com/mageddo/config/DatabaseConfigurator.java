@@ -1,6 +1,8 @@
 package com.mageddo.config;
 
 import com.mageddo.commons.Maps;
+import com.mageddo.commons.MigrationUtils;
+import io.micronaut.context.env.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -18,15 +20,19 @@ public class DatabaseConfigurator {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private final NamedParameterJdbcTemplate namedJdbcTemplate;
 	private final PlatformTransactionManager platformTransactionManager;
+	private final Environment environment;
 
 	public DatabaseConfigurator(
-		NamedParameterJdbcTemplate namedJdbcTemplate, PlatformTransactionManager platformTransactionManager
+		NamedParameterJdbcTemplate namedJdbcTemplate,
+		PlatformTransactionManager platformTransactionManager, Environment environment
 	) {
 		this.namedJdbcTemplate = namedJdbcTemplate;
 		this.platformTransactionManager = platformTransactionManager;
+		this.environment = environment;
 	}
 
 	public void migrate() {
+		MigrationUtils.migrate(environment);
 		new TransactionTemplate(platformTransactionManager).execute((st) -> {
 			logger.info("status=schema-truncating");
 			final StringBuilder sql = new StringBuilder()
@@ -61,7 +67,7 @@ public class DatabaseConfigurator {
 
 	public Collection<String> skipTables(){
 		return Arrays.asList(
-			"BSK_BOT".toLowerCase()
+			"flyway_schema_history".toLowerCase()
 		);
 	}
 
