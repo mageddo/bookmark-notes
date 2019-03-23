@@ -5,6 +5,6 @@ import com.mageddo.bookmarks.entity.BookmarkEntity;
 import java.util.List;
 
 public interface BookmarkDAO {
-	void insert();
+	void saveBookmark(BookmarkEntity bookmarkEntity);
 	List<BookmarkEntity> loadSiteMap();
 }

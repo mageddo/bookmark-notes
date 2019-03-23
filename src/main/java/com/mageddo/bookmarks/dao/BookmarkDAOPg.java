@@ -1,15 +1,14 @@
 package com.mageddo.bookmarks.dao;
 
 import com.mageddo.bookmarks.entity.BookmarkEntity;
-import com.mageddo.commons.Maps;
 import com.mageddo.rawstringliterals.RawString;
 import com.mageddo.rawstringliterals.Rsl;
 import io.micronaut.context.annotation.Requires;
-import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.inject.Singleton;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.List;
 
 import static com.mageddo.rawstringliterals.RawStrings.lateInit;
@@ -26,15 +25,38 @@ public class BookmarkDAOPg implements BookmarkDAO {
 	}
 
 	@Override
-	public void insert() {
-		parameterJdbcTemplate.update("INSERT INTO CUSTOMER_1 VALUES (:v)", Maps.of("v", LocalDateTime.now().toString()));
+	public void saveBookmark(BookmarkEntity bookmarkEntity) {
+		/*
+			INSERT INTO BOOKMARK (
+				NAM_BOOKMARK, DES_LINK,
+				DES_HTML, FLG_DELETED,
+				FLG_ARCHIVED, NUM_VISIBILITY, DAT_UPDATE
+			) VALUES (
+				:name, :link,
+				:desc, :deleted,
+				:archived, :visibility,
+				:updated
+			)
+		 */
+		@RawString
+		final String sql = lateInit();
+		parameterJdbcTemplate.update(
+			sql, new MapSqlParameterSource()
+			.addValue("name", bookmarkEntity.getName())
+			.addValue("link", bookmarkEntity.getLink())
+			.addValue("desc", bookmarkEntity.getDescription())
+			.addValue("deleted", bookmarkEntity.isDeleted())
+			.addValue("archived", bookmarkEntity.isArchived())
+			.addValue("visibility", bookmarkEntity.getVisibility().getCode())
+			.addValue("updated", Timestamp.valueOf(bookmarkEntity.getLastUpdate()))
+		);
 	}
 
 	@Override
 	public List<BookmarkEntity> loadSiteMap() {
 		/*
 		SELECT * FROM (
-			SELECT IDT_BOOKMARK, NAM_BOOKMARK, DAT_UPDATE
+			SELECT *
 			FROM BOOKMARK
 			WHERE NUM_VISIBILITY = 1
 			AND FLG_DELETED = false

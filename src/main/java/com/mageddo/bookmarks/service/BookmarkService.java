@@ -24,6 +24,10 @@ public class BookmarkService {
 		this.bookmarkDAO = bookmarkDAO;
 	}
 
+	public void saveBookmark(BookmarkEntity bookmarkEntity){
+		bookmarkDAO.saveBookmark(bookmarkEntity);
+	}
+
 	@Transactional
 	public void generateSiteMapXML(OutputStream out, String url) throws IOException {
 		/*
@@ -58,7 +62,7 @@ public class BookmarkService {
 		if(date == null){
 			return "";
 		}
-		return date.format(DateTimeFormatter.ISO_DATE);
+		return String.format("<lastmod>%s</lastmod>", date.format(DateTimeFormatter.ISO_DATE));
 	}
 
 	private String formatURL(String url, BookmarkEntity bookmarkEntity) {

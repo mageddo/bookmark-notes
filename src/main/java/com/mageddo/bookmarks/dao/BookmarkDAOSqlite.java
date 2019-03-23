@@ -25,7 +25,7 @@ public class BookmarkDAOSqlite implements BookmarkDAO {
 	}
 
 	@Override
-	public void insert() {
+	public void saveBookmark(BookmarkEntity bookmarkEntity) {
 		parameterJdbcTemplate.update("INSERT INTO CUSTOMER_1 VALUES (:v)", Maps.of("v", LocalDateTime.now().toString()));
 	}
 

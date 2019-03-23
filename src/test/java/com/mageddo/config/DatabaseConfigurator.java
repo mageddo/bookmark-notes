@@ -1,0 +1,68 @@
+package com.mageddo.config;
+
+import com.mageddo.commons.Maps;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
+
+import javax.inject.Singleton;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+@Singleton
+public class DatabaseConfigurator {
+
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+	private final NamedParameterJdbcTemplate namedJdbcTemplate;
+	private final PlatformTransactionManager platformTransactionManager;
+
+	public DatabaseConfigurator(
+		NamedParameterJdbcTemplate namedJdbcTemplate, PlatformTransactionManager platformTransactionManager
+	) {
+		this.namedJdbcTemplate = namedJdbcTemplate;
+		this.platformTransactionManager = platformTransactionManager;
+	}
+
+	public void migrate() {
+		new TransactionTemplate(platformTransactionManager).execute((st) -> {
+			logger.info("status=schema-truncating");
+			final StringBuilder sql = new StringBuilder()
+				.append("SELECT  \n")
+				.append("	CONCAT(TABLE_SCHEMA, '.', TABLE_NAME) \n")
+				.append("FROM INFORMATION_SCHEMA.TABLES \n")
+				.append("WHERE TABLE_SCHEMA = CURRENT_SCHEMA() \n")
+				.append("AND TABLE_NAME NOT IN (:tables) \n")
+				.append("ORDER BY TABLE_NAME \n")
+				;
+			final List<String> tables = namedJdbcTemplate.query(
+				sql.toString(),
+				Maps.of("tables", skipTables()),
+				(rs, i) -> rs.getString(1)
+			);
+			namedJdbcTemplate.update("SET CONSTRAINTS ALL DEFERRED", Maps.of());
+			for (final String table : tables) {
+				namedJdbcTemplate.update("DELETE FROM " + table, Maps.of());
+			}
+			namedJdbcTemplate.update("SET CONSTRAINTS ALL IMMEDIATE", Maps.of());
+			logger.info("status=schema-truncated");
+			try {
+				namedJdbcTemplate.update(TestUtils.readAsString("/db/base-data.sql"), Maps.of());
+			} catch (Exception e) {
+				logger.error("status=cant-run-base-data", e);
+				throw new RuntimeException(e);
+			}
+			logger.info("status=base-data-executed");
+			return null;
+		});
+	}
+
+	public Collection<String> skipTables(){
+		return Arrays.asList(
+			"BSK_BOT".toLowerCase()
+		);
+	}
+
+}
