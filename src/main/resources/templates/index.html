@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-			xmlns:layout="http://www.thymeleaf.org"
-			th:replace="layout/public-layout :: layout(headerTitle = ${headerTitle})"
+<html
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	th:replace="layout/public-layout :: layout(headerTitle = ${headerTitle})"
 >
 <head th:fragment="header-scripts"></head>
 <div th:fragment="content">
