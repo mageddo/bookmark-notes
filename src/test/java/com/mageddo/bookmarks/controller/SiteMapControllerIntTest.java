@@ -13,6 +13,7 @@ import io.micronaut.runtime.server.EmbeddedServer;
 import io.micronaut.test.annotation.MicronautTest;
 import io.restassured.path.xml.XmlPath;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +21,6 @@ import javax.inject.Inject;
 import java.time.LocalDateTime;
 
 import static com.mageddo.config.TestUtils.setupRestAssured;
-import static com.mageddo.rawstringliterals.commons.StringUtils.align;
 import static io.restassured.RestAssured.get;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -82,7 +82,7 @@ public class SiteMapControllerIntTest {
 			.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_XML)
 		;
 
-		final XmlPath xml = XmlPath.from(align(body));
+		final XmlPath xml = XmlPath.from(StringUtils.trim(body));
 
 		assertEquals(1, xml.getList("urlset").size());
 		assertThat(xml.get("urlset[0].url.loc"), containsString("/api/v1.0/sitemap/bookmark/"));

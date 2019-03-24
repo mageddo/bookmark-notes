@@ -22,11 +22,8 @@ import static com.mageddo.bookmarks.enums.BookmarkVisibility.PUBLIC;
 import static com.mageddo.config.HamcrestUtils.jsonMatchingPattern;
 import static com.mageddo.config.TestUtils.setupRestAssured;
 import static com.mageddo.rawstringliterals.RawStrings.lateInit;
-import static com.mageddo.rawstringliterals.commons.StringUtils.align;
 import static io.micronaut.http.HttpStatus.OK;
 import static io.restassured.RestAssured.get;
-import static org.apache.commons.lang3.StringUtils.remove;
-import static org.hamcrest.CoreMatchers.equalTo;
 
 @Rsl
 @MicronautTest(environments = "pg")
@@ -45,7 +42,6 @@ class BookmarkControllerIntTest {
 	void before(){
 		setupRestAssured(server);
 		databaseConfigurator.migrate();
-//		databaseConfigurator.resetSequences();
 	}
 
 	@Test
@@ -64,7 +60,7 @@ class BookmarkControllerIntTest {
 			.then()
 			.assertThat()
 			.statusCode(HttpStatus.BAD_REQUEST.getCode())
-			.body(equalTo(remove(align(expectedValidationMsg), '\n')))
+			.body(jsonMatchingPattern(expectedValidationMsg))
 		;
 
 	}
@@ -112,7 +108,7 @@ class BookmarkControllerIntTest {
 
 
 	@Test
-	void GetV1_0ListBookmarksValidateFromSuccess(){
+	void getV1_0ListBookmarksValidateFromSuccess(){
 
 		// arrange
 
@@ -156,30 +152,49 @@ class BookmarkControllerIntTest {
 
 	}
 
+	@Test
+	void getV1_0ListBookmarksSearchSuccess(){
+
+		// arrange
+
+		/*
+		[
+			{"id":2,"name":"Android 7.0 was released","html":"Some desc","length":2, "visibility": 1},
+			{"id":3,"name":"Separate your software release by major, minor and patch","length":2, "visibility": 0}
+		]
+		 */
+		@RawString
+		final String expectedBookmarks = lateInit();
+
+		bookmarksService.saveBookmark(
+			new BookmarkEntity()
+				.setName("Google is the most popular search engine site")
+				.setVisibility(PUBLIC)
+		);
+		bookmarksService.saveBookmark(
+			new BookmarkEntity()
+				.setName("Android 7.0 was released")
+				.setDescription("Some desc")
+				.setVisibility(PUBLIC)
+		);
+		bookmarksService.saveBookmark(
+			new BookmarkEntity()
+				.setName("Separate your software release by major, minor and patch")
+				.setVisibility(PRIVATE)
+		);
+
+		// act
+		final Response res = get("/api/v1.0/bookmark?from=0&quantity=3&query=release");
+
+		// assert
+		res
+			.then()
+			.assertThat()
+			.statusCode(OK.getCode())
+			.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+			.body(jsonMatchingPattern(expectedBookmarks, "**.id", "\\d+"))
+		;
+
+	}
+
 }
-
-
-//
-//	func TestGetV1_0ListBookmarksSearchSuccess(t *testing.T){
-//
-//		test.BuildDatabase()
-//
-//		expectedBookmarks := `[{"id":2,"name":"Android 7.0 was released","html":"","length":2},{"id":3,"name":"Separate your software release by major, minor and patch","html":"","length":2}]`
-//
-//		service.NewBookmarkService().SaveBookmark(entity.NewBookmarkWithNameAndVisibility("Google is the most popular search engine site", entity.PUBLIC))
-//		service.NewBookmarkService().SaveBookmark(entity.NewBookmarkWithNameAndVisibility("Android 7.0 was released", entity.PUBLIC))
-//		service.NewBookmarkService().SaveBookmark(entity.NewBookmarkWithNameAndVisibility("Separate your software release by major, minor and patch", entity.PRIVATE))
-//
-//		resp, c, err := test.NewReq("GET", BOOKMARK_V1 + "?from=0&quantity=3&query=release")
-//
-//		assert.Nil(t, err)
-//		assert.Equal(t, 200, c)
-//
-//		resp = regex.ReplaceAllString(resp, "")
-//
-//		assert.Equal(t, len(expectedBookmarks), len(resp))
-//		assert.Equal(t, expectedBookmarks, resp)
-//
-//	}
-//
-//

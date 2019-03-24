@@ -75,6 +75,8 @@ dependencies {
 	compileOnly "io.micronaut:micronaut-inject-java:${micronautVersion}"
 
 	compile("com.mageddo:commons:1.2.0")
+	compile("org.apache.commons:commons-lang3:3.8.1")
+
 	compile ("io.micronaut:micronaut-views:${micronautVersion}")
 	runtime ('org.thymeleaf:thymeleaf:3.0.11.RELEASE')
 

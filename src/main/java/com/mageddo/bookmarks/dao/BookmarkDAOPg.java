@@ -5,6 +5,8 @@ import com.mageddo.bookmarks.entity.BookmarkEntity;
 import com.mageddo.rawstringliterals.RawString;
 import com.mageddo.rawstringliterals.Rsl;
 import io.micronaut.context.annotation.Requires;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -19,6 +21,7 @@ import static com.mageddo.rawstringliterals.RawStrings.lateInit;
 @Requires(env = "pg")
 public class BookmarkDAOPg implements BookmarkDAO {
 
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private final NamedParameterJdbcTemplate parameterJdbcTemplate;
 
 	public BookmarkDAOPg(NamedParameterJdbcTemplate parameterJdbcTemplate) {
@@ -77,7 +80,32 @@ public class BookmarkDAOPg implements BookmarkDAO {
 
 	@Override
 	public List<BookmarkRes> getBookmarksByNameOrContent(String query, int offset, int quantity) {
-		throw new UnsupportedOperationException();
+		logger.debug("status=begin, query={}, offset={}, quantity={}", query, offset, quantity);
+
+		/*
+			WITH FILTER AS (
+				SELECT * FROM BOOKMARK B
+					WHERE FLG_DELETED=FALSE
+					AND ( NAM_BOOKMARK LIKE :query OR DES_HTML LIKE :query )
+			)
+			SELECT
+				IDT_BOOKMARK, NAM_BOOKMARK, FLG_ARCHIVED, FLG_DELETED, DAT_UPDATE, DES_LINK, NUM_VISIBILITY,
+				(SELECT COUNT(IDT_BOOKMARK) FROM FILTER) AS NUM_QUANTITY, SUBSTR(DES_HTML, 0, 160) AS DES_HTML
+			FROM FILTER OFFSET :offset LIMIT :limit
+		 */
+		@RawString
+		final String sql = lateInit();
+
+		final List<BookmarkRes> bookmarks = parameterJdbcTemplate.query(
+			sql,
+			new MapSqlParameterSource()
+			.addValue("query", String.format("%%%s%%", query))
+			.addValue("offset", offset)
+			.addValue("limit", quantity)
+			, BookmarkRes.mapper()
+		);
+		logger.debug("status=success, size={}, query={}", bookmarks.size(), query);
+		return bookmarks;
 	}
 
 	@Override
