@@ -1,6 +1,7 @@
 package com.mageddo.bookmarks.service;
 
-import com.mageddo.bookmarks.controller.res.BookmarkRes;
+import com.mageddo.bookmarks.apiserver.res.BookmarkRes;
+import com.mageddo.bookmarks.apiserver.res.RecentBookmarksRes;
 import com.mageddo.bookmarks.dao.BookmarkDAO;
 import com.mageddo.bookmarks.entity.BookmarkEntity;
 
@@ -40,4 +41,11 @@ public class BookmarksService {
 		return bookmarkDAO.getBookmarks(offset, quantity);
 	}
 
+	public int countPublicNotDeleted() {
+		return bookmarkDAO.countPublicNotDeleted();
+	}
+
+	public List<RecentBookmarksRes> getRecentBookmarks(int pageSize, int startPage) {
+		return bookmarkDAO.getRecentBookmarks(pageSize, startPage);
+	}
 }

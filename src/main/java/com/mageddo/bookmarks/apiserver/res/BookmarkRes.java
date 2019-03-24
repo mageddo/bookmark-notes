@@ -1,4 +1,4 @@
-package com.mageddo.bookmarks.controller.res;
+package com.mageddo.bookmarks.apiserver.res;
 
 import com.mageddo.bookmarks.entity.BookmarkEntity;
 import org.springframework.jdbc.core.RowMapper;

@@ -14,3 +14,5 @@ flyway:
   locations-image: conf/db/migration/postgres
   locations-java: db/migration/postgres
   schema: public
+analytics:
+  id: UA-88070435-1

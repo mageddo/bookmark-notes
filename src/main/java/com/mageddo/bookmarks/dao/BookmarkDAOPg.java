@@ -1,7 +1,9 @@
 package com.mageddo.bookmarks.dao;
 
-import com.mageddo.bookmarks.controller.res.BookmarkRes;
+import com.mageddo.bookmarks.apiserver.res.BookmarkRes;
+import com.mageddo.bookmarks.apiserver.res.RecentBookmarksRes;
 import com.mageddo.bookmarks.entity.BookmarkEntity;
+import com.mageddo.commons.Maps;
 import com.mageddo.rawstringliterals.RawString;
 import com.mageddo.rawstringliterals.Rsl;
 import io.micronaut.context.annotation.Requires;
@@ -22,10 +24,10 @@ import static com.mageddo.rawstringliterals.RawStrings.lateInit;
 public class BookmarkDAOPg implements BookmarkDAO {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
-	private final NamedParameterJdbcTemplate parameterJdbcTemplate;
+	private final NamedParameterJdbcTemplate namedJdbcTemplate;
 
-	public BookmarkDAOPg(NamedParameterJdbcTemplate parameterJdbcTemplate) {
-		this.parameterJdbcTemplate = parameterJdbcTemplate;
+	public BookmarkDAOPg(NamedParameterJdbcTemplate namedJdbcTemplate) {
+		this.namedJdbcTemplate = namedJdbcTemplate;
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class BookmarkDAOPg implements BookmarkDAO {
 		 */
 		@RawString
 		final String sql = lateInit();
-		parameterJdbcTemplate.update(
+		namedJdbcTemplate.update(
 			sql, new MapSqlParameterSource()
 			.addValue("name", bookmarkEntity.getName())
 			.addValue("link", bookmarkEntity.getLink())
@@ -70,7 +72,7 @@ public class BookmarkDAOPg implements BookmarkDAO {
 		*/
 		@RawString
 		final String sql = lateInit();
-		return parameterJdbcTemplate.query(sql, BookmarkEntity.mapper());
+		return namedJdbcTemplate.query(sql, BookmarkEntity.mapper());
 	}
 
 	@Override
@@ -96,7 +98,7 @@ public class BookmarkDAOPg implements BookmarkDAO {
 		@RawString
 		final String sql = lateInit();
 
-		final List<BookmarkRes> bookmarks = parameterJdbcTemplate.query(
+		final List<BookmarkRes> bookmarks = namedJdbcTemplate.query(
 			sql,
 			new MapSqlParameterSource()
 			.addValue("query", String.format("%%%s%%", query))
@@ -122,12 +124,44 @@ public class BookmarkDAOPg implements BookmarkDAO {
 		 */
 		@RawString
 		final String sql = lateInit();
-		return parameterJdbcTemplate.query(
+		return namedJdbcTemplate.query(
 			sql,
 			new MapSqlParameterSource()
 				.addValue("offset", offset)
 				.addValue("quantity", quantity)
 			, BookmarkRes.mapper()
+		);
+	}
+
+	@Override
+	public int countPublicNotDeleted() {
+		/*
+			SELECT COUNT(1) AS COUNT FROM BOOKMARK B
+			WHERE B.FLG_DELETED = FALSE AND B.NUM_VISIBILITY = 1
+		 */
+		@RawString
+		final String sql = lateInit();
+		return namedJdbcTemplate.queryForObject(sql, Maps.of(), Integer.class);
+	}
+
+	@Override
+	public List<RecentBookmarksRes> getRecentBookmarks(int pageSize, int startPage) {
+		/*
+			SELECT
+				B.IDT_BOOKMARK AS ID, B.NAM_BOOKMARK AS NAME, array_agg(T.NAM_TAG) AS TAGS
+			FROM BOOKMARK B
+			LEFT JOIN TAG_BOOKMARK TB ON TB.IDT_BOOKMARK = B.IDT_BOOKMARK
+			LEFT JOIN TAG T ON T.IDT_TAG = TB.IDT_TAG
+			WHERE B.FLG_DELETED = FALSE
+			AND B.NUM_VISIBILITY = 1
+			GROUP BY B.IDT_BOOKMARK
+			ORDER BY B.IDT_BOOKMARK DESC
+			OFFSET :offset LIMIT :limit
+		 */
+		@RawString
+		final String sql = lateInit();
+		return namedJdbcTemplate.query(
+			sql, Maps.of("offset", startPage, "limit", pageSize), RecentBookmarksRes.mapper()
 		);
 	}
 }

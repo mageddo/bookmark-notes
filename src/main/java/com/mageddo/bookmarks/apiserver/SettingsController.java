@@ -1,4 +1,4 @@
-package com.mageddo.bookmarks.controller;
+package com.mageddo.bookmarks.apiserver;
 
 import com.mageddo.bookmarks.entity.SettingEntity;
 import com.mageddo.bookmarks.exception.NotFoundException;

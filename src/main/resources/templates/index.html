@@ -1,13 +1,44 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.thymeleaf.org" xmlns:v-tooltip="http://www.w3.org/1999/xhtml"
-		xmlns:v-bind="http://www.w3.org/1999/xhtml"
+			xmlns:layout="http://www.thymeleaf.org" xmlns:v-tooltip="http://www.w3.org/1999/xhtml"
+			xmlns:v-bind="http://www.w3.org/1999/xhtml"
+			th:replace="~{layout/publiclayout :: layout(~{::title}, ~{::#content})}"
 >
 <head>
-	<title>Good Thymes Virtual Grocery</title>
-	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+	<title>my title</title>
 </head>
-<body>
-<p th:text="${name}">Hello world</p>
-</body>
+<!--layout:decorator="layout/public-layout"-->
+<div id="content" layout:fragment="content">
+	<div class="container" style="min-height:500px">
+
+		<h1 id="page-title" th:text="${pageTitle}"></h1>
+		<div class="row-result" th:each="bookmark : ${bookmarks}">
+			<h4><a th:href="'/bookmark/' + *{bookmark.id} + '/' + *{getURL.apply(bookmark.name)} ">
+				<div th:if="#{bookmark.name} == null" >
+					ID: [${bookmark.id}]] - Unknow name
+				</div>
+				<div th:if="#{bookmark.name} != null" >
+					[[${bookmark.name}]]
+				</div>
+			</a></h4>
+			<a href="#" class="btn btn-tag" th:each="tag : ${toTagArray.apply(bookmark.tags)}">
+				[[${tag}]]
+			</a>
+			<hr>
+		</div>
+
+		<!-- possible error -->
+		[[${msg}]]
+
+		<div th:if="#{hasMore} != null" >
+			<div class="row more-results">
+				<div class="col-lg-5 col-centered">
+					<a class="btn btn-info center-block" style="width:100%" th:href="*{getURL.apply(x)} + '?page=' + ${nextPage}" >More results ...</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div layout:fragment="scripts">
+</div>
 </html>
