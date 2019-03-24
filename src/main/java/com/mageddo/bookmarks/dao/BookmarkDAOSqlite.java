@@ -1,5 +1,6 @@
 package com.mageddo.bookmarks.dao;
 
+import com.mageddo.bookmarks.controller.res.BookmarkRes;
 import com.mageddo.bookmarks.entity.BookmarkEntity;
 import com.mageddo.commons.Maps;
 import com.mageddo.rawstringliterals.RawString;
@@ -41,8 +42,22 @@ public class BookmarkDAOSqlite implements BookmarkDAO {
 			ORDER BY IDT_BOOKMARK DESC
 		) T LIMIT 100000
 		*/
-		@RawString
-		final String sql = lateInit();
+		@RawString final String sql = lateInit();
 		return parameterJdbcTemplate.query(sql, BookmarkEntity.mapper());
+	}
+
+	@Override
+	public List<BookmarkRes> getBookmarks(String tag, int offset, int quantity) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<BookmarkRes> getBookmarksByNameOrContent(String query, int offset, int quantity) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<BookmarkRes> getBookmarks(int offset, int quantity) {
+		throw new UnsupportedOperationException();
 	}
 }

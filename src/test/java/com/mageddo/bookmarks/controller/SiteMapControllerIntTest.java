@@ -2,10 +2,13 @@ package com.mageddo.bookmarks.controller;
 
 import com.mageddo.bookmarks.entity.BookmarkEntity;
 import com.mageddo.bookmarks.enums.BookmarkVisibility;
-import com.mageddo.bookmarks.service.BookmarkService;
+import com.mageddo.bookmarks.service.BookmarksService;
+import com.mageddo.bookmarks.service.SiteMapService;
 import com.mageddo.config.DatabaseConfigurator;
 import com.mageddo.rawstringliterals.Rsl;
+import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpStatus;
+import io.micronaut.http.MediaType;
 import io.micronaut.runtime.server.EmbeddedServer;
 import io.micronaut.test.annotation.MicronautTest;
 import io.restassured.path.xml.XmlPath;
@@ -34,7 +37,10 @@ public class SiteMapControllerIntTest {
 	private DatabaseConfigurator databaseConfigurator;
 
 	@Inject
-	private BookmarkService bookmarkService;
+	private SiteMapService siteMapService;
+
+	@Inject
+	private BookmarksService bookmarksService;
 
 	@BeforeEach
 	public void before(){
@@ -47,14 +53,14 @@ public class SiteMapControllerIntTest {
 
 		// arrange
 
-		bookmarkService.saveBookmark(
+		bookmarksService.saveBookmark(
 			new BookmarkEntity()
 				.setName("Awesome Bookmark")
 				.setVisibility(BookmarkVisibility.PUBLIC)
 				.setLastUpdate(LocalDateTime.parse("2017-08-07T00:00:00"))
 		);
 
-		bookmarkService.saveBookmark(
+		bookmarksService.saveBookmark(
 			new BookmarkEntity()
 				.setName("Private Bookmark")
 				.setVisibility(BookmarkVisibility.PRIVATE)
@@ -72,7 +78,9 @@ public class SiteMapControllerIntTest {
 		req
 			.then()
 			.assertThat()
-			.statusCode(HttpStatus.OK.getCode());
+			.statusCode(HttpStatus.OK.getCode())
+			.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_XML)
+		;
 
 		final XmlPath xml = XmlPath.from(align(body));
 

@@ -16,16 +16,12 @@ import static com.mageddo.rawstringliterals.RawStrings.lateInit;
 
 @Rsl
 @Singleton
-public class BookmarkService {
+public class SiteMapService {
 
 	private final BookmarkDAO bookmarkDAO;
 
-	public BookmarkService(BookmarkDAO bookmarkDAO) {
+	public SiteMapService(BookmarkDAO bookmarkDAO) {
 		this.bookmarkDAO = bookmarkDAO;
-	}
-
-	public void saveBookmark(BookmarkEntity bookmarkEntity){
-		bookmarkDAO.saveBookmark(bookmarkEntity);
 	}
 
 	@Transactional

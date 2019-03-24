@@ -1,3 +1,4 @@
+// MIGRATED
 package controller
 
 import (

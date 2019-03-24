@@ -1,5 +1,6 @@
 package com.mageddo.bookmarks.dao;
 
+import com.mageddo.bookmarks.controller.res.BookmarkRes;
 import com.mageddo.bookmarks.entity.BookmarkEntity;
 import com.mageddo.rawstringliterals.RawString;
 import com.mageddo.rawstringliterals.Rsl;
@@ -67,5 +68,38 @@ public class BookmarkDAOPg implements BookmarkDAO {
 		@RawString
 		final String sql = lateInit();
 		return parameterJdbcTemplate.query(sql, BookmarkEntity.mapper());
+	}
+
+	@Override
+	public List<BookmarkRes> getBookmarks(String tag, int offset, int quantity) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<BookmarkRes> getBookmarksByNameOrContent(String query, int offset, int quantity) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<BookmarkRes> getBookmarks(int offset, int quantity) {
+		/*
+			WITH LIST AS (
+				SELECT * FROM BOOKMARK
+			)
+			SELECT
+				IDT_BOOKMARK, NAM_BOOKMARK, FLG_ARCHIVED, NUM_VISIBILITY,
+				FLG_DELETED, DAT_UPDATE, DES_LINK,
+				SUBSTR(DES_HTML, 0, 160) DES_HTML, (SELECT COUNT(IDT_BOOKMARK) FROM LIST) NUM_QUANTITY
+			FROM LIST WHERE FLG_DELETED=FALSE OFFSET :offset LIMIT :quantity
+		 */
+		@RawString
+		final String sql = lateInit();
+		return parameterJdbcTemplate.query(
+			sql,
+			new MapSqlParameterSource()
+				.addValue("offset", offset)
+				.addValue("quantity", quantity)
+			, BookmarkRes.mapper()
+		);
 	}
 }

@@ -18,6 +18,7 @@ public class BookmarkEntity {
 	private BookmarkVisibility visibility;
 
 	public BookmarkEntity() {
+		this.lastUpdate = LocalDateTime.now();
 	}
 
 	public BookmarkEntity(String name, BookmarkVisibility visibility) {

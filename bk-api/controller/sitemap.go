@@ -1,11 +1,10 @@
+// MIGRATED
 package controller
 
 import (
-	"net/http"
-	"context"
 	"bk-api/service"
-	"github.com/mageddo/go-logging"
-	. "github.com/mageddo/go-httpmap"
+	"context"
+	"net/http"
 )
 
 func init(){
