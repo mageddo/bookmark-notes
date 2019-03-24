@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org"
-			lang="en" class="dark-theme" th:fragment="layout (title, content)"
+			lang="en" class="dark-theme" th:fragment="layout(headerTitle)"
 >
 <head>
-	<title ><span th:replace="${title}" ></span> - Bookmarks</title>
+	<title >[[${headerTitle}]] - Bookmarks</title>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<meta name="title" content="${title}">
+	<meta name="title" data-th-attr="content=${headerTitle}" />
 	<meta name="description" content="${description}">
 	<!--STYLES-->
 	<link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
@@ -33,7 +33,7 @@
 		</div>
 	</div>
 </nav>
-<div th:replace="${content}" ></div>
+<div th:replace="this :: content" th:class="my-class" ></div>
 <!-- Footer -->
 <footer>
 	<div class="container" style="text-align:center">
