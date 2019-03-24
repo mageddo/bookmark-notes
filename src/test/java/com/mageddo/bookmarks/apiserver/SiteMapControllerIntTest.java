@@ -57,15 +57,15 @@ public class SiteMapControllerIntTest {
 			new BookmarkEntity()
 				.setName("Awesome Bookmark")
 				.setVisibility(BookmarkVisibility.PUBLIC)
-				.setLastUpdate(LocalDateTime.parse("2017-08-07T00:00:00"))
-		);
+				.setLastUpdate(LocalDateTime.parse("2017-08-07T00:00:00")),
+			bookmarkRes.getTags());
 
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("Private Bookmark")
 				.setVisibility(BookmarkVisibility.PRIVATE)
-				.setLastUpdate(LocalDateTime.parse("2017-08-06T00:00:00"))
-		);
+				.setLastUpdate(LocalDateTime.parse("2017-08-06T00:00:00")),
+			bookmarkRes.getTags());
 
 		// act
 		final Response req = get("/api/v1.0/sitemap");

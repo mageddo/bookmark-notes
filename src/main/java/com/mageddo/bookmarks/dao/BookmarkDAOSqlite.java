@@ -81,4 +81,14 @@ public class BookmarkDAOSqlite implements BookmarkDAO {
 	public void update(BookmarkEntity bookmark) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public void associate(long tagId, long bookmarkId) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void disassociateTags(long bookmarkId) {
+		throw new UnsupportedOperationException();
+	}
 }

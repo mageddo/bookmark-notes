@@ -35,7 +35,7 @@
 				</div>
 				<div class="form-group col-xs-4 col-sm-4 col-md-5">
 					<label for="iptTag" >Tags </label><br />
-					<select id="iptTag" class="js-data-example-ajax" name="tag[]" multiple="multiple" style="width:100%" >
+					<select id="iptTag" class="js-data-example-ajax" name="tags" multiple="multiple" style="width:100%" >
 						<option th:each="tag : ${tags}" th:value="${name}" th:text="${name}"></option>
 					</select>
 				</div>

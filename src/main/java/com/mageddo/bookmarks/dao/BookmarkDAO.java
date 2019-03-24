@@ -25,4 +25,8 @@ public interface BookmarkDAO {
 	BookmarkRes findBookmarkRes(long bookmarkId);
 
 	void update(BookmarkEntity bookmark);
+
+	void associate(long tagId, long bookmarkId);
+
+	void disassociateTags(long bookmarkId);
 }

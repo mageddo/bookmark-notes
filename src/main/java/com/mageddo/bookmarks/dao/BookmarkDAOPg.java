@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 
 import javax.inject.Singleton;
 import java.sql.Timestamp;
@@ -47,6 +48,7 @@ public class BookmarkDAOPg implements BookmarkDAO {
 		 */
 		@RawString
 		final String sql = lateInit();
+		final GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 		namedJdbcTemplate.update(
 			sql, new MapSqlParameterSource()
 			.addValue("name", bookmarkEntity.getName())
@@ -56,7 +58,9 @@ public class BookmarkDAOPg implements BookmarkDAO {
 			.addValue("archived", bookmarkEntity.isArchived())
 			.addValue("visibility", bookmarkEntity.getVisibility().getCode())
 			.addValue("updated", Timestamp.valueOf(bookmarkEntity.getLastUpdate()))
+			, keyHolder, new String[]{"IDT_BOOKMARK".toLowerCase()}
 		);
+		bookmarkEntity.setId(keyHolder.getKey().longValue());
 	}
 
 	@Override
@@ -198,6 +202,24 @@ public class BookmarkDAOPg implements BookmarkDAO {
 				.addValue("visibility", bookmark.getVisibility().getCode())
 				.addValue("id", bookmark.getId())
 		);
-		Validate.isTrue(affected == 1, "Should update exatcly one bookmark ", bookmark.getId(), bookmark.getName());
+		Validate.isTrue(affected == 1, "Should update exactly one bookmark ", affected, bookmark.getId(), bookmark.getName());
+	}
+
+	@Override
+	public void associate(long tagId, long bookmarkId) {
+		/*
+			INSERT INTO TAG_BOOKMARK (IDT_TAG, IDT_BOOKMARK, DAT_UPDATE) VALUES (:id, :bookmarkId, TIMEZONE('UTC', NOW()))
+		 */
+		@RawString
+		final String sql = lateInit();
+		namedJdbcTemplate.update(sql, Maps.of("id", tagId, "bookmarkId", bookmarkId));
+	}
+
+	@Override
+	public void disassociateTags(long bookmarkId) {
+		namedJdbcTemplate.update(
+			"DELETE FROM TAG_BOOKMARK WHERE IDT_BOOKMARK = :bookmarkId",
+			Maps.of("bookmarkId", bookmarkId)
+		);
 	}
 }

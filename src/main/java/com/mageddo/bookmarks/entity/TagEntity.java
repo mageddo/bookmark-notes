@@ -1,5 +1,6 @@
 package com.mageddo.bookmarks.entity;
 
+import com.mageddo.common.jdbc.JdbcHelper;
 import org.springframework.jdbc.core.RowMapper;
 
 public class TagEntity {
@@ -50,7 +51,7 @@ public class TagEntity {
 			.setId(rs.getLong("IDT_TAG"))
 			.setName(rs.getString("NAM_TAG"))
 			.setSlug(rs.getString("COD_SLUG"))
-			.setBookmarkId(rs.getLong("IDT_BOOKMARK"))
+			.setBookmarkId(JdbcHelper.getLong(rs, "IDT_BOOKMARK"))
 		;
 	}
 

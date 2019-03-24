@@ -79,19 +79,19 @@ class BookmarkControllerIntTest {
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 			.setName("X")
-			.setVisibility(PUBLIC)
-		);
+			.setVisibility(PUBLIC),
+			bookmarkRes.getTags());
 
 		bookmarksService.createBookmark(new BookmarkEntity()
 			.setName("X2")
-			.setVisibility(PUBLIC)
-		);
+			.setVisibility(PUBLIC),
+			bookmarkRes.getTags());
 
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 			.setName("X3")
-			.setVisibility(PRIVATE)
-		);
+			.setVisibility(PRIVATE),
+			bookmarkRes.getTags());
 
 		// act
 		final Response res = get("/api/v1.0/bookmark?from=0&quantity=1");
@@ -124,18 +124,18 @@ class BookmarkControllerIntTest {
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("X")
-				.setVisibility(PUBLIC)
-		);
+				.setVisibility(PUBLIC),
+			bookmarkRes.getTags());
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("X2")
-				.setVisibility(PUBLIC)
-		);
+				.setVisibility(PUBLIC),
+			bookmarkRes.getTags());
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("X3")
-				.setVisibility(PRIVATE)
-		);
+				.setVisibility(PRIVATE),
+			bookmarkRes.getTags());
 
 		// act
 		final Response res = get("/api/v1.0/bookmark?from=1&quantity=2");
@@ -169,19 +169,19 @@ class BookmarkControllerIntTest {
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("Google is the most popular search engine site")
-				.setVisibility(PUBLIC)
-		);
+				.setVisibility(PUBLIC),
+			bookmarkRes.getTags());
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("Android 7.0 was released")
 				.setDescription("Some desc")
-				.setVisibility(PUBLIC)
-		);
+				.setVisibility(PUBLIC),
+			bookmarkRes.getTags());
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("Separate your software release by major, minor and patch")
-				.setVisibility(PRIVATE)
-		);
+				.setVisibility(PRIVATE),
+			bookmarkRes.getTags());
 
 		// act
 		final Response res = get("/api/v1.0/bookmark?from=0&quantity=3&query=release");

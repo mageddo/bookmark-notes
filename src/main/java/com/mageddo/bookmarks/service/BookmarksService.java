@@ -3,11 +3,16 @@ package com.mageddo.bookmarks.service;
 import com.mageddo.bookmarks.apiserver.res.BookmarkRes;
 import com.mageddo.bookmarks.apiserver.res.RecentBookmarksRes;
 import com.mageddo.bookmarks.dao.BookmarkDAO;
+import com.mageddo.bookmarks.dao.TagDAO;
 import com.mageddo.bookmarks.entity.BookmarkEntity;
+import com.mageddo.bookmarks.entity.TagEntity;
+import com.mageddo.bookmarks.utils.Tags;
+import io.micronaut.spring.tx.annotation.Transactional;
 
 import javax.inject.Singleton;
-
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
@@ -16,13 +21,17 @@ public class BookmarksService {
 
 	private static final int SEARCH_MIN_SIZE = 3;
 	private final BookmarkDAO bookmarkDAO;
+	private final TagDAO tagDAO;
 
-	public BookmarksService(BookmarkDAO bookmarkDAO) {
+	public BookmarksService(BookmarkDAO bookmarkDAO, TagDAO tagDAO) {
 		this.bookmarkDAO = bookmarkDAO;
+		this.tagDAO = tagDAO;
 	}
 
-	public void createBookmark(BookmarkEntity bookmarkEntity){
+	@Transactional
+	public void createBookmark(BookmarkEntity bookmarkEntity, List<String> rawTags){
 		bookmarkDAO.createBookmark(bookmarkEntity);
+		associateTags(rawTags, bookmarkEntity.getId());
 	}
 
 	public List<BookmarkRes> getBookmarks(String query, String tag, int offset, int quantity){
@@ -53,7 +62,25 @@ public class BookmarksService {
 		return bookmarkDAO.findBookmarkRes(bookmarkId);
 	}
 
-	public void updateBookmark(BookmarkEntity bookmark) {
+	public void updateBookmark(BookmarkEntity bookmark, List<String> rawTags) {
 		bookmarkDAO.update(bookmark);
+		bookmarkDAO.disassociateTags(bookmark.getId());
+		associateTags(rawTags, bookmark.getId());
+	}
+
+	private void associateTags(List<String> rawTags, long bookmarkId) {
+		for (final TagEntity tagEntity : createIgnoreDuplicates(rawTags)) {
+			bookmarkDAO.associate(tagEntity.getId(), bookmarkId);
+		}
+	}
+
+	private List<TagEntity> createIgnoreDuplicates(List<String> rawTags) {
+		final Set<Tags.Tag> tags = Tags.toTags(rawTags);
+		final List<TagEntity> updatedTags = new ArrayList<>();
+		for (Tags.Tag tag : tags) {
+			tagDAO.createIgnoreDuplicates(tag);
+			updatedTags.add(tagDAO.findTag(tag.getSlug()));
+		}
+		return updatedTags;
 	}
 }

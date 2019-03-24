@@ -23,4 +23,8 @@ public class TagService {
 	public List<TagEntity> getTags(long bookmarkId) {
 		return tagDAO.findTags(bookmarkId);
 	}
+
+	public List<TagEntity> findTags(String query) {
+		return tagDAO.findTags(query);
+	}
 }

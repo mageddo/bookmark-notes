@@ -1,6 +1,7 @@
 package com.mageddo.bookmarks.controller;
 
 import com.mageddo.bookmarks.apiserver.res.BookmarkRes;
+import com.mageddo.bookmarks.entity.BookmarkEntity;
 import com.mageddo.bookmarks.entity.SettingEntity.Setting;
 import com.mageddo.bookmarks.entity.TagEntity;
 import com.mageddo.bookmarks.service.BookmarksService;
@@ -36,11 +37,12 @@ public class BookmarkController {
 		this.settingsService = settingsService;
 	}
 
-	@Post(value = "/api/bookmark", consumes = MediaType.APPLICATION_FORM_URLENCODED)
+	@Post(value = "/api/bookmark", consumes = MediaType.APPLICATION_FORM_URLENCODED, produces = MediaType.TEXT_PLAIN)
 	HttpResponse _3(@Body BookmarkRes bookmarkRes){
 		try {
-			bookmarksService.createBookmark(bookmarkRes.toBookmark());
-			return ok();
+			final BookmarkEntity bookmark = bookmarkRes.toBookmark();
+			bookmarksService.createBookmark(bookmark, bookmarkRes.getTags());
+			return ok(bookmark.getId());
 		} catch (Exception e){
 			logger.error("status=cant-save-bookmark, msg={}", e.getMessage(), e);
 			return serverError(mapOf(
@@ -53,7 +55,7 @@ public class BookmarkController {
 	@Put(value = "/api/bookmark", consumes = MediaType.APPLICATION_FORM_URLENCODED)
 	HttpResponse _4(@Body BookmarkRes bookmarkRes){
 		try {
-			bookmarksService.updateBookmark(bookmarkRes.toBookmark());
+			bookmarksService.updateBookmark(bookmarkRes.toBookmark(), bookmarkRes.getTags());
 			return ok();
 		} catch (Exception e){
 			logger.error("status=cant-update-bookmark, msg={}", e.getMessage(), e);

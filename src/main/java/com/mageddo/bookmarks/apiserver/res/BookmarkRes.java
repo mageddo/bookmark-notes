@@ -4,6 +4,7 @@ import com.mageddo.bookmarks.entity.BookmarkEntity;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.mageddo.bookmarks.enums.BookmarkVisibility.PRIVATE;
 import static com.mageddo.bookmarks.enums.BookmarkVisibility.mustFromCode;
@@ -16,6 +17,7 @@ public class BookmarkRes {
 	private Integer visibility;
 	private String html;
 	private Integer length;
+	private List<String> tags;
 
 	public static RowMapper<BookmarkRes> mapper() {
 		return (rs, i) -> {
@@ -100,5 +102,14 @@ public class BookmarkRes {
 			.setLastUpdate(LocalDateTime.now())
 			.setId(getId())
 		;
+	}
+
+	public List<String> getTags() {
+		return tags;
+	}
+
+	public BookmarkRes setTags(List<String> tags) {
+		this.tags = tags;
+		return this;
 	}
 }
