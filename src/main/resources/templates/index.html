@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-			xmlns:layout="http://www.thymeleaf.org" xmlns:v-tooltip="http://www.w3.org/1999/xhtml"
-			xmlns:v-bind="http://www.w3.org/1999/xhtml"
+			xmlns:layout="http://www.thymeleaf.org"
 			th:replace="layout/public-layout :: layout(headerTitle = ${headerTitle})"
 >
-<head>
-</head>
-<div th:fragment="content" th:class="page-my-class" >
+<head th:fragment="header-scripts"></head>
+<div th:fragment="content">
 	<div class="container" style="min-height:500px">
 
 		<h1 id="page-title" th:text="${pageTitle}"></h1>
@@ -37,6 +35,5 @@
 		</div>
 	</div>
 </div>
-<div layout:fragment="scripts">
-</div>
+<div th:fragment="footer-scripts"></div>
 </html>

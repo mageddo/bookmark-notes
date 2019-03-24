@@ -3,7 +3,7 @@
 			lang="en" class="dark-theme" th:fragment="layout(headerTitle)"
 >
 <head>
-	<title >[[${headerTitle}]] - Bookmarks</title>
+	<title th:text="${headerTitle} ?: 'Bookmarks'" ></title>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="title" data-th-attr="content=${headerTitle}" />
@@ -23,6 +23,7 @@
 		ga('create', '[[${analytics}]]', 'auto');
 		ga('send', 'pageview');
 	</script>
+	<div th:replace="this :: header-scripts" ></div>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top ">
@@ -33,12 +34,13 @@
 		</div>
 	</div>
 </nav>
-<div th:replace="this :: content" th:class="my-class" ></div>
+<div th:replace="this :: content" ></div>
 <!-- Footer -->
 <footer>
 	<div class="container" style="text-align:center">
 		<p class="copyright text-muted">Copyright &copy; Bookmarks Mageddo 2015-2017</p>
 	</div>
 </footer>
+<div th:replace="this :: footer-scripts" ></div>
 </body>
 </html>

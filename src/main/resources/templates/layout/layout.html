@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	lang="en" class="dark-theme" th:fragment="layout(headerTitle)"
+>
+<head>
+	<title th:text="${headerTitle} ?: 'Bookmarks'" ></title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!--STYLES-->
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="/static/select2/select2.css" rel="stylesheet"/>
+	<link href="/static/markdownEditor/css/bootstrap-markdown-editor.css" rel="stylesheet"/>
+	<link href="/static/highlight/github.css" rel="stylesheet"/>
+	<link href="/static/css/style.css" rel="stylesheet"/>
+	<link href="/static/css/universal.css" rel="stylesheet"/>
+	<link href="/static/css/animate.css" rel="stylesheet"/>
+	<!--STYLES END-->
+
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="glyphicon glyphicon-menu-hamburger menu-expand pull-left collapsed "
+					style="margin-left:5px" data-toggle="collapse" data-target="#menu-lateral" aria-expanded="false"></button>
+			<a href="/" class="navbar-brand">Bookmarks</a>
+			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+		<div class="navbar-collapse collapse" id="navbar-main">
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<form id="search-form" class="navbar-form navbar-left" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control" id="iptSearch" placeholder="search bookmarks...">
+						</div>
+						<button type="button" class="btn btn-info">Search</button>
+					</form>
+				</li>
+			</ul>
+		</div>
+		<div class="col-xs-6 col-md-2 mg-menu">
+			<div class="collapse" id="menu-lateral">
+				<ul class="nav nav-sidebar ulLateralItems">
+					<li class="mg-btn-settings"><a href="#"><span class="glyphicon glyphicon-cog"></span> settings</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>
+<a href="javascript:void(0)" class="btn btn-success btn-fab bookmarkNew">
+	<i class="glyphicon glyphicon-pencil"></i>
+</a>
+<!--SCRIPTS-->
+<script th:with="debugging=${debug} ?: 'false'" >
+var mg = {
+	defaults: {
+		debug: [[${debugging}]]
+	}
+}
+</script>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/bootstrap-notify.js"></script>
+<script src="/static/select2/select2.full.js"></script>
+<script src="/static/js/core.js"></script>
+<script src="/static/js/mustache.min.js"></script>
+<script src="/static/js/ace.js"></script>
+<script src="/static/js/ext-searchbox.js"></script>
+<script src="/static/js/mode-css.js"></script>
+<script src="/static/markdownEditor/js/bootstrap-markdown-editor.js"></script>
+<script src="/static/js/marked.min.js"></script>
+<script src="/static/highlight/highlight.pack.js"></script>
+<script src="/static/js/ct/main.js"></script>
+<div th:replace="this :: footer-scripts" th:remove="tag" ></div>
+<!--SCRIPTS END-->
+<div id="container" class="container" style="margin-top: 80px">
+	<div th:replace="this :: content" ></div>
+</div>
+<div class="popuparea modal fade" role="dialog" id="modal"></div>
+<div class="modal-editor hidden"></div>
+</body>
