@@ -27,11 +27,3 @@ COPY files/prod "${APP_PATH}/files/prod"
 # INSTALLING API FILES
 COPY build/* /tmp/
 
-# GETTING API FILES FROM WEB
-RUN if [ "$DOWNLOAD_API_FROM_REMOTE" = "1" ] ; then apt-get update && apt-get install -y curl && \
-	curl -L https://github.com/mageddo/bookmark-notes/releases/download/2.13.0/bk-api-2.13.0.tgz > /tmp/bk-api.tgz ; fi
-
-RUN mkdir -p $API_PATH && tar -xvf /tmp/bk-api*.tgz -C $API_PATH && rm -rf /tmp/*
-COPY bk-api/conf $API_PATH/conf
-
-CMD $APP_PATH/bookmark-notes

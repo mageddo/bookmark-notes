@@ -26,3 +26,4 @@ datasources:
 flyway:
   locations-image: conf/db/migration/postgres
   locations-java: db/migration/postgres
+  schema: public
