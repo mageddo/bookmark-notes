@@ -50,7 +50,6 @@ $("#mg-frm-settings").submit(function(e){
 	$.ajax({
 		url: '/api/v2.0/settings',
 		method: 'PATCH',
-		dataType: 'JSON',
 		contentType: 'application/json',
 		data: JSON.stringify(props)
 	}).done(function(data, txtStatus, r){
@@ -70,7 +69,7 @@ $.ajax({
 		var that = $(this);
 		var prop = data[that.prop('name')];
 		if(prop != null){
-			that.val(prop.value);
+			that.val(prop);
 		}
 	})
 }).error(function(error){

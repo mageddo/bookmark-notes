@@ -53,7 +53,7 @@ public class SettingsController {
 		}
 	}
 
-	@Patch(value = "/api/v{version:[12]}.0/settings", consumes = MediaType.APPLICATION_JSON)
+	@Patch(value = "/api/v{version:[12]}.0/settings", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
 	public HttpResponse _4(String version, @Body List<SettingEntity> settings){
 		try {
 			settingsService.patch(settings);
