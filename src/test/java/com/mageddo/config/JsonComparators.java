@@ -13,10 +13,7 @@ public final class JsonComparators {
 	public static JSONComparator matchingPattern(String prop, String regex){
 		return new CustomComparator(
 			JSONCompareMode.STRICT,
-			new Customization(
-				prop,
-				new RegularExpressionValueMatcher<>(regex)
-			)
+			new Customization(prop, new RegularExpressionValueMatcher<>(regex))
 		);
 	}
 }

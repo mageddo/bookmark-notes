@@ -11,6 +11,10 @@ public final class HamcrestUtils {
 	}
 
 	public static Matcher<String> jsonMatchingPattern(String expected){
+		return jsonMatchingPattern(expected, true);
+	}
+
+	public static Matcher<String> jsonMatchingPattern(String expected, boolean strict){
 		return new BaseMatcher<String>(){
 			@Override
 			public void describeTo(Description description) {
@@ -20,7 +24,7 @@ public final class HamcrestUtils {
 			@Override
 			public boolean matches(Object actual) {
 				try {
-					JSONAssert.assertEquals(expected, (String) actual, true);
+					JSONAssert.assertEquals(expected, (String) actual, strict);
 					return true;
 				} catch (JSONException e) {
 					return false;

@@ -14,8 +14,8 @@
 	<root level="INFO">
 		<appender-ref ref="console"/>
 	</root>
-	<logger name="org.eclipse.jetty" level="INFO" />
-	<logger name="org.flywaydb" level="TRACE" />
-	<logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG" />
+	<!--<logger name="org.eclipse.jetty" level="INFO" />-->
+	<!--<logger name="org.flywaydb" level="INFO" />-->
 	<logger name="org.apache.http.client.protocol.ResponseProcessCookies" level="ERROR" />
+	<logger name="io.micronaut.web.router" level="DEBUG" />
 </configuration>

@@ -14,7 +14,13 @@ public final class MigrationUtils {
 	}
 
 	public static void migrate(final Environment env){
-		final Flyway flyway = Flyway
+		final Flyway flyway = getFlyway(env);
+		flyway.repair();
+		flyway.migrate();
+	}
+
+	public static Flyway getFlyway(Environment env) {
+		return Flyway
 			.configure()
 			.locations(getLocations(env))
 			.dataSource(
@@ -22,14 +28,12 @@ public final class MigrationUtils {
 				get(env, "datasources.default.username"),
 				get(env, "datasources.default.password")
 			)
-			.load()
-			;
-		flyway.repair();
-		flyway.migrate();
+			.schemas(get(env, "flyway.schema"))
+			.load();
 	}
 
 	private static String get(Environment env, String k) {
-		return env.getRequiredProperty(k, String.class);
+		return env.get(k, String.class, "");
 	}
 
 	private static String getLocations(Environment env){

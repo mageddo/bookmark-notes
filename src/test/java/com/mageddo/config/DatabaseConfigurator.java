@@ -3,6 +3,7 @@ package com.mageddo.config;
 import com.mageddo.commons.Maps;
 import com.mageddo.commons.MigrationUtils;
 import io.micronaut.context.env.Environment;
+import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -16,6 +17,8 @@ import java.util.List;
 
 @Singleton
 public class DatabaseConfigurator {
+
+	private static boolean migrated = false;
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private final NamedParameterJdbcTemplate namedJdbcTemplate;
@@ -32,7 +35,12 @@ public class DatabaseConfigurator {
 	}
 
 	public void migrate() {
-		MigrationUtils.migrate(environment);
+		if(!migrated){
+			final Flyway flyway = MigrationUtils.getFlyway(environment);
+			flyway.clean();
+			flyway.migrate();
+			migrated = true;
+		}
 		new TransactionTemplate(platformTransactionManager).execute((st) -> {
 			logger.info("status=schema-truncating");
 			final StringBuilder sql = new StringBuilder()
@@ -67,7 +75,8 @@ public class DatabaseConfigurator {
 
 	public Collection<String> skipTables(){
 		return Arrays.asList(
-			"flyway_schema_history".toLowerCase()
+			"flyway_schema_history".toLowerCase(),
+			"system_property".toLowerCase()
 		);
 	}
 

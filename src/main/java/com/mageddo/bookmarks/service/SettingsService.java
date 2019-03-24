@@ -2,6 +2,7 @@ package com.mageddo.bookmarks.service;
 
 import com.mageddo.bookmarks.dao.SettingsDAO;
 import com.mageddo.bookmarks.entity.SettingEntity;
+import com.mageddo.bookmarks.exception.NotFoundException;
 
 import javax.inject.Singleton;
 import java.time.LocalDateTime;
@@ -35,11 +36,15 @@ public class SettingsService {
 		return settingsDAO.find(key);
 	}
 
-	public void patch(SettingEntity settingEntity) {
+	public boolean patch(SettingEntity settingEntity) {
 		final SettingEntity dbSettingEntity = settingsDAO.find(settingEntity.getKey());
+		if(dbSettingEntity == null){
+			throw new NotFoundException(String.format("parameter doesn't exists %s", settingEntity.getKey()));
+		}
 		dbSettingEntity.setValue(settingEntity.getValue());
 		dbSettingEntity.setUpdate(LocalDateTime.now());
 		settingsDAO.patch(dbSettingEntity);
+		return true;
 	}
 
 	public void patch(List<SettingEntity> settings) {
