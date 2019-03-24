@@ -179,7 +179,7 @@ public class BookmarkDAOPg implements BookmarkDAO {
 	public List<RecentBookmarksRes> getRecentBookmarks(int pageSize, int startPage) {
 		/*
 			SELECT
-				B.IDT_BOOKMARK AS ID, B.NAM_BOOKMARK AS NAME, array_agg(T.NAM_TAG) AS TAGS
+				B.IDT_BOOKMARK AS ID, B.NAM_BOOKMARK AS NAME, STRING_AGG(T.NAM_TAG, ',') AS TAGS
 			FROM BOOKMARK B
 			LEFT JOIN TAG_BOOKMARK TB ON TB.IDT_BOOKMARK = B.IDT_BOOKMARK
 			LEFT JOIN TAG T ON T.IDT_TAG = TB.IDT_TAG

@@ -56,7 +56,7 @@ public class HomeController {
 			"nextPage", page + 2,
 			"hasMore", pages > page + 1,
 			"bookmarks", recentBookmarks,
-			"toTagArray", (Function<String, String[]>) tags -> tags.equals("{NULL}") ? null : tags.split(","),
+			"toTagArray", (Function<String, String[]>) tags -> tags == null ? null : tags.split(","),
 			"getURL", (Function<String, String>) URLUtils::getURL
 		));
 	}

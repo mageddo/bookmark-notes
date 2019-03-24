@@ -17,9 +17,7 @@
 					[[${bookmark.name}]]
 				</div>
 			</a></h4>
-			<a href="#" class="btn btn-tag" th:each="tag : ${toTagArray.apply(bookmark.tags)}">
-				[[${tag}]]
-			</a>
+			<a href="#" class="btn btn-tag" style="margin-right: 5px" th:each="tag : ${toTagArray.apply(bookmark.tags)}" th:text="${tag}" />
 			<hr>
 		</div>
 
