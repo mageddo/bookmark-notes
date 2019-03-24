@@ -76,7 +76,8 @@ BookmarkEdition.prototype.setup = function(){
 			$.ajax({
 				url: "/api/bookmark",
 				type: 'PUT',
-				data: that.getFormData(),
+				data: JSON.stringify(that.getFormData()),
+				contentType: 'application/json',
 				success: function () {
 					successEvent(true);
 					editionMode();
@@ -90,7 +91,8 @@ BookmarkEdition.prototype.setup = function(){
 			$.ajax({
 				url: "/api/bookmark",
 				type: 'POST',
-				data: that.getFormData(),
+				data: JSON.stringify(that.getFormData()),
+				contentType: 'application/json',
 				success: function (id) {
 					console.debug("cadastrado");
 					items.form.prop("id").value = id;
@@ -117,7 +119,7 @@ BookmarkEdition.prototype.setup = function(){
 
 		if(items.iptVisible.prop("checked")){
 			items.btnLink.removeClass('hidden');
-			items.btnLink.prop("href", '/bookmark/' + formData[0].value + '/' + (formData[1].value.replace(/\s/g, '-')))
+			items.btnLink.prop("href", '/bookmark/' + formData['id'] + '/' + (formData['name'].replace(/\s/g, '-')))
 		}else{
 			items.btnLink.addClass('hidden');
 		}
@@ -143,7 +145,12 @@ BookmarkEdition.prototype.getFormData = function(){
 		name: "html",
 		value: this.getEditorValue()
 	});
-	return data;
+
+	var jsonObject = {};
+	data.forEach(function(it){
+		jsonObject[it.name] = it.value;
+	});
+	return jsonObject;
 };
 
 BookmarkEdition.prototype.getEditorValue = function(){

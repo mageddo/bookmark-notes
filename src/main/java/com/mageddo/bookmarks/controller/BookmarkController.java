@@ -44,7 +44,7 @@ public class BookmarkController {
 		this.settingsService = settingsService;
 	}
 
-	@Post(value = "/api/bookmark", consumes = MediaType.APPLICATION_FORM_URLENCODED, produces = MediaType.TEXT_PLAIN)
+	@Post(value = "/api/bookmark", consumes = MediaType.APPLICATION_JSON, produces = MediaType.TEXT_PLAIN)
 	HttpResponse _3(@Body BookmarkRes bookmarkRes) {
 		try {
 			final BookmarkEntity bookmark = bookmarkRes.toBookmark();
@@ -59,7 +59,7 @@ public class BookmarkController {
 		}
 	}
 
-	@Put(value = "/api/bookmark", consumes = MediaType.APPLICATION_FORM_URLENCODED)
+	@Put(value = "/api/bookmark", consumes = MediaType.APPLICATION_JSON)
 	HttpResponse _4(@Body BookmarkRes bookmarkRes) {
 		try {
 			bookmarksService.updateBookmark(bookmarkRes.toBookmark(), bookmarkRes.getTags());
