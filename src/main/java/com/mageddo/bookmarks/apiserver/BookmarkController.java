@@ -24,16 +24,17 @@ public class BookmarkController {
 	}
 
 	@Get("/api/v1.0/bookmark")
-	public HttpResponse _1(
+	HttpResponse _1(
 		@QueryValue(value = "from", defaultValue = "0") int from, @QueryValue(value = "quantity", defaultValue = "0") int quantity,
 		@QueryValue(value = "tag", defaultValue = "") String tag, @QueryValue(value = "query", defaultValue = "") String query
 	) {
 
-		if(quantity <= 0){
+		if (quantity <= 0) {
 			return badRequest(Maps.of(
 				"code", HttpStatus.BAD_REQUEST.getCode(),
 				"message", "Please pass a valid quantity"
-			));
+			))
+			.header("catch", "1");
 		}
 
 		try {
@@ -42,6 +43,11 @@ public class BookmarkController {
 			logger.error("status=failed-load-bookmark, msg={}", e.getMessage(), e);
 			return badRequest("Could not read bookmarks");
 		}
+	}
+
+	@Get("/api/bookmark")
+	HttpResponse _2() {
+		return _1(0, 100, "", "");
 	}
 
 }
