@@ -7,6 +7,7 @@ public class BookmarkRes {
 
 	private Long id;
 	private String name;
+	private String link;
 	private Integer visibility;
 	private String html;
 	private Integer length;
@@ -25,6 +26,7 @@ public class BookmarkRes {
 			.setId(bookmark.getId())
 			.setName(bookmark.getName())
 			.setVisibility(bookmark.getVisibility().getCode())
+			.setLink(bookmark.getLink())
 		;
 	}
 
@@ -70,6 +72,15 @@ public class BookmarkRes {
 
 	public BookmarkRes setLength(Integer length) {
 		this.length = length;
+		return this;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public BookmarkRes setLink(String link) {
+		this.link = link;
 		return this;
 	}
 }

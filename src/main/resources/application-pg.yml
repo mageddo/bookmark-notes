@@ -1,7 +1,7 @@
 ---
 datasources:
   default:
-    jdbcUrl: jdbc:postgresql://localhost:5432/db
+    jdbcUrl: jdbc:postgresql://localhost:5432/db?currentSchema=bookmarks
     username: root
     password: root
     driverClassName: org.postgresql.Driver
@@ -13,6 +13,6 @@ datasources:
 flyway:
   locations-image: conf/db/migration/postgres
   locations-java: db/migration/postgres
-  schema: public
+  schema: bookmarks
 analytics:
   id: UA-88070435-1

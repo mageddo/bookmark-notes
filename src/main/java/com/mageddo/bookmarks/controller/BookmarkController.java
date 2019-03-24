@@ -7,11 +7,10 @@ import com.mageddo.bookmarks.entity.TagEntity;
 import com.mageddo.bookmarks.service.BookmarksService;
 import com.mageddo.bookmarks.service.SettingsService;
 import com.mageddo.bookmarks.service.TagService;
-import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.QueryValue;
-import io.micronaut.views.View;
+import io.micronaut.views.ModelAndView;
 
 import java.util.List;
 import java.util.function.Function;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 
 import static com.mageddo.common.jackson.JsonUtils.writeValueAsString;
 import static io.micronaut.core.util.CollectionUtils.mapOf;
-import static io.micronaut.http.HttpResponse.ok;
 
 @Controller
 public class BookmarkController {
@@ -36,13 +34,11 @@ public class BookmarkController {
 	}
 
 	@Get("/bookmark/edit")
-	@View("restricted-area/bookmark-edit")
-	HttpResponse _1(@QueryValue("id") long bookmarkId, @QueryValue("editMode") boolean editMode) {
+	ModelAndView _1(@QueryValue("id") long bookmarkId, @QueryValue("editMode") boolean editMode) {
 		final BookmarkRes bookmark = bookmarksService.getBookmarkRes(bookmarkId);
 		final List<TagEntity> tags = tagService.getTags(bookmarkId);
 		final SettingEntity setting = settingsService.findSetting(Setting.CODE_BLOCK_MAX_HEIGHT.name());
-		return ok(mapOf(
-			"layout", false,
+		return new ModelAndView("restricted-area/bookmark-edit", mapOf(
 			"maxHeight", setting.getValue(),
 			"bookmark", bookmark,
 			"tags", tags,
