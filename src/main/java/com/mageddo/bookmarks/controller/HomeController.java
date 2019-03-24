@@ -55,7 +55,6 @@ public class HomeController {
 			"description", "Technology posts based on my practice experience",
 			"nextPage", page + 2,
 			"hasMore", pages > page + 1,
-			"layout", "publicLayout",
 			"bookmarks", recentBookmarks,
 			"toTagArray", (Function<String, String[]>) tags -> tags.equals("{NULL}") ? null : tags.split(","),
 			"getURL", (Function<String, String>) URLUtils::getURL
@@ -72,7 +71,6 @@ public class HomeController {
 			));
 		} else {
 			return ok(mapOf(
-				"layout", true,
 				"compile", false
 			));
 		}

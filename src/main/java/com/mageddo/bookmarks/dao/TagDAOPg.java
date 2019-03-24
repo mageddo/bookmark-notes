@@ -57,7 +57,7 @@ public class TagDAOPg implements TagDAO {
 	public List<TagEntity> findTags(String query) {
 		/*
 			SELECT
-				T.IDT_TAG, T.NAM_TAG, T.COD_SLUG, NULL::BIGINT AS IDT_BOOKMARK
+				T.IDT_TAG, T.NAM_TAG, T.COD_SLUG, NULL::INTEGER AS IDT_BOOKMARK
 			FROM TAG T WHERE NAM_TAG LIKE :query
 		 */
 		@RawString
@@ -87,7 +87,7 @@ public class TagDAOPg implements TagDAO {
 	@Override
 	public TagEntity findTag(String slug) {
 		return namedJdbcTemplate.queryForObject(
-			"SELECT T.*, NULL::BIGINT AS IDT_BOOKMARK FROM TAG T WHERE COD_SLUG=:slug",
+			"SELECT T.*, NULL::INTEGER AS IDT_BOOKMARK FROM TAG T WHERE COD_SLUG=:slug",
 			Maps.of("slug", slug),
 			TagEntity.mapper()
 		);
