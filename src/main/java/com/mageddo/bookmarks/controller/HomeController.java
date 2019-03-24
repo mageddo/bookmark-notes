@@ -50,7 +50,7 @@ public class HomeController {
 		final List<RecentBookmarksRes> recentBookmarks = bookmarksService.getRecentBookmarks(pageSize, startPage);
 		return ok(Maps.of(
 			"analytics", analyticsId,
-			"title", page == 0 ? "Home" : "Page " + (page + 1),
+			"headerTitle", page == 0 ? "Home" : "Page " + (page + 1),
 			"pageTitle", page == 0 ? null : "Page " + (page + 1),
 			"description", "Technology posts based on my practice experience",
 			"nextPage", page + 2,

@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 			xmlns:layout="http://www.thymeleaf.org" xmlns:v-tooltip="http://www.w3.org/1999/xhtml"
 			xmlns:v-bind="http://www.w3.org/1999/xhtml"
-			th:replace="~{layout/publiclayout :: layout(~{::title}, ~{::#content})}"
+			th:replace="~{layout/publiclayout :: layout(~{::title/text()}, ~{::#content})}"
 >
 <head>
-	<title>my title</title>
+	<title>[[${headerTitle}]]</title>
 </head>
 <!--layout:decorator="layout/public-layout"-->
-<div id="content" layout:fragment="content">
+<div id="content" >
 	<div class="container" style="min-height:500px">
 
 		<h1 id="page-title" th:text="${pageTitle}"></h1>

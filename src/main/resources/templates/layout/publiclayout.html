@@ -3,7 +3,7 @@
 			lang="en" class="dark-theme" th:fragment="layout (title, content)"
 >
 <head>
-	<title th:text="${title} + '-' + ${appName}"></title>
+	<title ><span th:replace="${title}" ></span> - Bookmarks</title>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="title" content="${title}">
