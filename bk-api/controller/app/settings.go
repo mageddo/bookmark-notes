@@ -1,6 +1,0 @@
-package app
-
-func init(){
-
-}
-
