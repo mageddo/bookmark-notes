@@ -114,8 +114,8 @@ class BookmarkControllerIntTest {
 
 		/*
 		[
-			{"id":2,"name":"X2","visibility":1,"length":3},
-			{"id":3,"name":"X3","visibility":0,"length":3}
+			{"id":2,"name":"X2","visibility":1,"length":3, "creationDate": "2019-07-19", "updateDate": "2019-07-20"},
+			{"id":3,"name":"X","visibility":1,"length":3, "creationDate": "2019-07-20", "updateDate": "2019-07-21"}
 		]
 		 */
 		@RawString
@@ -146,7 +146,12 @@ class BookmarkControllerIntTest {
 			.assertThat()
 			.statusCode(OK.getCode())
 			.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-			.body(jsonMatchingPattern(expectedBookmarks, "**.id", "\\d+"))
+			.body(jsonMatchingPattern(
+				expectedBookmarks,
+				"**.id", "\\d+",
+				"**.creationDate", "\\d{4}-\\d{2}-\\d{2}",
+				"**.updateDate", "\\d{4}-\\d{2}-\\d{2}"
+			))
 		;
 	}
 

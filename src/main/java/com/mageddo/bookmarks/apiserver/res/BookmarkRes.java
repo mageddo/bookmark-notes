@@ -1,6 +1,8 @@
 package com.mageddo.bookmarks.apiserver.res;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mageddo.bookmarks.entity.BookmarkEntity;
+import com.mageddo.bookmarks.jackson.TruncatedLocalDateTimeConverter;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.time.LocalDateTime;
@@ -21,6 +23,7 @@ public class BookmarkRes {
 	private LocalDateTime creationDate;
 	private LocalDateTime updateDate;
 
+	@JsonSerialize(using = TruncatedLocalDateTimeConverter.Serializer.class)
 	public LocalDateTime getCreationDate() {
 		return creationDate;
 	}
@@ -30,6 +33,7 @@ public class BookmarkRes {
 		return this;
 	}
 
+	@JsonSerialize(using = TruncatedLocalDateTimeConverter.Serializer.class)
 	public LocalDateTime getUpdateDate() {
 		return updateDate;
 	}

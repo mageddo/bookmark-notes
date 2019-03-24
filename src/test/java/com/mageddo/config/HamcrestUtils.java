@@ -52,4 +52,23 @@ public final class HamcrestUtils {
 		};
 	}
 
+	public static Matcher<String> jsonMatchingPattern(String expected, String ... props){
+		return new BaseMatcher<String>(){
+			@Override
+			public void describeTo(Description description) {
+				description.appendValue(expected);
+			}
+
+			@Override
+			public boolean matches(Object actual) {
+				try {
+					JSONAssert.assertEquals(expected, (String) actual, JsonComparators.matchingPattern(props));
+					return true;
+				} catch (JSONException e) {
+					return false;
+				}
+			}
+		};
+	}
+
 }
