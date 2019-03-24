@@ -7,6 +7,7 @@ import com.mageddo.commons.Maps;
 import com.mageddo.rawstringliterals.RawString;
 import com.mageddo.rawstringliterals.Rsl;
 import io.micronaut.context.annotation.Requires;
+import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -31,7 +32,7 @@ public class BookmarkDAOPg implements BookmarkDAO {
 	}
 
 	@Override
-	public void saveBookmark(BookmarkEntity bookmarkEntity) {
+	public void createBookmark(BookmarkEntity bookmarkEntity) {
 		/*
 			INSERT INTO BOOKMARK (
 				NAM_BOOKMARK, DES_LINK,
@@ -177,5 +178,26 @@ public class BookmarkDAOPg implements BookmarkDAO {
 		final String sql = lateInit();
 		return namedJdbcTemplate.queryForObject(sql, Maps.of("id", bookmarkId), BookmarkRes.mapper());
 
+	}
+
+	@Override
+	public void update(BookmarkEntity bookmark) {
+		/*
+			UPDATE BOOKMARK SET
+				NAM_BOOKMARK=:name, DES_LINK=:link, DES_HTML=:html,
+				NUM_VISIBILITY=:visibility, DAT_UPDATE=CURRENT_TIMESTAMP
+			WHERE IDT_BOOKMARK=:id
+		 */
+		@RawString
+		final String sql = lateInit();
+		final int affected = namedJdbcTemplate.update(
+			sql, new MapSqlParameterSource()
+				.addValue("name", bookmark.getName())
+				.addValue("link", bookmark.getLink())
+				.addValue("html", bookmark.getDescription())
+				.addValue("visibility", bookmark.getVisibility().getCode())
+				.addValue("id", bookmark.getId())
+		);
+		Validate.isTrue(affected == 1, "Should update exatcly one bookmark ", bookmark.getId(), bookmark.getName());
 	}
 }

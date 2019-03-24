@@ -15,17 +15,23 @@
 				</div>
 			</div>
 			<div class="fields">
-				<input type="hidden" th:value="${ bookmark.id }" name="id" />
+				<input type="hidden" th:value="${bookmark.id}" name="id" />
 				<div class="form-group col-xs-12 col-md-12">
 					<label for="iptName" >Name </label>
 					<div style="display: flex;" class="link-container">
-						<input id="iptName" type="text" class="form-control ipt-name" tabindex="1" th:value="${ bookmark.name }" name="name" placeholder="bookmark name">
+						<input
+							id="iptName" type="text" class="form-control ipt-name" tabindex="1"
+							th:value="${ bookmark.name }" name="name" placeholder="bookmark name"
+						>
 						<a class="btn btn-default hidden btn-public-link glyphicon glyphicon-new-window" target="_blank" href="#"></a>
 					</div>
 				</div>
 				<div class="form-group col-xs-6 col-sm-6 col-md-6">
 					<label for="iptLink" >Link </label>
-					<input id="iptLink" type="text" name="link" tabindex="1" th:value="${ bookmark.link}" class="form-control" placeholder="bookmark link">
+					<input
+						id="iptLink" type="text" name="link" tabindex="1"
+						th:value="${ bookmark.link }" class="form-control" placeholder="bookmark link"
+					>
 				</div>
 				<div class="form-group col-xs-4 col-sm-4 col-md-5">
 					<label for="iptTag" >Tags </label><br />
@@ -36,12 +42,15 @@
 				<div class="form-group col-xs-2 col-sm-2 col-md-1 chckVisible">
 					<label for="visible" >Public</label><br />
 					<label class="switch">
-						<input id="visible" name="visible" type="checkbox" th:checked="${bookmark.visibility == 1}" >
+						<input
+							id="visible" name="visibility" type="checkbox" value="1"
+							th:checked="${bookmark.visibility == 1 }"
+						>
 						<div class="slider round"></div>
 					</label>
 				</div>
 			</div>
-			<div id="md-editor" tabindex="4" th:text="${bookmark.html}" ></div>
+			<div id="md-editor" tabindex="4" th:text="${bookmark.html }" ></div>
 		</form>
 		<script>
 			window.tagsToEdit = [[${stringify.get()}]];

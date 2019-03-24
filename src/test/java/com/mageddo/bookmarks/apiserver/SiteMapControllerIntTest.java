@@ -53,14 +53,14 @@ public class SiteMapControllerIntTest {
 
 		// arrange
 
-		bookmarksService.saveBookmark(
+		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("Awesome Bookmark")
 				.setVisibility(BookmarkVisibility.PUBLIC)
 				.setLastUpdate(LocalDateTime.parse("2017-08-07T00:00:00"))
 		);
 
-		bookmarksService.saveBookmark(
+		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("Private Bookmark")
 				.setVisibility(BookmarkVisibility.PRIVATE)

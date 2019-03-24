@@ -76,18 +76,18 @@ class BookmarkControllerIntTest {
 		@RawString
 		final String expectedBookmarks = lateInit();
 
-		bookmarksService.saveBookmark(
+		bookmarksService.createBookmark(
 			new BookmarkEntity()
 			.setName("X")
 			.setVisibility(PUBLIC)
 		);
 
-		bookmarksService.saveBookmark(new BookmarkEntity()
+		bookmarksService.createBookmark(new BookmarkEntity()
 			.setName("X2")
 			.setVisibility(PUBLIC)
 		);
 
-		bookmarksService.saveBookmark(
+		bookmarksService.createBookmark(
 			new BookmarkEntity()
 			.setName("X3")
 			.setVisibility(PRIVATE)
@@ -121,17 +121,17 @@ class BookmarkControllerIntTest {
 		@RawString
 		final String expectedBookmarks = lateInit();
 
-		bookmarksService.saveBookmark(
+		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("X")
 				.setVisibility(PUBLIC)
 		);
-		bookmarksService.saveBookmark(
+		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("X2")
 				.setVisibility(PUBLIC)
 		);
-		bookmarksService.saveBookmark(
+		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("X3")
 				.setVisibility(PRIVATE)
@@ -166,18 +166,18 @@ class BookmarkControllerIntTest {
 		@RawString
 		final String expectedBookmarks = lateInit();
 
-		bookmarksService.saveBookmark(
+		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("Google is the most popular search engine site")
 				.setVisibility(PUBLIC)
 		);
-		bookmarksService.saveBookmark(
+		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("Android 7.0 was released")
 				.setDescription("Some desc")
 				.setVisibility(PUBLIC)
 		);
-		bookmarksService.saveBookmark(
+		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("Separate your software release by major, minor and patch")
 				.setVisibility(PRIVATE)

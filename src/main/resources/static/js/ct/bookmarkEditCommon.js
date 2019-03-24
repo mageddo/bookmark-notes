@@ -75,7 +75,7 @@ BookmarkEdition.prototype.setup = function(){
 			e.preventDefault();
 			$.ajax({
 				url: "/api/bookmark",
-				type: 'POST',
+				type: 'PUT',
 				data: that.getFormData(),
 				success: function () {
 					successEvent(true);
@@ -89,7 +89,7 @@ BookmarkEdition.prototype.setup = function(){
 
 			$.ajax({
 				url: "/api/bookmark",
-				type: 'PUT',
+				type: 'POST',
 				data: that.getFormData(),
 				success: function (id) {
 					console.debug("cadastrado");
@@ -131,11 +131,12 @@ BookmarkEdition.prototype.setup = function(){
 
 		refreshBookmarkList();
 	}
-}
+};
 
 BookmarkEdition.prototype.postCreate = function(){
 
-}
+};
+
 BookmarkEdition.prototype.getFormData = function(){
 	var data = this.items.form.serializeArray();
 	data.push({
@@ -143,11 +144,11 @@ BookmarkEdition.prototype.getFormData = function(){
 		value: this.getEditorValue()
 	});
 	return data;
-}
+};
 
 BookmarkEdition.prototype.getEditorValue = function(){
 	return this.items.editor.val();
-}
+};
 
 BookmarkEdition.prototype.getItems = function getItems(){
 	return new function(){
@@ -159,5 +160,5 @@ BookmarkEdition.prototype.getItems = function getItems(){
 		this.linkContainer = this.modal.find(".link-container")
 		this.btnLink = this.modal.find(".btn-public-link")
 		this.iptVisible = this.form.find("#visible")
-	}
-}
+	};
+};

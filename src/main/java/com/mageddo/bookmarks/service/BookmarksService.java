@@ -21,8 +21,8 @@ public class BookmarksService {
 		this.bookmarkDAO = bookmarkDAO;
 	}
 
-	public void saveBookmark(BookmarkEntity bookmarkEntity){
-		bookmarkDAO.saveBookmark(bookmarkEntity);
+	public void createBookmark(BookmarkEntity bookmarkEntity){
+		bookmarkDAO.createBookmark(bookmarkEntity);
 	}
 
 	public List<BookmarkRes> getBookmarks(String query, String tag, int offset, int quantity){
@@ -51,5 +51,9 @@ public class BookmarksService {
 
 	public BookmarkRes getBookmarkRes(long bookmarkId) {
 		return bookmarkDAO.findBookmarkRes(bookmarkId);
+	}
+
+	public void updateBookmark(BookmarkEntity bookmark) {
+		bookmarkDAO.update(bookmark);
 	}
 }

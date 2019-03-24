@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BookmarkDAO {
 
-	void saveBookmark(BookmarkEntity bookmarkEntity);
+	void createBookmark(BookmarkEntity bookmarkEntity);
 
 	List<BookmarkEntity> loadSiteMap();
 
@@ -23,4 +23,6 @@ public interface BookmarkDAO {
 	List<RecentBookmarksRes> getRecentBookmarks(int pageSize, int startPage);
 
 	BookmarkRes findBookmarkRes(long bookmarkId);
+
+	void update(BookmarkEntity bookmark);
 }

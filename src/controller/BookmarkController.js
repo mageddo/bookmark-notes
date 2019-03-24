@@ -181,6 +181,7 @@ module.exports.controller = function(app) {
 		});
 	});
 
+	// DONE
 	app.get('/bookmark/edit', function(req, res) {
 		var query = url.parse(req.url, true).query;
 		m.getBookmarkById(query.id, function(err, bookmark){

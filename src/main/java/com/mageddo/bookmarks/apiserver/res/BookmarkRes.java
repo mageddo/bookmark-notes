@@ -3,6 +3,11 @@ package com.mageddo.bookmarks.apiserver.res;
 import com.mageddo.bookmarks.entity.BookmarkEntity;
 import org.springframework.jdbc.core.RowMapper;
 
+import java.time.LocalDateTime;
+
+import static com.mageddo.bookmarks.enums.BookmarkVisibility.PRIVATE;
+import static com.mageddo.bookmarks.enums.BookmarkVisibility.mustFromCode;
+
 public class BookmarkRes {
 
 	private Long id;
@@ -82,5 +87,18 @@ public class BookmarkRes {
 	public BookmarkRes setLink(String link) {
 		this.link = link;
 		return this;
+	}
+
+	public BookmarkEntity toBookmark() {
+		return new BookmarkEntity()
+			.setDescription(getHtml())
+			.setVisibility(getVisibility() == null ? PRIVATE : mustFromCode(getVisibility()))
+			.setName(getName())
+			.setDeleted(false)
+			.setArchived(false)
+			.setLink(getLink())
+			.setLastUpdate(LocalDateTime.now())
+			.setId(getId())
+		;
 	}
 }

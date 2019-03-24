@@ -27,7 +27,7 @@ public class BookmarkDAOSqlite implements BookmarkDAO {
 	}
 
 	@Override
-	public void saveBookmark(BookmarkEntity bookmarkEntity) {
+	public void createBookmark(BookmarkEntity bookmarkEntity) {
 		parameterJdbcTemplate.update("INSERT INTO CUSTOMER_1 VALUES (:v)", Maps.of("v", LocalDateTime.now().toString()));
 	}
 
@@ -74,6 +74,11 @@ public class BookmarkDAOSqlite implements BookmarkDAO {
 
 	@Override
 	public BookmarkRes findBookmarkRes(long bookmarkId) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void update(BookmarkEntity bookmark) {
 		throw new UnsupportedOperationException();
 	}
 }
