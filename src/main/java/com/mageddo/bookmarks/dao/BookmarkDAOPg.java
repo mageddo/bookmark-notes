@@ -95,7 +95,7 @@ public class BookmarkDAOPg implements BookmarkDAO {
 					*
 				FROM BOOKMARK B
 				WHERE FLG_DELETED=FALSE
-				AND ( NAM_BOOKMARK LIKE :query OR DES_HTML LIKE :query )
+				AND ( NAM_BOOKMARK ILIKE :query OR DES_HTML ILIKE :query )
 				ORDER BY DAT_UPDATE DESC
 			)
 			SELECT

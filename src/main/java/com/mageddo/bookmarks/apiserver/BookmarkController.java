@@ -16,6 +16,7 @@ import static io.micronaut.http.HttpResponse.ok;
 @Controller
 public class BookmarkController {
 
+	public static final int PAGE_SIZE = 100;
 	private final BookmarksService bookmarksService;
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -45,9 +46,14 @@ public class BookmarkController {
 		}
 	}
 
+	@Get("/api/bookmark/search")
+	public HttpResponse _4(@QueryValue String query, @QueryValue(defaultValue = "") String tag) {
+		return _1(0, PAGE_SIZE, tag, query);
+	}
+
 	@Get("/api/bookmark")
 	HttpResponse _2() {
-		return _1(0, 100, "", "");
+		return _1(0, PAGE_SIZE, "", "");
 	}
 
 }
