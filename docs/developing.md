@@ -13,3 +13,7 @@ Start `Application` class
 $ docker-compose -f docker-compose-test.yml up --force-recreate
 ./gradlew build
 ```
+
+#### Compiling Native Image
+
+	./gradlew clean build nativeImage

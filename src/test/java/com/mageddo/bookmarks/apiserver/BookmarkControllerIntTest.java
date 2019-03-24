@@ -79,19 +79,19 @@ class BookmarkControllerIntTest {
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 			.setName("X")
-			.setVisibility(PUBLIC),
-			bookmarkRes.getTags());
+			.setVisibility(PUBLIC)
+		);
 
 		bookmarksService.createBookmark(new BookmarkEntity()
 			.setName("X2")
-			.setVisibility(PUBLIC),
-			bookmarkRes.getTags());
+			.setVisibility(PUBLIC)
+		);
 
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 			.setName("X3")
-			.setVisibility(PRIVATE),
-			bookmarkRes.getTags());
+			.setVisibility(PRIVATE)
+		);
 
 		// act
 		final Response res = get("/api/v1.0/bookmark?from=0&quantity=1");
@@ -124,18 +124,18 @@ class BookmarkControllerIntTest {
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("X")
-				.setVisibility(PUBLIC),
-			bookmarkRes.getTags());
+				.setVisibility(PUBLIC)
+		);
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("X2")
-				.setVisibility(PUBLIC),
-			bookmarkRes.getTags());
+				.setVisibility(PUBLIC)
+		);
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("X3")
-				.setVisibility(PRIVATE),
-			bookmarkRes.getTags());
+				.setVisibility(PRIVATE)
+		);
 
 		// act
 		final Response res = get("/api/v1.0/bookmark?from=1&quantity=2");
@@ -148,8 +148,6 @@ class BookmarkControllerIntTest {
 			.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
 			.body(jsonMatchingPattern(expectedBookmarks, "**.id", "\\d+"))
 		;
-
-
 	}
 
 	@Test
@@ -169,19 +167,19 @@ class BookmarkControllerIntTest {
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("Google is the most popular search engine site")
-				.setVisibility(PUBLIC),
-			bookmarkRes.getTags());
+				.setVisibility(PUBLIC)
+		);
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("Android 7.0 was released")
 				.setDescription("Some desc")
-				.setVisibility(PUBLIC),
-			bookmarkRes.getTags());
+				.setVisibility(PUBLIC)
+		);
 		bookmarksService.createBookmark(
 			new BookmarkEntity()
 				.setName("Separate your software release by major, minor and patch")
-				.setVisibility(PRIVATE),
-			bookmarkRes.getTags());
+				.setVisibility(PRIVATE)
+		);
 
 		// act
 		final Response res = get("/api/v1.0/bookmark?from=0&quantity=3&query=release");

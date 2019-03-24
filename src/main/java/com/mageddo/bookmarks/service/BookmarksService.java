@@ -11,9 +11,7 @@ import com.mageddo.bookmarks.utils.Tags;
 import io.micronaut.spring.tx.annotation.Transactional;
 
 import javax.inject.Singleton;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
@@ -27,6 +25,11 @@ public class BookmarksService {
 	public BookmarksService(BookmarkDAO bookmarkDAO, TagDAO tagDAO) {
 		this.bookmarkDAO = bookmarkDAO;
 		this.tagDAO = tagDAO;
+	}
+
+	@Transactional
+	public void createBookmark(BookmarkEntity bookmarkEntity){
+		createBookmark(bookmarkEntity, Collections.emptyList());
 	}
 
 	@Transactional
