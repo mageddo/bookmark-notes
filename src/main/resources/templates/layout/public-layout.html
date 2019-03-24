@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org"
-			lang="en" class="dark-theme"
+			lang="en" class="dark-theme" th:fragment="layout (title, content)"
 >
 <head>
-	<title th:text="${title} + '-' + ${appName}"></title>
+	<title ><span th:replace="${title}" ></span> - Bookmarks</title>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="title" content="${title}">
@@ -33,7 +33,7 @@
 		</div>
 	</div>
 </nav>
-<div layout:fragment="content" ></div>
+<div th:replace="${content}" ></div>
 <!-- Footer -->
 <footer>
 	<div class="container" style="text-align:center">

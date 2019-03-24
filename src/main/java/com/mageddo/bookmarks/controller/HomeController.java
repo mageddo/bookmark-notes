@@ -39,7 +39,7 @@ public class HomeController {
 		int pageSize = 10, pages = (int) Math.ceil(size / (double) pageSize), startPage = 0;
 		if (page + 1 > pages){
 			return ok(mapOf(
-				"title", "Not found",
+				"headerTitle", "Not found",
 				"msg", "No results",
 				"getURL", (Function<String, String>) URLUtils::getURL
 			));
