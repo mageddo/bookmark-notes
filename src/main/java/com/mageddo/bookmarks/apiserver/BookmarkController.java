@@ -47,7 +47,7 @@ public class BookmarkController {
 	}
 
 	@Get("/api/bookmark/search")
-	public HttpResponse _4(@QueryValue String query, @QueryValue(defaultValue = "") String tag) {
+	public HttpResponse _4(@QueryValue(defaultValue = "") String query, @QueryValue(defaultValue = "") String tag) {
 		return _1(0, PAGE_SIZE, tag, query);
 	}
 

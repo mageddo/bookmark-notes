@@ -82,7 +82,29 @@ public class BookmarkDAOPg implements BookmarkDAO {
 
 	@Override
 	public List<BookmarkRes> getBookmarks(String tag, int offset, int quantity) {
-		throw new UnsupportedOperationException();
+		/*
+		WITH FILTER AS (
+			SELECT DISTINCT B.* FROM TAG_BOOKMARK TB
+				INNER JOIN BOOKMARK B ON B.IDT_BOOKMARK = TB.IDT_BOOKMARK
+				WHERE IDT_TAG IN (
+					SELECT T.IDT_TAG FROM TAG T
+						WHERE T.COD_SLUG = :slug
+				)
+				AND B.FLG_DELETED = FALSE
+		)
+		SELECT
+			IDT_BOOKMARK, NAM_BOOKMARK, DES_LINK, FLG_ARCHIVED, FLG_DELETED, DAT_UPDATE,
+			NUM_VISIBILITY,
+			(SELECT COUNT(IDT_BOOKMARK) FROM FILTER) AS NUM_QUANTITY, SUBSTR(DES_HTML, 0, 160) DES_HTML
+		FROM FILTER OFFSET :offset LIMIT :limit
+		 */
+		@RawString
+		final String sql = lateInit();
+		return namedJdbcTemplate.query(
+			sql,
+			Maps.of("slug", tag, "offset", offset, "limit", quantity),
+			BookmarkRes.mapper()
+		);
 	}
 
 	@Override
