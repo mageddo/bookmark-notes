@@ -1,5 +1,6 @@
 package com.mageddo.bookmarks.dao;
 
+import com.mageddo.bookmarks.apiserver.res.BookmarkDescriptionRes;
 import com.mageddo.bookmarks.apiserver.res.BookmarkRes;
 import com.mageddo.bookmarks.apiserver.res.RecentBookmarksRes;
 import com.mageddo.bookmarks.entity.BookmarkEntity;
@@ -89,6 +90,11 @@ public class BookmarkDAOSqlite implements BookmarkDAO {
 
 	@Override
 	public void disassociateTags(long bookmarkId) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public BookmarkDescriptionRes findBookMarkWithNavigation(int bookmarkId) {
 		throw new UnsupportedOperationException();
 	}
 }

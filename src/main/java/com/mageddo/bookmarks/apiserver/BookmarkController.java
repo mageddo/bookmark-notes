@@ -56,4 +56,9 @@ public class BookmarkController {
 		return _1(0, PAGE_SIZE, "", "");
 	}
 
+	@Get("/api/bookmark/{id}")
+	HttpResponse _5(int id) {
+		return ok(bookmarksService.findBookmark(id));
+	}
+
 }

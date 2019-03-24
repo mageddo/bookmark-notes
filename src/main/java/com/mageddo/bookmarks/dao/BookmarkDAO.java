@@ -1,5 +1,6 @@
 package com.mageddo.bookmarks.dao;
 
+import com.mageddo.bookmarks.apiserver.res.BookmarkDescriptionRes;
 import com.mageddo.bookmarks.apiserver.res.BookmarkRes;
 import com.mageddo.bookmarks.apiserver.res.RecentBookmarksRes;
 import com.mageddo.bookmarks.entity.BookmarkEntity;
@@ -29,4 +30,6 @@ public interface BookmarkDAO {
 	void associate(long tagId, long bookmarkId);
 
 	void disassociateTags(long bookmarkId);
+
+	BookmarkDescriptionRes findBookMarkWithNavigation(int bookmarkId);
 }

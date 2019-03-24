@@ -41,7 +41,7 @@ public class HomeController {
 			return ok(mapOf(
 				"headerTitle", "Not found",
 				"msg", "No results",
-				"getURL", (Function<String, String>) URLUtils::getURL
+				"getURL", (Function<String, String>) URLUtils::encode
 			));
 		} else if (page > 0) {
 			startPage = page * pageSize;
@@ -57,7 +57,7 @@ public class HomeController {
 			"hasMore", pages > page + 1,
 			"bookmarks", recentBookmarks,
 			"toTagArray", (Function<String, String[]>) tags -> tags == null ? null : tags.split(","),
-			"getURL", (Function<String, String>) URLUtils::getURL
+			"getURL", (Function<String, String>) URLUtils::encode
 		));
 	}
 

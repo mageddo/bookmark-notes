@@ -1,5 +1,6 @@
 package com.mageddo.bookmarks.dao;
 
+import com.mageddo.bookmarks.apiserver.res.BookmarkDescriptionRes;
 import com.mageddo.bookmarks.apiserver.res.BookmarkRes;
 import com.mageddo.bookmarks.apiserver.res.RecentBookmarksRes;
 import com.mageddo.bookmarks.entity.BookmarkEntity;
@@ -60,7 +61,7 @@ public class BookmarkDAOPg implements BookmarkDAO {
 			.addValue("updated", Timestamp.valueOf(bookmarkEntity.getLastUpdate()))
 			, keyHolder, new String[]{"IDT_BOOKMARK".toLowerCase()}
 		);
-		bookmarkEntity.setId(keyHolder.getKey().longValue());
+		bookmarkEntity.setId(keyHolder.getKey().intValue());
 	}
 
 	@Override
@@ -149,7 +150,7 @@ public class BookmarkDAOPg implements BookmarkDAO {
 			)
 			SELECT
 				IDT_BOOKMARK, NAM_BOOKMARK, FLG_ARCHIVED, NUM_VISIBILITY,
-				FLG_DELETED, DAT_UPDATE, DES_LINK,
+				FLG_DELETED, DAT_UPDATE, DES_LINK, DAT_CREATION,
 				SUBSTR(DES_HTML, 0, 160) DES_HTML, (SELECT COUNT(IDT_BOOKMARK) FROM LIST) NUM_QUANTITY
 			FROM LIST WHERE FLG_DELETED=FALSE OFFSET :offset LIMIT :quantity
 		 */
@@ -200,7 +201,7 @@ public class BookmarkDAOPg implements BookmarkDAO {
 	public BookmarkRes findBookmarkRes(long bookmarkId) {
 		/*
 		SELECT
-			IDT_BOOKMARK, NAM_BOOKMARK, DES_LINK, DES_HTML, FLG_DELETED, FLG_ARCHIVED,
+			IDT_BOOKMARK, NAM_BOOKMARK, DES_LINK, DES_HTML, FLG_DELETED, FLG_ARCHIVED, DAT_CREATION,
 			-1 AS NUM_QUANTITY, NUM_VISIBILITY, DAT_UPDATE
 		FROM BOOKMARK WHERE IDT_BOOKMARK = :id
 		 */
@@ -246,6 +247,28 @@ public class BookmarkDAOPg implements BookmarkDAO {
 		namedJdbcTemplate.update(
 			"DELETE FROM TAG_BOOKMARK WHERE IDT_BOOKMARK = :bookmarkId",
 			Maps.of("bookmarkId", bookmarkId)
+		);
+	}
+
+	@Override
+	public BookmarkDescriptionRes findBookMarkWithNavigation(int bookmarkId) {
+		/*
+		SELECT
+			IDT_BOOKMARK, NAM_BOOKMARK, NUM_VISIBILITY, DES_HTML, DES_LINK,
+			DAT_CREATION, DAT_UPDATE, FLG_ARCHIVED, FLG_DELETED, NULL::INTEGER AS NUM_QUANTITY
+		FROM BOOKMARK
+		WHERE IDT_BOOKMARK IN(
+				(SELECT MAX(IDT_BOOKMARK) FROM BOOKMARK WHERE IDT_BOOKMARK < :id AND FLG_DELETED = FALSE AND NUM_VISIBILITY = 1),
+				:id,
+				(SELECT MIN(IDT_BOOKMARK) FROM BOOKMARK WHERE IDT_BOOKMARK > :id AND FLG_DELETED = FALSE AND NUM_VISIBILITY = 1)
+		)
+		AND FLG_DELETED = FALSE AND NUM_VISIBILITY = 1
+		 */
+		@RawString
+		final String sql = lateInit();
+		return new BookmarkDescriptionRes(
+			namedJdbcTemplate.query(sql, Maps.of("id", bookmarkId), BookmarkRes.mapper()),
+			bookmarkId
 		);
 	}
 }

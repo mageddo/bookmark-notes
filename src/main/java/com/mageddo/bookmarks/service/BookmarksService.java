@@ -1,5 +1,6 @@
 package com.mageddo.bookmarks.service;
 
+import com.mageddo.bookmarks.apiserver.res.BookmarkDescriptionRes;
 import com.mageddo.bookmarks.apiserver.res.BookmarkRes;
 import com.mageddo.bookmarks.apiserver.res.RecentBookmarksRes;
 import com.mageddo.bookmarks.dao.BookmarkDAO;
@@ -82,5 +83,13 @@ public class BookmarksService {
 			updatedTags.add(tagDAO.findTag(tag.getSlug()));
 		}
 		return updatedTags;
+	}
+
+	public BookmarkRes findBookmark(int id) {
+		return bookmarkDAO.findBookmarkRes(id);
+	}
+
+	public BookmarkDescriptionRes findBookmarkWithNavigation(int bookmarkId) {
+		return bookmarkDAO.findBookMarkWithNavigation(bookmarkId);
 	}
 }

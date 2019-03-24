@@ -8,7 +8,7 @@ public final class URLUtils {
 	private URLUtils() {
 	}
 
-	public static String getURL(String path) {
+	public static String encode(String path) {
 		if(path == null){
 			return "";
 		}
@@ -18,10 +18,5 @@ public final class URLUtils {
 			throw new RuntimeException(e);
 		}
 	}
-//		getSEOURL(req, path){
-//			return this.getURL(req, path.replace(/\s/g, '-').toLowerCase())
-//		},
-//		clearHTML(html){
-//			return html.replace(/<\/?[^>]+(>|$)/g, "");
-//		}
+
 }

@@ -11,37 +11,39 @@ import static com.mageddo.bookmarks.enums.BookmarkVisibility.mustFromCode;
 
 public class BookmarkRes {
 
-	private Long id;
+	private Integer id;
 	private String name;
 	private String link;
 	private Integer visibility;
 	private String html;
 	private Integer length;
 	private List<String> tags;
+	private LocalDateTime creationDate;
+	private LocalDateTime updateDate;
 
-	public static RowMapper<BookmarkRes> mapper() {
-		return (rs, i) -> {
-			final BookmarkRes bookmark = BookmarkRes.valueOf(BookmarkEntity.mapper().mapRow(rs, i));
-			bookmark.setLength(rs.getInt("NUM_QUANTITY"));
-			return bookmark;
-		};
+	public LocalDateTime getCreationDate() {
+		return creationDate;
 	}
 
-	private static BookmarkRes valueOf(BookmarkEntity bookmark) {
-		return new BookmarkRes()
-			.setHtml(bookmark.getDescription())
-			.setId(bookmark.getId())
-			.setName(bookmark.getName())
-			.setVisibility(bookmark.getVisibility().getCode())
-			.setLink(bookmark.getLink())
-		;
+	public BookmarkRes setCreationDate(LocalDateTime creationDate) {
+		this.creationDate = creationDate;
+		return this;
 	}
 
-	public Long getId() {
+	public LocalDateTime getUpdateDate() {
+		return updateDate;
+	}
+
+	public BookmarkRes setUpdateDate(LocalDateTime updateDate) {
+		this.updateDate = updateDate;
+		return this;
+	}
+
+	public Integer getId() {
 		return id;
 	}
 
-	public BookmarkRes setId(Long id) {
+	public BookmarkRes setId(Integer id) {
 		this.id = id;
 		return this;
 	}
@@ -91,6 +93,16 @@ public class BookmarkRes {
 		return this;
 	}
 
+	public List<String> getTags() {
+		return tags;
+	}
+
+	public BookmarkRes setTags(List<String> tags) {
+		this.tags = tags;
+		return this;
+	}
+
+
 	public BookmarkEntity toBookmark() {
 		return new BookmarkEntity()
 			.setDescription(getHtml())
@@ -104,12 +116,23 @@ public class BookmarkRes {
 		;
 	}
 
-	public List<String> getTags() {
-		return tags;
+	public static RowMapper<BookmarkRes> mapper() {
+		return (rs, i) -> {
+			final BookmarkRes bookmark = BookmarkRes.valueOf(BookmarkEntity.mapper().mapRow(rs, i));
+			bookmark.setLength(rs.getInt("NUM_QUANTITY"));
+			return bookmark;
+		};
 	}
 
-	public BookmarkRes setTags(List<String> tags) {
-		this.tags = tags;
-		return this;
+	private static BookmarkRes valueOf(BookmarkEntity bookmark) {
+		return new BookmarkRes()
+			.setHtml(bookmark.getDescription())
+			.setId(bookmark.getId())
+			.setName(bookmark.getName())
+			.setVisibility(bookmark.getVisibility().getCode())
+			.setLink(bookmark.getLink())
+			.setUpdateDate(bookmark.getLastUpdate())
+			.setCreationDate(bookmark.getCreation())
+			;
 	}
 }

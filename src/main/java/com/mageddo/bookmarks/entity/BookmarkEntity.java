@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public class BookmarkEntity {
 
-	private Long id;
+	private Integer id;
 	private String name;
 	private LocalDateTime lastUpdate;
 	private String link;
@@ -16,6 +16,7 @@ public class BookmarkEntity {
 	private boolean deleted;
 	private boolean archived;
 	private BookmarkVisibility visibility;
+	private LocalDateTime creation;
 
 	public BookmarkEntity() {
 		this.lastUpdate = LocalDateTime.now();
@@ -31,19 +32,21 @@ public class BookmarkEntity {
 			.setArchived(rs.getBoolean("flg_archived"))
 			.setDeleted(rs.getBoolean("flg_deleted"))
 			.setDescription(rs.getString("des_html"))
-			.setId(rs.getLong("idt_bookmark"))
+			.setId(rs.getInt("idt_bookmark"))
 			.setLastUpdate(JdbcHelper.getLocalDateTime(rs, "dat_update"))
 			.setLink(rs.getString("des_link"))
 			.setName(rs.getString("nam_bookmark"))
 			.setVisibility(BookmarkVisibility.mustFromCode(rs.getInt("num_visibility")))
+			.setCreation(JdbcHelper.getLocalDateTime(rs, "DAT_CREATION"))
+			.setLastUpdate(JdbcHelper.getLocalDateTime(rs, "DAT_UPDATE"))
 			;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public BookmarkEntity setId(Long id) {
+	public BookmarkEntity setId(Integer id) {
 		this.id = id;
 		return this;
 	}
@@ -108,6 +111,15 @@ public class BookmarkEntity {
 
 	public BookmarkEntity setVisibility(BookmarkVisibility visibility) {
 		this.visibility = visibility;
+		return this;
+	}
+
+	public LocalDateTime getCreation() {
+		return creation;
+	}
+
+	public BookmarkEntity setCreation(LocalDateTime creation) {
+		this.creation = creation;
 		return this;
 	}
 }
