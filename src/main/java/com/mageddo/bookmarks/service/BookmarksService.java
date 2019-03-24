@@ -48,4 +48,8 @@ public class BookmarksService {
 	public List<RecentBookmarksRes> getRecentBookmarks(int pageSize, int startPage) {
 		return bookmarkDAO.getRecentBookmarks(pageSize, startPage);
 	}
+
+	public BookmarkRes getBookmarkRes(long bookmarkId) {
+		return bookmarkDAO.findBookmarkRes(bookmarkId);
+	}
 }

@@ -50,4 +50,8 @@ public class SettingEntity {
 		this.update = update;
 		return this;
 	}
+
+	public enum Setting {
+		CODE_BLOCK_MAX_HEIGHT
+	}
 }

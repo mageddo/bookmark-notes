@@ -22,4 +22,5 @@ public interface BookmarkDAO {
 
 	List<RecentBookmarksRes> getRecentBookmarks(int pageSize, int startPage);
 
+	BookmarkRes findBookmarkRes(long bookmarkId);
 }

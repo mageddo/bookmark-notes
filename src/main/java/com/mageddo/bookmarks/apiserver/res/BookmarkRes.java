@@ -13,10 +13,9 @@ public class BookmarkRes {
 
 	public static RowMapper<BookmarkRes> mapper() {
 		return (rs, i) -> {
-			return BookmarkRes
-				.valueOf(BookmarkEntity.mapper().mapRow(rs, i))
-				.setLength(rs.getInt("NUM_QUANTITY"))
-			;
+			final BookmarkRes bookmark = BookmarkRes.valueOf(BookmarkEntity.mapper().mapRow(rs, i));
+			bookmark.setLength(rs.getInt("NUM_QUANTITY"));
+			return bookmark;
 		};
 	}
 

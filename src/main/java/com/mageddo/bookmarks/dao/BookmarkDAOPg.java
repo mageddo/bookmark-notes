@@ -164,4 +164,18 @@ public class BookmarkDAOPg implements BookmarkDAO {
 			sql, Maps.of("offset", startPage, "limit", pageSize), RecentBookmarksRes.mapper()
 		);
 	}
+
+	@Override
+	public BookmarkRes findBookmarkRes(long bookmarkId) {
+		/*
+		SELECT
+			IDT_BOOKMARK, NAM_BOOKMARK, DES_LINK, DES_HTML, FLG_DELETED, FLG_ARCHIVED,
+			-1 AS NUM_QUANTITY, NUM_VISIBILITY, DAT_UPDATE
+		FROM BOOKMARK WHERE IDT_BOOKMARK = :id
+		 */
+		@RawString
+		final String sql = lateInit();
+		return namedJdbcTemplate.queryForObject(sql, Maps.of("id", bookmarkId), BookmarkRes.mapper());
+
+	}
 }

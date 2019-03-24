@@ -2,6 +2,7 @@ package com.mageddo.bookmarks.service;
 
 import com.mageddo.bookmarks.apiserver.res.TagV1Res;
 import com.mageddo.bookmarks.dao.TagDAO;
+import com.mageddo.bookmarks.entity.TagEntity;
 
 import javax.inject.Singleton;
 import java.util.List;
@@ -17,5 +18,9 @@ public class TagService {
 
 	public List<TagV1Res> getTags() {
 		return tagDAO.findTags();
+	}
+
+	public List<TagEntity> getTags(long bookmarkId) {
+		return tagDAO.findTags(bookmarkId);
 	}
 }

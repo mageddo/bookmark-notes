@@ -71,4 +71,9 @@ public class BookmarkDAOSqlite implements BookmarkDAO {
 	public List<RecentBookmarksRes> getRecentBookmarks(int pageSize, int startPage) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public BookmarkRes findBookmarkRes(long bookmarkId) {
+		throw new UnsupportedOperationException();
+	}
 }
