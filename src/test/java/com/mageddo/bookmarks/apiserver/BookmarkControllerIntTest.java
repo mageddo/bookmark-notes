@@ -71,7 +71,7 @@ class BookmarkControllerIntTest {
 		// arrange
 
 		/*
-		[{"id":1,"name":"X","visibility":1,"length":3}]
+		[{"id":1,"name":"X3","visibility":0,"length":3, "creationDate": "2019-07-19", "updateDate": "2019-07-20"}]
 		 */
 		@RawString
 		final String expectedBookmarks = lateInit();
@@ -102,7 +102,12 @@ class BookmarkControllerIntTest {
 			.assertThat()
 			.statusCode(OK.getCode())
 			.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-			.body(jsonMatchingPattern(expectedBookmarks, "[0].id", "\\d+"))
+			.body(jsonMatchingPattern(
+				expectedBookmarks,
+				"**.id", "\\d+",
+				"**.creationDate", "\\d{4}-\\d{2}-\\d{2}",
+				"**.updateDate", "\\d{4}-\\d{2}-\\d{2}"
+			))
 		;
 	}
 
@@ -162,8 +167,14 @@ class BookmarkControllerIntTest {
 
 		/*
 		[
-			{"id":2,"name":"Android 7.0 was released","html":"Some desc","length":2, "visibility": 1},
-			{"id":3,"name":"Separate your software release by major, minor and patch","length":2, "visibility": 0}
+			{
+				"id":3,"name":"Separate your software release by major, minor and patch",
+				"length":2, "visibility": 0, "creationDate": "2019-07-19", "updateDate": "2019-07-20"
+			},
+			{
+				"id":2,"name":"Android 7.0 was released","html":"Some desc","length":2,
+				 "visibility": 1, "creationDate": "2019-07-19", "updateDate": "2019-07-20"
+			}
 		]
 		 */
 		@RawString
@@ -195,7 +206,12 @@ class BookmarkControllerIntTest {
 			.assertThat()
 			.statusCode(OK.getCode())
 			.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-			.body(jsonMatchingPattern(expectedBookmarks, "**.id", "\\d+"))
+			.body(jsonMatchingPattern(
+				expectedBookmarks,
+				"**.id", "\\d+",
+				"**.creationDate", "\\d{4}-\\d{2}-\\d{2}",
+				"**.updateDate", "\\d{4}-\\d{2}-\\d{2}"
+			))
 		;
 
 	}
