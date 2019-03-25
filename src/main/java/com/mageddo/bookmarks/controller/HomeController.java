@@ -2,8 +2,8 @@ package com.mageddo.bookmarks.controller;
 
 import com.mageddo.bookmarks.apiserver.res.RecentBookmarksRes;
 import com.mageddo.bookmarks.service.BookmarksService;
+import com.mageddo.bookmarks.utils.ThymeleafUtils;
 import com.mageddo.commons.Maps;
-import com.mageddo.commons.URLUtils;
 import io.micronaut.context.annotation.Value;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.function.Function;
 
 import static io.micronaut.core.util.CollectionUtils.mapOf;
 import static io.micronaut.http.HttpResponse.ok;
@@ -41,7 +40,7 @@ public class HomeController {
 			return ok(mapOf(
 				"headerTitle", "Not found",
 				"msg", "No results",
-				"getURL", (Function<String, String>) URLUtils::encode
+				"thymeleafUtils", ThymeleafUtils.getInstance()
 			));
 		} else if (page > 0) {
 			startPage = page * pageSize;
@@ -56,8 +55,7 @@ public class HomeController {
 			"nextPage", page + 2,
 			"hasMore", pages > page + 1,
 			"bookmarks", recentBookmarks,
-			"toTagArray", (Function<String, String[]>) tags -> tags == null ? null : tags.split(","),
-			"getURL", (Function<String, String>) URLUtils::encode
+			"thymeleafUtils", ThymeleafUtils.getInstance()
 		));
 	}
 

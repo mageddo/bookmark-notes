@@ -78,7 +78,7 @@ dependencies {
 	compile("org.apache.commons:commons-lang3:3.8.1")
 
 	compile ("io.micronaut:micronaut-views:${micronautVersion}")
-	runtime ('org.thymeleaf:thymeleaf:3.0.11.RELEASE')
+	compile ('org.thymeleaf:thymeleaf:3.0.11.RELEASE')
 
 	testAnnotationProcessor('com.mageddo:rsl-compiler:1.0.1')
 	compile('com.mageddo:rsl:1.0.0')

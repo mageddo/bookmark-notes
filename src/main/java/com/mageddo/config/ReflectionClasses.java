@@ -1,8 +1,10 @@
 package com.mageddo.config;
 
+import com.mageddo.bookmarks.utils.ThymeleafUtils;
 import com.oracle.svm.core.annotate.AutomaticFeature;
 import org.graalvm.nativeimage.Feature;
 import org.graalvm.nativeimage.RuntimeReflection;
+import org.thymeleaf.standard.expression.AdditionExpression;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -30,7 +32,8 @@ class ReflectionClasses implements Feature {
 	static Class<?>[] getClasses(){
 		return new Class[]{
 			Statement[].class,
-//			FruitEntity.class
+			AdditionExpression.class,
+			ThymeleafUtils.class
 		};
 	}
 

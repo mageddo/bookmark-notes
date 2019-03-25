@@ -134,6 +134,7 @@ public class BookmarkController {
 			"title", title,
 			"content", content,
 			"description", StringUtils.substring(clearHTML(content).replace( "/[\\r\\n]+ /", ""), 0, 160),
+			"link", createSEOLink(req, bookmark.getBookmark()),
 			"prev", mapOf(
 				"name", getName(bookmark.getPrev()),
 				"link", createSEOLink(req, bookmark.getPrev())
@@ -156,14 +157,9 @@ public class BookmarkController {
 		final String host = req.getHeaders().get("Host");
 		return String.format(
 			"//%s/bookmark/%d/%s",
-			host, bookmark.getId(), URLUtils.encode(normalizeURL(bookmark.getName()))
+			host, bookmark.getId(), URLUtils.encodeSeoUrl(bookmark.getName())
 		);
 	}
-
-	String normalizeURL(String path){
-		return StringUtils.stripAccents(path.toLowerCase().replaceAll("\\s", "-"));
-	}
-
 	private String toSQLDate(LocalDateTime creationDate) {
 		if (creationDate == null) {
 			return "";
