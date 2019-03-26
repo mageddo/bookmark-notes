@@ -19,7 +19,7 @@ public final class ThymeleafUtils {
 		return URLUtils.encode(path);
 	}
 
-	public String encodeSeoUrl(String path){
+	public static String encodeSeoUrl(String path){
 		return URLUtils.encodeSeoUrl(path);
 	}
 }
