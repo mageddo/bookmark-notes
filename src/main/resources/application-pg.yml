@@ -1,7 +1,7 @@
 ---
 datasources:
   default:
-    jdbcUrl: jdbc:postgresql://localhost:5432/db?currentSchema=bookmarks
+    jdbcUrl: jdbc:postgresql://localhost:5434/db?currentSchema=bookmarks
     username: root
     password: root
     driverClassName: org.postgresql.Driver

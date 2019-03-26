@@ -1,10 +1,15 @@
+### Starting database server
+
+	$ docker-compose -f docker-compose-test.yml up postgres
+
+
 #### Running on Intellij / Eclipse
 
 Start `Application` class
 
 #### Running on terminal
 
-	./gradlew run
+	$ ./gradlew run
 
 
 #### Testing
@@ -16,4 +21,4 @@ $ docker-compose -f docker-compose-test.yml up --force-recreate
 
 #### Compiling Native Image
 
-	./gradlew clean build nativeImage
+	$ ./gradlew clean nativeImage
