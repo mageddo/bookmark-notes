@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.mageddo.common.time.DateUtils;
+import com.mageddo.graal.reflection.configuration.RuntimeReflection;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ public interface TruncatedLocalDateTimeConverter {
 		.appendPattern("yyyy-MM-dd")
 		.toFormatter();
 
+	@RuntimeReflection
 	class Deserializer extends JsonDeserializer<LocalDateTime> {
 
 		@Override
@@ -33,6 +35,7 @@ public interface TruncatedLocalDateTimeConverter {
 		}
 	}
 
+	@RuntimeReflection
 	class Serializer extends JsonSerializer<LocalDateTime> {
 		@Override
 		public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
