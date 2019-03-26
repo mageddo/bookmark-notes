@@ -5,6 +5,8 @@ import com.oracle.svm.core.annotate.AutomaticFeature;
 import org.graalvm.nativeimage.Feature;
 import org.graalvm.nativeimage.RuntimeReflection;
 import org.thymeleaf.standard.expression.AdditionExpression;
+import org.thymeleaf.standard.expression.EqualsExpression;
+import org.thymeleaf.standard.expression.NotEqualsExpression;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -31,9 +33,15 @@ class ReflectionClasses implements Feature {
 	 */
 	static Class<?>[] getClasses(){
 		return new Class[]{
+
+			// hikari datasource
 			Statement[].class,
+
+			// thymeleaf
 			AdditionExpression.class,
-			ThymeleafUtils.class
+			ThymeleafUtils.class,
+			EqualsExpression.class,
+			NotEqualsExpression.class
 		};
 	}
 
