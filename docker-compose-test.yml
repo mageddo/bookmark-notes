@@ -9,12 +9,3 @@ services:
     hostname: testpostgres
     volumes:
       - ./src/main/docker/postgres/db/:/docker-entrypoint-initdb.d/
-
-  postgres:
-    image: postgres:10.3
-    environment:
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_USER=root
-      - POSTGRES_DB=db
-    ports:
-      - 5434:5432

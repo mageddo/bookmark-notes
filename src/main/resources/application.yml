@@ -31,4 +31,4 @@ flyway:
   schema: bookmarks
 
 analytics:
-  id: UA-88070435-1
+  id: fake

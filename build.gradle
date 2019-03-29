@@ -48,7 +48,6 @@ graal {
 	option("-H:+ReportUnsupportedElementsAtRuntime")
 	option("-H:EnableURLProtocols=http")
 	option("-Dfile.encoding=UTF-8")
-//	option("--jvm.Xmx=3G")
 	option("-J-Xmx5G")
 	option("--no-server")
 }

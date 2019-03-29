@@ -15,4 +15,4 @@ flyway:
   locations-java: db/migration/postgres
   schema: bookmarks
 analytics:
-  id: UA-88070435-1
+  id: fake
