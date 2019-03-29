@@ -16,7 +16,7 @@
 	</root>
 	<!--<logger name="org.eclipse.jetty" level="INFO" />-->
 	<!--<logger name="org.flywaydb" level="INFO" />-->
-	<logger name="io.micronaut" level="DEBUG" />
+	<!--<logger name="io.micronaut" level="DEBUG" />-->
 	<logger name="org.apache.http.client.protocol.ResponseProcessCookies" level="ERROR" />
 	<logger name="io.micronaut.web.router" level="DEBUG" />
 </configuration>
