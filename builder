@@ -32,7 +32,7 @@ upload_file(){
 apply_version(){
 
 	sed -i -E "s/(defreitas\\/bookmark-notes:)[0-9]+\.[0-9]+\.[0-9]+/\1$APP_VERSION/g" docker-compose.yml
-	sed -i -E "s/download\\/([0-9]+\.[0-9]+\.[0-9]+)\\/(bk-api-[0-9]+\.[0-9]+\.[0-9]+)/download\\/$APP_VERSION\\/bk-api-$APP_VERSION/g" Dockerfile
+	sed -i -E "s/download\\/([0-9]+\.[0-9]+\.[0-9]+)\\/(bk-api-[0-9]+\.[0-9]+\.[0-9]+)/download\\/$APP_VERSION\\/bookmark-notes-$APP_VERSION/g" Dockerfile
 
 }
 
@@ -103,8 +103,8 @@ case $1 in
 
 		echo "> Release created with id $TAG_ID"
 
-		SOURCE_FILE="build/bk-api-$APP_VERSION.tgz"
-		TARGET_FILE=bk-api-$APP_VERSION.tgz
+		SOURCE_FILE="build/graal/dist/bookmark-notes.zip"
+		TARGET_FILE=bookmark-notes-$APP_VERSION.zip
 		echo "> Source file hash"
 		md5sum $SOURCE_FILE && ls -lha $SOURCE_FILE
 

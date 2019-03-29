@@ -1,0 +1,22 @@
+version: '2'
+services:
+  postgres:
+    image: postgres:11
+    environment:
+      - TZ=UTC
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=root
+      - POSTGRES_DB=db
+    volumes:
+      - /var/lib/mageddo/bookmarks-node/db-pg/:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  app:
+    image: defreitas/bookmar-notes:latest
+    build:
+      context: .
+      dockerfile: src/main/docker/app/Dockerfile
+    environment:
+      - MICRONAUT_ENVIRONMENTS=pg
+      - DATASOURCES_DEFAULT_JDBC_URL=jdbc:postgresql://postgres:5432/db

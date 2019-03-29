@@ -1,0 +1,6 @@
+---
+datasources:
+  default:
+    jdbcUrl: jdbc:postgresql://testpostgres:5432/db?currentSchema=bookmarks
+flyway:
+  schema: bookmarks

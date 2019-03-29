@@ -1,0 +1,4 @@
+FROM debian:9
+RUN apt-get update && apt install -y git curl
+WORKDIR /app
+CMD /app/builder validate-release || exit 0 && /app/builder apply-version && /app/builder build && /app/builder upload-release

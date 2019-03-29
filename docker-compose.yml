@@ -1,110 +1,32 @@
 version: '2'
 services:
 
-### PRODUCTION RUN
-
-# Run prod image
-  prod-app-bk:
-    container_name: bookmarks-node-prod
-    image: defreitas/bookmark-notes:2.13.0
-    hostname: bookmarks.mageddo
-    environment:
-      - HOSTNAMES=bookmarks-node.mageddo
-      - PROFILE=PROD
-      - NODE_ENV=prod
-      - NODE_CONFIG_DIR=conf
-    volumes:
-      - /var/lib/mageddo/bookmarks-node/db:/opt/bookmarks/db
-      - /var/lib/mageddo/bookmarks-node/logs:/opt/bookmarks/logs
-      - /var/lib/mageddo/bookmarks-node/conf:/opt/bookmarks/conf
-      - /etc/resolv.conf:/etc/resolv.conf
-    network_mode: bridge
-  
-  prod-nginx-bk:
-    image: nginx:1.10
-    hostname: bookmarks.intranet
-    container_name: bookmarks-app
-    volumes:
-      - ./nginx/conf.d/:/etc/nginx/conf.d
-      - /etc/resolv.conf:/etc/resolv.conf
-    network_mode: 'bridge'
-    restart: always
-
-  prod-dns-bk:
-    image: defreitas/dns-proxy-server
-    hostname: dns.mageddo
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /etc/resolv.conf:/etc/resolv.conf
-    network_mode: 'bridge'
-
 ## PRODUCTION BUILD
 
-  # compile the whole apk for production
-  prod-build-bk:
-    extends: prod-app-bk
+  prod-image-build:
+    image: defreitas/bookmark-notes
     build:
       context: .
-      args:
-        - DOWNLOAD_API_FROM_REMOTE=0
-
-  # compile only the prod api package
-  prod-api-build-bk:
-    image: golang:1.9
-    volumes:
-      - $PWD/bk-api:/go/src/bk-api/
-      - $PWD:/app
-    command: bash -c "/app/builder apply-version && /app/builder build"
-    environment:
-      - TERM=xterm
-      - GOPATH=/go
-      - BUILD_PATH=/app/build
-      - API_PATH=/go/src/bk-api
-      - MG_WORK_DIR=/go/src/bk-api
-    working_dir: /app
-    network_mode: bridge
 
   # build the api and make the github release
   prod-ci-deploy:
-    extends: prod-api-build-bk
-    command: bash -c "/app/builder validate-release || exit 0 && /app/builder apply-version && /app/builder build && /app/builder upload-release"
+    build:
+      context: .
+      dockerfile: Dockerfile.ci
     environment:
       - CURRENT_BRANCH=$TRAVIS_BRANCH # current branch name
       - REPO_TOKEN=$REPO_TOKEN # github token to deploy the binary
     volumes:
+      - ./:/app
       - $HOME/.gitconfig:/root/.gitconfig
-
-  # just in case of deps change
-  prod-api-install-deps-bk:
-    extends: prod-api-build-bk
-    command: bash -c "/app/builder deps"
 
 ## DEVELOPMENT
 
-  # useful to run api for development
-  prod-api-compiler-bk:
-    extends: prod-api-build-bk
-    container_name: prod-api-compiler-bk
-    volumes:
-      - /var/lib/mageddo/bookmarks-node/db:/opt/bookmarks/db
-    command: bash -c "go install -v bk-api/vendor/github.com/mattn/go-sqlite3 && tail -f /dev/null"
-    working_dir: /go/src/bk-api
-    hostname: bk-api.dev
-
-  # run app for development
-  dev-app-bk:
-    container_name: dev-app-bk
-    extends: prod-app-bk
-    build:
-       context: .
-       args:
-        - DOWNLOAD_API_FROM_REMOTE=0
-    container_name: bookmarks-node
+  postgres:
+    image: postgres:10.3
     environment:
-      - MG_MODE=debug
-      - NODE_CONFIG_DIR=conf
-      - NODE_ENV=dev
-    volumes:
-      - ./:/opt/bookmarks
-      - ./files/prod:/opt/bookmarks/prod/sql
-    command: bash -c 'npm install && tail -f /dev/null'
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=root
+      - POSTGRES_DB=db
+    ports:
+      - 5434:5432

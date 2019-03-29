@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:fragment="header-scripts" th:remove="tag">
+	<link rel="stylesheet" href="/static/css/style.css" type="text/css" />
+</head>
+<div th:fragment="content">
+	<div class="container">
+		<form class="form" role="search" id="bookmarkForm" data-th-attr="data-edit-mode=${editMode}" >
+			<div class="editor-panel" >
+				<div class="btn-editor-panel" >
+					<a class="btn btn-close-modal btn-warning glyphicon glyphicon-arrow-left" href="#"></a>
+					<button type="submit" class="btn btn-success glyphicon glyphicon-floppy-save pull-right" ></button>
+				</div>
+			</div>
+			<div class="fields">
+				<input type="hidden" th:value="${bookmark.id}" name="id" />
+				<div class="form-group col-xs-12 col-md-12">
+					<label for="iptName" >Name </label>
+					<div style="display: flex;" class="link-container">
+						<input
+							id="iptName" type="text" class="form-control ipt-name" tabindex="1"
+							th:value="${ bookmark.name }" name="name" placeholder="bookmark name"
+						>
+						<a class="btn btn-default hidden btn-public-link glyphicon glyphicon-new-window" target="_blank" href="#"></a>
+					</div>
+				</div>
+				<div class="form-group col-xs-6 col-sm-6 col-md-6">
+					<label for="iptLink" >Link </label>
+					<input
+						id="iptLink" type="text" name="link" tabindex="1"
+						th:value="${ bookmark.link }" class="form-control" placeholder="bookmark link"
+					>
+				</div>
+				<div class="form-group col-xs-4 col-sm-4 col-md-5">
+					<label for="iptTag" >Tags </label><br />
+					<select id="iptTag" class="js-data-example-ajax" name="tags" multiple="multiple" style="width:100%" >
+						<option th:each="tag : ${tags}" th:value="${tag.name}" th:text="${tag.name}"></option>
+					</select>
+				</div>
+				<div class="form-group col-xs-2 col-sm-2 col-md-1 chckVisible">
+					<label for="visible" >Public</label><br />
+					<label class="switch">
+						<input
+							id="visible" name="visibility" type="checkbox" value="1"
+							th:checked="${bookmark.visibility == 1 }"
+						>
+						<div class="slider round"></div>
+					</label>
+				</div>
+			</div>
+			<div id="md-editor" tabindex="4"  >[[${bookmark.html}]]</div>
+		</form>
+		<script>
+			window.tagsToEdit = [(${tagsAsJson})];
+			mg.defaults.maxHeight = [[${maxHeight}]];
+		</script>
+		<script type="text/template" id="tplCodeBlock-2">
+			<div class="mg-code" lang="{{lang}}">
+				<ul class="nav nav-pills painel-acoes">
+					{{#overflown}}
+					<li role="presentation" ><a href="#" class="toggle-scroll skipped glyphicon glyphicon-eye-open" title="Maxmize code"></a></li>
+					{{/overflown}}
+					<li role="presentation" class="pull-right" ><a href="#" class="skipped glyphicon glyphicon-option-vertical"></a></li>
+				</ul>
+				<pre style="max-height: {{maxHeight}}px"><code>{{#plain}}{{code}}{{/plain}}{{^plain}}{{{code}}}{{/plain}}</code></pre>
+			</div>
+		</script>
+	</div>
+</div>
+<div th:fragment="footer-scripts" th:remove="tag">
+	<script src="/static/js/ct/bookmarkEditCommon.js"></script>
+	<script src="/static/js/ct/bookmarkEdit.js"></script>
+</div>

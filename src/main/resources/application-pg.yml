@@ -1,0 +1,18 @@
+---
+datasources:
+  default:
+    jdbcUrl: jdbc:postgresql://localhost:5434/db?currentSchema=bookmarks
+    username: root
+    password: root
+    driverClassName: org.postgresql.Driver
+    connectionTestQuery: SELECT 1
+    initializationFailTimeout: -1
+    minimumIdle: 1
+    maximumPoolSize: 10
+
+flyway:
+  locations-image: conf/db/migration/postgres
+  locations-java: db/migration/postgres
+  schema: bookmarks
+analytics:
+  id: fake
