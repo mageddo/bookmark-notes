@@ -52,16 +52,9 @@ case $1 in
 
 	build )
 
-		echo "starting build $APP_VERSION"
-
-		rm -rf ${BUILD_PATH}/* && \
-		cd ${API_PATH} && \
-		go test -cover=false ./.../ && \
-		go build -v -o ${BUILD_PATH}/bk-api && \
-		cp -r static ${BUILD_PATH} && \
-		sh -c "cd ${BUILD_PATH} && tar -acvf bk-api-$APP_VERSION.tgz *"
-
-		echo "build success"
+		echo "> starting build $APP_VERSION"
+		./gradlew clean build
+		echo "> build success"
 
 
 	;;
