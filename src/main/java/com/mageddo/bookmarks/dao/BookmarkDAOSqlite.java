@@ -97,4 +97,14 @@ public class BookmarkDAOSqlite implements BookmarkDAO {
 	public BookmarkDescriptionRes findBookMarkWithNavigation(int bookmarkId) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public void deleteBookmark(int bookmarkId) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void recoverBookmark(int bookmarkId) {
+		throw new UnsupportedOperationException();
+	}
 }

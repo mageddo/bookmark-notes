@@ -32,4 +32,8 @@ public interface BookmarkDAO {
 	void disassociateTags(long bookmarkId);
 
 	BookmarkDescriptionRes findBookMarkWithNavigation(int bookmarkId);
+
+	void deleteBookmark(int bookmarkId);
+
+	void recoverBookmark(int bookmarkId);
 }

@@ -271,4 +271,20 @@ public class BookmarkDAOPg implements BookmarkDAO {
 			bookmarkId
 		);
 	}
+
+	@Override
+	public void deleteBookmark(int bookmarkId) {
+		final int affected = namedJdbcTemplate.update(
+			"UPDATE BOOKMARK SET FLG_DELETED=TRUE WHERE IDT_BOOKMARK=:id", Maps.of("id", bookmarkId)
+		);
+		Validate.isTrue(affected == 1);
+	}
+
+	@Override
+	public void recoverBookmark(int bookmarkId) {
+		final int affected = namedJdbcTemplate.update(
+			"UPDATE BOOKMARK SET FLG_DELETED=FALSE WHERE IDT_BOOKMARK=:id", Maps.of("id", bookmarkId)
+		);
+		Validate.isTrue(affected == 1);
+	}
 }

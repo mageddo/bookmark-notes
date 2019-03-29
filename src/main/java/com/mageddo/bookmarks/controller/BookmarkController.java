@@ -72,6 +72,34 @@ public class BookmarkController {
 		}
 	}
 
+	@Delete(value = "/api/bookmark", produces = MediaType.TEXT_PLAIN)
+	HttpResponse _5(@Body BookmarkRes bookmark) {
+		try {
+			bookmarksService.deleteBookmark(bookmark.getId());
+			return ok();
+		} catch (Exception e) {
+			logger.error("status=cant-delete-bookmark, msg={}", e.getMessage(), e);
+			return serverError(mapOf(
+				"message", "Can't Delete bookmark"
+			))
+				.header("caught", "1");
+		}
+	}
+
+	@Post(value = "/api/bookmark/recover", produces = MediaType.TEXT_PLAIN)
+	HttpResponse _6(@Body BookmarkRes bookmark) {
+		try {
+			bookmarksService.recoverBookmark(bookmark.getId());
+			return ok();
+		} catch (Exception e) {
+			logger.error("status=cant-recover-bookmark, msg={}", e.getMessage(), e);
+			return serverError(mapOf(
+				"message", "Can't Recover bookmark"
+			))
+				.header("caught", "1");
+		}
+	}
+
 	@Get("/bookmark/edit")
 	@View("restricted-area/bookmark-edit")
 	HttpResponse _1(@QueryValue("id") long bookmarkId, @QueryValue("editMode") boolean editMode) {

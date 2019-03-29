@@ -173,9 +173,10 @@ function eventosTabela(){
 		var id = thatLine.data("id");
 		$.ajax({
 			url: "/api/bookmark",
-			data: {
+			data: JSON.stringify({
 				id: id
-			},
+			}),
+			contentType: 'application/json',
 			type: "DELETE",
 			dataType: "",
 			success:function(){
@@ -191,10 +192,11 @@ function eventosTabela(){
 					var that = $(this).text("Restaurando....");
 					$.ajax({
 						url: "/api/bookmark/recover",
-						data: {
+						data: JSON.stringify({
 							id: id
-						},
+						}),
 						type: "POST",
+						contentType: 'application/json',
 						success:function(){
 							thatLine.fadeIn(500);
 							that.remove();

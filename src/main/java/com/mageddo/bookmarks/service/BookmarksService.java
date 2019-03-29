@@ -95,4 +95,12 @@ public class BookmarksService {
 	public BookmarkDescriptionRes findBookmarkWithNavigation(int bookmarkId) {
 		return bookmarkDAO.findBookMarkWithNavigation(bookmarkId);
 	}
+
+	public void deleteBookmark(int bookmarkId) {
+		bookmarkDAO.deleteBookmark(bookmarkId);
+	}
+
+	public void recoverBookmark(int bookmarkId) {
+		bookmarkDAO.deleteBookmark(bookmarkId);
+	}
 }
