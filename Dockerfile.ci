@@ -1,4 +1,4 @@
-FROM debian:9
-RUN apt-get update && apt install -y git curl
+FROM openjdk:11-jdk
+RUN apt-get update -y && apt-get install -y git curl build-essential zlib1g-dev
 WORKDIR /app
-CMD /app/builder validate-release || exit 0 && /app/builder apply-version && /app/builder build && /app/builder upload-release
+CMD /app/builder validate-release || exit 0 && /app/builder apply-version && /app/builder build

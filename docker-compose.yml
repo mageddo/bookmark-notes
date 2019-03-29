@@ -20,6 +20,16 @@ services:
       - ./:/app
       - $HOME/.gitconfig:/root/.gitconfig
 
+  testpostgres:
+    image: postgres:10.3
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=root
+      - POSTGRES_DB=db
+    hostname: testpostgres
+    volumes:
+      - ./src/main/docker/postgres/db/:/docker-entrypoint-initdb.d/
+
 ## DEVELOPMENT
 
   postgres:
