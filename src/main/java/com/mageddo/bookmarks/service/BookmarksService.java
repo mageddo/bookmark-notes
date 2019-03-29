@@ -101,6 +101,6 @@ public class BookmarksService {
 	}
 
 	public void recoverBookmark(int bookmarkId) {
-		bookmarkDAO.deleteBookmark(bookmarkId);
+		bookmarkDAO.recoverBookmark(bookmarkId);
 	}
 }

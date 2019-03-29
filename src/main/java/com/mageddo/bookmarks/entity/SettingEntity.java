@@ -52,6 +52,7 @@ public class SettingEntity {
 	}
 
 	public enum Setting {
-		CODE_BLOCK_MAX_HEIGHT
+		CODE_BLOCK_MAX_HEIGHT,
+		MOBILE_CODE_BLOCK_MAX_HEIGHT
 	}
 }
