@@ -1,3 +1,8 @@
+# 3.0.0
+* Migrating to monolith first architecture 
+* Migrating to Java + Native Image + Micronaut
+* Setup Postgres support
+
 # 2.12.6
 * fixing highlight in public view
 
