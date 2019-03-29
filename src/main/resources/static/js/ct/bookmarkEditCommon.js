@@ -148,7 +148,16 @@ BookmarkEdition.prototype.getFormData = function(){
 
 	var jsonObject = {};
 	data.forEach(function(it){
-		jsonObject[it.name] = it.value;
+
+		var prop;
+		if(prop = jsonObject[it.name]){
+			if(!Array.isArray(prop)){
+				prop = jsonObject[it.name] = [prop];
+			}
+			prop.push(it.value)
+		} else {
+			jsonObject[it.name] = it.value;
+		}
 	});
 	return jsonObject;
 };
