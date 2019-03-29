@@ -43,9 +43,8 @@ bk-api/pkg
 
 ## Build files
 build
-out/
 
-testing/
+
 *.ipr
 *.iws
-ajcore*
+out/
