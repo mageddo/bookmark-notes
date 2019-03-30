@@ -1,24 +1,41 @@
-### Starting database server
+Bookmark Notes uses DNS proxy server for development purposes
 
-	$ docker-compose -f docker-compose-test.yml up postgres
+Starting DNS server 
+
+```bash
+$ docker run --rm --hostname dns.mageddo \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v /etc/resolv.conf:/etc/resolv.conf \
+defreitas/dns-proxy-server
+```
 
 
-#### Running on Intellij / Eclipse
+## Developing
+
+__Starting database server__
+
+	$ docker-compose -f docker-compose.yml up postgres
+
+__Running on Intellij / Eclipse__
 
 Start `Application` class
 
-#### Running on terminal
+__Running on terminal__
 
 	$ ./gradlew run
 
+__Fully testing__
 
-#### Testing
-
+Building and testing
 ```bash
-$ docker-compose -f docker-compose-test.yml up --force-recreate
-./gradlew build
+./gradlew build intTest
 ```
 
-#### Compiling Native Image
+## Building archives
 
-	$ ./gradlew clean nativeImage
+```
+$ ./gradlew clean build nativeImage
+$ ls build/distributions/ && ls build/graal/
+bookmark-notes.zip # java binary
+bookmark-notes # linux os native binary
+```

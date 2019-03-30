@@ -3,17 +3,20 @@ services:
 
 ## PRODUCTION BUILD
 
+
+  # Build project java docker image
   prod-java-bookmark-notes:
     build:
       context: .
       dockerfile: Dockerfile.java
 
+  # Build project linux binary docker image
   prod-linux-bookmark-notes:
     build:
       context: .
       dockerfile: Dockerfile.linux
 
-  # build the api and make the github release
+  # Build the project binaries, create a git tag and upload the archives to github releases
   prod-ci-deploy:
     build:
       context: .
