@@ -37,7 +37,7 @@ task run(type: JavaExec){
 graal {
 	mainClass className
 	graalVersion(graalVMVersion)
-	outputName(project.name)
+	outputName("bookmark-notes")
 	option("-H:IncludeResources=db/.*|static/.*|templates/.*|.*.yml|.*.xml|META-INF/http/.*|org/flywaydb/core/internal/database/postgresql/.*")
 	option("-H:Log=registerResource")
 	option("--allow-incomplete-classpath")
