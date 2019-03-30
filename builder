@@ -31,8 +31,7 @@ upload_file(){
 
 apply_version(){
 
-	sed -i -E "s/(defreitas\\/bookmark-notes:)[0-9]+\.[0-9]+\.[0-9]+/\1$APP_VERSION/g" docker-compose.yml
-	sed -i -E "s/download\\/([0-9]+\.[0-9]+\.[0-9]+)\\/(bk-api-[0-9]+\.[0-9]+\.[0-9]+)/download\\/$APP_VERSION\\/bookmark-notes-$APP_VERSION/g" Dockerfile
+	sed -i -E "s/BOOKMARK_NOTES_VERSION=.+/BOOKMARK_NOTES_VERSION=$APP_VERSION/g" Dockerfile
 
 }
 
