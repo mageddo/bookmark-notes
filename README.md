@@ -39,3 +39,5 @@ $ docker-compose -f docker-compose-prod.yml rm -f
 $ docker-compose -f docker-compose-prod.yml up postgres
 $ docker-compose -f docker-compose-prod.yml up bookmark-notes
 ```
+
+Access browser [http://localhost:8080](http://localhost:8080)
