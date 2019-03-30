@@ -31,7 +31,8 @@ upload_file(){
 
 apply_version(){
 
-	sed -i -E "s/BOOKMARK_NOTES_VERSION=.+/BOOKMARK_NOTES_VERSION=$APP_VERSION/g" Dockerfile
+	sed -i -E "s/BOOKMARK_NOTES_VERSION=.+/BOOKMARK_NOTES_VERSION=$APP_VERSION/g" Dockerfile.java
+	sed -i -E "s/BOOKMARK_NOTES_VERSION=.+/BOOKMARK_NOTES_VERSION=$APP_VERSION/g" Dockerfile.linux
 
 }
 
