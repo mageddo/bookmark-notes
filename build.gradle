@@ -24,12 +24,6 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 mainClassName = "com.mageddo.Application"
 
-task debug(type: JavaExec){
-	debug = true
-	classpath = sourceSets.main.runtimeClasspath
-	main = mainClassName
-}
-
 graal {
 	mainClass mainClassName
 	graalVersion(graalVMVersion)
@@ -102,11 +96,30 @@ dependencies {
 
 }
 
+task debug(type: JavaExec){
+	debug = true
+	classpath = sourceSets.main.runtimeClasspath
+	main = mainClassName
+}
+
 test {
 	useJUnitPlatform()
 	testLogging {
 		events "passed", "skipped", "failed"
 	}
+	exclude '**/*IntTest*'
+}
+
+task intTest (type: Test){
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+	outputs.upToDateWhen {
+		false
+	}
+	include '**/*IntTest*'
+	failFast = true
 }
 
 task copyStatics() {
