@@ -53,7 +53,7 @@ case $1 in
 	build )
 
 		echo "> starting build $APP_VERSION"
-		./gradlew clean nativeImage --info
+		./gradlew clean build nativeImage --info
 		echo "> build success"
 
 
