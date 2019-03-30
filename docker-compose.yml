@@ -3,10 +3,15 @@ services:
 
 ## PRODUCTION BUILD
 
-  prod-image-build:
-    image: defreitas/bookmark-notes
+  prod-java-bookmark-notes:
     build:
       context: .
+      dockerfile: Dockerfile.java
+
+  prod-linux-bookmark-notes:
+    build:
+      context: .
+      dockerfile: Dockerfile.linux
 
   # build the api and make the github release
   prod-ci-deploy:
