@@ -1,0 +1,18 @@
+version: '2'
+services:
+
+  bookmark-notes:
+    image: defreitas/bookmark-notes:3.0.7-native
+    volumes:
+      - /etc/resolv.conf:/etc/resolv.conf
+    environment:
+      - DATASOURCES_DEFAULT_JDBC_URL=jdbc:postgres://postgres:5432/db?currentSchema=bookmarks
+    ports:
+      - 8080:8080
+
+  postgres:
+    image: postgres:10.3
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=root
+      - POSTGRES_DB=db

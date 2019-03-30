@@ -46,5 +46,6 @@ services:
       - POSTGRES_PASSWORD=root
       - POSTGRES_USER=root
       - POSTGRES_DB=db
+      - HOSTNAMES=bookmark-notes-postgres.docker
     ports:
       - 5434:5432
