@@ -19,7 +19,7 @@
 [See more screenshots](https://mageddo.github.io/bookmark-notes/docs/)
 
 
-### Running With Docker
+### Running without Docker
 
 1. Run image (It can take some seconds to server start to listen)
 
@@ -31,3 +31,13 @@ Server Running: http://localhost:8080
 
 2. Access browser [http://localhost:8080](http://localhost:8080)
 3. That's it :)
+
+### Running with Docker
+
+```
+$ docker-compose -f docker-compose-prod.yml rm -f
+$ docker-compose -f docker-compose-prod.yml up postgres
+$ docker-compose -f docker-compose-prod.yml up bookmark-notes
+```
+
+Access browser [http://localhost:8080](http://localhost:8080)
