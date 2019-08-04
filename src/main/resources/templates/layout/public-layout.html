@@ -29,7 +29,7 @@
 <nav class="navbar navbar-default navbar-fixed-top ">
 	<div class="container">
 		<div class="nav">
-			<a href="/" class="navbar-brand">[[${ appName }]]</a>
+			<a href="/" class="navbar-brand" th:text="${appName == null} ? 'Bookmarks' : ${ appName }"></a>
 			<a href="/_/bookmarks" type="button" class="navbar-btn btn btn-info pull-right">login</a>
 		</div>
 	</div>
