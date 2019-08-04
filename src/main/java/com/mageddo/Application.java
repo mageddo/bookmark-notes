@@ -1,12 +1,11 @@
 package com.mageddo;
 
-import com.mageddo.config.ApplicationContextUtils;
 import com.mageddo.commons.MigrationUtils;
+import com.mageddo.config.ApplicationContextUtils;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.runtime.Micronaut;
-import org.graalvm.nativeimage.Feature;
 
-public class Application implements Feature {
+public class Application {
 
 	public static void main(String[] args) {
 
