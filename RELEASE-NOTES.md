@@ -1,3 +1,9 @@
+# 3.1.0
+* Switching docker images to the ones which use less resources
+
+# 3.0.8
+* Fixing sunec dependency
+
 # 3.0.0
 * Migrating to monolith first architecture 
 * Migrating to Java + Native Image + Micronaut
