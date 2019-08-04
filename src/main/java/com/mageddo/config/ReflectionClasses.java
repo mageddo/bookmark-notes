@@ -5,6 +5,7 @@ import com.mageddo.common.graalvm.SubstrateVM;
 import com.oracle.svm.core.annotate.AutomaticFeature;
 import org.flywaydb.core.internal.logging.javautil.JavaUtilLogCreator;
 import org.graalvm.nativeimage.hosted.Feature;
+import org.springframework.transaction.TransactionDefinition;
 import org.thymeleaf.standard.expression.AdditionExpression;
 import org.thymeleaf.standard.expression.EqualsExpression;
 import org.thymeleaf.standard.expression.NotEqualsExpression;
@@ -34,6 +35,12 @@ class ReflectionClasses implements Feature {
 			.builder()
 			.constructors()
 			.clazz(JavaUtilLogCreator.class)
+		.build();
+
+		SubstrateVM
+			.builder()
+			.fields()
+			.clazz(TransactionDefinition.class)
 		.build();
 
 			// thymeleaf
