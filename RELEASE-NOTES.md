@@ -1,3 +1,8 @@
+# 3.2.0
+* Upgrading micronaut
+* Upgrading graalvm
+* Reducing binary size 
+
 # 3.1.0
 * Switching docker images to the ones which use less resources
 
