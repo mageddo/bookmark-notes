@@ -1,15 +1,14 @@
 package com.mageddo.config;
 
 import com.mageddo.bookmarks.utils.ThymeleafUtils;
+import com.mageddo.common.graalvm.SubstrateVM;
 import com.oracle.svm.core.annotate.AutomaticFeature;
+import org.flywaydb.core.internal.logging.javautil.JavaUtilLogCreator;
 import org.graalvm.nativeimage.hosted.Feature;
-import org.graalvm.nativeimage.hosted.RuntimeReflection;
 import org.thymeleaf.standard.expression.AdditionExpression;
 import org.thymeleaf.standard.expression.EqualsExpression;
 import org.thymeleaf.standard.expression.NotEqualsExpression;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.sql.Statement;
 
 @AutomaticFeature
@@ -22,68 +21,32 @@ class ReflectionClasses implements Feature {
 
 	@Override
 	public void beforeAnalysis(BeforeAnalysisAccess access) {
-		setupClasses();
-	}
 
-	/**
-	 * All classes defined here will have reflection support and be registered as spring beans
-	 */
-	static Class<?>[] getBeans(){
-		return new Class[]{
-		};
-	}
+		// hikari datasource
+		SubstrateVM
+			.builder()
+			.constructors()
+			.clazz(Statement[].class)
+		.build();
 
-	/**
-	 * All classes defined here will have reflection support
-	 */
-	static Class<?>[] getClasses(){
-		return new Class[]{
-
-			// hikari datasource
-			Statement[].class,
+		// flyway migration
+		SubstrateVM
+			.builder()
+			.constructors()
+			.clazz(JavaUtilLogCreator.class)
+		.build();
 
 			// thymeleaf
-			AdditionExpression.class,
-			ThymeleafUtils.class,
-			EqualsExpression.class,
-			NotEqualsExpression.class
-		};
+		SubstrateVM
+			.builder()
+			.constructors()
+			.clazz(AdditionExpression.class)
+			.clazz(ThymeleafUtils.class)
+			.clazz(EqualsExpression.class)
+			.clazz(NotEqualsExpression.class)
+		.build();
+
 	}
 
-	static void setupClasses() {
-		try {
-			System.out.println("> Loading classes for future reflection support");
-			for (final Class<?> clazz : getBeans()) {
-				process(clazz);
-			}
-			for (final Class<?> clazz : getClasses()) {
-				process(clazz);
-			}
-		} catch (Error e){
-			if(!e.getMessage().contains("The class ImageSingletons can only be used when building native images")){
-				throw e;
-			}
-		}
-	}
-
-	/**
-	 * Register all constructors and methods on graalvm to reflection support at runtime
-	 */
-	private static void process(Class<?> clazz) {
-		try {
-			System.out.println("> Declaring class: " + clazz.getCanonicalName());
-			RuntimeReflection.register(clazz);
-			for (final Method method : clazz.getMethods()) {
-				System.out.println("\t> method: " + method.getName() + "(" + method.getParameterCount() + ")");
-				RuntimeReflection.register(method);
-			}
-			for (final Constructor<?> constructor : clazz.getDeclaredConstructors()) {
-				System.out.println("\t> constructor: " + constructor.getName() + "(" + constructor.getParameterCount() + ")");
-				RuntimeReflection.register(constructor);
-			}
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-	}
 }
 
