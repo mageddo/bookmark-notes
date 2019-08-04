@@ -28,7 +28,8 @@ mainClassName = "com.mageddo.Application"
 graal {
 	mainClass mainClassName
 	graalVersion(graalVMVersion)
-	outputName("bookmark-notes")
+	outputName(project.name)
+	downloadBaseUrl("https://github.com/oracle/graal/releases/download/vm-19.1.1/graalvm-ce-linux-amd64-19.1.1.tar.gz#")
 	option("-H:IncludeResources=db/.*|static/.*|templates/.*|.*.yml|.*.xml|META-INF/http/.*|org/flywaydb/core/internal/database/postgresql/.*")
 	option("-H:Log=registerResource")
 	option("--allow-incomplete-classpath")

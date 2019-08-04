@@ -2,8 +2,8 @@ package com.mageddo.config;
 
 import com.mageddo.bookmarks.utils.ThymeleafUtils;
 import com.oracle.svm.core.annotate.AutomaticFeature;
-import org.graalvm.nativeimage.Feature;
-import org.graalvm.nativeimage.RuntimeReflection;
+import org.graalvm.nativeimage.hosted.Feature;
+import org.graalvm.nativeimage.hosted.RuntimeReflection;
 import org.thymeleaf.standard.expression.AdditionExpression;
 import org.thymeleaf.standard.expression.EqualsExpression;
 import org.thymeleaf.standard.expression.NotEqualsExpression;
