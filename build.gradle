@@ -44,8 +44,12 @@ graal {
 
 dependencies {
 
+	annotationProcessor "io.micronaut:micronaut-validation:${micronautVersion}"
+	annotationProcessor "io.micronaut:micronaut-inject-java:${micronautVersion}"
+	annotationProcessor('com.mageddo:rsl-compiler:1.0.1')
+	
 	compile ("org.flywaydb:flyway-core:5.2.4")
-	compile 'com.zaxxer:HikariCP:3.3.1'
+	compile ("com.zaxxer:HikariCP:3.3.1")
 
 //	compile("org.xerial:sqlite-jdbc:3.27.2")
 	compile("org.postgresql:postgresql:42.2.5")
@@ -53,13 +57,10 @@ dependencies {
 	compile ("org.springframework:spring-jdbc:5.1.5.RELEASE")
 	compile ("io.micronaut:micronaut-spring:${micronautVersion}")
 
-	annotationProcessor "io.micronaut:micronaut-validation:${micronautVersion}"
 	compile "io.micronaut:micronaut-validation:${micronautVersion}"
-	compile "io.micronaut:micronaut-http-client:${micronautVersion}"
 	compile "io.micronaut:micronaut-http-server-netty:${micronautVersion}"
 	compile "io.micronaut:micronaut-runtime:${micronautVersion}"
 
-	annotationProcessor "io.micronaut:micronaut-inject-java:${micronautVersion}"
 	compile "io.micronaut:micronaut-inject:${micronautVersion}"
 	compileOnly "io.micronaut:micronaut-inject-java:${micronautVersion}"
 
@@ -69,21 +70,19 @@ dependencies {
 	compile ("io.micronaut:micronaut-views:${micronautVersion}")
 	compile ('org.thymeleaf:thymeleaf:3.0.11.RELEASE')
 
-	testAnnotationProcessor('com.mageddo:rsl-compiler:1.0.1')
 	compile('com.mageddo:rsl:1.0.0')
-	annotationProcessor('com.mageddo:rsl-compiler:1.0.1')
+	compile("ch.qos.logback:logback-classic:1.2.3")
 
 	compile ("com.mageddo:graal-reflection-configuration:2.0.0")
 	compileOnly("com.oracle.substratevm:svm:${graalVMVersion}")
 	runtime("io.micronaut:micronaut-graal:${micronautVersion}")
 	compile("org.graalvm.sdk:graal-sdk:${graalVMVersion}")
 
-	runtime "ch.qos.logback:logback-classic:1.2.3"
-	implementation ("org.aspectj:aspectjrt:1.9.2")
-
 	compile("com.atlassian.commonmark:commonmark:0.12.1")
 
 	testAnnotationProcessor "io.micronaut:micronaut-inject-java:${micronautVersion}"
+	testAnnotationProcessor('com.mageddo:rsl-compiler:1.0.1')
+	
 	testCompile "io.micronaut:micronaut-inject-java:${micronautVersion}"
 	testCompile("io.micronaut.test:micronaut-test-junit5:1.0.2")
 

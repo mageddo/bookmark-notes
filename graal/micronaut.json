@@ -95,9 +95,6 @@
   "name" : "io.micronaut.http.annotation.Produces",
   "allDeclaredConstructors" : true
 }, {
-  "name" : "io.micronaut.http.client.NettyClientHttpRequestFactory",
-  "allDeclaredConstructors" : true
-}, {
   "name" : "io.micronaut.http.netty.cookies.NettyCookieFactory",
   "allDeclaredConstructors" : true
 }, {

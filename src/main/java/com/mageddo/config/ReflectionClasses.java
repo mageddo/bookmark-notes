@@ -16,6 +16,11 @@ import java.sql.Statement;
 class ReflectionClasses implements Feature {
 
 	@Override
+	public void duringSetup(DuringSetupAccess access) {
+		System.loadLibrary("sunec");
+	}
+
+	@Override
 	public void beforeAnalysis(BeforeAnalysisAccess access) {
 		setupClasses();
 	}
