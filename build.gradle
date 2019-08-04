@@ -18,6 +18,7 @@ repositories {
 	mavenCentral()
 	maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 	maven { url "https://dl.bintray.com/micronaut/core-releases-local" }
+	maven { url = 'https://oss.sonatype.org/service/local/repositories/releases/content' }
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
