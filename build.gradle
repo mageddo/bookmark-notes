@@ -17,6 +17,7 @@ repositories {
 	mavenLocal()
 	mavenCentral()
 	maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+	maven { url "https://dl.bintray.com/micronaut/core-releases-local" }
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -67,7 +68,7 @@ dependencies {
 	compile("com.mageddo:commons:1.2.0")
 	compile("org.apache.commons:commons-lang3:3.8.1")
 
-	compile ("io.micronaut:micronaut-views:${micronautVersion}")
+	compile ("io.micronaut:micronaut-views-core:1.2.0")
 	compile ('org.thymeleaf:thymeleaf:3.0.11.RELEASE')
 
 	compile('com.mageddo:rsl:1.0.0')
