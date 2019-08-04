@@ -41,9 +41,14 @@ class ReflectionClasses implements Feature {
 			.builder()
 			.constructors()
 			.clazz(AdditionExpression.class)
-			.clazz(ThymeleafUtils.class)
 			.clazz(EqualsExpression.class)
 			.clazz(NotEqualsExpression.class)
+		.build();
+
+		SubstrateVM
+			.builder()
+			.methods()
+			.clazz(ThymeleafUtils.class)
 		.build();
 
 	}
