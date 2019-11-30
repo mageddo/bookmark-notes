@@ -82,7 +82,8 @@ dependencies {
 	runtime("io.micronaut:micronaut-graal:${micronautVersion}")
 	compile("org.graalvm.sdk:graal-sdk:${graalVMVersion}")
 
-	compile("com.atlassian.commonmark:commonmark:0.12.1")
+	compile("com.atlassian.commonmark:commonmark:0.13.1")
+	compile("com.atlassian.commonmark:commonmark-ext-gfm-tables:0.13.1")
 
 	testAnnotationProcessor "io.micronaut:micronaut-inject-java:${micronautVersion}"
 	testAnnotationProcessor('com.mageddo:rsl-compiler:1.0.1')
