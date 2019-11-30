@@ -5,12 +5,16 @@ RUN apt-get update -y && apt-get install -y git curl build-essential zlib1g-dev
 ENV GRAALVM_DOWNLOAD_URL=https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-19.3.0/graalvm-ce-java11-linux-amd64-19.3.0.tar.gz
 ENV GRAALVM_TARGET_DIR="${HOME}/.gradle/caches/com.palantir.graal/19.3.0"
 ENV GRAALVM_TARGET_FILE="${GRAALVM_TARGET_DIR}/graalvm-ce-19.3.0-amd64.tar.gz"
-RUN mkdir -p ${GRAALVM_TARGET_DIR} &&\
-	cd ${GRAALVM_TARGET_DIR} &&\
-	curl -L ${GRAALVM_DOWNLOAD_URL} > ${GRAALVM_TARGET_FILE} &&\
-	tar -xf ${GRAALVM_TARGET_FILE} -C ${GRAALVM_TARGET_DIR} &&\
-	ln -s graalvm-ce-java11-19.3.0/ graalvm-ce-19.3.0 &&\
-	"${GRAALVM_TARGET_DIR}/graalvm-ce-19.3.0/bin/gu install native-image"
+
+RUN mkdir -p ${GRAALVM_TARGET_DIR}
+WORKDIR ${GRAALVM_TARGET_DIR}
+
+RUN curl -L ${GRAALVM_DOWNLOAD_URL} > ${GRAALVM_TARGET_FILE} &&\
+	tar -xf ${GRAALVM_TARGET_FILE} -C ${GRAALVM_TARGET_DIR}
+RUN ln -s graalvm-ce-java11-19.3.0/ graalvm-ce-19.3.0 &&\
+	${GRAALVM_TARGET_DIR}/graalvm-ce-19.3.0/bin/gu install native-image
+
+ENV JAVA_HOME="${GRAALVM_TARGET_DIR}/graalvm-ce-19.3.0/"
 
 WORKDIR /app
 CMD /app/builder validate-release || exit 0 && /app/builder apply-version && /app/builder build && /app/builder upload-release
