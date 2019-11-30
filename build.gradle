@@ -69,6 +69,7 @@ dependencies {
 	compileOnly("com.oracle.substratevm:svm:19.2.1")
 	annotationProcessor "io.micronaut:micronaut-graal:${micronautVersion}"
 	compile("org.graalvm.sdk:graal-sdk:${graalVMVersion}")
+	compile ("commons-logging:commons-logging:1.2")
 //	end:graal[]
 
 	testAnnotationProcessor "io.micronaut:micronaut-inject-java:${micronautVersion}"
