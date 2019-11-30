@@ -23,7 +23,8 @@ services:
       dockerfile: Dockerfile.ci
     environment:
       - CURRENT_BRANCH=$TRAVIS_BRANCH # current branch name
-      - REPO_TOKEN=$REPO_TOKEN # github token to deploy the binary
+    env_file:
+      - .env
     volumes:
       - ./:/app
       - $HOME/.gitconfig:/root/.gitconfig

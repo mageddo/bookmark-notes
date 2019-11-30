@@ -1,9 +1,13 @@
 sudo: required
-
+os: linux
+language: minimal
 services:
   - docker
 
-script: docker-compose up --build --abort-on-container-exit testpostgres prod-ci-deploy
+install: skip
+script:
+  - env > .env
+  - docker-compose up --build --abort-on-container-exit testpostgres prod-ci-deploy
 
 branches:
   only:
