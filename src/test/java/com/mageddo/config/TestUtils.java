@@ -6,7 +6,7 @@ import io.restassured.RestAssured;
 
 import java.io.*;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public final class TestUtils {
 	private TestUtils() {
@@ -21,7 +21,7 @@ public final class TestUtils {
 	public static String readAsString(String path) {
 		try {
 			final InputStream resource = TestUtils.class.getResourceAsStream(path);
-			assertNotNull("file not found: " + path, resource);
+			assertNotNull(resource, "file not found: " + path);
 			return IOUtils.readText(new BufferedReader(new InputStreamReader(resource)));
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);

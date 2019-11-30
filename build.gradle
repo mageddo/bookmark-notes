@@ -41,6 +41,9 @@ dependencies {
 	compileOnly('com.mageddo:rsl:1.0.0')
 	annotationProcessor("com.mageddo:rsl-compiler:1.0.1")
 
+	compileOnly("com.mageddo.nativeimage:reflection-config-generator:2.0.3")
+	annotationProcessor("com.mageddo.nativeimage:reflection-config-generator:2.0.3")
+
 	compile ("org.flywaydb:flyway-core:5.2.4")
 	compile ("com.zaxxer:HikariCP:3.3.1")
 //	compile("org.xerial:sqlite-jdbc:3.27.2")
@@ -63,7 +66,7 @@ dependencies {
 	compile("com.atlassian.commonmark:commonmark-ext-gfm-tables:0.13.1")
 
 //	tag:graal[]
-	compileOnly("com.oracle.substratevm:svm:${graalVMVersion}")
+	compileOnly("com.oracle.substratevm:svm:19.2.1")
 	annotationProcessor "io.micronaut:micronaut-graal:${micronautVersion}"
 	compile("org.graalvm.sdk:graal-sdk:${graalVMVersion}")
 //	end:graal[]
