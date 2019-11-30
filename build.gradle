@@ -10,7 +10,6 @@ plugins {
 	id "java"
 	id "application"
 	id "com.palantir.graal" version "0.4.0"
-	id "com.mageddo.graal-reflection-configuration-generator" version "2.0.1"
 }
 
 repositories {
@@ -30,32 +29,20 @@ graal {
 	mainClass mainClassName
 	graalVersion(graalVMVersion)
 	outputName(project.name)
-
-	option("-H:IncludeResources=static/.*|templates/.*|.*.yml|.*.xml|.*version.txt|META-INF/http/.*|org/flywaydb/core/internal/database/postgresql/.*")
-	option("-H:Log=registerResource")
-	option("--allow-incomplete-classpath")
-	option("-H:ReflectionConfigurationFiles=build/reflect.json,graal/micronaut.json")
-	option("-H:+AllowVMInspection")
-	option("--initialize-at-run-time=io.netty.handler.codec.http.HttpObjectEncoder,io.netty.handler.codec.http.websocketx.WebSocket00FrameEncoder,io.netty.handler.ssl.util.ThreadLocalInsecureRandom,com.sun.jndi.dns.DnsClient")
-	option("--initialize-at-build-time=org.postgresql.Driver")
-	option("--initialize-at-build-time=org.postgresql.util.SharedTimer")
-	option("--no-fallback")
-	option("-H:+ReportUnsupportedElementsAtRuntime")
-	option("-H:EnableURLProtocols=http")
-	option("-Dfile.encoding=UTF-8")
-	option("-J-Xmx5G")
-	option("--no-server")
 }
 
 dependencies {
 
-	annotationProcessor "io.micronaut:micronaut-validation:${micronautVersion}"
-	annotationProcessor "io.micronaut:micronaut-inject-java:${micronautVersion}"
-	annotationProcessor('com.mageddo:rsl-compiler:1.0.1')
-	
+	annotationProcessor("io.micronaut:micronaut-validation:${micronautVersion}")
+
+	compileOnly "io.micronaut:micronaut-inject-java:${micronautVersion}"
+	annotationProcessor("io.micronaut:micronaut-inject-java:${micronautVersion}")
+
+	compileOnly('com.mageddo:rsl:1.0.0')
+	annotationProcessor("com.mageddo:rsl-compiler:1.0.1")
+
 	compile ("org.flywaydb:flyway-core:5.2.4")
 	compile ("com.zaxxer:HikariCP:3.3.1")
-
 //	compile("org.xerial:sqlite-jdbc:3.27.2")
 	compile("org.postgresql:postgresql:42.2.5")
 
@@ -65,33 +52,27 @@ dependencies {
 	compile "io.micronaut:micronaut-validation:${micronautVersion}"
 	compile "io.micronaut:micronaut-http-server-netty:${micronautVersion}"
 	compile "io.micronaut:micronaut-runtime:${micronautVersion}"
-
 	compile "io.micronaut:micronaut-inject:${micronautVersion}"
-	compileOnly "io.micronaut:micronaut-inject-java:${micronautVersion}"
 
 	compile("com.mageddo:commons:1.5.0")
 	compile("org.apache.commons:commons-lang3:3.8.1")
-
 	compile ("io.micronaut:micronaut-views-thymeleaf:1.2.0")
-
-	compile('com.mageddo:rsl:1.0.0')
-	compile("ch.qos.logback:logback-classic:1.2.3")
-
-	compile ("com.mageddo:graal-reflection-configuration:2.0.0")
-	compileOnly("com.oracle.substratevm:svm:${graalVMVersion}")
-	runtime("io.micronaut:micronaut-graal:${micronautVersion}")
-	compile("org.graalvm.sdk:graal-sdk:${graalVMVersion}")
+	runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
 
 	compile("com.atlassian.commonmark:commonmark:0.13.1")
 	compile("com.atlassian.commonmark:commonmark-ext-gfm-tables:0.13.1")
 
+//	tag:graal[]
+	compileOnly("com.oracle.substratevm:svm:${graalVMVersion}")
+	annotationProcessor "io.micronaut:micronaut-graal:${micronautVersion}"
+	compile("org.graalvm.sdk:graal-sdk:${graalVMVersion}")
+//	end:graal[]
+
 	testAnnotationProcessor "io.micronaut:micronaut-inject-java:${micronautVersion}"
 	testAnnotationProcessor('com.mageddo:rsl-compiler:1.0.1')
-	
+
 	testCompile "io.micronaut:micronaut-inject-java:${micronautVersion}"
 	testCompile("io.micronaut.test:micronaut-test-junit5:1.0.2")
-
-	testCompile "junit:junit:4.12"
 	testCompile('org.junit.jupiter:junit-jupiter:5.4.0')
 
 	testCompile("io.rest-assured:rest-assured:3.3.0")
@@ -154,7 +135,6 @@ task copyStatics() {
 	}
 }
 
-nativeImage.dependsOn(tasks.reflectConfigFiles)
 nativeImage.finalizedBy(tasks.copyStatics)
 
 static void deleteRecursively(java.nio.file.Path distPath) {

@@ -24,7 +24,7 @@ services:
     environment:
       - CURRENT_BRANCH=$TRAVIS_BRANCH # current branch name
     env_file:
-      - .env
+      - ${ENV_FILE:-.env}
     volumes:
       - ./:/app
       - $HOME/.gitconfig:/root/.gitconfig
