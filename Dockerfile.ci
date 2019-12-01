@@ -14,7 +14,7 @@ RUN curl -L ${GRAALVM_DOWNLOAD_URL} > ${GRAALVM_TARGET_FILE} &&\
 RUN ln -s graalvm-ce-java11-19.3.0/ graalvm-ce-19.3.0 &&\
 	${GRAALVM_TARGET_DIR}/graalvm-ce-19.3.0/bin/gu install native-image
 
-ENV JAVA_HOME="${GRAALVM_TARGET_DIR}/graalvm-ce-19.3.0/"
+ADD src/main/docker/ci/entrypoint.sh /entrypoint.sh
 
 WORKDIR /app
-CMD /app/builder validate-release || exit 0 && /app/builder apply-version && /app/builder build && /app/builder upload-release
+ENTRYPOINT /entrypoint.sh
