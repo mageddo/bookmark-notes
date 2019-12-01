@@ -28,6 +28,7 @@ services:
     volumes:
       - ./:/app
       - $HOME/.gitconfig:/root/.gitconfig
+    mem_limit: 4000M
 
   testpostgres:
     image: postgres:10.3
