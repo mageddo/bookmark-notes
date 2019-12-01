@@ -1,8 +1,10 @@
+# 3.3.0
+* Fixing tables format on public view
+
 # 3.2.0
 * Upgrading micronaut
 * Upgrading graalvm 
 * Fixing missing appname on public pages
-* Fixing tables format on public view
 
 # 3.1.0
 * Switching docker images to the ones which use less resources
