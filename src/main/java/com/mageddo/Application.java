@@ -4,16 +4,18 @@ import com.mageddo.commons.MigrationUtils;
 import com.mageddo.config.ApplicationContextUtils;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.runtime.Micronaut;
+import io.micronaut.runtime.event.annotation.EventListener;
+import io.micronaut.runtime.server.event.ServerStartupEvent;
 
 public class Application {
 
 	public static void main(String[] args) {
 
+		setupProperties();
 		setupEnv();
 
-		ApplicationContext ctx = Micronaut.run(Application.class);
-		ApplicationContextUtils.context(ctx);
-		MigrationUtils.migrate(ctx.getEnvironment());
+		Micronaut.run(Application.class);
+
 	}
 
 	static void setupEnv() {
@@ -22,5 +24,21 @@ public class Application {
 		if(osEnvs == null && javaEnvs == null){
 			System.setProperty("micronaut.environments", "pg");
 		}
+	}
+
+	@EventListener
+	public void onStartup(ServerStartupEvent event){
+		final ApplicationContext ctx = event.getSource().getApplicationContext();
+		ApplicationContextUtils.context(ctx);
+		MigrationUtils.migrate(ctx.getEnvironment());
+	}
+
+	static void setupProperties() {
+		commonsLoggingFix();
+	}
+
+	private static void commonsLoggingFix() {
+		System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+		System.setProperty("org.apache.commons.logging.diagnostics.dest", "STDOUT");
 	}
 }

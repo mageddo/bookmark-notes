@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.mageddo.common.jackson.JsonUtils.writeValueAsString;
-import static com.mageddo.commons.MarkdownUtils.parseMarkdown;
+import static com.mageddo.markdown.MarkdownUtils.parseMarkdown;
 import static io.micronaut.core.util.CollectionUtils.mapOf;
 import static io.micronaut.http.HttpResponse.ok;
 import static io.micronaut.http.HttpResponse.serverError;
