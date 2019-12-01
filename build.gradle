@@ -1,5 +1,8 @@
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.time.LocalDateTime
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 buildscript {
 	repositories {
@@ -154,6 +157,15 @@ static void deleteRecursively(java.nio.file.Path distPath) {
 			Files.deleteIfExists(it)
 		} catch (IOException e) {
 			throw new UncheckedIOException(e)
+		}
+	})
+}
+
+task heartbeat(){
+	Executors.newSingleThreadExecutor().submit({
+		while (!Thread.currentThread().isInterrupted()){
+			println "${LocalDateTime.now()} ping"
+			TimeUnit.MINUTES.sleep(1);
 		}
 	})
 }
