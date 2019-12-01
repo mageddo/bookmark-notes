@@ -3,7 +3,7 @@ FROM debian:10
 RUN apt-get update -y && apt-get install -y git curl build-essential zlib1g-dev
 
 ENV GRAALVM_DOWNLOAD_URL=https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-19.3.0/graalvm-ce-java11-linux-amd64-19.3.0.tar.gz
-ENV GRAALVM_TARGET_DIR="${HOME}/.gradle/caches/com.palantir.graal/19.3.0"
+ENV GRAALVM_TARGET_DIR="/root/.gradle/caches/com.palantir.graal/19.3.0"
 ENV GRAALVM_TARGET_FILE="${GRAALVM_TARGET_DIR}/graalvm-ce-19.3.0-amd64.tar.gz"
 
 RUN mkdir -p ${GRAALVM_TARGET_DIR}
@@ -17,4 +17,4 @@ RUN ln -s graalvm-ce-java11-19.3.0/ graalvm-ce-19.3.0 &&\
 ENV JAVA_HOME="${GRAALVM_TARGET_DIR}/graalvm-ce-19.3.0/"
 
 WORKDIR /app
-CMD /app/builder build
+CMD /app/builder validate-release || exit 0 && /app/builder apply-version && /app/builder build && /app/builder upload-release
