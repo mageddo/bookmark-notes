@@ -1,7 +1,6 @@
-package com.mageddo.commons;
+package com.mageddo.markdown;
 
 import org.commonmark.Extension;
-import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
@@ -13,7 +12,9 @@ public final class MarkdownUtils {
 	}
 
 	public static String parseMarkdown(String markdown) {
-		final List<Extension> extensions = Arrays.asList(TablesExtension.create());
+		final List<Extension> extensions = Arrays.asList(
+			CustomTableExtension.create("table table-bordered table-striped")
+		);
 		final Parser parser = Parser
 			.builder()
 			.extensions(extensions)

@@ -2,7 +2,7 @@ package com.mageddo.commons;
 
 import org.junit.jupiter.api.Test;
 
-import static com.mageddo.commons.MarkdownUtils.parseMarkdown;
+import static com.mageddo.markdown.MarkdownUtils.parseMarkdown;
 import static com.mageddo.config.TestUtils.readAsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
