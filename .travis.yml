@@ -1,6 +1,6 @@
 sudo: required
 os: linux
-language: minimal
+language: java
 services:
   - docker
 
