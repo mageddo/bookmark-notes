@@ -1,6 +1,8 @@
-package com.mageddo.bookmarks.utils;
+package thymeleaf;
 
 import com.mageddo.commons.URLUtils;
+
+import static com.mageddo.config.ApplicationContextUtils.context;
 
 public final class ThymeleafUtils {
 
@@ -21,5 +23,12 @@ public final class ThymeleafUtils {
 
 	public static String encodeSeoUrl(String path){
 		return URLUtils.encodeSeoUrl(path);
+	}
+
+	public static String analyticsId(){
+		return context()
+			.getEnvironment()
+			.get("analytics.id", String.class, "")
+			;
 	}
 }

@@ -162,10 +162,12 @@ static void deleteRecursively(java.nio.file.Path distPath) {
 }
 
 task heartbeat(){
-	Executors.newSingleThreadExecutor().submit({
-		while (!Thread.currentThread().isInterrupted()){
-			println "${LocalDateTime.now()} ping"
-			TimeUnit.MINUTES.sleep(1);
-		}
-	})
+	doLast(){
+		Executors.newSingleThreadExecutor().submit({
+			while (!Thread.currentThread().isInterrupted()){
+				println "${LocalDateTime.now()} ping"
+				TimeUnit.MINUTES.sleep(1);
+			}
+		})
+	}
 }
