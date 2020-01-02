@@ -9,10 +9,6 @@ public final class ThymeleafUtils {
 	private ThymeleafUtils() {
 	}
 
-	public static ThymeleafUtils getInstance() {
-		return new ThymeleafUtils();
-	}
-
 	public static String[] splitTags(String tags) {
 		return tags == null ? null : tags.split(",");
 	}

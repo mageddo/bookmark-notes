@@ -36,8 +36,7 @@ public class HomeController {
 		if (page + 1 > pages) {
 			return ok(mapOf(
 				"headerTitle", "Not found",
-				"msg", "No results",
-				"thymeleafUtils", ThymeleafUtils.getInstance()
+				"msg", "No results"
 			));
 		} else if (page > 0) {
 			startPage = page * pageSize;
@@ -50,8 +49,7 @@ public class HomeController {
 			"description", "Technology posts based on my practice experience",
 			"nextPage", page + 2,
 			"hasMore", pages > page + 1,
-			"bookmarks", recentBookmarks,
-			"thymeleafUtils", ThymeleafUtils.getInstance()
+			"bookmarks", recentBookmarks
 		));
 	}
 
