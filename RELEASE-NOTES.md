@@ -1,3 +1,6 @@
+# 3.3.1
+* Fixing analytics ID wasn't being replicated to pages 
+
 # 3.3.0
 * Fixing tables format on public view
 
