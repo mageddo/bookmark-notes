@@ -164,7 +164,7 @@ static void deleteRecursively(java.nio.file.Path distPath) {
 task heartbeat(){
 	doLast(){
 		Executors.newSingleThreadExecutor().submit({
-			while (!Thread.isInterrupted()){
+			while (!Thread.currentThread().isInterrupted()){
 				println "${LocalDateTime.now()} ping"
 				TimeUnit.MINUTES.sleep(1);
 			}
