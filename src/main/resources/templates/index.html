@@ -9,7 +9,7 @@
 
 		<h1 id="page-title" th:text="${pageTitle}"></h1>
 		<div class="row-result" th:each="bookmark : ${bookmarks}">
-			<h4><a th:href="'/bookmark/' + *{bookmark.id} + '/' + *{thymeleafUtils.encodeSeoUrl(bookmark.name)} ">
+			<h4><a th:href="'/bookmark/' + *{bookmark.id} + '/' + *{@thymeleaf.ThymeleafUtils@encodeSeoUrl(bookmark.name)} ">
 				<div th:if="#{bookmark.name} == null" >
 					ID: [${bookmark.id}]] - Unknow name
 				</div>
@@ -17,7 +17,7 @@
 					[[${bookmark.name}]]
 				</div>
 			</a></h4>
-			<a href="#" class="btn btn-tag" style="margin-right: 5px" th:each="tag : ${thymeleafUtils.splitTags(bookmark.tags)}" th:text="${tag}" />
+			<a href="#" class="btn btn-tag" style="margin-right: 5px" th:each="tag : ${@thymeleaf.ThymeleafUtils@splitTags(bookmark.tags)}" th:text="${tag}" />
 			<hr>
 		</div>
 
@@ -27,7 +27,7 @@
 		<div th:if="#{hasMore} != null" >
 			<div class="row more-results">
 				<div class="col-lg-5 col-centered">
-					<a class="btn btn-info center-block" style="width:100%" th:href="*{thymeleafUtils.encodeSeoUrl(x)} + '?page=' + ${nextPage}" >More results ...</a>
+					<a class="btn btn-info center-block" style="width:100%" th:href="*{@thymeleaf.ThymeleafUtils@encodeSeoUrl(x)} + '?page=' + ${nextPage}" >More results ...</a>
 				</div>
 			</div>
 		</div>

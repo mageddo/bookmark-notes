@@ -1,6 +1,6 @@
 package com.mageddo.config;
 
-import com.mageddo.bookmarks.utils.ThymeleafUtils;
+import thymeleaf.ThymeleafUtils;
 import com.oracle.svm.core.annotate.AutomaticFeature;
 import nativeimage.Reflection;
 import nativeimage.Reflections;
