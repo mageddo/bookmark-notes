@@ -6,12 +6,10 @@ import com.mageddo.commons.UrlUtils;
 import com.mageddo.rawstringliterals.RawString;
 import com.mageddo.rawstringliterals.RawStrings;
 import com.mageddo.rawstringliterals.Rsl;
-import io.micronaut.http.HttpRequest;
-import io.micronaut.http.MutableHttpResponse;
+import io.micronaut.http.*;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ModelAndView;
 import com.mageddo.commons.Maps;
-import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.QueryValue;
@@ -37,15 +35,15 @@ public class HomeController {
 	}
 
 	@Get("/robots.txt")
-	@Produces("text/plain")
-	String robots(HttpRequest req){
+	HttpResponse robots(HttpRequest req){
 /*
 # Sitemaps
 Sitemap: %s/api/v1.0/sitemap
 */
 		@RawString
 		final String robots = RawStrings.lateInit();
-		return String.format(robots, UrlUtils.getFullHost(req));
+		return ok(String.format(robots, UrlUtils.getFullHost(req)))
+			.header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN);
 	}
 
 	@Get
