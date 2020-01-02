@@ -1,6 +1,6 @@
 package thymeleaf;
 
-import com.mageddo.commons.URLUtils;
+import com.mageddo.commons.UrlUtils;
 
 import static com.mageddo.config.ApplicationContextUtils.context;
 
@@ -14,11 +14,11 @@ public final class ThymeleafUtils {
 	}
 
 	public static String encodePath(String path){
-		return URLUtils.encode(path);
+		return UrlUtils.encode(path);
 	}
 
 	public static String encodeSeoUrl(String path){
-		return URLUtils.encodeSeoUrl(path);
+		return UrlUtils.encodeSeoUrl(path);
 	}
 
 	public static String analyticsId(){

@@ -41,7 +41,7 @@ public class BookmarkDAOSqlite implements BookmarkDAO {
 			WHERE NUM_VISIBILITY = 1
 			AND FLG_DELETED = 0
 			AND FLG_ARCHIVED = 0
-			ORDER BY IDT_BOOKMARK DESC
+			ORDER BY DAT_UPDATE DESC
 		) T LIMIT 100000
 		*/
 		@RawString final String sql = lateInit();

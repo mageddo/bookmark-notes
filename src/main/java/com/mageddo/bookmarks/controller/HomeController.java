@@ -2,9 +2,14 @@ package com.mageddo.bookmarks.controller;
 
 import com.mageddo.bookmarks.apiserver.res.RecentBookmarksRes;
 import com.mageddo.bookmarks.service.BookmarksService;
-import thymeleaf.ThymeleafUtils;
+import com.mageddo.commons.UrlUtils;
+import com.mageddo.rawstringliterals.RawString;
+import com.mageddo.rawstringliterals.RawStrings;
+import com.mageddo.rawstringliterals.Rsl;
+import io.micronaut.http.*;
+import io.micronaut.http.annotation.Produces;
+import io.micronaut.views.ModelAndView;
 import com.mageddo.commons.Maps;
-import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.QueryValue;
@@ -13,10 +18,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
 
 import static io.micronaut.core.util.CollectionUtils.mapOf;
 import static io.micronaut.http.HttpResponse.ok;
 
+@Rsl
 @Controller
 public class HomeController {
 
@@ -25,6 +32,18 @@ public class HomeController {
 
 	public HomeController(BookmarksService bookmarksService) {
 		this.bookmarksService = bookmarksService;
+	}
+
+	@Get("/robots.txt")
+	HttpResponse robots(HttpRequest req){
+/*
+# Sitemaps
+Sitemap: %s/api/v1.0/sitemap
+*/
+		@RawString
+		final String robots = RawStrings.lateInit();
+		return ok(String.format(robots, UrlUtils.getFullHost(req)))
+			.header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN);
 	}
 
 	@Get

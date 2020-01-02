@@ -27,7 +27,6 @@ public class SiteMapService {
 	@Transactional
 	public void generateSiteMapXML(OutputStream out, String url) throws IOException {
 		/*
-		<?xml version="1.0" encoding="UTF-8"?>
 		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 		 */
 		@RawString

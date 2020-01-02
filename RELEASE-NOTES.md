@@ -1,3 +1,6 @@
+# 3.4.0
+* Configuring robots and sitemaps 
+
 # 3.3.1
 * Fixing analytics ID wasn't being replicated to pages 
 
