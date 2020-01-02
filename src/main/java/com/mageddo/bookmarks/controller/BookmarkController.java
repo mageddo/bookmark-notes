@@ -8,7 +8,7 @@ import com.mageddo.bookmarks.entity.TagEntity;
 import com.mageddo.bookmarks.service.BookmarksService;
 import com.mageddo.bookmarks.service.SettingsService;
 import com.mageddo.bookmarks.service.TagService;
-import com.mageddo.commons.URLUtils;
+import com.mageddo.commons.UrlUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
@@ -181,10 +181,9 @@ public class BookmarkController {
 		if(bookmark == null){
 			return null;
 		}
-		final String host = req.getHeaders().get("Host");
 		return String.format(
 			"//%s/bookmark/%d/%s",
-			host, bookmark.getId(), URLUtils.encodeSeoUrl(bookmark.getName())
+			UrlUtils.getHost(req), bookmark.getId(), UrlUtils.encodeSeoUrl(bookmark.getName())
 		);
 	}
 	private String toSQLDate(LocalDateTime creationDate) {

@@ -2,7 +2,14 @@ package com.mageddo.bookmarks.controller;
 
 import com.mageddo.bookmarks.apiserver.res.RecentBookmarksRes;
 import com.mageddo.bookmarks.service.BookmarksService;
-import thymeleaf.ThymeleafUtils;
+import com.mageddo.commons.UrlUtils;
+import com.mageddo.rawstringliterals.RawString;
+import com.mageddo.rawstringliterals.RawStrings;
+import com.mageddo.rawstringliterals.Rsl;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.MutableHttpResponse;
+import io.micronaut.http.annotation.Produces;
+import io.micronaut.views.ModelAndView;
 import com.mageddo.commons.Maps;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
@@ -13,10 +20,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
 
 import static io.micronaut.core.util.CollectionUtils.mapOf;
 import static io.micronaut.http.HttpResponse.ok;
 
+@Rsl
 @Controller
 public class HomeController {
 
@@ -28,8 +37,16 @@ public class HomeController {
 	}
 
 	@Get("/robots.txt")
-	@View("robots")
-	void robots(){}
+	@Produces("text/plain")
+	String robots(HttpRequest req){
+/*
+# Sitemaps
+Sitemap: %s/api/v1.0/sitemap
+*/
+		@RawString
+		final String robots = RawStrings.lateInit();
+		return String.format(robots, UrlUtils.getFullHost(req));
+	}
 
 	@Get
 	@View("index")
