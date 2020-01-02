@@ -27,6 +27,10 @@ public class HomeController {
 		this.bookmarksService = bookmarksService;
 	}
 
+	@Get("/robots.txt")
+	@View("robots")
+	void robots(){}
+
 	@Get
 	@View("index")
 	HttpResponse index(@QueryValue(value = "page", defaultValue = "1") int page) {
