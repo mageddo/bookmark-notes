@@ -1,3 +1,6 @@
+# 3.4.1
+* Fixing pages URLs on sitemap api
+
 # 3.4.0
 * Configuring robots and sitemaps 
 
