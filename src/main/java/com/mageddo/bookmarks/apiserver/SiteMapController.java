@@ -35,7 +35,7 @@ public class SiteMapController {
 	public HttpResponse sitemap(HttpRequest req) {
 		try {
 			final ByteArrayOutputStream out = new ByteArrayOutputStream();
-			this.siteMapService.generateSiteMapXML(out, req.getPath());
+			this.siteMapService.generateSiteMapXML(out, req);
 			return ok(new String(out.toByteArray()));
 		} catch (Exception e) {
 			logger.error("status=cant-mount-sitemap, msg={}", e.getMessage(), e);

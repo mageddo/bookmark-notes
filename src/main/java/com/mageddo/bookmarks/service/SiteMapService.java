@@ -2,8 +2,10 @@ package com.mageddo.bookmarks.service;
 
 import com.mageddo.bookmarks.dao.BookmarkDAO;
 import com.mageddo.bookmarks.entity.BookmarkEntity;
+import com.mageddo.commons.UrlUtils;
 import com.mageddo.rawstringliterals.RawString;
 import com.mageddo.rawstringliterals.Rsl;
+import io.micronaut.http.HttpRequest;
 import io.micronaut.spring.tx.annotation.Transactional;
 
 import javax.inject.Singleton;
@@ -25,7 +27,7 @@ public class SiteMapService {
 	}
 
 	@Transactional
-	public void generateSiteMapXML(OutputStream out, String url) throws IOException {
+	public void generateSiteMapXML(OutputStream out, HttpRequest req) throws IOException {
 		/*
 		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 		 */
@@ -46,7 +48,7 @@ public class SiteMapService {
 
 		for (final BookmarkEntity bookmarkEntity : bookmarkDAO.loadSiteMap()) {
 			out.write(String.format(
-				siteMapItem, formatURL(url, bookmarkEntity), formatDate(bookmarkEntity.getLastUpdate())
+				siteMapItem, formatURL(req, bookmarkEntity), formatDate(bookmarkEntity.getLastUpdate())
 			).getBytes());
 		}
 		out.write( "</urlset>\n".getBytes());
@@ -60,9 +62,9 @@ public class SiteMapService {
 		return String.format("<lastmod>%s</lastmod>", date.format(DateTimeFormatter.ISO_DATE));
 	}
 
-	private String formatURL(String url, BookmarkEntity bookmarkEntity) {
+	private String formatURL(HttpRequest url, BookmarkEntity bookmarkEntity) {
 		return String.format(
-			"%s/bookmark/%d/%s", url, bookmarkEntity.getId(),
+			"%s/bookmark/%d/%s", UrlUtils.getFullHost(url), bookmarkEntity.getId(),
 			bookmarkEntity.getName().toLowerCase().replaceAll(" ", "-")
 		);
 	}
