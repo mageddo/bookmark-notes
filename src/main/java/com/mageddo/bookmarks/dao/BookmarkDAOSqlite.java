@@ -35,14 +35,14 @@ public class BookmarkDAOSqlite implements BookmarkDAO {
 	@Override
 	public List<BookmarkEntity> loadSiteMap() {
 		/*
-		SELECT * FROM (
-			SELECT IDT_BOOKMARK, NAM_BOOKMARK, DAT_UPDATE
-			FROM BOOKMARK
-			WHERE NUM_VISIBILITY = 1
-			AND FLG_DELETED = 0
-			AND FLG_ARCHIVED = 0
-			ORDER BY DAT_UPDATE DESC
-		) T LIMIT 100000
+		SELECT
+			IDT_BOOKMARK, NAM_BOOKMARK, DAT_UPDATE
+		FROM BOOKMARK
+		WHERE NUM_VISIBILITY = 1
+		AND FLG_DELETED = 0
+		AND FLG_ARCHIVED = 0
+		ORDER BY DAT_UPDATE DESC
+		LIMIT 100000
 		*/
 		@RawString final String sql = lateInit();
 		return parameterJdbcTemplate.query(sql, BookmarkEntity.mapper());
