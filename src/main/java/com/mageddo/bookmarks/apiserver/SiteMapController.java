@@ -25,6 +25,11 @@ public class SiteMapController {
 		this.siteMapService = siteMapService;
 	}
 
+	@Get("/sitemap.xml")
+	@Produces(MediaType.APPLICATION_XML)
+	public HttpResponse sitemapXml(HttpRequest req) {
+		return sitemap(req);
+	}
 	@Get("/api/v1.0/sitemap")
 	@Produces(MediaType.APPLICATION_XML)
 	public HttpResponse sitemap(HttpRequest req) {
