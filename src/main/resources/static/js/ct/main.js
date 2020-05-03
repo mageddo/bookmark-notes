@@ -87,7 +87,7 @@ function prependTableOfContents(html) {
   let headersHtml = marked(headersMarkdown, {
     renderer: renderer
   });
-  return '<h1><button type="button" data-target="#toc-contents" data-toggle="collapse" aria-expanded="false">Table Of Contents </button></h1>\n'
+  return '<h1><a href="#toc-contents" data-toggle="collapse" aria-expanded="false" class="skipped">Table Of Contents </a></h1>\n'
     + '<div class="collapse" id="toc-contents">\n'
     + headersHtml
     + '\n</div>'

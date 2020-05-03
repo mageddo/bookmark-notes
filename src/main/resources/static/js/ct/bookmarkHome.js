@@ -151,9 +151,9 @@
       .click(abrirTelaEdicao);
 
     $("#tbyBookmark .divItemBody a").click(function (e) {
-      e.stopPropagation();
-      this.target = "_blank";
-    });
+        e.stopPropagation();
+        this.target = "_blank";
+      });
 
     $("#tbyBookmark .divItemFooter")
       .find(".btnEditBookmark")
