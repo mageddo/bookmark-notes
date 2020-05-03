@@ -128,6 +128,8 @@
         } else if (btnType === 'link') {
           editor.execCommand('link');
 
+        } else if (btnType === 'code-block') {
+          editor.execCommand(btnType);
         } else if (btnType === 'image') {
           if (selectedText === '') {
             snippetManager.insertSnippet(editor, '![${1:text}](http://$2)');
@@ -137,7 +139,7 @@
 
         } else if (btnType === 'edit') {
           preview = false;
-
+          plugin.find('.btn-toc').hide();
           mdPreview.hide();
           mdEditor.show();
           plugin.find('.btn-edit').addClass('active');
@@ -153,6 +155,7 @@
           mdPreview.html('<p style="text-align:center; font-size:16px">' + defaults.label.loading + '...</p>');
 
           defaults.onPreview(editor.getSession().getValue(), function (content) {
+            plugin.find('.btn-toc').show();
             mdPreview.html(content);
           });
 
@@ -317,6 +320,19 @@
       },
       readOnly: false
     });
+
+    editor.commands.addCommand({
+      name: "code-block",
+      exec: function() {
+        let copiedText = editor.getCopyText();
+        if(!copiedText.endsWith("\n")){
+          copiedText += '\n';
+        }
+        editor.insert('```\n' + copiedText + '```');
+      },
+      bindKey: {mac: "cmd-,|cmd-\\", win: "ctrl-\\|ctrl-,"}
+    });
+
   }
 
   function insertBeforeText(editor, string) {
@@ -361,6 +377,8 @@
       html += '<div data-mdtooltip="tooltip" title="' + options.label.btnUpload + '" class="btn btn-sm btn-default md-btn-file"><span class="glyphicon glyphicon-upload"></span><input class="md-input-upload" type="file" multiple accept=".jpg,.jpeg,.png,.gif"></div>';
     }
     html += '</div>'; // .btn-group
+    html += '<button type="button" data-mdtooltip="tooltip" title="' + options.label.btnCodeBlock + '" class="md-btn btn btn-sm btn-default btn-code-block" data-btn="code-block"><span class="glyphicon glyphicon-console"></span></button>';
+    html += '<button type="button" data-target="#toc-contents" data-toggle="collapse" aria-expanded="false" class="md-btn btn btn-sm btn-default btn-toc" data-btn="toc" data-mdtooltip="tooltip" title="Table Of Contents"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;TOC</button>';
 
     if (options.fullscreen === true) {
 
@@ -413,6 +431,7 @@
       btnLink: 'Link',
       btnImage: 'Insert image',
       btnUpload: 'Upload image',
+      btnCodeBlock: 'Code Block',
       btnEdit: 'Edit',
       btnPreview: 'Preview',
       btnFullscreen: 'Fullscreen',

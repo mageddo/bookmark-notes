@@ -58,10 +58,10 @@
 <!--SCRIPTS-->
 <script th:with="debugging=${debug} ?: 'false'">
   var mg = {
-    defaults: {
-      debug: [[${debugging}]]
-    }
-  }
+    defaults: {}
+  };
+  mg.settings = [(${settingsJson})];
+  mg.defaults.debug = [[${debugging}]];
 </script>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>

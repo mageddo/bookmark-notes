@@ -2,7 +2,7 @@ var mg = {
   defaults: {
     cache: false
   }
-}
+};
 
 var myapp = angular.module('myapp', []);
 myapp.controller('menuController', function ($scope, $http) {

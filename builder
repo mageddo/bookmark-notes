@@ -53,7 +53,7 @@ case $1 in
 	build )
 
 		echo "> starting build $APP_VERSION"
-		./gradlew clean heartbeat build nativeImage --info
+		./gradlew clean heartbeat build intTest nativeImage --info
 		echo "> build success"
 
 

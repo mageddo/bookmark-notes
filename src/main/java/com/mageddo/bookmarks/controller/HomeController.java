@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.mageddo.bookmarks.apiserver.res.RecentBookmarksRes;
 import com.mageddo.bookmarks.service.BookmarksService;
+import com.mageddo.bookmarks.service.SettingsService;
+import com.mageddo.common.jackson.JsonUtils;
 import com.mageddo.commons.Maps;
 import com.mageddo.commons.UrlUtils;
 import com.mageddo.rawstringliterals.RawString;
@@ -31,9 +33,11 @@ public class HomeController {
 
   private final Logger logger = LoggerFactory.getLogger(getClass());
   private final BookmarksService bookmarksService;
+  private final SettingsService settingsService;
 
-  public HomeController(BookmarksService bookmarksService) {
+  public HomeController(BookmarksService bookmarksService, SettingsService settingsService) {
     this.bookmarksService = bookmarksService;
+    this.settingsService = settingsService;
   }
 
   @Get("/robots.txt")
@@ -72,7 +76,10 @@ Sitemap: %s/api/v1.0/sitemap
     if (false) {
       return ok(mapOf("layout", false, "compile", false));
     } else {
-      return ok(mapOf("compile", false));
+      return ok(mapOf(
+          "compile", false
+          , "settingsJson", JsonUtils.writeValueAsString(settingsService.findAllAsMap())
+      ));
     }
   }
 

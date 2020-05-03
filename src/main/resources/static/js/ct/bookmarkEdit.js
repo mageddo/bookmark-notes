@@ -7,7 +7,7 @@
     preview: true,
     theme: "ace/theme/tomorrow_night",
     onPreview: function (content, callback) {
-      callback(parseCode(content, callback));
+      callback(parseMarkdown(content));
     }
   });
 
@@ -21,9 +21,10 @@
 
   edition.setup();
 
-  var session = items.editorPanel.editor.getSession();
-  session.setUseSoftTabs(false);
-  session.setTabSize(2);
+  items.editorPanel.editor.setOption("showInvisibles", mg.settings.CODE_STYLE_SHOW_WHITESPACES === "true");
+  let session = items.editorPanel.editor.getSession();
+  session.setUseSoftTabs(mg.settings.CODE_STYLE_TAB_STYLE === "SPACES");
+  session.setTabSize(mg.settings.CODE_STYLE_TAB_SIZE);
   items.editorPanel.focus(function () {
     items.editorPanel.editor.focus();
   });

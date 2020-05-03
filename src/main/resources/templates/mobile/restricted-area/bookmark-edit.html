@@ -41,11 +41,10 @@
     <div class="editor-panel">
       <div class="btn-editor-panel">
         <a class="btn btn-close-modal btn-warning glyphicon glyphicon-arrow-left" href="#"></a>
-        <a class="btn-edit  btn btn-default btn-edit-common glyphicon glyphicon-pencil active" href="#"></a>&nbsp;
-        <a class="btn-visualize  btn btn-default btn-visualize-common glyphicon glyphicon-eye-open" href="#"></a>&nbsp;
-        <a class="btn-linewrap  btn btn-default btn-linewrap-common glyphicon glyphicon-line-wrap png-active"
-           href="#"></a>&nbsp;
-        <a class="btn-tab  btn btn-default glyphicon glyphicon-indent-left" href="#"></a>&nbsp;
+        <a class="btn-edit  btn btn-default btn-edit-common glyphicon glyphicon-pencil active" href="#"></a>&nbsp
+        <a class="btn-visualize btn btn-default btn-visualize-common glyphicon glyphicon-eye-open" href="#"></a>&nbsp
+        <a class="btn-linewrap  btn btn-default btn-linewrap-common glyphicon glyphicon-line-wrap png-active" href="#"></a>&nbsp
+        <a class="btn-tab btn btn-default glyphicon glyphicon-indent-left" href="#"></a>&nbsp
         <a class="btn-fullscreen btn btn-default glyphicon glyphicon-fullscreen" href="#"></a>
         <button class="btn btn-success glyphicon glyphicon-floppy-save pull-right" type="submit"></button>
       </div>
@@ -57,7 +56,7 @@
 <div th:fragment="footer-scripts" th:remove="tag">
   <script>
     var tagsToEdit = [(${tagsAsJson})];
-    mg.defaults.maxHeight = [[${mobileMaxHeight}]];
+    mg.defaults.maxHeight = mg.settings.MOBILE_CODE_BLOCK_MAX_HEIGHT;
   </script>
   <script src="/static/js/ct/bookmarkEditCommon.js"></script>
   <script src="/static/js/ct/mobile/bookmarkEdit.js"></script>

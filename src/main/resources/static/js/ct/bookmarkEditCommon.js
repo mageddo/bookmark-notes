@@ -107,7 +107,18 @@ BookmarkEdition.prototype.setup = function () {
     })(e)
   });
 
+  function isHashClick(href) {
+    let currentUriHashIndex = window.location.href.indexOf("#");
+    if(currentUriHashIndex < 0){
+      currentUriHashIndex = window.location.href.length;
+    }
+    return href.substring(currentUriHashIndex).startsWith('#');
+  }
+
   items.preview.on('click', 'a:not(.skipped)', function (e) {
+    if(isHashClick(this.href)){
+      return ;
+    }
     e.stopPropagation();
     this.target = "_blank";
   });
