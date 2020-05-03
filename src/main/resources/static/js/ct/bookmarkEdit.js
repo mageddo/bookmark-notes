@@ -21,7 +21,7 @@
 
   edition.setup();
 
-  items.editorPanel.editor.setOption("showInvisibles", true); // fixme customize this option
+  items.editorPanel.editor.setOption("showInvisibles", mg.settings.CODE_STYLE_SHOW_WHITESPACES === "true");
   let session = items.editorPanel.editor.getSession();
   session.setUseSoftTabs(mg.settings.CODE_STYLE_TAB_STYLE === "SPACES");
   session.setTabSize(mg.settings.CODE_STYLE_TAB_SIZE);
