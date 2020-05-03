@@ -85,7 +85,13 @@
         mg.notify.warn("Nothing to save");
         return;
       }
-      mg.notify.success("All settings saved! (You must refresh the page to some take effect)");
+      mg.notify.success("All settings saved! Reloading...", {
+        onShow: function(){
+          setTimeout(function(){
+            window.location.reload();
+          }, 2000);
+        }
+      });
     }).error(function () {
       mg.notify.error("Can't save settings");
     });
