@@ -52,7 +52,7 @@ dependencies {
   compileOnly("com.mageddo.nativeimage:reflection-config-generator:2.1.1")
   annotationProcessor("com.mageddo.nativeimage:reflection-config-generator:2.1.1")
 
-  compile("org.flywaydb:flyway-core:5.2.4")
+  compile("org.flywaydb:flyway-core:6.4.1")
   compile("com.zaxxer:HikariCP:3.3.1")
 //	compile("org.xerial:sqlite-jdbc:3.27.2")
   compile("org.postgresql:postgresql:42.2.5")
