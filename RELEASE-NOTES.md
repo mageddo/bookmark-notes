@@ -1,4 +1,4 @@
-# 3.5.1
+# 3.5.0
 * Table Of Contents: Now you can see a table of contents at the editor when previewing
 * Code block button: Click on code block button while editing (selecting a existent code or not) to generate a new code
  block
