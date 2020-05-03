@@ -33,7 +33,7 @@
     items.btnVisualize.addClass("active");
 
     items.editor.addClass("hidden");
-    items.preview.removeClass("hidden").html(parseCode(items.editor.val()))
+    items.preview.removeClass("hidden").html(transformCodeBlocks(items.editor.val()))
   })
 
   items.btnLineWrap.click(function () {
