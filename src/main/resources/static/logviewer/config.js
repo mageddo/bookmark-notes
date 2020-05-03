@@ -1,3 +1,5 @@
 {
-	"logUrl": "/logs"
+  "logUrl"
+:
+  "/logs"
 }

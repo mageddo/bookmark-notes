@@ -1,37 +1,39 @@
 <!DOCTYPE html>
 <html
-	xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	th:replace="layout/public-layout :: layout(headerTitle = ${headerTitle})"
+  th:replace="layout/public-layout :: layout(headerTitle = ${headerTitle})" xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
 >
 <head th:fragment="header-scripts"></head>
 <div th:fragment="content">
-	<div class="container" style="min-height:500px">
+  <div class="container" style="min-height:500px">
 
-		<h1 id="page-title" th:text="${pageTitle}"></h1>
-		<div class="row-result" th:each="bookmark : ${bookmarks}">
-			<h4><a th:href="'/bookmark/' + *{bookmark.id} + '/' + *{@thymeleaf.ThymeleafUtils@encodeSeoUrl(bookmark.name)} ">
-				<div th:if="#{bookmark.name} == null" >
-					ID: [${bookmark.id}]] - Unknow name
-				</div>
-				<div th:if="#{bookmark.name} != null" >
-					[[${bookmark.name}]]
-				</div>
-			</a></h4>
-			<a href="#" class="btn btn-tag" style="margin-right: 5px" th:each="tag : ${@thymeleaf.ThymeleafUtils@splitTags(bookmark.tags)}" th:text="${tag}" />
-			<hr>
-		</div>
+    <h1 id="page-title" th:text="${pageTitle}"></h1>
+    <div class="row-result" th:each="bookmark : ${bookmarks}">
+      <h4><a th:href="'/bookmark/' + *{bookmark.id} + '/' + *{@thymeleaf.ThymeleafUtils@encodeSeoUrl(bookmark.name)} ">
+        <div th:if="#{bookmark.name} == null">
+          ID: [${bookmark.id}]] - Unknow name
+        </div>
+        <div th:if="#{bookmark.name} != null">
+          [[${bookmark.name}]]
+        </div>
+      </a></h4>
+      <a class="btn btn-tag" href="#" style="margin-right: 5px"
+         th:each="tag : ${@thymeleaf.ThymeleafUtils@splitTags(bookmark.tags)}" th:text="${tag}"/>
+      <hr>
+    </div>
 
-		<!-- possible error -->
-		[[${msg}]]
+    <!-- possible error -->
+    [[${msg}]]
 
-		<div th:if="#{hasMore} != null" >
-			<div class="row more-results">
-				<div class="col-lg-5 col-centered">
-					<a class="btn btn-info center-block" style="width:100%" th:href="*{@thymeleaf.ThymeleafUtils@encodeSeoUrl(x)} + '?page=' + ${nextPage}" >More results ...</a>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div th:if="#{hasMore} != null">
+      <div class="row more-results">
+        <div class="col-lg-5 col-centered">
+          <a class="btn btn-info center-block" style="width:100%"
+             th:href="*{@thymeleaf.ThymeleafUtils@encodeSeoUrl(x)} + '?page=' + ${nextPage}">More results ...</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <div th:fragment="footer-scripts"></div>
 </html>

@@ -17,12 +17,13 @@
 package com.mageddo.config;
 
 import com.zaxxer.hikari.HikariConfig;
+
 import io.micronaut.context.annotation.EachProperty;
 
 /**
  * Allows the configuration of Hikari JDBC data sources. All properties on
  * {@link HikariConfig} are available to be configured.
- *
+ * <p>
  * If the url, driver class, username, or password are missing, sensible defaults
  * will be provided when possible. If no configuration beyond the datasource name
  * is provided, an in memory datastore will be configured based on the available
@@ -34,76 +35,76 @@ import io.micronaut.context.annotation.EachProperty;
 @EachProperty(value = "datasources", primary = "default")
 public class DatasourceConfiguration {
 
-	private String jdbcUrl;
-	private String username;
-	private String password;
-	private String driverClassName;
-	private String connectionTestQuery;
-	private int initializationFailTimeout;
-	private int minimumIdle;
-	private int maximumPoolSize;
+  private String jdbcUrl;
+  private String username;
+  private String password;
+  private String driverClassName;
+  private String connectionTestQuery;
+  private int initializationFailTimeout;
+  private int minimumIdle;
+  private int maximumPoolSize;
 
-	public String getJdbcUrl() {
-		return jdbcUrl;
-	}
+  public String getJdbcUrl() {
+    return jdbcUrl;
+  }
 
-	public void setJdbcUrl(String jdbcUrl) {
-		this.jdbcUrl = jdbcUrl;
-	}
+  public void setJdbcUrl(String jdbcUrl) {
+    this.jdbcUrl = jdbcUrl;
+  }
 
-	public String getUsername() {
-		return username;
-	}
+  public String getUsername() {
+    return username;
+  }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+  public void setUsername(String username) {
+    this.username = username;
+  }
 
-	public String getPassword() {
-		return password;
-	}
+  public String getPassword() {
+    return password;
+  }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-	public String getDriverClassName() {
-		return driverClassName;
-	}
+  public String getDriverClassName() {
+    return driverClassName;
+  }
 
-	public void setDriverClassName(String driverClassName) {
-		this.driverClassName = driverClassName;
-	}
+  public void setDriverClassName(String driverClassName) {
+    this.driverClassName = driverClassName;
+  }
 
-	public String getConnectionTestQuery() {
-		return connectionTestQuery;
-	}
+  public String getConnectionTestQuery() {
+    return connectionTestQuery;
+  }
 
-	public void setConnectionTestQuery(String connectionTestQuery) {
-		this.connectionTestQuery = connectionTestQuery;
-	}
+  public void setConnectionTestQuery(String connectionTestQuery) {
+    this.connectionTestQuery = connectionTestQuery;
+  }
 
-	public int getInitializationFailTimeout() {
-		return initializationFailTimeout;
-	}
+  public int getInitializationFailTimeout() {
+    return initializationFailTimeout;
+  }
 
-	public void setInitializationFailTimeout(int initializationFailTimeout) {
-		this.initializationFailTimeout = initializationFailTimeout;
-	}
+  public void setInitializationFailTimeout(int initializationFailTimeout) {
+    this.initializationFailTimeout = initializationFailTimeout;
+  }
 
-	public int getMinimumIdle() {
-		return minimumIdle;
-	}
+  public int getMinimumIdle() {
+    return minimumIdle;
+  }
 
-	public void setMinimumIdle(int minimumIdle) {
-		this.minimumIdle = minimumIdle;
-	}
+  public void setMinimumIdle(int minimumIdle) {
+    this.minimumIdle = minimumIdle;
+  }
 
-	public int getMaximumPoolSize() {
-		return maximumPoolSize;
-	}
+  public int getMaximumPoolSize() {
+    return maximumPoolSize;
+  }
 
-	public void setMaximumPoolSize(int maximumPoolSize) {
-		this.maximumPoolSize = maximumPoolSize;
-	}
+  public void setMaximumPoolSize(int maximumPoolSize) {
+    this.maximumPoolSize = maximumPoolSize;
+  }
 }

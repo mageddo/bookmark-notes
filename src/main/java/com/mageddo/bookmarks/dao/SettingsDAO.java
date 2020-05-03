@@ -1,14 +1,14 @@
 package com.mageddo.bookmarks.dao;
 
-import com.mageddo.bookmarks.entity.SettingEntity;
-
 import java.util.List;
+
+import com.mageddo.bookmarks.entity.SettingEntity;
 
 public interface SettingsDAO {
 
-	List<SettingEntity> findAll();
+  List<SettingEntity> findAll();
 
-	SettingEntity find(String key);
+  SettingEntity find(String key);
 
-	void patch(SettingEntity settingEntity);
+  void patch(SettingEntity settingEntity);
 }
