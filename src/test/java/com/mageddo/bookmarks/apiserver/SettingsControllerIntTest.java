@@ -1,13 +1,14 @@
 package com.mageddo.bookmarks.apiserver;
 
+import java.io.IOException;
+
+import javax.inject.Inject;
+
 import com.mageddo.common.jackson.JsonUtils;
 import com.mageddo.config.DatabaseConfigurator;
 import com.mageddo.rawstringliterals.RawString;
 import com.mageddo.rawstringliterals.Rsl;
-import io.micronaut.http.MediaType;
-import io.micronaut.runtime.server.EmbeddedServer;
-import io.micronaut.test.annotation.MicronautTest;
-import io.restassured.response.Response;
+
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,10 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.skyscreamer.jsonassert.comparator.DefaultComparator;
 import org.skyscreamer.jsonassert.comparator.JSONComparator;
 
-import javax.inject.Inject;
-import java.io.IOException;
+import io.micronaut.http.MediaType;
+import io.micronaut.runtime.server.EmbeddedServer;
+import io.micronaut.test.annotation.MicronautTest;
+import io.restassured.response.Response;
 
 import static com.mageddo.config.TestUtils.setupRestAssured;
 import static com.mageddo.rawstringliterals.RawStrings.lateInit;
@@ -31,100 +34,93 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 @MicronautTest(environments = "pg")
 class SettingsControllerIntTest {
 
-	@Inject
-	private EmbeddedServer server;
+  private static final JSONComparator comparator = new DefaultComparator(JSONCompareMode.LENIENT);
+  @Inject
+  private EmbeddedServer server;
+  @Inject
+  private DatabaseConfigurator databaseConfigurator;
 
-	@Inject
-	private DatabaseConfigurator databaseConfigurator;
+  @BeforeEach
+  void before() {
+    setupRestAssured(server);
+    databaseConfigurator.migrate();
+  }
 
-	@BeforeEach
-	void before(){
-		setupRestAssured(server);
-		databaseConfigurator.migrate();
-	}
+  @Test
+  void shouldUpdateExistingSettingProperties() {
 
-	@Test
-	void shouldUpdateExistingSettingProperties(){
-
-		// arrange
+    // arrange
 
 		/*
 		[{"key":"CODE_BLOCK_MAX_HEIGHT","value":"250"}]
 		 */
-		@RawString
-		final String reqBody = lateInit();
+    @RawString
+    final String reqBody = lateInit();
 
-		// act
-		final Response res = given()
-			.body(reqBody)
-			.contentType(MediaType.APPLICATION_JSON)
-			.patch("/api/v2.0/settings")
-		;
+    // act
+    final Response res = given().body(reqBody)
+        .contentType(MediaType.APPLICATION_JSON)
+        .patch("/api/v2.0/settings");
 
-		// assert
-		res
-			.then()
-			.assertThat()
-			.statusCode(OK.getCode())
-			.body(emptyOrNullString())
-		;
+    // assert
+    res.then()
+        .assertThat()
+        .statusCode(OK.getCode())
+        .body(emptyOrNullString());
 
-	}
+  }
 
-	@Test
-	void shouldValidateWhenKeyDoesntExists(){
+  @Test
+  void shouldValidateWhenKeyDoesntExists() {
 
-		// arrange
+    // arrange
 
 		/*
 		[{"key":"INEXISTENT_KEY","value":"250"}]
 		 */
-		@RawString
-		final String reqBody = lateInit();
+    @RawString
+    final String reqBody = lateInit();
 
-		// act
-		final Response res = given()
-			.body(reqBody)
-			.contentType(MediaType.APPLICATION_JSON)
-			.patch("/api/v2.0/settings")
-			;
+    // act
+    final Response res = given().body(reqBody)
+        .contentType(MediaType.APPLICATION_JSON)
+        .patch("/api/v2.0/settings");
 
-		// assert
-		res
-			.then()
-			.assertThat()
-			.statusCode(NOT_FOUND.getCode())
-			.body(emptyOrNullString())
-		;
+    // assert
+    res.then()
+        .assertThat()
+        .statusCode(NOT_FOUND.getCode())
+        .body(emptyOrNullString());
 
-	}
+  }
 
-	private static final JSONComparator comparator = new DefaultComparator(JSONCompareMode.LENIENT);
+  @Test
+  void shouldReturnProperty() throws JSONException, IOException {
 
-	@Test
-	void shouldReturnProperty() throws JSONException, IOException {
-
-		// arrange
+    // arrange
 		/*
 		{"key":"CODE_BLOCK_MAX_HEIGHT","value":"250"}
 		 */
-		@RawString
-		final String expectedSettings = lateInit();
+    @RawString
+    final String expectedSettings = lateInit();
 
-		// act
-		final Response res = get("/api/v1.0/settings?key=CODE_BLOCK_MAX_HEIGHT");
+    // act
+    final Response res = get("/api/v1.0/settings?key=CODE_BLOCK_MAX_HEIGHT");
 
-		// assert
-		res
-			.then()
-			.assertThat()
-			.statusCode(OK.getCode())
-		;
+    // assert
+    res.then()
+        .assertThat()
+        .statusCode(OK.getCode());
 
-		final String body = JsonUtils.instance().readTree(res.andReturn().body().asString()).at("/0").toString();
-		assertEquals(expectedSettings, body, true);
+    final String body = JsonUtils.instance()
+        .readTree(res.andReturn()
+            .body()
+            .asString())
+        .at("/0")
+        .toString();
+    assertEquals(expectedSettings, body, true);
 
-	}
+  }
 
 
 }

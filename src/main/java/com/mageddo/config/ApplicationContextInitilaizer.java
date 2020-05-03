@@ -1,16 +1,16 @@
 package com.mageddo.config;
 
-import io.micronaut.context.ApplicationContext;
-
 import javax.inject.Singleton;
+
+import io.micronaut.context.ApplicationContext;
 
 @Singleton
 public class ApplicationContextInitilaizer {
 
-	private final ApplicationContext context;
+  private final ApplicationContext context;
 
-	public ApplicationContextInitilaizer(ApplicationContext context) {
-		this.context = context;
-		ApplicationContextUtils.context(context);
-	}
+  public ApplicationContextInitilaizer(ApplicationContext context) {
+    this.context = context;
+    ApplicationContextUtils.context(context);
+  }
 }

@@ -1,21 +1,23 @@
 package com.mageddo.bookmarks.apiserver;
 
+import javax.inject.Inject;
+
 import com.mageddo.bookmarks.entity.BookmarkEntity;
 import com.mageddo.bookmarks.service.BookmarksService;
 import com.mageddo.config.DatabaseConfigurator;
 import com.mageddo.rawstringliterals.RawString;
 import com.mageddo.rawstringliterals.Rsl;
+
+import org.json.JSONException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.runtime.server.EmbeddedServer;
 import io.micronaut.test.annotation.MicronautTest;
 import io.restassured.response.Response;
-import org.json.JSONException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import javax.inject.Inject;
 
 import static com.mageddo.bookmarks.enums.BookmarkVisibility.PRIVATE;
 import static com.mageddo.bookmarks.enums.BookmarkVisibility.PUBLIC;
@@ -29,93 +31,78 @@ import static io.restassured.RestAssured.get;
 @MicronautTest(environments = "pg")
 class BookmarkControllerIntTest {
 
-	@Inject
-	private EmbeddedServer server;
+  @Inject
+  private EmbeddedServer server;
 
-	@Inject
-	private DatabaseConfigurator databaseConfigurator;
+  @Inject
+  private DatabaseConfigurator databaseConfigurator;
 
-	@Inject
-	private BookmarksService bookmarksService;
+  @Inject
+  private BookmarksService bookmarksService;
 
-	@BeforeEach
-	void before(){
-		setupRestAssured(server);
-		databaseConfigurator.migrate();
-	}
+  @BeforeEach
+  void before() {
+    setupRestAssured(server);
+    databaseConfigurator.migrate();
+  }
 
-	@Test
-	void shouldValidateQuantity() {
+  @Test
+  void shouldValidateQuantity() {
 
-		// arrange
+    // arrange
 		/*
 		{"code":400,"message":"Please pass a valid quantity"}
 		 */
-		@RawString
-		final String expectedValidationMsg  = lateInit();
+    @RawString
+    final String expectedValidationMsg = lateInit();
 
-		// act // assert
+    // act // assert
 
-		get("/api/v1.0/bookmark")
-			.then()
-			.assertThat()
-			.statusCode(HttpStatus.BAD_REQUEST.getCode())
-			.body(jsonMatchingPattern(expectedValidationMsg))
-		;
+    get("/api/v1.0/bookmark").then()
+        .assertThat()
+        .statusCode(HttpStatus.BAD_REQUEST.getCode())
+        .body(jsonMatchingPattern(expectedValidationMsg));
 
-	}
+  }
 
-	@Test
-	void GetV1_0__shouldListBookmarksAndLimitQuantityToOne() throws JSONException {
+  @Test
+  void GetV1_0__shouldListBookmarksAndLimitQuantityToOne() throws JSONException {
 
-		// arrange
+    // arrange
 
 		/*
 		[{"id":1,"name":"X3","visibility":0,"length":3, "creationDate": "2019-07-19", "updateDate": "2019-07-20"}]
 		 */
-		@RawString
-		final String expectedBookmarks = lateInit();
+    @RawString
+    final String expectedBookmarks = lateInit();
 
-		bookmarksService.createBookmark(
-			new BookmarkEntity()
-			.setName("X")
-			.setVisibility(PUBLIC)
-		);
+    bookmarksService.createBookmark(new BookmarkEntity().setName("X")
+        .setVisibility(PUBLIC));
 
-		bookmarksService.createBookmark(new BookmarkEntity()
-			.setName("X2")
-			.setVisibility(PUBLIC)
-		);
+    bookmarksService.createBookmark(new BookmarkEntity().setName("X2")
+        .setVisibility(PUBLIC));
 
-		bookmarksService.createBookmark(
-			new BookmarkEntity()
-			.setName("X3")
-			.setVisibility(PRIVATE)
-		);
+    bookmarksService.createBookmark(new BookmarkEntity().setName("X3")
+        .setVisibility(PRIVATE));
 
-		// act
-		final Response res = get("/api/v1.0/bookmark?from=0&quantity=1");
+    // act
+    final Response res = get("/api/v1.0/bookmark?from=0&quantity=1");
 
-		// assert
-		res
-			.then()
-			.assertThat()
-			.statusCode(OK.getCode())
-			.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-			.body(jsonMatchingPattern(
-				expectedBookmarks,
-				"**.id", "\\d+",
-				"**.creationDate", "\\d{4}-\\d{2}-\\d{2}",
-				"**.updateDate", "\\d{4}-\\d{2}-\\d{2}"
-			))
-		;
-	}
+    // assert
+    res.then()
+        .assertThat()
+        .statusCode(OK.getCode())
+        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+        .body(jsonMatchingPattern(expectedBookmarks, "**.id", "\\d+", "**.creationDate", "\\d{4}-\\d{2}-\\d{2}",
+            "**.updateDate", "\\d{4}-\\d{2}-\\d{2}"
+        ));
+  }
 
 
-	@Test
-	void getV1_0ListBookmarksValidateFromSuccess(){
+  @Test
+  void getV1_0ListBookmarksValidateFromSuccess() {
 
-		// arrange
+    // arrange
 
 		/*
 		[
@@ -123,47 +110,33 @@ class BookmarkControllerIntTest {
 			{"id":3,"name":"X","visibility":1,"length":3, "creationDate": "2019-07-20", "updateDate": "2019-07-21"}
 		]
 		 */
-		@RawString
-		final String expectedBookmarks = lateInit();
+    @RawString
+    final String expectedBookmarks = lateInit();
 
-		bookmarksService.createBookmark(
-			new BookmarkEntity()
-				.setName("X")
-				.setVisibility(PUBLIC)
-		);
-		bookmarksService.createBookmark(
-			new BookmarkEntity()
-				.setName("X2")
-				.setVisibility(PUBLIC)
-		);
-		bookmarksService.createBookmark(
-			new BookmarkEntity()
-				.setName("X3")
-				.setVisibility(PRIVATE)
-		);
+    bookmarksService.createBookmark(new BookmarkEntity().setName("X")
+        .setVisibility(PUBLIC));
+    bookmarksService.createBookmark(new BookmarkEntity().setName("X2")
+        .setVisibility(PUBLIC));
+    bookmarksService.createBookmark(new BookmarkEntity().setName("X3")
+        .setVisibility(PRIVATE));
 
-		// act
-		final Response res = get("/api/v1.0/bookmark?from=1&quantity=2");
+    // act
+    final Response res = get("/api/v1.0/bookmark?from=1&quantity=2");
 
-		// assert
-		res
-			.then()
-			.assertThat()
-			.statusCode(OK.getCode())
-			.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-			.body(jsonMatchingPattern(
-				expectedBookmarks,
-				"**.id", "\\d+",
-				"**.creationDate", "\\d{4}-\\d{2}-\\d{2}",
-				"**.updateDate", "\\d{4}-\\d{2}-\\d{2}"
-			))
-		;
-	}
+    // assert
+    res.then()
+        .assertThat()
+        .statusCode(OK.getCode())
+        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+        .body(jsonMatchingPattern(expectedBookmarks, "**.id", "\\d+", "**.creationDate", "\\d{4}-\\d{2}-\\d{2}",
+            "**.updateDate", "\\d{4}-\\d{2}-\\d{2}"
+        ));
+  }
 
-	@Test
-	void getV1_0ListBookmarksSearchSuccess(){
+  @Test
+  void getV1_0ListBookmarksSearchSuccess() {
 
-		// arrange
+    // arrange
 
 		/*
 		[
@@ -177,43 +150,30 @@ class BookmarkControllerIntTest {
 			}
 		]
 		 */
-		@RawString
-		final String expectedBookmarks = lateInit();
+    @RawString
+    final String expectedBookmarks = lateInit();
 
-		bookmarksService.createBookmark(
-			new BookmarkEntity()
-				.setName("Google is the most popular search engine site")
-				.setVisibility(PUBLIC)
-		);
-		bookmarksService.createBookmark(
-			new BookmarkEntity()
-				.setName("Android 7.0 was released")
-				.setDescription("Some desc")
-				.setVisibility(PUBLIC)
-		);
-		bookmarksService.createBookmark(
-			new BookmarkEntity()
-				.setName("Separate your software release by major, minor and patch")
-				.setVisibility(PRIVATE)
-		);
+    bookmarksService.createBookmark(new BookmarkEntity().setName("Google is the most popular search engine site")
+        .setVisibility(PUBLIC));
+    bookmarksService.createBookmark(new BookmarkEntity().setName("Android 7.0 was released")
+        .setDescription("Some desc")
+        .setVisibility(PUBLIC));
+    bookmarksService.createBookmark(
+        new BookmarkEntity().setName("Separate your software release by major, minor and patch")
+            .setVisibility(PRIVATE));
 
-		// act
-		final Response res = get("/api/v1.0/bookmark?from=0&quantity=3&query=release");
+    // act
+    final Response res = get("/api/v1.0/bookmark?from=0&quantity=3&query=release");
 
-		// assert
-		res
-			.then()
-			.assertThat()
-			.statusCode(OK.getCode())
-			.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-			.body(jsonMatchingPattern(
-				expectedBookmarks,
-				"**.id", "\\d+",
-				"**.creationDate", "\\d{4}-\\d{2}-\\d{2}",
-				"**.updateDate", "\\d{4}-\\d{2}-\\d{2}"
-			))
-		;
+    // assert
+    res.then()
+        .assertThat()
+        .statusCode(OK.getCode())
+        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+        .body(jsonMatchingPattern(expectedBookmarks, "**.id", "\\d+", "**.creationDate", "\\d{4}-\\d{2}-\\d{2}",
+            "**.updateDate", "\\d{4}-\\d{2}-\\d{2}"
+        ));
 
-	}
+  }
 
 }
