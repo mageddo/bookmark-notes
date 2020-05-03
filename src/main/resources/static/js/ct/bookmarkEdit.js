@@ -7,7 +7,7 @@
     preview: true,
     theme: "ace/theme/tomorrow_night",
     onPreview: function (content, callback) {
-      callback(transformCodeBlocks(content));
+      callback(parseMarkdown(content));
     }
   });
 

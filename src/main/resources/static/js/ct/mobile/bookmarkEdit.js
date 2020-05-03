@@ -25,7 +25,7 @@
     items.editor.removeClass("hidden");
     items.preview.addClass("hidden");
 
-  })
+  });
 
   items.btnVisualize.click(function () {
 
@@ -33,8 +33,8 @@
     items.btnVisualize.addClass("active");
 
     items.editor.addClass("hidden");
-    items.preview.removeClass("hidden").html(transformCodeBlocks(items.editor.val()))
-  })
+    items.preview.removeClass("hidden").html(parseMarkdown(items.editor.val()))
+  });
 
   items.btnLineWrap.click(function () {
 
