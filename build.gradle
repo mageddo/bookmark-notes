@@ -23,8 +23,7 @@ repositories {
   maven { url = 'https://oss.sonatype.org/service/local/repositories/releases/content' }
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_11
 
 mainClassName = "com.mageddo.Application"
 
@@ -38,6 +37,9 @@ configurations {
 }
 
 dependencies {
+
+  compileOnly 'org.projectlombok:lombok:1.18.12'
+  annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
   annotationProcessor("io.micronaut:micronaut-validation:${micronautVersion}")
 
@@ -77,6 +79,9 @@ dependencies {
   compile("org.graalvm.sdk:graal-sdk:${graalVMVersion}")
   compile("commons-logging:commons-logging:1.2")
 //	end:graal[]
+
+  testCompileOnly 'org.projectlombok:lombok:1.18.12'
+  testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
 
   testAnnotationProcessor "io.micronaut:micronaut-inject-java:${micronautVersion}"
   testCompileOnly('com.mageddo:rsl:1.0.0')
