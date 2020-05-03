@@ -43,12 +43,10 @@ public class BookmarkController {
   private final Logger logger = LoggerFactory.getLogger(getClass());
   private final BookmarksService bookmarksService;
   private final TagService tagService;
-  private final SettingsService settingsService;
 
-  public BookmarkController(BookmarksService bookmarksService, TagService tagService, SettingsService settingsService) {
+  public BookmarkController(BookmarksService bookmarksService, TagService tagService) {
     this.bookmarksService = bookmarksService;
     this.tagService = tagService;
-    this.settingsService = settingsService;
   }
 
   @Post(value = "/api/bookmark", consumes = MediaType.APPLICATION_JSON, produces = MediaType.TEXT_PLAIN)
@@ -101,7 +99,7 @@ public class BookmarkController {
   HttpResponse _1(@QueryValue("id") long bookmarkId, @QueryValue("editMode") boolean editMode) {
     final BookmarkRes bookmark = bookmarksService.getBookmarkRes(bookmarkId);
     final List<TagEntity> tags = tagService.getTags(bookmarkId);
-    return ok(mapOf("maxHeight", getMaxHeight(), "bookmark", bookmark, "tags", tags, "editMode", editMode, "tagsAsJson",
+    return ok(mapOf("bookmark", bookmark, "tags", tags, "editMode", editMode, "tagsAsJson",
         writeValueAsString(tags.stream()
             .map(TagEntity::getName)
             .collect(Collectors.toList()))
@@ -111,7 +109,7 @@ public class BookmarkController {
   @Get("/bookmark/new")
   @View("restricted-area/bookmark-edit")
   HttpResponse _2() {
-    return ok(mapOf("maxHeight", getMaxHeight(), "tagsAsJson", "[]", "bookmark", new BookmarkRes()));
+    return ok(mapOf("tagsAsJson", "[]", "bookmark", new BookmarkRes()));
   }
 
   /**
@@ -177,11 +175,6 @@ public class BookmarkController {
     }
     return creationDate.toLocalDate()
         .toString();
-  }
-
-  private String getMaxHeight() {
-    return settingsService.findSetting(Setting.CODE_BLOCK_MAX_HEIGHT.name())
-        .getValue();
   }
 
   String clearHTML(String html) {

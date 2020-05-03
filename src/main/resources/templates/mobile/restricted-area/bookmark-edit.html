@@ -56,7 +56,7 @@
 <div th:fragment="footer-scripts" th:remove="tag">
   <script>
     var tagsToEdit = [(${tagsAsJson})];
-    mg.defaults.maxHeight = [[${mobileMaxHeight}]];
+    mg.defaults.maxHeight = mg.settings.MOBILE_CODE_BLOCK_MAX_HEIGHT;
   </script>
   <script src="/static/js/ct/bookmarkEditCommon.js"></script>
   <script src="/static/js/ct/mobile/bookmarkEdit.js"></script>

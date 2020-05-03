@@ -55,6 +55,7 @@ public class SettingEntity {
     MOBILE_CODE_BLOCK_MAX_HEIGHT, //
     CODE_STYLE_TAB_SIZE, //
     CODE_STYLE_TAB_STYLE, //
+    CODE_STYLE_SHOW_WHITESPACES, //
     ;
   }
 }

@@ -55,7 +55,7 @@
     </form>
     <script>
       window.tagsToEdit = [(${tagsAsJson})];
-      mg.defaults.maxHeight = [[${maxHeight}]];
+      mg.defaults.maxHeight = mg.settings.CODE_BLOCK_MAX_HEIGHT;
     </script>
     <script id="tplCodeBlock-2" type="text/template">
       <div class="mg-code" lang="{{lang}}">
