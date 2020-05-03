@@ -21,9 +21,10 @@
 
   edition.setup();
 
-  var session = items.editorPanel.editor.getSession();
-  session.setUseSoftTabs(false);
-  session.setTabSize(2);
+  items.editorPanel.editor.setOption("showInvisibles", true); // fixme customize this option
+  let session = items.editorPanel.editor.getSession();
+  session.setUseSoftTabs(mg.settings.CODE_STYLE_TAB_STYLE === "SPACES");
+  session.setTabSize(mg.settings.CODE_STYLE_TAB_SIZE);
   items.editorPanel.focus(function () {
     items.editorPanel.editor.focus();
   });

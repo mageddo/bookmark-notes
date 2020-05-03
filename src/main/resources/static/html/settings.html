@@ -31,6 +31,23 @@
             <input class="form-control mg-prop-key" id="mobileCodeBlockMaxSize" name="MOBILE_CODE_BLOCK_MAX_HEIGHT"
                    type="number"/>
           </div>
+          <div class="form-group ">
+            <label class="control-label requiredField" for="iptTabSize">
+              Tab Size
+              <span class="asteriskField">*</span>
+            </label>
+            <input class="form-control mg-prop-key" id="iptTabSize" name="CODE_STYLE_TAB_SIZE" type="number"/>
+          </div>
+          <div class="form-group ">
+            <label class="control-label requiredField" for="slcTabStyle">
+              Tab Style
+              <span class="asteriskField">*</span>
+            </label>
+            <select class="form-control mg-prop-key" id="slcTabStyle" name="CODE_STYLE_TAB_STYLE" >
+              <option value="TAB">Tab</option>
+              <option value="SPACES">Spaces</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -58,7 +75,7 @@
         mg.notify.warn("Nothing to save");
         return;
       }
-      mg.notify.success("All settings saved!");
+      mg.notify.success("All settings saved! (You must refresh the page to some take effect)");
     }).error(function () {
       mg.notify.error("Can't save settings");
     });
@@ -66,13 +83,16 @@
   $.ajax({
     url: '/api/v2.0/settings/map'
   }).done(function (data) {
-    $("#mg-frm-settings input").each(function () {
-      var that = $(this);
-      var prop = data[that.prop('name')];
-      if (prop != null) {
-        that.val(prop);
+    $("#mg-frm-settings input, #mg-frm-settings select").each(function () {
+      let that = $(this);
+      let val = data[that.prop('name')];
+      if (val != null) {
+        that.val(val);
+        if(that.prop("tagName") === "SELECT"){
+          that.find("option[value=" + val + "]").prop("selected", true);
+        }
       }
-    })
+    });
   }).error(function (error) {
     // TODO EFS fazer isso buscar de um template
     $(container).html("Error on load " + url + "<br/>" + error);

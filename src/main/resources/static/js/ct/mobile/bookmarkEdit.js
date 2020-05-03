@@ -5,7 +5,7 @@
 
   edition.postCreate = function () {
     items.btnFullScreen.trigger("click");
-  }
+  };
 
   items.btnTab.click(function (e) {
     e.preventDefault();
