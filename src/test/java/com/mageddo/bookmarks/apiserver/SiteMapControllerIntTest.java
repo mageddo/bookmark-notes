@@ -80,9 +80,7 @@ public class SiteMapControllerIntTest {
 
     final XmlPath xml = XmlPath.from(StringUtils.trim(body));
 
-    assertEquals(1, xml.getList("urlset")
-        .size());
-    assertThat(xml.get("urlset[0].url.loc"), containsString("/api/v1.0/sitemap/bookmark/"));
+    assertEquals(1, xml.getList("urlset").size());
     assertThat(xml.get("urlset[0].url.loc"), endsWith("/awesome-bookmark"));
     assertThat(xml.get("urlset[0].url.changefreq"), equalTo("weekly"));
     assertThat(xml.get("urlset[0].url.priority"), equalTo("1"));
