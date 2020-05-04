@@ -12,7 +12,7 @@ buildscript {
 plugins {
   id "java"
   id "application"
-  id "com.palantir.graal" version "0.4.0"
+  id "org.mikeneck.graalvm-native-image" version "0.3.0"
 }
 
 repositories {
@@ -27,11 +27,16 @@ sourceCompatibility = JavaVersion.VERSION_11
 
 mainClassName = "com.mageddo.Application"
 
-graal {
-  mainClass mainClassName
-  graalVersion(graalVMVersion)
-  outputName(project.name)
+nativeImage {
+  graalVmHome = System.getProperty("java.home")
+  mainClass = mainClassName
+  executableName = project.name
+  arguments(
+      "--no-server",
+      "-J-Xmx7G"
+  )
 }
+
 configurations {
   compile.exclude module: 'spring-jcl'
 }
@@ -126,7 +131,7 @@ task intTest(type: Test) {
 task copyStatics() {
   doLast {
 
-    def binFilePath = "${project.buildDir}/graal/"
+    def binFilePath = "${project.buildDir}/native-image/"
     def distPath = Paths.get("${binFilePath}/dist")
 
     deleteRecursively(distPath)
@@ -150,8 +155,6 @@ task copyStatics() {
     }
   }
 }
-
-nativeImage.finalizedBy(tasks.copyStatics)
 
 static void deleteRecursively(java.nio.file.Path distPath) {
   Files.createDirectories(distPath)

@@ -54,7 +54,7 @@ case $1 in
 
     docker-compose up -d testpostgres
     echo "> starting build $APP_VERSION"
-    ./gradlew clean heartbeat build intTest nativeImage --info
+    ./gradlew clean heartbeat build intTest nativeImage copyStatics --info
     echo "> build success"
 
   ;;
@@ -96,7 +96,7 @@ case $1 in
 
     echo "> Release created with id $TAG_ID"
 
-    SOURCE_FILE="build/graal/dist/bookmark-notes.zip"
+    SOURCE_FILE="build/native-image/dist/bookmark-notes.zip"
     TARGET_FILE=bookmark-notes-linux-amd64-$APP_VERSION.zip
     echo "> Source file hash"
     md5sum $SOURCE_FILE && ls -lha $SOURCE_FILE

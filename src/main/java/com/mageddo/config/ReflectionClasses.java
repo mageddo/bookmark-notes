@@ -27,12 +27,14 @@ import thymeleaf.ThymeleafUtils;
         declaredFields = true
     ),
 
+    @Reflection(scanClass = thymeleaf.ThymeleafUtils.class, declaredMethods = true, constructors = true,
+        declaredConstructors = true),
+
     /*
       Hikari datasource
      */
     @Reflection(scanClassName = "java.sql.Statement[]", publicConstructors = true, declaredConstructors = true),
 
-    @Reflection(scanClass = thymeleaf.ThymeleafUtils.class, declaredMethods = true)
 })
 @AutomaticFeature
 class ReflectionClasses implements Feature {
