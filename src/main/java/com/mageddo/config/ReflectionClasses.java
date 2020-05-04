@@ -14,27 +14,31 @@ import thymeleaf.ThymeleafUtils;
     @Reflection(declaredConstructors = true, declaredMethods = true, scanPackage = "com.mageddo.bookmarks.jackson"),
 
     // flyway migration
-    @Reflection(declaredConstructors = true, scanClass = JavaUtilLogCreator.class),
+    @Reflection(scanClass = JavaUtilLogCreator.class, declaredConstructors = true),
 
-    @Reflection(declaredMethods = true, scanClass = ThymeleafUtils.class),
+    @Reflection(scanClass = ThymeleafUtils.class, declaredMethods = true),
 
-    @Reflection(declaredConstructors = true, declaredMethods = true, declaredFields = true,
-        scanPackage = "com.mageddo.bookmarks.entity"),
+    @Reflection(scanPackage = "com.mageddo.bookmarks.entity", declaredConstructors = true, declaredMethods = true,
+        declaredFields = true
+    ),
 
-    @Reflection(declaredConstructors = true, declaredMethods = true, declaredFields = true,
-        scanPackage = "com.mageddo.bookmarks.apiserver.res"),
+    @Reflection(scanPackage = "com.mageddo.bookmarks.apiserver.res", declaredConstructors = true,
+        declaredMethods = true,
+        declaredFields = true
+    ),
 
-	/*
-	 	Hikari datasource
-	 */
-    @Reflection(publicConstructors = true, declaredConstructors = true, scanClassName = "java.sql.Statement[]")})
+    /*
+      Hikari datasource
+     */
+    @Reflection(scanClassName = "java.sql.Statement[]", publicConstructors = true, declaredConstructors = true),
+
+    @Reflection(scanClass = thymeleaf.ThymeleafUtils.class, declaredMethods = true)
+})
 @AutomaticFeature
 class ReflectionClasses implements Feature {
-
   @Override
   public void duringSetup(DuringSetupAccess access) {
     System.loadLibrary("sunec");
   }
-
 }
 
