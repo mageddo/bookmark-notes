@@ -1,3 +1,6 @@
+# 3.5.2 
+* Fixing binary executable permission
+
 # 3.5.1 
 * Generating native-image binary
 
