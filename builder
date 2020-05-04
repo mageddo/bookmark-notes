@@ -52,9 +52,8 @@ case $1 in
 
   build )
 
-    docker-compose up -d testpostgres
     echo "> starting build $APP_VERSION"
-    ./gradlew clean heartbeat build intTest nativeImage copyStatics --info
+    ./gradlew clean heartbeat build nativeImage copyStatics --info
     echo "> build success"
 
   ;;
