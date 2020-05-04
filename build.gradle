@@ -33,7 +33,7 @@ nativeImage {
   executableName = project.name
   arguments(
       "--no-server",
-      "-J-Xmx7G"
+      "-J-Xmx4G"
   )
 }
 
