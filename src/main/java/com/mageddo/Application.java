@@ -7,6 +7,15 @@ import io.micronaut.context.ApplicationContext;
 import io.micronaut.runtime.Micronaut;
 import io.micronaut.runtime.event.annotation.EventListener;
 import io.micronaut.runtime.server.event.ServerStartupEvent;
+import nativeimage.Reflection;
+
+import nativeimage.Reflections;
+
+import org.flywaydb.core.internal.logging.javautil.JavaUtilLogCreator;
+
+import thymeleaf.ThymeleafUtils;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class Application {
 
@@ -37,7 +46,8 @@ public class Application {
   }
 
   @EventListener
-  public void onStartup(ServerStartupEvent event) {
+  public void onStartup(ServerStartupEvent event)
+      throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
     final ApplicationContext ctx = event.getSource()
         .getApplicationContext();
     ApplicationContextUtils.context(ctx);

@@ -2,7 +2,8 @@
 * Table Of Contents: Now you can see a table of contents at the editor when previewing
 * Code block button: Click on code block button while editing (selecting a existent code or not) to generate a new code
  block
-* Minor bug fixes 
+* Minor bug fixes
+ 
 # 3.4.1
 * Fixing pages URLs on sitemap api
 
