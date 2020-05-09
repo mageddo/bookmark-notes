@@ -1,3 +1,6 @@
+# 3.6.0 
+* Adjusting headers as bootstrap 4.3
+
 # 3.5.2 
 * Fixing binary executable permission
 
