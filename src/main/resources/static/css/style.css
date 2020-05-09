@@ -265,3 +265,35 @@ pre {
 	float: none;
 	margin: 0 auto;
 }
+
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6 {
+  margin-top: 0;
+  margin-bottom: .5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+body h1 {
+  font-size: 38px;
+}
+
+body h2 {
+  font-size: 32px;
+}
+
+body h3 {
+  font-size: 28px;
+}
+
+body h4 {
+  font-size: 24px;
+}
+
+body h5 {
+  font-size: 20px;
+}
