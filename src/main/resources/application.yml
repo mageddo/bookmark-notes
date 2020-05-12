@@ -13,6 +13,8 @@ micronaut:
     folder: templates
     thymeleaf:
       cacheable: false
+  server:
+    port: 8080
 ---
 datasources:
   default:
