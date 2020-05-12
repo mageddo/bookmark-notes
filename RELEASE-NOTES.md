@@ -1,3 +1,6 @@
+# 3.7.0
+* Setup default favicon
+
 # 3.6.1
 * Adjusting sitemap to a friendlier url on robots.txt
 

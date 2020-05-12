@@ -4,6 +4,8 @@
   th:fragment="layout(headerTitle)" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 >
 <head>
+  <link rel="icon" th:href="@{/static/favicon.ico}" type="image/ico"/>
+  <link rel="shortcut icon" th:href="@{/static/favicon.ico}" type="image/x-icon"/>
   <title th:text="${headerTitle} ?: 'Bookmarks'"></title>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
