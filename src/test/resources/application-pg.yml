@@ -4,3 +4,7 @@ datasources:
     jdbcUrl: jdbc:postgresql://127.0.0.1:5435/db?currentSchema=bookmarks
 flyway:
   schema: bookmarks
+
+micronaut:
+  server:
+    port: 8563

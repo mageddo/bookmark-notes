@@ -42,9 +42,7 @@ public class HomeController {
 
   @Get("/robots.txt")
   HttpResponse robots(HttpRequest req) {
-/*
-# Sitemaps
-Sitemap: %s/api/v1.0/sitemap
+/*Sitemap: %s/sitemap.xml
 */
     @RawString
     final String robots = RawStrings.lateInit();
