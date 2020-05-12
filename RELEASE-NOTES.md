@@ -1,3 +1,6 @@
+# 3.6.1
+* Adjusting sitemap to a friendlier url on robots.txt
+
 # 3.6.0 
 * Adjusting headers as bootstrap 4.3
 
