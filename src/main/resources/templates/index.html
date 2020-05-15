@@ -9,7 +9,7 @@
 
     <h1 id="page-title" th:text="${pageTitle}"></h1>
     <div class="row-result" th:each="bookmark : ${bookmarks}">
-      <h4><a th:href="'/bookmark/' + *{bookmark.id} + '/' + *{@thymeleaf.ThymeleafUtils@encodeSeoUrl(bookmark.name)} ">
+      <h4><a th:href="*{@thymeleaf.ThymeleafUtils@createBookmarkUrl(bookmark.id, bookmark.name)}">
         <div th:if="#{bookmark.name} == null">
           ID: [${bookmark.id}]] - Unknow name
         </div>
@@ -29,7 +29,7 @@
       <div class="row more-results">
         <div class="col-lg-5 col-centered">
           <a class="btn btn-info center-block" style="width:100%"
-             th:href="*{@thymeleaf.ThymeleafUtils@encodeSeoUrl(x)} + '?page=' + ${nextPage}">More results ...</a>
+             th:href="'/?page=' + ${nextPage}">More results ...</a>
         </div>
       </div>
     </div>
