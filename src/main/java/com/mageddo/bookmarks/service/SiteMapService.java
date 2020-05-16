@@ -67,7 +67,7 @@ public class SiteMapService {
 
   private String formatURL(HttpRequest url, BookmarkEntity bookmarkEntity) {
     return String.format(
-        "%s/%s",
+        "%s%s",
         UrlUtils.getFullHost(url),
         formatUrl(bookmarkEntity.getId(), bookmarkEntity.getName())
     );

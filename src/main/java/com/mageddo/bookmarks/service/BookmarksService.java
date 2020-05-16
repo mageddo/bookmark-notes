@@ -99,7 +99,7 @@ public class BookmarksService {
   }
 
   public BookmarkDescriptionRes findBookmarkWithNavigation(int bookmarkId) {
-    return bookmarkDAO.findBookMarkWithNavigation(bookmarkId);
+    return this.bookmarkDAO.findBookMarkWithNavigation(bookmarkId);
   }
 
   public void deleteBookmark(int bookmarkId) {

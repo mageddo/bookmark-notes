@@ -26,7 +26,8 @@ public class BookmarkRes {
 
   public static RowMapper<BookmarkRes> mapper() {
     return (rs, i) -> {
-      final BookmarkRes bookmark = BookmarkRes.valueOf(BookmarkEntity.mapper()
+      final BookmarkRes bookmark = BookmarkRes.valueOf(BookmarkEntity
+          .mapper()
           .mapRow(rs, i));
       bookmark.setLength(rs.getInt("NUM_QUANTITY"));
       return bookmark;

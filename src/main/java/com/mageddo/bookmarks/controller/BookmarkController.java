@@ -102,7 +102,8 @@ public class BookmarkController {
     return ok(mapOf("bookmark", bookmark, "tags", tags, "editMode", editMode, "tagsAsJson",
         writeValueAsString(tags.stream()
             .map(TagEntity::getName)
-            .collect(Collectors.toList()))
+            .collect(Collectors.toList())
+        )
     ));
   }
 
@@ -144,13 +145,22 @@ public class BookmarkController {
       content = "";
     }
 
-    return ok(mapOf("analytics", "", "creationDate", toSQLDate(bookmark.getBookmark()
-            .getCreationDate()), "updateDate", toSQLDate(bookmark.getBookmark()
-            .getUpdateDate()), "id", id, "title", title, "content", content, "description",
-        StringUtils.substring(clearHTML(content).replace("/[\\r\\n]+ /", ""), 0, 160), "link",
-        createSEOLink(req, bookmark.getBookmark()), "prev",
-        mapOf("name", getName(bookmark.getPrev()), "link", createSEOLink(req, bookmark.getPrev())), "next",
-        mapOf("name", getName(bookmark.getNext()), "link", createSEOLink(req, bookmark.getNext()))
+    final var shortDesc = StringUtils.substring(
+        this.clearHTML(content)
+          .replace("/[\\r\\n]+ /", ""),
+        0, 160
+    );
+    return ok(mapOf(
+        "analytics", "",
+        "creationDate", this.toSQLDate(bookmark.getBookmark().getCreationDate()),
+        "updateDate", this.toSQLDate(bookmark.getBookmark().getUpdateDate()),
+        "id", id,
+        "title", title,
+        "description", shortDesc,
+        "content", content,
+        "link", this.createSEOLink(req, bookmark.getBookmark()),
+        "prev", mapOf("name", this.getName(bookmark.getPrev()), "link", this.createSEOLink(req, bookmark.getPrev())),
+        "next", mapOf("name", this.getName(bookmark.getNext()), "link", this.createSEOLink(req, bookmark.getNext()))
     ));
   }
 

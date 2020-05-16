@@ -24,11 +24,11 @@
     <br/>
     [(${content})]
     <br/>
-    <a class="pull-left" th:href="${prev.link}" th:if="${prev}">
+    <a class="pull-left" th:href="${prev.link}" th:if="${prev.name != ''}">
       <span class="glyphicon glyphicon-step-backward" style="font-size:20px"></span> [[${prev.name}]]
     </a>
 
-    <a class="pull-right" th:href="${next.link}" th:if="${next}">
+    <a class="pull-right" th:href="${next.link}" th:if="${next.name != ''}">
       [[${next.name}]]
       <span class="glyphicon glyphicon-step-forward" style="font-size:20px"></span>
     </a>
