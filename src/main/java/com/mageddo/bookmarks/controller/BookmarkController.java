@@ -13,11 +13,6 @@ import com.mageddo.bookmarks.service.BookmarksService;
 import com.mageddo.bookmarks.service.TagService;
 import com.mageddo.commons.UrlUtils;
 
-import com.mageddo.rawstringliterals.RawString;
-import com.mageddo.rawstringliterals.RawStrings;
-
-import com.mageddo.rawstringliterals.Rsl;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
