@@ -28,7 +28,12 @@ public final class UrlUtils {
     if (path == null) {
       return "";
     }
-    return encode(normalizeURL(path));
+    return normalizeURL(path)
+        .replaceAll("[^a-z0-9\\-_]", "-")
+        .replaceAll("-{2,}", "-")
+        .replaceAll("-+$", "")
+        .replaceAll("^-+", "")
+        ;
   }
 
   public static String getHost(HttpRequest req) {

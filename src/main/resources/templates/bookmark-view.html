@@ -22,13 +22,20 @@
       <strong>Updated</strong>: [[${updateDate}]]
     </div>
     <br/>
-    [(${content})]
+    <div th:if="${content != null}" th:remove="tag">
+      [(${content})]
+    </div>
+    <div th:if="${content == null}">
+      <h2>
+        <span style="font-size:72px">404</span>: <a href="https://en.wikipedia.org/wiki/HTTP_404">Page Not Found</a>
+      </h2>
+    </div>
     <br/>
-    <a class="pull-left" th:href="${prev.link}" th:if="${prev}">
+    <a class="pull-left" th:href="${prev.link}" th:if="${prev != null and prev.name != ''}">
       <span class="glyphicon glyphicon-step-backward" style="font-size:20px"></span> [[${prev.name}]]
     </a>
 
-    <a class="pull-right" th:href="${next.link}" th:if="${next}">
+    <a class="pull-right" th:href="${next.link}" th:if="${next != null and next.name != ''}">
       [[${next.name}]]
       <span class="glyphicon glyphicon-step-forward" style="font-size:20px"></span>
     </a>

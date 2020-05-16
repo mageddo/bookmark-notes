@@ -8,10 +8,8 @@ import java.util.stream.Collectors;
 import com.mageddo.bookmarks.apiserver.res.BookmarkDescriptionRes;
 import com.mageddo.bookmarks.apiserver.res.BookmarkRes;
 import com.mageddo.bookmarks.entity.BookmarkEntity;
-import com.mageddo.bookmarks.entity.SettingEntity.Setting;
 import com.mageddo.bookmarks.entity.TagEntity;
 import com.mageddo.bookmarks.service.BookmarksService;
-import com.mageddo.bookmarks.service.SettingsService;
 import com.mageddo.bookmarks.service.TagService;
 import com.mageddo.commons.UrlUtils;
 
@@ -102,7 +100,8 @@ public class BookmarkController {
     return ok(mapOf("bookmark", bookmark, "tags", tags, "editMode", editMode, "tagsAsJson",
         writeValueAsString(tags.stream()
             .map(TagEntity::getName)
-            .collect(Collectors.toList()))
+            .collect(Collectors.toList())
+        )
     ));
   }
 
@@ -120,17 +119,27 @@ public class BookmarkController {
   HttpResponse _3(HttpRequest req, int id, String description) {
 
     logger.debug("status=begin, id={}, desc={}", id, description);
-    final BookmarkDescriptionRes bookmark = bookmarksService.findBookmarkWithNavigation(id);
-    String title;
-    String content;
-    if (bookmark.hasBookmark()) {
-      title = bookmark.getBookmark()
-          .getName();
+    final var bookmark = bookmarksService.findBookmarkWithNavigation(id);
 
-      content = parseMarkdown(bookmark.getBookmark()
-          .getHtml());
+    if (!bookmark.hasBookmark()) {
+      logger.debug("status=not-found, id={}, desc={}", id, description);
+      final var title = String.format("%s", description != null ? description : id);
+      return ok(mapOf(
+          "title", title,
+          "description", title,
+          "content", null
+      ));
+    }
+    logger.debug("status=found, id={}, desc={}", id, description);
+    return renderWhenFound(req, bookmark);
+  }
 
-      // if you make changes here probably you also want to change  public/js/ct/bookmarkEdit.js#267
+  HttpResponse renderWhenFound(HttpRequest req, BookmarkDescriptionRes bookmark) {
+
+    final var title = bookmark.getBookmark().getName();
+    final var content = parseMarkdown(bookmark.getBookmark().getHtml());
+
+    // if you make changes here probably you also want to change  public/js/ct/bookmarkEdit.js#267
 //				content = parseCode(`
 //					<div class="mg-code" lang="{{lang}}">
 //						<ul class="nav nav-pills painel-acoes">
@@ -139,18 +148,25 @@ public class BookmarkController {
 //						</ul>
 //						<pre><code>{{{code}}}</code></pre>
 //					</div>`, bookmark.bookmark.html);
-    } else {
-      title = String.format("Bookmark '%s' not found", description != null ? description : id);
-      content = "";
-    }
 
-    return ok(mapOf("analytics", "", "creationDate", toSQLDate(bookmark.getBookmark()
-            .getCreationDate()), "updateDate", toSQLDate(bookmark.getBookmark()
-            .getUpdateDate()), "id", id, "title", title, "content", content, "description",
-        StringUtils.substring(clearHTML(content).replace("/[\\r\\n]+ /", ""), 0, 160), "link",
-        createSEOLink(req, bookmark.getBookmark()), "prev",
-        mapOf("name", getName(bookmark.getPrev()), "link", createSEOLink(req, bookmark.getPrev())), "next",
-        mapOf("name", getName(bookmark.getNext()), "link", createSEOLink(req, bookmark.getNext()))
+    final var shortDesc = StringUtils
+        .substring(
+            this.clearHTML(content)
+                .replace("/[\\r\\n]+ /", ""),
+            0, 157
+        )
+        .concat("...");
+    return ok(mapOf(
+        "analytics", "",
+        "creationDate", this.toSQLDate(bookmark.getBookmark().getCreationDate()),
+        "updateDate", this.toSQLDate(bookmark.getBookmark().getUpdateDate()),
+        "id", bookmark.getBookmark().getId(),
+        "title", title,
+        "description", shortDesc,
+        "content", content,
+        "link", this.createSEOLink(req, bookmark.getBookmark()),
+        "prev", mapOf("name", this.getName(bookmark.getPrev()), "link", this.createSEOLink(req, bookmark.getPrev())),
+        "next", mapOf("name", this.getName(bookmark.getNext()), "link", this.createSEOLink(req, bookmark.getNext()))
     ));
   }
 
@@ -178,7 +194,7 @@ public class BookmarkController {
   }
 
   String clearHTML(String html) {
-    return html.replace("/<\\/?[^>]+(>|$)/g", "");
+    return html.replaceAll("<[^>]*>", "");
   }
 
 }

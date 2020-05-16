@@ -1,5 +1,6 @@
 package thymeleaf;
 
+import com.mageddo.bookmarks.service.SiteMapService;
 import com.mageddo.commons.UrlUtils;
 
 import static com.mageddo.config.ApplicationContextUtils.context;
@@ -17,8 +18,8 @@ public final class ThymeleafUtils {
     return UrlUtils.encode(path);
   }
 
-  public static String encodeSeoUrl(String path) {
-    return UrlUtils.encodeSeoUrl(path);
+  public static String createBookmarkUrl(long id, String name) {
+    return SiteMapService.formatUrl(id, name);
   }
 
   public static String analyticsId() {

@@ -69,16 +69,16 @@ public class BookmarkDAOPg implements BookmarkDAO {
 
   @Override
   public List<BookmarkEntity> loadSiteMap() {
-		/*
-		SELECT * FROM (
-			SELECT *
-			FROM BOOKMARK
-			WHERE NUM_VISIBILITY = 1
-			AND FLG_DELETED = false
-			AND FLG_ARCHIVED = false
-			ORDER BY IDT_BOOKMARK DESC
-		) T LIMIT 100000
-		*/
+    /*
+    SELECT * FROM (
+      SELECT *
+      FROM BOOKMARK
+      WHERE NUM_VISIBILITY = 1
+      AND FLG_DELETED = false
+      AND FLG_ARCHIVED = false
+      ORDER BY DAT_UPDATE DESC
+    ) T LIMIT 100000
+    */
     @RawString
     final String sql = lateInit();
     return namedJdbcTemplate.query(sql, BookmarkEntity.mapper());
@@ -242,30 +242,43 @@ public class BookmarkDAOPg implements BookmarkDAO {
 
   @Override
   public BookmarkDescriptionRes findBookMarkWithNavigation(int bookmarkId) {
-		/*
-		SELECT
-			IDT_BOOKMARK, NAM_BOOKMARK, NUM_VISIBILITY, DES_HTML, DES_LINK,
-			DAT_CREATION, DAT_UPDATE, FLG_ARCHIVED, FLG_DELETED, NULL::INTEGER AS NUM_QUANTITY
-		FROM BOOKMARK
-		WHERE IDT_BOOKMARK IN(
-				(SELECT MAX(IDT_BOOKMARK) FROM BOOKMARK WHERE IDT_BOOKMARK < :id AND FLG_DELETED = FALSE AND NUM_VISIBILITY =
-				 1),
-				:id,
-				(SELECT MIN(IDT_BOOKMARK) FROM BOOKMARK WHERE IDT_BOOKMARK > :id AND FLG_DELETED = FALSE AND NUM_VISIBILITY
-				= 1)
-		)
-		AND FLG_DELETED = FALSE AND NUM_VISIBILITY = 1
-		 */
+   /*
+    SELECT
+      IDT_BOOKMARK, NAM_BOOKMARK, NUM_VISIBILITY, DES_HTML, DES_LINK,
+      DAT_CREATION, DAT_UPDATE, FLG_ARCHIVED, FLG_DELETED, NULL::INTEGER AS NUM_QUANTITY
+    FROM BOOKMARK
+    WHERE IDT_BOOKMARK IN(
+        (
+          SELECT MAX(IDT_BOOKMARK)
+          FROM BOOKMARK
+          WHERE IDT_BOOKMARK < :id
+          AND FLG_DELETED = FALSE
+          AND NUM_VISIBILITY = 1
+        ),
+        :id,
+        (
+          SELECT MIN(IDT_BOOKMARK)
+          FROM BOOKMARK
+          WHERE IDT_BOOKMARK > :id
+          AND FLG_DELETED = FALSE
+          AND NUM_VISIBILITY = 1
+       )
+    )
+    AND FLG_DELETED = FALSE AND NUM_VISIBILITY = 1
+    ORDER BY IDT_BOOKMARK
+   */
     @RawString
     final String sql = lateInit();
-    return new BookmarkDescriptionRes(namedJdbcTemplate.query(sql, Maps.of("id", bookmarkId), BookmarkRes.mapper()),
+    return new BookmarkDescriptionRes(
+        this.namedJdbcTemplate.query(sql, Maps.of("id", bookmarkId), BookmarkRes.mapper()),
         bookmarkId
     );
   }
 
   @Override
   public void deleteBookmark(int bookmarkId) {
-    final int affected = namedJdbcTemplate.update("UPDATE BOOKMARK SET FLG_DELETED=TRUE WHERE IDT_BOOKMARK=:id",
+    final int affected = this.namedJdbcTemplate.update(
+        "UPDATE BOOKMARK SET FLG_DELETED=TRUE WHERE IDT_BOOKMARK=:id",
         Maps.of("id", bookmarkId)
     );
     Validate.isTrue(affected == 1);

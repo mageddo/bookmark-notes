@@ -30,27 +30,29 @@ public class SiteMapService {
 
   @Transactional
   public void generateSiteMapXML(OutputStream out, HttpRequest req) throws IOException {
-		/*
-		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-		 */
+    /*
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+     */
     @RawString
     final String header = lateInit();
     out.write(header.getBytes());
 
-		/*
-		<url>
-			<loc>%s</loc>
-			%s
-			<changefreq>weekly</changefreq>
-			<priority>1</priority>
-		</url>
-		 */
+    /*
+    <url>
+      <loc>%s</loc>
+      %s
+      <changefreq>weekly</changefreq>
+      <priority>1</priority>
+    </url>
+     */
     @RawString
     final String siteMapItem = lateInit();
 
-    for (final BookmarkEntity bookmarkEntity : bookmarkDAO.loadSiteMap()) {
-      out.write(String.format(siteMapItem, formatURL(req, bookmarkEntity), formatDate(bookmarkEntity.getLastUpdate()))
-          .getBytes());
+    for (final var bookmarkEntity : this.bookmarkDAO.loadSiteMap()) {
+      out.write(String.format(
+          siteMapItem, this.formatURL(req, bookmarkEntity),
+          this.formatDate(bookmarkEntity.getLastUpdate())
+      ).getBytes());
     }
     out.write("</urlset>\n".getBytes());
 
@@ -64,10 +66,14 @@ public class SiteMapService {
   }
 
   private String formatURL(HttpRequest url, BookmarkEntity bookmarkEntity) {
-    return String.format("%s/bookmark/%d/%s", UrlUtils.getFullHost(url), bookmarkEntity.getId(),
-        bookmarkEntity.getName()
-            .toLowerCase()
-            .replaceAll(" ", "-")
+    return String.format(
+        "%s%s",
+        UrlUtils.getFullHost(url),
+        formatUrl(bookmarkEntity.getId(), bookmarkEntity.getName())
     );
+  }
+
+  public static String formatUrl(long bookmarkId, String bookmarkName){
+    return String.format("/bookmark/%d/%s", bookmarkId, UrlUtils.encodeSeoUrl(bookmarkName));
   }
 }
