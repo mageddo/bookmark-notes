@@ -147,8 +147,9 @@ public class BookmarkController {
 
     final var shortDesc = StringUtils.substring(
         this.clearHTML(content)
-          .replace("/[\\r\\n]+ /", ""),
-        0, 160
+          .replace("/[\\r\\n]+ /", "")
+          .concat("..."),
+        0, 157
     );
     return ok(mapOf(
         "analytics", "",
@@ -188,7 +189,7 @@ public class BookmarkController {
   }
 
   String clearHTML(String html) {
-    return html.replace("/<\\/?[^>]+(>|$)/g", "");
+    return html.replaceAll("<[^>]*>", "");
   }
 
 }
