@@ -48,7 +48,7 @@ public class SiteMapService {
     @RawString
     final String siteMapItem = lateInit();
 
-    for (final var bookmarkEntity : bookmarkDAO.loadSiteMap()) {
+    for (final var bookmarkEntity : this.bookmarkDAO.loadSiteMap()) {
       out.write(String.format(
           siteMapItem, this.formatURL(req, bookmarkEntity),
           this.formatDate(bookmarkEntity.getLastUpdate())

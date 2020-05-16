@@ -1,6 +1,7 @@
 # 3.7.1
 * Striping invalid chars on SEO URL
 * Fixing next and prev item on bookmark view were not being respected in some cases
+* Fixing meta content
 
 # 3.7.0
 * Setup default favicon

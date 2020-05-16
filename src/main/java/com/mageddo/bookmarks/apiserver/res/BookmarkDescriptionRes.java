@@ -51,7 +51,7 @@ public class BookmarkDescriptionRes {
         return i;
       }
     }
-    throw new IllegalStateException("Bookmark is expected to be found " + bookmarkId);
+    return -1;
   }
 
   public BookmarkRes getPrev() {

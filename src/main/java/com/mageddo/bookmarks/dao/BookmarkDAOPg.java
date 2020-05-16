@@ -69,16 +69,16 @@ public class BookmarkDAOPg implements BookmarkDAO {
 
   @Override
   public List<BookmarkEntity> loadSiteMap() {
-		/*
-		SELECT * FROM (
-			SELECT *
-			FROM BOOKMARK
-			WHERE NUM_VISIBILITY = 1
-			AND FLG_DELETED = false
-			AND FLG_ARCHIVED = false
-			ORDER BY IDT_BOOKMARK DESC
-		) T LIMIT 100000
-		*/
+    /*
+    SELECT * FROM (
+      SELECT *
+      FROM BOOKMARK
+      WHERE NUM_VISIBILITY = 1
+      AND FLG_DELETED = false
+      AND FLG_ARCHIVED = false
+      ORDER BY DAT_UPDATE DESC
+    ) T LIMIT 100000
+    */
     @RawString
     final String sql = lateInit();
     return namedJdbcTemplate.query(sql, BookmarkEntity.mapper());
