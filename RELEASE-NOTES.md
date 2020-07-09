@@ -1,3 +1,6 @@
+# 3.9.0
+* Set page title as the bookmark name when editing 
+
 # 3.8.0
 * Settings: Option to add arbitrary HTML at the &#x3C;head&#x3E; tag of public pages
 

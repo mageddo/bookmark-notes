@@ -4,6 +4,9 @@
 >
 <head th:fragment="header-scripts" th:remove="tag">
   <link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
+  <script>
+    window.document.title = '[[${ bookmark.name }]] - Bookmarks';
+  </script>
 </head>
 <div th:fragment="content">
   <div class="container">
