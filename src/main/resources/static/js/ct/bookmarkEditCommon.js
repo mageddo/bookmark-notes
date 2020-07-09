@@ -19,6 +19,7 @@ BookmarkEdition.prototype.setup = function () {
   items.btnCloseEditor.on('dblclick' + (mg.defaults.debug ? ' click' : ''), function () {
     console.debug('closing');
     items.modal.addClass("hidden");
+    window.document.title = "Bookmarks";
   });
 
   // tag search
