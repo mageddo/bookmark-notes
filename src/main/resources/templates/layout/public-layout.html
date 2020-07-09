@@ -32,6 +32,7 @@
     ga('create', '[[${@thymeleaf.ThymeleafUtils@analyticsId()}]]', 'auto');
     ga('send', 'pageview');
   </script>
+  [(${@thymeleaf.ThymeleafUtils@headerHtml()})]
   <div th:replace="this :: header-scripts"></div>
 </head>
 <body>

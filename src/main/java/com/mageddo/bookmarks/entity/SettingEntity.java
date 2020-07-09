@@ -51,11 +51,17 @@ public class SettingEntity {
   }
 
   public enum Setting {
+
     CODE_BLOCK_MAX_HEIGHT, //
     MOBILE_CODE_BLOCK_MAX_HEIGHT, //
     CODE_STYLE_TAB_SIZE, //
     CODE_STYLE_TAB_STYLE, //
     CODE_STYLE_SHOW_WHITESPACES, //
+
+    /**
+     * HTML which should be put inside the &lt;head&gt; tag
+     */
+    PUBLIC_PAGES_HEADER_HTML, //
     ;
   }
 }
