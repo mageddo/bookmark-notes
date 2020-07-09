@@ -1,3 +1,6 @@
+# 3.8.0
+* Settings: Option to add arbitrary HTML at the &#x3C;head&#x3E; tag of public pages
+
 # 3.7.1
 * Striping invalid chars on SEO URL
 * Fixing next and prev item on bookmark view were not being respected in some cases
