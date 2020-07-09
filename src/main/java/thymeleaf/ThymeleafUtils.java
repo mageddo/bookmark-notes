@@ -1,5 +1,7 @@
 package thymeleaf;
 
+import com.mageddo.bookmarks.entity.SettingEntity.Setting;
+import com.mageddo.bookmarks.service.SettingsService;
 import com.mageddo.bookmarks.service.SiteMapService;
 import com.mageddo.commons.UrlUtils;
 
@@ -25,5 +27,13 @@ public final class ThymeleafUtils {
   public static String analyticsId() {
     return context().getEnvironment()
         .get("analytics.id", String.class, "");
+  }
+
+  public static String headerHtml(){
+    return context()
+        .getBean(SettingsService.class)
+        .findSetting(Setting.PUBLIC_PAGES_HEADER_HTML.name())
+        .getValue()
+        ;
   }
 }

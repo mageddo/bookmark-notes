@@ -58,6 +58,12 @@
               <option value="false">NO</option>
             </select>
           </div>
+          <div class="form-group ">
+            <label class="control-label requiredField" for="txtHeaderHtml">
+              Put this HTML into the &#x3C;head&#x3E; tag
+            </label>
+            <textarea class="form-control mg-prop-key" id="txtHeaderHtml" name="PUBLIC_PAGES_HEADER_HTML" ></textarea>
+          </div>
         </div>
       </div>
     </div>
@@ -70,9 +76,9 @@
   });
   $("#mg-frm-settings").submit(function (e) {
     e.preventDefault();
-    var props = [];
+    let props = [];
     $(this).find(".mg-prop-key").each(function () {
-      var that = $(this);
+      let that = $(this);
       props.push({key: that.prop("name"), value: that.val()});
     });
     $.ajax({
@@ -99,7 +105,7 @@
   $.ajax({
     url: '/api/v2.0/settings/map'
   }).done(function (data) {
-    $("#mg-frm-settings input, #mg-frm-settings select").each(function () {
+    $("#mg-frm-settings input, #mg-frm-settings select, #mg-frm-settings textarea").each(function () {
       let that = $(this);
       let val = data[that.prop('name')];
       if (val != null) {
