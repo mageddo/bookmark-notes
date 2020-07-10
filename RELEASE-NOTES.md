@@ -1,3 +1,6 @@
+# 3.9.1
+* Escaping HTML entities 
+
 # 3.9.0
 * Set page title as the bookmark name when editing 
 
