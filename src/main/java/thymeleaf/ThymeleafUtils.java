@@ -5,6 +5,9 @@ import com.mageddo.bookmarks.service.SettingsService;
 import com.mageddo.bookmarks.service.SiteMapService;
 import com.mageddo.commons.UrlUtils;
 
+import org.commonmark.internal.util.Html5Entities;
+import org.unbescape.html.HtmlEscape;
+
 import static com.mageddo.config.ApplicationContextUtils.context;
 
 public final class ThymeleafUtils {
@@ -30,10 +33,10 @@ public final class ThymeleafUtils {
   }
 
   public static String headerHtml(){
-    return context()
+    return HtmlEscape.unescapeHtml(context()
         .getBean(SettingsService.class)
         .findSetting(Setting.PUBLIC_PAGES_HEADER_HTML.name())
-        .getValue()
+        .getValue())
         ;
   }
 }
