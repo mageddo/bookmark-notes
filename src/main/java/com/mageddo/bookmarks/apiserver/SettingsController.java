@@ -1,13 +1,8 @@
 package com.mageddo.bookmarks.apiserver;
 
-import java.util.List;
-
 import com.mageddo.bookmarks.entity.SettingEntity;
 import com.mageddo.bookmarks.exception.NotFoundException;
 import com.mageddo.bookmarks.service.SettingsService;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
@@ -16,6 +11,13 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Patch;
 import io.micronaut.http.annotation.QueryValue;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.unbescape.html.HtmlEscape;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.micronaut.http.HttpResponse.badRequest;
 import static io.micronaut.http.HttpResponse.notFound;
@@ -65,7 +67,12 @@ public class SettingsController {
       produces = MediaType.APPLICATION_JSON)
   public HttpResponse _4(String version, @Body List<SettingEntity> settings) {
     try {
-      settingsService.patch(settings);
+      settingsService.patch(
+          settings
+              .stream()
+              .map(it -> it.setValue(HtmlEscape.escapeHtml4(it.getValue())))
+              .collect(Collectors.toList())
+      );
       return ok();
     } catch (NotFoundException e) {
       logger.warn("status=not-found, msg={}", e.getMessage(), e);
